@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <!-- Base application region. -->
+    <color name="colorPrimary">#0B5199</color>
+    <color name="colorPrimaryDark">#094383</color>
+    <color name="colorAccent">#FF6064</color>
+    <color name="colorTextPrimary">#444444</color>
+    <color name="colorHeaderPrimary">#000000</color>
+    <color name="colorShadow">#F0F3F8</color>
+    <color name="colorShadowDark">#87A3B9</color>
+    <!-- Endregion -->
+
 </resources>
