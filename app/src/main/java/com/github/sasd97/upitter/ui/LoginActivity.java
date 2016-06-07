@@ -1,9 +1,11 @@
 package com.github.sasd97.upitter.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
@@ -11,16 +13,28 @@ import com.github.sasd97.upitter.ui.base.BaseActivity;
 
 public class LoginActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
+    private final int COLOR_AMOUNT = 3;
+    private final int SCROLL_ENTRY_POINT = 0;
+
+    private int START_COLOR;
+    private int FINISH_COLOR;
+
+    private final float[] fromColor = new float[COLOR_AMOUNT];
+    private final float[] toColor =   new float[COLOR_AMOUNT];
+    private final float[] hsvColor  = new float[COLOR_AMOUNT];
+
     private final String TAG = "LOGIN_ACTIVITY";
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private View rootView;
     private LoginPagerAdapter loginPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        initColors();
 
         loginPagerAdapter = new LoginPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(loginPagerAdapter);
@@ -32,20 +46,47 @@ public class LoginActivity extends BaseActivity implements ViewPager.OnPageChang
     protected void bindViews() {
         tabLayout = findById(R.id.tab_layout_login_activity);
         viewPager = findById(R.id.viewpager_login_activity);
+        rootView = findById(R.id.root_view_login_activity);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
+        if (state == SCROLL_ENTRY_POINT) drawBackgroundByPosition(viewPager.getCurrentItem());
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        Log.d(TAG, String.valueOf(positionOffset));
+        if (positionOffset == SCROLL_ENTRY_POINT) return;
+        calculateHsvColor(positionOffset);
     }
 
     @Override
-    public void onPageSelected(int position) {
+    public void onPageSelected(int position) {}
 
+    public void drawBackgroundByPosition(int position) {
+        switch (position) {
+            case 0:
+                rootView.setBackgroundColor(START_COLOR);
+                break;
+            case 1:
+                rootView.setBackgroundColor(FINISH_COLOR);
+                break;
+            default:
+                rootView.setBackgroundColor(START_COLOR);
+                break;
+        }
+    }
+
+    private void initColors() {
+        START_COLOR = ContextCompat.getColor(this, R.color.colorPrimary);
+        FINISH_COLOR = ContextCompat.getColor(this, R.color.colorEndBackground);
+        Color.colorToHSV(START_COLOR, fromColor);
+        Color.colorToHSV(FINISH_COLOR, toColor);
+    }
+
+    private void calculateHsvColor(float percentage) {
+        for (int i = 0; i < COLOR_AMOUNT; i++)
+            hsvColor[i] = fromColor[i] + (toColor[i] - fromColor[i]) * percentage;
+        rootView.setBackgroundColor(Color.HSVToColor(hsvColor));
     }
 }

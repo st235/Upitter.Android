@@ -11,4 +11,7 @@
     <color name="colorShadowDark">#87A3B9</color>
     <!-- Endregion -->
 
+    <!-- Login activity region. -->
+    <color name="colorEndBackground">#EFF4F8</color>
+    <!-- Endregion -->
 </resources>
