@@ -1,12 +1,20 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Base application region. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <!-- Endregion -->
+
+    <!-- Tablayout style region. -->
     <style name="TabLayout.Upitter.White" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@android:color/white</item>
         <item name="tabBackground">?attr/selectableItemBackground</item>
@@ -15,18 +23,19 @@
     </style>
 
     <style name="TabTextAppearance.Upitter.White" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <!-- Endregion -->
+
+    <!-- Rounded button region -->
+    <style name="Upitter.Button.Rounded" parent="@style/Widget.AppCompat.Button">
+        <item name="android:layout_height">@dimen/rounded_button_height</item>
+        <item name="android:textSize">@dimen/rounded_button_text_size</item>
     </style>
 
-    <style name="TabLayout.Upitter.Blue" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/colorPrimary</item>
-        <item name="tabBackground">?attr/selectableItemBackground</item>
-        <item name="tabTextAppearance">@style/TabTextAppearance.Upitter.White</item>
-        <item name="tabSelectedTextColor">@color/colorPrimary</item>
+    <style name="Upitter.Button.Rounded.Watermelon" parent="@style/Upitter.Button.Rounded">
+        <item name="android:background">@drawable/rounded_button_watermelon</item>
+        <item name="android:textColor">@color/rounded_button_watermelon_text_selector</item>
     </style>
-
-    <style name="TabTextAppearance.Upitter.Blue" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
-
+    <!-- Endregion -->
 </resources>

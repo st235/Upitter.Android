@@ -1,5 +1,15 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- Base application region. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_short_margin">4dp</dimen>
+    <dimen name="activity_medium_margin">4dp</dimen>
+    <dimen name="activity_long_margin">16dp</dimen>
+    <!-- Endregion -->
+
+    <!-- Rounded button region. -->
+    <dimen name="rounded_button_corner_radius">60dp</dimen>
+    <dimen name="rounded_button_height">52dp</dimen>
+    <dimen name="rounded_button_text_size">17sp</dimen>
+    <!-- Endregion -->
 </resources>

@@ -1,10 +1,13 @@
 package com.github.sasd97.upitter.ui.adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.github.sasd97.upitter.ui.fragments.UserRegistrationFragment;
+import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.ui.fragments.CompanyLoginFragment;
+import com.github.sasd97.upitter.ui.fragments.UserLoginFragment;
 
 /**
  * Created by Alexander Dadukin on 06.06.2016.
@@ -12,22 +15,42 @@ import com.github.sasd97.upitter.ui.fragments.UserRegistrationFragment;
 
 public class LoginPagerAdapter extends FragmentPagerAdapter {
 
-    public LoginPagerAdapter(FragmentManager fragmentManager) {
+    private final int PAGES_AMOUNT = 2;
+
+    private Context context;
+
+    public LoginPagerAdapter(Context context, FragmentManager fragmentManager) {
         super(fragmentManager);
+
+        this.context = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return new UserRegistrationFragment();
+        switch (position) {
+            case 0:
+                return UserLoginFragment.getFragment();
+            case 1:
+                return CompanyLoginFragment.getFragment();
+            default:
+                return UserLoginFragment.getFragment();
+        }
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return PAGES_AMOUNT;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return String.valueOf(position);
+        switch (position) {
+            case 0:
+                return context.getString(R.string.user_registration_tab_login_activity);
+            case 1:
+                return context.getString(R.string.company_registration_tab_login_activity);
+            default:
+                return context.getString(R.string.user_registration_tab_login_activity);
+        }
     }
 }

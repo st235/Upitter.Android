@@ -1,0 +1,21 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.github.sasd97.upitter.ui.fragments.CompanyLoginFragment">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_short_margin"
+        android:layout_marginRight="@dimen/activity_short_margin"
+        android:text="@string/continue_label_login_activity"
+        style="@style/Upitter.Button.Rounded.Watermelon"
+        />
+
+</LinearLayout>

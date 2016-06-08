@@ -16,14 +16,12 @@ public class LoginActivity extends BaseActivity implements ViewPager.OnPageChang
     private final int COLOR_AMOUNT = 3;
     private final int SCROLL_ENTRY_POINT = 0;
 
-    private int START_COLOR;
-    private int FINISH_COLOR;
+    private int COLOR_INDIGO;
+    private int COLOR_BABY_BLUE;
 
     private final float[] fromColor = new float[COLOR_AMOUNT];
     private final float[] toColor =   new float[COLOR_AMOUNT];
     private final float[] hsvColor  = new float[COLOR_AMOUNT];
-
-    private final String TAG = "LOGIN_ACTIVITY";
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -36,7 +34,8 @@ public class LoginActivity extends BaseActivity implements ViewPager.OnPageChang
         setContentView(R.layout.login_activity);
         initColors();
 
-        loginPagerAdapter = new LoginPagerAdapter(getSupportFragmentManager());
+        loginPagerAdapter = new LoginPagerAdapter(this, getSupportFragmentManager());
+
         viewPager.setAdapter(loginPagerAdapter);
         viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
@@ -64,13 +63,13 @@ public class LoginActivity extends BaseActivity implements ViewPager.OnPageChang
     public void onPageSelected(int position) {
         switch (position) {
             case 0:
-                changeTabLayoutColor(tabLayout, FINISH_COLOR);
+                changeTabLayoutColor(tabLayout, COLOR_BABY_BLUE);
                 break;
             case 1:
-                changeTabLayoutColor(tabLayout, START_COLOR);
+                changeTabLayoutColor(tabLayout, COLOR_INDIGO);
                 break;
             default:
-                changeTabLayoutColor(tabLayout, FINISH_COLOR);
+                changeTabLayoutColor(tabLayout, COLOR_BABY_BLUE);
                 break;
         }
     }
@@ -78,22 +77,22 @@ public class LoginActivity extends BaseActivity implements ViewPager.OnPageChang
     public void drawBackgroundByPosition(int position) {
         switch (position) {
             case 0:
-                rootView.setBackgroundColor(START_COLOR);
+                rootView.setBackgroundColor(COLOR_INDIGO);
                 break;
             case 1:
-                rootView.setBackgroundColor(FINISH_COLOR);
+                rootView.setBackgroundColor(COLOR_BABY_BLUE);
                 break;
             default:
-                rootView.setBackgroundColor(START_COLOR);
+                rootView.setBackgroundColor(COLOR_INDIGO);
                 break;
         }
     }
 
     private void initColors() {
-        START_COLOR = ContextCompat.getColor(this, R.color.colorPrimary);
-        FINISH_COLOR = ContextCompat.getColor(this, R.color.colorEndBackground);
-        Color.colorToHSV(START_COLOR, fromColor);
-        Color.colorToHSV(FINISH_COLOR, toColor);
+        COLOR_INDIGO = ContextCompat.getColor(this, R.color.colorPrimary);
+        COLOR_BABY_BLUE = ContextCompat.getColor(this, R.color.colorEndBackground);
+        Color.colorToHSV(COLOR_INDIGO, fromColor);
+        Color.colorToHSV(COLOR_BABY_BLUE, toColor);
     }
 
     private void calculateHsvColor(float percentage) {
