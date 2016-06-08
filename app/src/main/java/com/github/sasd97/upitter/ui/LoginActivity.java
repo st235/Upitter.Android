@@ -61,7 +61,19 @@ public class LoginActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     @Override
-    public void onPageSelected(int position) {}
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0:
+                changeTabLayoutColor(tabLayout, FINISH_COLOR);
+                break;
+            case 1:
+                changeTabLayoutColor(tabLayout, START_COLOR);
+                break;
+            default:
+                changeTabLayoutColor(tabLayout, FINISH_COLOR);
+                break;
+        }
+    }
 
     public void drawBackgroundByPosition(int position) {
         switch (position) {
@@ -88,5 +100,10 @@ public class LoginActivity extends BaseActivity implements ViewPager.OnPageChang
         for (int i = 0; i < COLOR_AMOUNT; i++)
             hsvColor[i] = fromColor[i] + (toColor[i] - fromColor[i]) * percentage;
         rootView.setBackgroundColor(Color.HSVToColor(hsvColor));
+    }
+
+    private void changeTabLayoutColor(TabLayout tabLayout, int color) {
+        tabLayout.setTabTextColors(color, color);
+        tabLayout.setSelectedTabIndicatorColor(color);
     }
 }

@@ -15,6 +15,7 @@
     tools:context=".ui.LoginActivity">
 
     <android.support.design.widget.TabLayout
+        style="@style/TabLayout.Upitter.White"
         android:id="@+id/tab_layout_login_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
