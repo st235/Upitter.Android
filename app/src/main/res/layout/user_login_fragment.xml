@@ -21,19 +21,30 @@
         tools:text="Alexander"
         />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/twitter_button_user_login_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/activity_short_margin"
         android:layout_marginLeft="@dimen/activity_short_margin"
         android:layout_marginRight="@dimen/activity_short_margin"
-        android:orientation="horizontal">
+        android:text="Twitter"
+        style="@style/Upitter.Button.Rounded.Watermelon"
+        />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+
+    <Button
+        android:id="@+id/facebook_button_user_login_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_short_margin"
+        android:layout_marginLeft="@dimen/activity_short_margin"
+        android:layout_marginRight="@dimen/activity_short_margin"
+        android:text="Facebook"
+        style="@style/Upitter.Button.Rounded.Watermelon"
+        />
 
     <Button
         android:id="@+id/google_plus_button_user_login_fragment"

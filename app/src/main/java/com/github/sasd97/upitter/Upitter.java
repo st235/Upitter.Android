@@ -1,7 +1,6 @@
 package com.github.sasd97.upitter;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.utils.Assets;
@@ -10,8 +9,6 @@ import com.github.sasd97.upitter.utils.Connectivity;
 import com.github.sasd97.upitter.utils.Palette;
 import com.github.sasd97.upitter.utils.Prefs;
 import com.orm.SugarContext;
-
-import java.util.Locale;
 
 /**
  * Created by Alexander Dadukin on 06.06.2016.

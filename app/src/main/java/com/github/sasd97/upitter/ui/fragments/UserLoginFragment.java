@@ -11,17 +11,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.ui.CountryCodeChooseActivity;
-import com.github.sasd97.upitter.ui.LoginActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.utils.Authorization;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+
+import java.util.Arrays;
 
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.GOOGLE_SIGN_IN_REQUEST;
 
@@ -31,8 +38,13 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.GOOGLE_S
 public class UserLoginFragment extends BaseFragment
         implements GoogleApiClient.OnConnectionFailedListener {
 
+    private Button signFacebookButton;
     private Button signGoogleButton;
+    private Button signTwitterButton;
+
     private GoogleApiClient client;
+
+    CallbackManager callbackManager;
 
     public static UserLoginFragment getFragment() {
         return new UserLoginFragment();
@@ -49,6 +61,51 @@ public class UserLoginFragment extends BaseFragment
         super.onViewCreated(view, savedInstanceState);
         client = Authorization.obtainClient(getContext(), getActivity(), this);
 
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d("Success", "Login");
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(getActivity(), "Login Cancel", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        signTwitterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TwitterCore.getInstance().logIn(getActivity(), new Callback<TwitterSession>() {
+                    @Override
+                    public void success(Result<TwitterSession> result) {
+                        // Do something with result, which provides a TwitterSession for making API calls
+                    }
+
+                    @Override
+                    public void failure(TwitterException exception) {
+                        // Do something on failure
+                    }
+                });
+            }
+        });
+
+        signFacebookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile"));
+            }
+        });
+
         signGoogleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +118,8 @@ public class UserLoginFragment extends BaseFragment
     @Override
     protected void bindViews() {
         signGoogleButton = findById(R.id.google_plus_button_user_login_fragment);
+        signFacebookButton = findById(R.id.facebook_button_user_login_fragment);
+        signTwitterButton = findById(R.id.twitter_button_user_login_fragment);
     }
 
     @Override
