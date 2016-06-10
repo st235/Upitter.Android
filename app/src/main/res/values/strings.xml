@@ -7,6 +7,7 @@
     <string name="user_registration_tab_login_activity">User</string>
     <string name="company_registration_tab_login_activity">Company</string>
     <string name="continue_label_login_activity">Continue</string>
+    <string name="google_plus_label_login_activity">Google+</string>
     <string name="enter_phone_number_label_login_activity">Enter your phone number:</string>
     <!-- Endregion -->
 

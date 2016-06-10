@@ -10,6 +10,7 @@
     tools:context="com.github.sasd97.upitter.ui.fragments.CompanyLoginFragment">
 
     <Button
+        android:id="@+id/continue_registration_button_company_login_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_short_margin"

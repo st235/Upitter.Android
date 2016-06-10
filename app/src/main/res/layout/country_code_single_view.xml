@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/country_preview_country_code_single_view"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="4dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/code_country_code_single_view"
+        android:layout_toStartOf="@+id/code_country_code_single_view"
+        android:layout_toRightOf="@+id/country_preview_country_code_single_view"
+        android:layout_toEndOf="@+id/country_preview_country_code_single_view">
+
+        <TextView
+            android:id="@+id/country_native_country_code_single_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="30"
+            tools:text="Russia"
+            />
+
+
+        <TextView
+            android:id="@+id/country_official_country_code_single_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="30"
+            tools:text="Russia"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/code_country_code_single_view"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        tools:text="+78"
+        />
+</RelativeLayout>

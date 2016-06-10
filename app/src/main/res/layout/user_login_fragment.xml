@@ -36,12 +36,13 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/google_plus_button_user_login_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_short_margin"
         android:layout_marginLeft="@dimen/activity_short_margin"
         android:layout_marginRight="@dimen/activity_short_margin"
-        android:text="@string/continue_label_login_activity"
+        android:text="@string/google_plus_label_login_activity"
         style="@style/Upitter.Button.Rounded.Watermelon"
         />
 

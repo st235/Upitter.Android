@@ -14,4 +14,12 @@
     <!-- Login activity region. -->
     <color name="colorEndBackground">#EFF4F8</color>
     <!-- Endregion -->
+
+    <!-- Country code chooser region. -->
+    <color name="africa_region">#DA50CB</color>
+    <color name="oceania_region">#02D085</color>
+    <color name="asia_region">#F1BB00</color>
+    <color name="europe_region">#48B0D2</color>
+    <color name="americas_region">#EF574B</color>
+    <!-- Endregion -->
 </resources>

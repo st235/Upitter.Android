@@ -1,17 +1,28 @@
 package com.github.sasd97.upitter.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.services.query.AuthorizationQueryService;
 import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
-public class LoginActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+import static com.github.sasd97.upitter.constants.RequestCodesConstants.GOOGLE_SIGN_IN_REQUEST;
+
+public class LoginActivity extends BaseActivity
+        implements ViewPager.OnPageChangeListener,
+        AuthorizationQueryService.OnAuthorizationListener {
 
     private final int COLOR_AMOUNT = 3;
     private final int SCROLL_ENTRY_POINT = 0;
@@ -20,13 +31,15 @@ public class LoginActivity extends BaseActivity implements ViewPager.OnPageChang
     private int COLOR_BABY_BLUE;
 
     private final float[] fromColor = new float[COLOR_AMOUNT];
-    private final float[] toColor =   new float[COLOR_AMOUNT];
-    private final float[] hsvColor  = new float[COLOR_AMOUNT];
+    private final float[] toColor = new float[COLOR_AMOUNT];
+    private final float[] hsvColor = new float[COLOR_AMOUNT];
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private View rootView;
     private LoginPagerAdapter loginPagerAdapter;
+
+    private AuthorizationQueryService queryService = AuthorizationQueryService.getService(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,5 +117,34 @@ public class LoginActivity extends BaseActivity implements ViewPager.OnPageChang
     private void changeTabLayoutColor(TabLayout tabLayout, int color) {
         tabLayout.setTabTextColors(color, color);
         tabLayout.setSelectedTabIndicatorColor(color);
+    }
+
+    @Override
+    public void onServerNotify() {
+        Log.d("NOTIFIED", "HOOORAY");
+    }
+
+    @Override
+    public void onError(int code, String message) {
+        Log.d("SERVER_EVENT", "OHHHHH" + code + ";" + message);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == GOOGLE_SIGN_IN_REQUEST && resultCode == RESULT_OK) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result.isSuccess()) {
+                GoogleSignInAccount acct = result.getSignInAccount();
+                String mFullName = acct.getDisplayName();
+                String mEmail = acct.getEmail();
+                queryService.notifyServerBySignIn(acct.getIdToken());
+                Log.d("USER_INFO", result.isSuccess() + ";" + mFullName + ";" + mEmail + ";" + acct.getIdToken() + ";");
+            } else {
+                Toast.makeText(this, "result false", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "wrong", Toast.LENGTH_SHORT).show();
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

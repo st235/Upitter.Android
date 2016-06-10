@@ -9,7 +9,7 @@ import android.view.View;
 /**
  * Created by Alexander Dadukin on 06.06.2016.
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     private View rootView;
 
@@ -17,6 +17,7 @@ public class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rootView = view;
+        bindViews();
     }
 
     protected View findViewById(@IdRes int resourceId) {
@@ -26,4 +27,6 @@ public class BaseFragment extends Fragment {
     protected <T extends View> T findById(@IdRes int resourceId) {
         return (T) rootView.findViewById(resourceId);
     }
+
+    protected abstract void bindViews();
 }
