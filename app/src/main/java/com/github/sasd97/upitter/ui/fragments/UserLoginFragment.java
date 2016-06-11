@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.services.query.AuthorizationQueryService;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.utils.Authorization;
 import com.google.android.gms.auth.api.Auth;
@@ -24,7 +24,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 
@@ -35,19 +34,22 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.GOOGLE_S
 /**
  * Created by Alexander Dadukin on 06.06.2016.
  */
+
 public class UserLoginFragment extends BaseFragment
-        implements GoogleApiClient.OnConnectionFailedListener {
+        implements GoogleApiClient.OnConnectionFailedListener,
+        FacebookCallback<LoginResult> {
 
     private Button signFacebookButton;
     private Button signGoogleButton;
     private Button signTwitterButton;
 
     private GoogleApiClient client;
+    private AuthorizationQueryService service;
 
-    CallbackManager callbackManager;
-
-    public static UserLoginFragment getFragment() {
-        return new UserLoginFragment();
+    public static UserLoginFragment getFragment(AuthorizationQueryService service) {
+        UserLoginFragment fragment = new UserLoginFragment();
+        fragment.setAuthorizationService(service);
+        return fragment;
     }
 
     @Nullable
@@ -59,41 +61,21 @@ public class UserLoginFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        client = Authorization.obtainClient(getContext(), getActivity(), this);
-
-        callbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Log.d("Success", "Login");
-
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Toast.makeText(getActivity(), "Login Cancel", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+        client = Authorization.google(getContext(), getActivity(), this);
+        LoginManager.getInstance().registerCallback(Authorization.facebook(), this);
 
         signTwitterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TwitterCore.getInstance().logIn(getActivity(), new Callback<TwitterSession>() {
+                Authorization.twitter().authorize(getActivity(), new Callback<TwitterSession>() {
                     @Override
                     public void success(Result<TwitterSession> result) {
-                        // Do something with result, which provides a TwitterSession for making API calls
+                        service.notifyByTwitter(result.data.getAuthToken().token, result.data.getAuthToken().secret);
                     }
 
                     @Override
                     public void failure(TwitterException exception) {
-                        // Do something on failure
+
                     }
                 });
             }
@@ -102,7 +84,7 @@ public class UserLoginFragment extends BaseFragment
         signFacebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile"));
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
             }
         });
 
@@ -115,6 +97,10 @@ public class UserLoginFragment extends BaseFragment
         });
     }
 
+    private void setAuthorizationService(AuthorizationQueryService service) {
+        this.service = service;
+    }
+
     @Override
     protected void bindViews() {
         signGoogleButton = findById(R.id.google_plus_button_user_login_fragment);
@@ -125,5 +111,20 @@ public class UserLoginFragment extends BaseFragment
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(getContext(), "Connection lost", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccess(LoginResult loginResult) {
+        service.notifyByFacebook(loginResult.getAccessToken().getToken());
+    }
+
+    @Override
+    public void onCancel() {
+
+    }
+
+    @Override
+    public void onError(FacebookException error) {
+
     }
 }

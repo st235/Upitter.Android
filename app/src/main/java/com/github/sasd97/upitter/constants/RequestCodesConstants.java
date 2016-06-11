@@ -6,4 +6,6 @@ package com.github.sasd97.upitter.constants;
 public class RequestCodesConstants {
 
     public static final int GOOGLE_SIGN_IN_REQUEST = 97;
+    public static final int FACEBOOK_SIGN_IN_REQUEST = 98;
+    public static final int TWITTER_SIGN_IN_REQUEST = 140;
 }

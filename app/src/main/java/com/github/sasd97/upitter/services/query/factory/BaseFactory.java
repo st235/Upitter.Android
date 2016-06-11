@@ -15,4 +15,12 @@ public interface BaseFactory {
     @FormUrlEncoded
     @POST("authorization/google/verify")
     Call<AuthorizationResponseModel> authorizeWithGooglePlus(@Field("tokenId") String googleTokenId);
+
+    @FormUrlEncoded
+    @POST("authorization/facebook/verify")
+    Call<AuthorizationResponseModel> authorizeWithFacebook(@Field("accessToken") String accessToken);
+
+    @FormUrlEncoded
+    @POST("authorization/twitter/verify")
+    Call<AuthorizationResponseModel> authorizeWithTwitter(@Field("token") String token, @Field("secret") String secret);
 }

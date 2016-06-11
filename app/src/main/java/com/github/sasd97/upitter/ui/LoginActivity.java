@@ -10,15 +10,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.services.query.AuthorizationQueryService;
 import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.utils.Authorization;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.GOOGLE_SIGN_IN_REQUEST;
+import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
 
 public class LoginActivity extends BaseActivity
         implements ViewPager.OnPageChangeListener,
@@ -47,7 +50,7 @@ public class LoginActivity extends BaseActivity
         setContentView(R.layout.login_activity);
         initColors();
 
-        loginPagerAdapter = new LoginPagerAdapter(this, getSupportFragmentManager());
+        loginPagerAdapter = new LoginPagerAdapter(this, queryService, getSupportFragmentManager());
 
         viewPager.setAdapter(loginPagerAdapter);
         viewPager.addOnPageChangeListener(this);
@@ -121,30 +124,33 @@ public class LoginActivity extends BaseActivity
 
     @Override
     public void onServerNotify() {
-        Log.d("NOTIFIED", "HOOORAY");
     }
 
     @Override
     public void onError(int code, String message) {
-        Log.d("SERVER_EVENT", "OHHHHH" + code + ";" + message);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (FacebookSdk.isFacebookRequestCode(requestCode)) {
+            Authorization.facebook().onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+
+        if (requestCode == TWITTER_SIGN_IN_REQUEST) {
+            Authorization.twitter().onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+
         if (requestCode == GOOGLE_SIGN_IN_REQUEST && resultCode == RESULT_OK) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                GoogleSignInAccount acct = result.getSignInAccount();
-                String mFullName = acct.getDisplayName();
-                String mEmail = acct.getEmail();
-                queryService.notifyServerBySignIn(acct.getIdToken());
-                Log.d("USER_INFO", result.isSuccess() + ";" + mFullName + ";" + mEmail + ";" + acct.getIdToken() + ";");
-            } else {
-                Toast.makeText(this, "result false", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "wrong", Toast.LENGTH_SHORT).show();
-            super.onActivityResult(requestCode, resultCode, data);
+            if (result.isSuccess()) Authorization.obtainGoogle(queryService, result);
+            else Toast.makeText(this, "result false", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        Toast.makeText(this, "wrong", Toast.LENGTH_SHORT).show();
     }
 }

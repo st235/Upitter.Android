@@ -31,11 +31,32 @@ public class AuthorizationQueryService {
         return new AuthorizationQueryService(listener);
     }
 
-    public void notifyServerBySignIn(@NonNull String tokenId) {
+    public void notifyByGoogle(@NonNull String tokenId) {
         Call<AuthorizationResponseModel> notify = RestService
                 .baseFactory()
                 .authorizeWithGooglePlus(tokenId);
 
+        notifyServerBySignIn(notify);
+    }
+
+    public void notifyByFacebook(@NonNull String accessToken) {
+        Call<AuthorizationResponseModel> notify = RestService
+                .baseFactory()
+                .authorizeWithFacebook(accessToken);
+
+        notifyServerBySignIn(notify);
+    }
+
+    public void notifyByTwitter(@NonNull String token,
+                                @NonNull String secret) {
+        Call<AuthorizationResponseModel> notify = RestService
+                .baseFactory()
+                .authorizeWithTwitter(token, secret);
+
+        notifyServerBySignIn(notify);
+    }
+
+    public void notifyServerBySignIn(@NonNull Call<AuthorizationResponseModel> notify) {
         notify.enqueue(new Callback<AuthorizationResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationResponseModel> call, Response<AuthorizationResponseModel> response) {
