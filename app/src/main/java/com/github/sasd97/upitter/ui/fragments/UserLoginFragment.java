@@ -70,12 +70,13 @@ public class UserLoginFragment extends BaseFragment
                 Authorization.twitter().authorize(getActivity(), new Callback<TwitterSession>() {
                     @Override
                     public void success(Result<TwitterSession> result) {
+                        Log.d("AAAA", result.data.getAuthToken().toString());
                         service.notifyByTwitter(result.data.getAuthToken().token, result.data.getAuthToken().secret);
                     }
 
                     @Override
                     public void failure(TwitterException exception) {
-
+                        exception.printStackTrace();
                     }
                 });
             }
