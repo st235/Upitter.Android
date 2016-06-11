@@ -2,9 +2,10 @@ package com.github.sasd97.upitter.ui;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.CountryModel;
@@ -14,15 +15,22 @@ import com.github.sasd97.upitter.utils.Countries;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
-import com.tonicartos.superslim.LayoutManager;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.ArrayList;
 
-public class CountryCodeChooseActivity extends BaseActivity implements CountryCodeChooseRecyclerAdapter.OnItemClickListener {
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
+
+public class CountryCodeChooseActivity extends BaseActivity
+        implements CountryCodeChooseRecyclerAdapter.OnItemClickListener {
 
     private Toolbar toolbar;
-    private RecyclerView countryRecyclerView;
+    private LinearLayout progressLinearLayout;
+
+    private FastScrollRecyclerView countryRecyclerView;
     private CountryCodeChooseRecyclerAdapter adapter;
+    private StickyHeaderDecoration decor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +40,18 @@ public class CountryCodeChooseActivity extends BaseActivity implements CountryCo
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
 
-        countryRecyclerView.setLayoutManager(new LayoutManager(this));
+        adapter = new CountryCodeChooseRecyclerAdapter(CountryCodeChooseActivity.this, new ArrayList<CountryModel>());
+        decor = new StickyHeaderDecoration(adapter);
+        countryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        countryRecyclerView.setAdapter(adapter);
+        countryRecyclerView.addItemDecoration(decor);
+        countryRecyclerView.setItemAnimator(new SlideInRightAnimator());
 
         Countries.obtainCountries(new Countries.OnLoadListener() {
             @Override
             public void onLoad(ArrayList<CountryModel> list) {
-                countryRecyclerView.setAdapter(new CountryCodeChooseRecyclerAdapter(CountryCodeChooseActivity.this, list));
+                progressLinearLayout.setVisibility(View.GONE);
+                adapter.addItems(list);
             }
 
             @Override
@@ -51,6 +65,7 @@ public class CountryCodeChooseActivity extends BaseActivity implements CountryCo
     protected void bindViews() {
         toolbar = findById(R.id.toolbar);
         countryRecyclerView = findById(R.id.recycler_view_country_code_choose_activity);
+        progressLinearLayout = findById(R.id.still_progress_country_code_choose_activity);
     }
 
     @Override

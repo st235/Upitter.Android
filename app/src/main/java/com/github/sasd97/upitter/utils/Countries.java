@@ -1,9 +1,10 @@
 package com.github.sasd97.upitter.utils;
 
 import android.os.AsyncTask;
-import android.util.Log;
+import android.text.TextUtils;
 
 import com.github.sasd97.upitter.models.CountryModel;
+import com.github.sasd97.upitter.utils.comparators.CountryNameComparator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Alex on 09.06.2016.
@@ -52,10 +54,10 @@ public class Countries extends AsyncTask<Void, Void, ArrayList<CountryModel>> {
         this.listener = listener;
     }
 
-
     @Override
     protected ArrayList<CountryModel> doInBackground(Void... params) {
         try {
+
             ArrayList<CountryModel> result = new ArrayList<>();
             JSONArray array = new JSONArray(Assets.obtainJSONRepresentation(COUNTRIES_JSON));
             int arrayLength = array.length();
@@ -98,6 +100,20 @@ public class Countries extends AsyncTask<Void, Void, ArrayList<CountryModel>> {
                             .dialCode(countryCode)
                             .build());
                 }
+            }
+
+            Collections.sort(result, new CountryNameComparator());
+
+            int headerId = -1;
+            String lastHeader = "";
+
+            for (CountryModel countryModel: result) {
+                if (!TextUtils.equals(lastHeader, countryModel.getHeader())) {
+                    lastHeader = countryModel.getHeader();
+                    headerId++;
+                }
+
+                countryModel.setHeaderId(headerId);
             }
 
             return result;

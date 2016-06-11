@@ -11,4 +11,7 @@
     <string name="enter_phone_number_label_login_activity">Enter your phone number:</string>
     <!-- Endregion -->
 
+    <!-- Country choose region -->
+    <string name="search_country_code_choose_menu">Search</string>
+    <!-- Endregion -->
 </resources>

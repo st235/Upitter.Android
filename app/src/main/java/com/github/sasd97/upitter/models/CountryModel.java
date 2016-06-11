@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.skeletons.HeaderSkeleton;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -46,9 +45,7 @@ public class CountryModel implements HeaderSkeleton {
     private String mDialCode;
     private String mCode;
     private String mHeader;
-    private boolean mIsHeader = false;
-    private int mSectionManager;
-    private int mSectionFirstPosition;
+    private int mHeaderId;
 
     private CountryModel(Builder builder) {
         mName = builder.name;
@@ -85,33 +82,13 @@ public class CountryModel implements HeaderSkeleton {
     }
 
     @Override
-    public boolean isHeader() {
-        return mIsHeader;
+    public void setHeaderId(int headerId) {
+        mHeaderId = headerId;
     }
 
     @Override
-    public void setIsHeader(boolean isHeader) {
-        mIsHeader = isHeader;
-    }
-
-    @Override
-    public int getSectionManager() {
-        return mSectionManager;
-    }
-
-    @Override
-    public void setSectionManager(int manager) {
-        mSectionManager = manager;
-    }
-
-    @Override
-    public int getSectionFirstPosition() {
-        return mSectionFirstPosition;
-    }
-
-    @Override
-    public void setSectionFirstPosition(int position) {
-        mSectionFirstPosition = position;
+    public int getHeaderId() {
+        return mHeaderId;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.github.sasd97.upitter.ui.adapters;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,26 +12,27 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.CountryModel;
 import com.github.sasd97.upitter.utils.Palette;
-import com.tonicartos.superslim.GridSLM;
-import com.tonicartos.superslim.LinearSLM;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
 
 /**
  * Created by Alex on 09.06.2016.
  */
 public class CountryCodeChooseRecyclerAdapter
-        extends RecyclerView.Adapter<CountryCodeChooseRecyclerAdapter.CountryCodeChooseViewHolder> {
+        extends RecyclerView.Adapter<CountryCodeChooseRecyclerAdapter.CountryCodeChooseViewHolder>  implements
+        StickyHeaderAdapter<CountryCodeChooseRecyclerAdapter.CountryHeaderViewHolder>,
+        FastScrollRecyclerView.SectionedAdapter {
 
     public interface OnItemClickListener {
 
         void onClick(CountryModel country);
     }
 
-    private static final int VIEW_TYPE_HEADER = 0x01;
-    private static final int VIEW_TYPE_CONTENT = 0x00;
-
-    private Context context;
+    private final long NO_HEADER = 100000;
 
     private OnItemClickListener listener;
     private ArrayList<CountryModel> countryList;
@@ -75,6 +74,17 @@ public class CountryCodeChooseRecyclerAdapter
         }
     }
 
+    public class CountryHeaderViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView abcSectionTextView;
+
+        public CountryHeaderViewHolder(View itemView) {
+            super(itemView);
+
+            abcSectionTextView = (TextView) itemView.findViewById(R.id.abc_section_country_code_header);
+        }
+    }
+
 
     @Override
     public CountryCodeChooseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -97,23 +107,38 @@ public class CountryCodeChooseRecyclerAdapter
         holder.countryOfficialTextView.setText(country.getName());
         holder.countryPrefixTextView.setText(country.getDialCode());
         holder.countryPreviewImageView.setImageDrawable(circleCode);
+    }
 
-        final View itemView = holder.itemView;
-
-        final GridSLM.LayoutParams lp = GridSLM.LayoutParams.from(itemView.getLayoutParams());
-        lp.setSlm(LinearSLM.ID);
-        lp.setFirstPosition(country.getSectionFirstPosition());
-        itemView.setLayoutParams(lp);
+    @NonNull
+    @Override
+    public String getSectionName(int position) {
+        return  countryList.get(position).getHeader();
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return countryList.get(position).isHeader() ?
-                VIEW_TYPE_HEADER : VIEW_TYPE_CONTENT;
+    public long getHeaderId(int position) {
+        return countryList.get(position).getHeaderId();
+    }
+
+    @Override
+    public CountryHeaderViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_code_header, parent, false);
+        return new CountryHeaderViewHolder(v);
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(CountryHeaderViewHolder holder, int position) {
+        CountryModel country = countryList.get(position);
+        holder.abcSectionTextView.setText(country.getHeader());
     }
 
     @Override
     public int getItemCount() {
         return countryList.size();
+    }
+
+    public void addItems(List<CountryModel> list) {
+        countryList.addAll(list);
+        notifyItemInserted(countryList.size());
     }
 }
