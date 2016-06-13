@@ -4,13 +4,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.BuildConfig;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.LoggingBehavior;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.services.query.AuthorizationQueryService;
+import com.github.sasd97.upitter.services.query.SocialAuthorizationQueryService;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -84,7 +83,7 @@ public class Authorization {
         return facebookClient;
     }
 
-    public static void obtainGoogle(AuthorizationQueryService service, GoogleSignInResult result) {
+    public static void obtainGoogle(SocialAuthorizationQueryService service, GoogleSignInResult result) {
         GoogleSignInAccount googleAccount = result.getSignInAccount();
         service.notifyByGoogle(googleAccount.getIdToken());
     }

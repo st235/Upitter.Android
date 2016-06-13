@@ -1,7 +1,6 @@
 package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.github.sasd97.upitter.models.response.ErrorResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
@@ -14,21 +13,21 @@ import retrofit2.Response;
 /**
  * Created by Alex on 10.06.2016.
  */
-public class AuthorizationQueryService {
+public class SocialAuthorizationQueryService {
 
-    public interface OnAuthorizationListener {
+    public interface OnSocialAuthorizationListener {
         void onServerNotify();
-        void onError(int code, String message);
+        void onNotifyError(int code, String message);
     }
 
-    private OnAuthorizationListener listener;
+    private OnSocialAuthorizationListener listener;
 
-    private AuthorizationQueryService(OnAuthorizationListener listener) {
+    private SocialAuthorizationQueryService(OnSocialAuthorizationListener listener) {
         this.listener = listener;
     }
 
-    public static AuthorizationQueryService getService(OnAuthorizationListener listener) {
-        return new AuthorizationQueryService(listener);
+    public static SocialAuthorizationQueryService getService(OnSocialAuthorizationListener listener) {
+        return new SocialAuthorizationQueryService(listener);
     }
 
     public void notifyByGoogle(@NonNull String tokenId) {
@@ -56,13 +55,13 @@ public class AuthorizationQueryService {
         notifyServerBySignIn(notify);
     }
 
-    public void notifyServerBySignIn(@NonNull Call<AuthorizationResponseModel> notify) {
+    private void notifyServerBySignIn(@NonNull Call<AuthorizationResponseModel> notify) {
         notify.enqueue(new Callback<AuthorizationResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationResponseModel> call, Response<AuthorizationResponseModel> response) {
                 if (response.body().isError()) {
                     ErrorResponseModel error = response.body().getError();
-                    listener.onError(error.getCode(), error.getMessage());
+                    listener.onNotifyError(error.getCode(), error.getMessage());
                     return;
                 }
 
@@ -72,7 +71,7 @@ public class AuthorizationQueryService {
             @Override
             public void onFailure(Call<AuthorizationResponseModel> call, Throwable t) {
                 t.printStackTrace();
-                listener.onError(-1, null);
+                listener.onNotifyError(-1, null);
             }
         });
     }
