@@ -3,6 +3,12 @@
     <string name="app_name">Upitter</string>
     <!-- Endregion -->
 
+    <!-- Region Send Crash Report -->
+    <string name="crash_title_message">Upitter had been broken</string>
+    <string name="crash_ticker_message">Help us to improve Upitter</string>
+    <string name="crash_body_message">Looks like LocLook crash. We prepared some information to you, that you could share it with us.</string>
+    <!-- Endregion -->
+
     <!-- Login activity region -->
     <string name="user_registration_tab_login_activity">User</string>
     <string name="company_registration_tab_login_activity">Company</string>

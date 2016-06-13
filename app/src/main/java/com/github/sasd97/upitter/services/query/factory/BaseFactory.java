@@ -1,11 +1,15 @@
 package com.github.sasd97.upitter.services.query.factory;
 
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
+import com.github.sasd97.upitter.models.response.report.ReportResponseModel;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by Alexander Dadukin on 06.06.2016.
@@ -23,4 +27,8 @@ public interface BaseFactory {
     @FormUrlEncoded
     @POST("authorization/twitter/verify")
     Call<AuthorizationResponseModel> authorizeWithTwitter(@Field("token") String token, @Field("secret") String secret);
+
+    @FormUrlEncoded
+    @POST("support/android/{id}")
+    Call<ReportResponseModel> sendCrashReport(@Path("id") String id, @Field("log") JSONObject trace);
 }

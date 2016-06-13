@@ -25,6 +25,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
+    compile 'ch.acra:acra:4.9.0-RC-2'
     compile 'com.github.satyan:sugar:1.5'
     compile 'com.r0adkll:slidableactivity:2.0.5'
     compile 'de.hdodenhof:circleimageview:2.0.0'
