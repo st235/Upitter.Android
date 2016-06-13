@@ -35,6 +35,7 @@ import org.acra.annotation.ReportsCrashes;
                 ReportField.REPORT_ID
         },
         mode = ReportingInteractionMode.NOTIFICATION,
+        resDialogTitle = R.string.crash_ticker_message,
         resDialogText = R.string.crash_body_message,
         resDialogTheme = R.style.MD_Light,
         resNotifTitle = R.string.crash_title_message,
