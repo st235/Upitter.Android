@@ -21,7 +21,7 @@ public class LoginActivity extends BaseActivity
     private final int SCROLL_ENTRY_POINT = 0;
 
     private int COLOR_INDIGO;
-    private int COLOR_BABY_BLUE = 1 / 0;
+    private int COLOR_BABY_BLUE;
 
     private final float[] fromColor = new float[COLOR_AMOUNT];
     private final float[] toColor = new float[COLOR_AMOUNT];
