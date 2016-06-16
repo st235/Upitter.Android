@@ -12,6 +12,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 
+import static com.github.sasd97.upitter.holders.UserHolder.isUserCreate;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
 
 public class LoginActivity extends BaseActivity
@@ -36,6 +37,12 @@ public class LoginActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        if (isUserCreate()) {
+            Intent intent = new Intent(this, TapeActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         initColors();
 
         loginPagerAdapter = new LoginPagerAdapter(this, getSupportFragmentManager());

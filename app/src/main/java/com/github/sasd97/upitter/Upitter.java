@@ -3,6 +3,8 @@ package com.github.sasd97.upitter;
 import android.app.Application;
 import android.content.Context;
 
+import com.github.sasd97.upitter.holders.UserHolder;
+import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.utils.Assets;
 import com.github.sasd97.upitter.utils.Authorization;
@@ -67,5 +69,9 @@ public class Upitter extends Application {
     public void onTerminate() {
         super.onTerminate();
         SugarContext.terminate();
+    }
+
+    public static UserModel user() {
+        return UserHolder.get();
     }
 }

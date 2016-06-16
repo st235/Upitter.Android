@@ -19,7 +19,11 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.holders.UserHolder;
+import com.github.sasd97.upitter.models.UserModel;
+import com.github.sasd97.upitter.models.response.user.UserResponseModel;
 import com.github.sasd97.upitter.services.query.SocialAuthorizationQueryService;
+import com.github.sasd97.upitter.ui.TapeActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.utils.Authorization;
 import com.google.android.gms.auth.api.Auth;
@@ -81,6 +85,7 @@ public class UserLoginFragment extends BaseFragment
                     @Override
                     public void failure(TwitterException exception) {
                         exception.printStackTrace();
+                        showErrorSnackbar();
                     }
                 });
             }
@@ -111,7 +116,9 @@ public class UserLoginFragment extends BaseFragment
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Snackbar.make(getView(), "Connection lost", Snackbar.LENGTH_INDEFINITE).show();
+        Snackbar
+                .make(getView(), getString(R.string.error_authorization_login_activity), Snackbar.LENGTH_LONG)
+                .show();
     }
 
     @Override
@@ -121,22 +128,50 @@ public class UserLoginFragment extends BaseFragment
 
     @Override
     public void onCancel() {
-
+        Snackbar
+                .make(getView(), getString(R.string.cancel_authorization_login_activity), Snackbar.LENGTH_SHORT)
+                .show();
     }
 
     @Override
     public void onError(FacebookException error) {
-
+        showErrorSnackbar();
     }
 
     @Override
-    public void onServerNotify() {
-        Log.d("NOTIFY", "OK");
+    public void onServerNotify(UserResponseModel userResponseModel) {
+        UserModel.Builder builder = new UserModel
+                .Builder()
+                .nickname(userResponseModel.getNickname())
+                .sex(userResponseModel.getSex())
+                .isVerify(userResponseModel.isVerify())
+                .accessToken(userResponseModel.getToken());
+
+        if (userResponseModel.isField(userResponseModel.getName())) builder.name(userResponseModel.getName());
+        if (userResponseModel.isField(userResponseModel.getSurname())) builder.surname(userResponseModel.getSurname());
+        if (userResponseModel.isField(userResponseModel.getDescription())) builder.description(userResponseModel.getDescription());
+        if (userResponseModel.isField(userResponseModel.getAvatarUrl())) builder.avatarUrl(userResponseModel.getAvatarUrl());
+        if (userResponseModel.isField(userResponseModel.getEmail())) builder.email(userResponseModel.getEmail());
+
+        UserHolder.save(builder.build());
+
+        Snackbar
+                .make(getView(), getString(R.string.authorized_successfully_login_activity), Snackbar.LENGTH_LONG)
+                .show();
+
+        startActivity(new Intent(getActivity(), TapeActivity.class));
     }
 
     @Override
     public void onNotifyError(int code, String message) {
+        Log.d("CODE", String.valueOf(code));
+        showErrorSnackbar();
+    }
 
+    private void showErrorSnackbar() {
+        Snackbar
+                .make(getView(), getString(R.string.error_authorization_login_activity), Snackbar.LENGTH_LONG)
+                .show();
     }
 
     @Override
@@ -156,10 +191,8 @@ public class UserLoginFragment extends BaseFragment
         if (requestCode == GOOGLE_SIGN_IN_REQUEST && resultCode == FragmentActivity.RESULT_OK) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) Authorization.obtainGoogle(service, result);
-            else Toast.makeText(getActivity(), "result false", Toast.LENGTH_SHORT).show();
+            else showErrorSnackbar();
             return;
         }
-
-        Toast.makeText(getActivity(), "wrong", Toast.LENGTH_SHORT).show();
     }
 }

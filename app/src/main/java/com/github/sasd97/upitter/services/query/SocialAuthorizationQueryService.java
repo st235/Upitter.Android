@@ -1,9 +1,11 @@
 package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.github.sasd97.upitter.models.response.ErrorResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
+import com.github.sasd97.upitter.models.response.user.UserResponseModel;
 import com.github.sasd97.upitter.services.RestService;
 
 import retrofit2.Call;
@@ -16,7 +18,7 @@ import retrofit2.Response;
 public class SocialAuthorizationQueryService {
 
     public interface OnSocialAuthorizationListener {
-        void onServerNotify();
+        void onServerNotify(UserResponseModel userResponseModel);
         void onNotifyError(int code, String message);
     }
 
@@ -59,13 +61,14 @@ public class SocialAuthorizationQueryService {
         notify.enqueue(new Callback<AuthorizationResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationResponseModel> call, Response<AuthorizationResponseModel> response) {
+
                 if (response.body().isError()) {
                     ErrorResponseModel error = response.body().getError();
                     listener.onNotifyError(error.getCode(), error.getMessage());
                     return;
                 }
 
-                listener.onServerNotify();
+                listener.onServerNotify(response.body().getUser());
             }
 
             @Override

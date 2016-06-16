@@ -30,8 +30,12 @@ public abstract class BaseResponseModel {
         return mError;
     }
 
+    public boolean isField(Object object) {
+        return object != null;
+    }
+
     public String getResponseInfo() {
-        return String.format(Locale.getDefault(), "Response status: %1$b with error: %1$s",
+        return String.format(Locale.getDefault(), "Response status: %1$b with error: %2$s",
                 mIsSuccess,
                 mError == null ? "null" : mError.toString());
     }
