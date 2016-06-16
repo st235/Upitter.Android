@@ -15,9 +15,15 @@
     <string name="continue_label_login_activity">Continue</string>
     <string name="google_plus_label_login_activity">Google+</string>
     <string name="enter_phone_number_label_login_activity">Enter your phone number:</string>
+    <string name="sign_in_with_login_activity">Sign in with:</string>
     <string name="authorized_successfully_login_activity">Authorized successfully</string>
     <string name="error_authorization_login_activity">Authorization error</string>
     <string name="cancel_authorization_login_activity">Authorization canceled</string>
+    <string name="divider_text_login_activity">or</string>
+    <string name="skip_registration_label_login_activity">Skip</string>
+    <string name="twitter_label_login_activity">Twitter</string>
+    <string name="facebook_label_login_activity">Facebook</string>
+    <string name="google_label_login_activity">Google</string>
     <!-- Endregion -->
 
     <!-- Country choose region -->
@@ -26,10 +32,8 @@
 
     <!-- Tape activity region -->
     <string name="title_activity_tape">TapeActivity</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
     <!-- Endregion -->
 </resources>

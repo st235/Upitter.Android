@@ -100,7 +100,7 @@ public class LoginActivity extends BaseActivity
     }
 
     private void initColors() {
-        COLOR_INDIGO = ContextCompat.getColor(this, R.color.colorPrimary);
+        COLOR_INDIGO = ContextCompat.getColor(this, R.color.colorStartBackground);
         COLOR_BABY_BLUE = ContextCompat.getColor(this, R.color.colorEndBackground);
         Color.colorToHSV(COLOR_INDIGO, fromColor);
         Color.colorToHSV(COLOR_BABY_BLUE, toColor);

@@ -9,6 +9,7 @@ import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.utils.Assets;
 import com.github.sasd97.upitter.utils.Authorization;
 import com.github.sasd97.upitter.utils.Connectivity;
+import com.github.sasd97.upitter.utils.Keyboard;
 import com.github.sasd97.upitter.utils.Palette;
 import com.github.sasd97.upitter.utils.Prefs;
 import com.orm.SugarContext;
@@ -60,6 +61,7 @@ public class Upitter extends Application {
         Authorization.init(this);
         SugarContext.init(this);
         Connectivity.init(this);
+        Keyboard.init(this);
         Palette.init(this);
         Prefs.init(this);
         RestService.init();
