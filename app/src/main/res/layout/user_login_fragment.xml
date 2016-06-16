@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorShadow"
         android:layout_marginTop="@dimen/activity_medium_margin"
-        android:text="@string/enter_phone_number_label_login_activity"
+        android:text="@string/sign_in_with_login_activity"
         android:gravity="center"
         tools:text="Alexander"
         />
