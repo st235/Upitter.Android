@@ -14,6 +14,10 @@
     <!-- Login activity region. -->
     <color name="colorStartBackground">#2E6FB0</color>
     <color name="colorEndBackground">#F0F4F8</color>
+    <color name="colorTwitter">#51ABEF</color>
+    <color name="colorFacebook">#3A559D</color>
+    <color name="colorGoogle">#DC4A38</color>
+    <color name="colorDivider">#5D95CE</color>
     <!-- Endregion -->
 
     <!-- Country code chooser region. -->
