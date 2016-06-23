@@ -8,7 +8,42 @@
     android:background="@android:color/white"
     tools:context="com.github.sasd97.upitter.ui.CodeConfirmActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp">
 
-    <include layout="@layout/content_code_confirm" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_logo_big"
+            android:layout_marginTop="@dimen/activity_extra_margin"
+            />
 
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/country_body_company_login_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:digits="+0123456789"
+            android:maxLength="14"
+            android:inputType="numberDecimal"
+            android:enabled="false"
+            android:hint="@string/request_code_edittext_code_confirm"
+            />
+
+        <Button
+            android:id="@+id/continue_registration_button_company_login_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_long_margin"
+            android:layout_marginLeft="@dimen/activity_short_margin"
+            android:layout_marginRight="@dimen/activity_short_margin"
+            android:text="@string/continue_label_login_activity"
+            style="@style/Upitter.Button.Rounded.Watermelon"
+            />
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

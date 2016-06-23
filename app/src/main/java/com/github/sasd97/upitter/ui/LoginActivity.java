@@ -45,8 +45,6 @@ public class LoginActivity extends BaseActivity
         }
         initColors();
 
-        startActivity(new Intent(this, CodeConfirmActivity.class));
-
         loginPagerAdapter = new LoginPagerAdapter(this, getSupportFragmentManager());
 
         viewPager.setAdapter(loginPagerAdapter);

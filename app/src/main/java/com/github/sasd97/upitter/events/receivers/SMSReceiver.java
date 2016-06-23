@@ -29,8 +29,6 @@ public class SmsReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         SmsMessage[] messages = null;
 
-        Log.d("SMS_RECEIVER", "SMS_RECIVED");
-
         if (bundle != null) {
             Object[] pdus = (Object[]) bundle.get(PDUS_FORMAT);
             messages = new SmsMessage[pdus.length];

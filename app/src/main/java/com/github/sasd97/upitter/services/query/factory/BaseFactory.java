@@ -34,5 +34,8 @@ public interface BaseFactory {
     Call<ReportResponseModel> sendCrashReport(@Path("id") String id, @Field("log") JSONObject trace);
 
     @POST("/authorization/phone/set/{number}/{countryCode}")
+    Call<SimpleResponseModel> obtainRequestCode(@Path("number") String number, @Path("countryCode") String countryCode);
+
+    @POST("/authorization/phone/set/{number}/{countryCode}")
     Call<SimpleResponseModel> sendRequestCode(@Path("number") String number, @Path("countryCode") String countryCode);
 }

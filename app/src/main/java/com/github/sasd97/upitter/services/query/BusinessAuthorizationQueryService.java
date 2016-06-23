@@ -32,7 +32,7 @@ public class BusinessAuthorizationQueryService {
 
     public void sendCodeRequest(@NonNull String number,
                                 @NonNull String countryCode) {
-        Call<SimpleResponseModel> sendRequest = RestService.baseFactory().sendRequestCode(number, countryCode);
+        Call<SimpleResponseModel> sendRequest = RestService.baseFactory().obtainRequestCode(number, countryCode);
         sendRequest.enqueue(new Callback<SimpleResponseModel>() {
 
             @Override

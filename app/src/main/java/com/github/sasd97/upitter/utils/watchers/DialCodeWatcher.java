@@ -11,7 +11,7 @@ import com.github.sasd97.upitter.utils.ListUtils;
 /**
  * Created by alexander on 21.06.16.
  */
-public class DialCodeWatcher implements TextWatcher {
+public final class DialCodeWatcher implements TextWatcher {
 
     public interface OnCountryReadyListener {
         void onCountryReady(CountryModel country);

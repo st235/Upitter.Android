@@ -37,10 +37,16 @@
     <!-- Endregion -->
 
     <!-- Tape activity region -->
-    <string name="title_activity_tape">TapeActivity</string>
+    <string name="title_activity_tape">Tape</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_code_confirm">CodeConfirmActivity</string>
     <!-- Endregion -->
+
+    <!-- Code confirm activity region -->
+    <string name="title_activity_code_confirm">Confirm code</string>
+    <string name="request_code_edittext_code_confirm">Request code</string>
+    <string name="description_label_code_confirm"></string>
+    <!-- Endregion -->
+
 </resources>

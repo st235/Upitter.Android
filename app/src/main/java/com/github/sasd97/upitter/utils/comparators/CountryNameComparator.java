@@ -7,7 +7,7 @@ import java.util.Comparator;
 /**
  * Created by Alexander Dadukin on 11.06.2016.
  */
-public class CountryNameComparator implements Comparator<CountryModel> {
+public final class CountryNameComparator implements Comparator<CountryModel> {
 
     @Override
     public int compare(CountryModel lhs, CountryModel rhs) {

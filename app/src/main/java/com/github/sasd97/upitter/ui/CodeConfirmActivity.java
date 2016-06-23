@@ -3,6 +3,7 @@ package com.github.sasd97.upitter.ui;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.Telephony;
+import android.support.annotation.NonNull;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CODE_RECEIVER_INTENT_NAME;
 
 public class CodeConfirmActivity extends BaseActivity implements RequestCodeReceiver.OnRequestCodeReceiveListener {
+
+    private final String UPITTER_SMS_HEADER = "UPITTER";
 
     private RequestCodeReceiver requestCodeReceiver;
 
@@ -56,9 +59,14 @@ public class CodeConfirmActivity extends BaseActivity implements RequestCodeRece
 
     @Override
     public void onReceiveRequestCode(ArrayList<SmsModel> messages) {
-        Log.d("ACTIVITY_RECIEVE", "SMS_RECIVED");
         for (SmsModel sms: messages) {
-            Log.d("ACTIVITY_RECIEVE", sms.toString());
+            if (sms.getAuthor().equalsIgnoreCase(UPITTER_SMS_HEADER)) {
+                setRequestCode(sms.getBody().replaceAll("[^\\d]", ""));
+            }
         }
+    }
+
+    private void setRequestCode(@NonNull String requestCode) {
+
     }
 }
