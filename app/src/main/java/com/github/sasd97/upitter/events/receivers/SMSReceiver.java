@@ -7,48 +7,55 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
+import android.util.Log;
+
+import com.github.sasd97.upitter.models.SmsModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.github.sasd97.upitter.constants.RequestCodesConstants.CODE_RECEIVER_INTENT_NAME;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.RECEIVED_SMS_CODES;
 
 /**
  * Created by alexander on 23.06.16.
  */
 public class SmsReceiver extends BroadcastReceiver {
 
+    private final String PDUS_FORMAT = "pdus";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         SmsMessage[] messages = null;
 
-        String str = "";
+        Log.d("SMS_RECEIVER", "SMS_RECIVED");
+
         if (bundle != null) {
-            Object[] pdus = (Object[]) bundle.get("pdus");
+            Object[] pdus = (Object[]) bundle.get(PDUS_FORMAT);
             messages = new SmsMessage[pdus.length];
 
-            if (Build.VERSION.SDK_INT >= 19) {
-                messages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
-            } else {
-                for (int i=0; i < messages.length; i++) {
-                    byte[] data = null;
+            if (Build.VERSION.SDK_INT >= 19) messages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
+            else for (int i = 0; i < messages.length; i++) messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
+        }
 
-                     messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
 
-                    // Return the User Data section minus the
-                    // User Data Header (UDH) (if there is any UDH at all)
-                    data = messages[i].getUserData();
+        ArrayList<SmsModel> messageList = new ArrayList<>();
 
-                    // Generally you can do away with this for loop
-                    // You'll just need the next for loop
-                    for (int index=0; index < data.length; index++) {
-                        str += Byte.toString(data[index]);
-                    }
+        for (SmsMessage sms: messages) {
+            messageList.add(new SmsModel.Builder()
+                                .author(sms.getDisplayOriginatingAddress())
+                                .body(sms.getMessageBody())
+                                .build());
+            Log.d("SMS_RECEIVER_BODY", sms.getDisplayMessageBody());
+            Log.d("SMS_RECEIVER_ADDRESS", sms.getDisplayOriginatingAddress());
+            Log.d("SMS_RECEIVER_BODY", sms.getMessageBody());
+            Log.d("SMS_RECEIVER_TIMESTAMP", sms.getTimestampMillis()+ "");
+            Log.d("SMS_RECEIVER_STATUS", sms.getStatus() + "");
+        }
 
-                    str += "\nTEXT MESSAGE (FROM BINARY): ";
-
-                    for (int index=0; index < data.length; index++) {
-                        str += Character.toString((char) data[index]);
-                    }
-
-                    str += "\n";
-                }
-            }
+        Intent sendIntent = new Intent(CODE_RECEIVER_INTENT_NAME);
+        sendIntent.putParcelableArrayListExtra(RECEIVED_SMS_CODES, messageList);
+        context.sendBroadcast(sendIntent);
     }
 }

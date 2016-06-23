@@ -98,7 +98,6 @@ public class LocationService implements LocationListener {
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             currentAddress = addresses.get(0);
             listener.onAddressReady(currentAddress);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

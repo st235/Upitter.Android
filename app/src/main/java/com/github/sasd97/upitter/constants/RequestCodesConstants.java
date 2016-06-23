@@ -10,4 +10,6 @@ public class RequestCodesConstants {
     public static final int TWITTER_SIGN_IN_REQUEST = 140;
 
     public static final int COUNTRY_CHOOSE_LIST_REQUEST = 9;
+
+    public static final String CODE_RECEIVER_INTENT_NAME = "com.github.sasd97.recievers.HANDLE_SMS_CODE";
 }
