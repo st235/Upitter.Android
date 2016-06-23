@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:name=".Upitter"
@@ -14,7 +16,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="DATABASE"
-            android:value="loclook_base.db" />
+            android:value="upitter_base.db" />
         <meta-data
             android:name="VERSION"
             android:value="1" />
@@ -46,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.CountryCodeChooseActivity"
+            android:name=".ui.result.CountryCodeChooseActivity"
             android:parentActivityName=".ui.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -56,7 +58,11 @@
         <activity
             android:name=".ui.TapeActivity"
             android:label="@string/title_activity_tape"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.CodeConfirmActivity"
+            android:label="@string/title_activity_code_confirm"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

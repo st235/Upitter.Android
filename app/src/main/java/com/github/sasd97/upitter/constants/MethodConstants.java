@@ -10,4 +10,7 @@ public class MethodConstants {
 
     public static final String BASE_SUB_API_URL = "http://192.168.1.11:9000/";
     public static final String FILE_SUB_SERVER_API_URL = "http://192.168.1.11:3000/";
+
+    public static final String BASE_SUB_ASTRAL_API_URL = "http://192.168.1.230:9000/";
+    public static final String FILE_SUB_ASTRAL_SERVER_API_URL = "http://192.168.1.230:3000/";
 }

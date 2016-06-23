@@ -6,6 +6,7 @@
     <dimen name="activity_medium_margin">4dp</dimen>
     <dimen name="activity_long_margin">16dp</dimen>
     <dimen name="activity_extra_margin">32dp</dimen>
+    <dimen name="activity_medium_text">18sp</dimen>
     <!-- Endregion -->
 
     <!-- Rounded button region. -->

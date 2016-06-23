@@ -6,7 +6,7 @@ import com.r0adkll.slidr.model.SlidrPosition;
 /**
  * Created by Alex on 10.06.2016.
  */
-public class SlidrUtils {
+public final class SlidrUtils {
 
     private SlidrUtils() {}
 

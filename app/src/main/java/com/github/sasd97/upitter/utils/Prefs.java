@@ -8,7 +8,7 @@ import android.util.Log;
  * Created by Alexander Dadukin on 21.04.2016.
  */
 
-public class Prefs {
+public final class Prefs {
 
     private static String TAG = "SHARED_PREFS";
     private static String APP_PREFERENCES = "LOCLOOK_PREFS";

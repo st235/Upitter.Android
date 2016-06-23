@@ -17,7 +17,7 @@ import java.util.Collections;
 /**
  * Created by Alex on 09.06.2016.
  */
-public class Countries extends AsyncTask<Void, Void, ArrayList<CountryModel>> {
+public final class Countries extends AsyncTask<Void, Void, ArrayList<CountryModel>> {
 
     public interface OnLoadListener {
             void onLoad(ArrayList<CountryModel> list);

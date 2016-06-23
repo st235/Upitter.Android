@@ -6,7 +6,7 @@ import android.support.v4.content.ContextCompat;
 /**
  * Created by Alex on 09.06.2016.
  */
-public class Palette {
+public final class Palette {
 
     private static Context context;
 

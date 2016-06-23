@@ -12,7 +12,11 @@ import java.util.List;
  * Created by Alex on 20.05.2016.
  */
 
-public class ListUtils {
+public final class ListUtils {
+
+    public interface OnSelectListener<T>{
+        boolean isSelectable(T other);
+    }
 
     private ListUtils() {}
 
@@ -35,5 +39,12 @@ public class ListUtils {
             result[i] = (T) jsonArray.get(i);
 
         return result;
+    }
+
+    public static <T> T select(@NonNull List<T> list, @NonNull OnSelectListener<T> listener) {
+        for (T item: list)
+            if (listener.isSelectable(item))
+                return item;
+        return null;
     }
 }

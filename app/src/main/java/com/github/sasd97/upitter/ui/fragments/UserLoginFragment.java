@@ -70,6 +70,7 @@ public class UserLoginFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final String[] facebookScope = getResources().getStringArray(R.array.facebook_app_scope);
         googleClient = Authorization.google(getContext(), getActivity(), this);
         LoginManager.getInstance().registerCallback(Authorization.facebook(), this);
 
@@ -94,7 +95,7 @@ public class UserLoginFragment extends BaseFragment
         signFacebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(UserLoginFragment.this, Arrays.asList("public_profile", "email"));
+                LoginManager.getInstance().logInWithReadPermissions(UserLoginFragment.this, Arrays.asList(facebookScope));
             }
         });
 

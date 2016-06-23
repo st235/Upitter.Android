@@ -7,7 +7,7 @@ import android.view.inputmethod.InputMethodManager;
 /**
  * Created by Alexander Dadukin on 08.05.2016.
  */
-public class Keyboard {
+public final class Keyboard {
 
     private static InputMethodManager inputManager = null;
 

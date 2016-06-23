@@ -8,7 +8,7 @@ import android.net.NetworkInfo;
  * Created by Alex on 12.01.2016.
  */
 
-public class Connectivity {
+public final class Connectivity {
 
     private static String IN_ROAMING = "ALLOW_IN_ROAMING";
 

@@ -27,7 +27,7 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.FACEBOOK
  * Created by Alex on 10.06.2016.
  */
 
-public class Authorization {
+public final class Authorization {
 
     private static GoogleSignInOptions googleSignInOptions;
     private static TwitterAuthClient twitterClient;

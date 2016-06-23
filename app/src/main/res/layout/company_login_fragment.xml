@@ -18,6 +18,18 @@
         android:gravity="center"
         />
 
+    <TextView
+        android:id="@+id/country_display_company_login_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:textSize="@dimen/activity_medium_text"
+        android:textColor="@color/colorStartBackground"
+        android:clickable="false"
+        android:text="@string/detecting_your_position_login_activity"
+        tools:text="Russian Federation"
+        />
+
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,32 +37,34 @@
         app:columnCount="2"
         app:rowCount="1">
 
-        <android.support.design.widget.TextInputLayout
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/country_dial_code_company_login_fragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_columnWeight="3">
+            android:gravity="center"
+            android:digits="+0123456789"
+            android:maxLength="8"
+            android:inputType="numberDecimal"
+            android:enabled="false"
+            android:hint="@string/dial_code_hint_login_activity"
+            app:met_floatingLabel="highlight"
+            app:layout_columnWeight="3"
+            />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="Hint"
-                />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/country_body_company_login_fragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:digits="+0123456789"
+            android:maxLength="14"
+            android:inputType="numberDecimal"
+            android:enabled="false"
+            android:hint="@string/dial_body_hint_login_activity"
+            app:met_floatingLabel="highlight"
             app:layout_columnWeight="7"
-            app:hintTextAppearance="@style/Upitter.EditText.BabyBlue.TextAppearance">
+            />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="Hint"
-                />
-        </android.support.design.widget.TextInputLayout>
     </android.support.v7.widget.GridLayout>
 
     <Button

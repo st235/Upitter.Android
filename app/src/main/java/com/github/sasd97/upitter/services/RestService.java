@@ -13,13 +13,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.github.sasd97.upitter.constants.MethodConstants.BASE_SUB_API_URL;
+import static com.github.sasd97.upitter.constants.MethodConstants.BASE_SUB_ASTRAL_API_URL;
 import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SERVER_API_URL;
+import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SUB_ASTRAL_SERVER_API_URL;
 
 /**
  * Created by Alexander Dadukin on 06.06.2016.
  */
 
-public class RestService {
+public final class RestService {
 
     private static final String IMAGE_MEDIATYPE = "image/*";
     private static final String FILE_MULTIPART_SCHEMA = "files\"; filename=\"%1$s";
@@ -31,7 +33,7 @@ public class RestService {
 
     public static void init() {
         Retrofit baseAPI = new Retrofit.Builder()
-                .baseUrl(BASE_SUB_API_URL)
+                .baseUrl(BASE_SUB_ASTRAL_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

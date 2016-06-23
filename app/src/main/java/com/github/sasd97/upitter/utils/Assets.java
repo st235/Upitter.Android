@@ -10,7 +10,7 @@ import java.io.InputStream;
 /**
  * Created by Alex on 09.06.2016.
  */
-public class Assets {
+public final class Assets {
 
     private static AssetManager manager;
 
