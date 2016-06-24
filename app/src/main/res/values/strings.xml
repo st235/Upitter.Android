@@ -44,9 +44,10 @@
     <!-- Endregion -->
 
     <!-- Code confirm activity region -->
-    <string name="title_activity_code_confirm">Confirm code</string>
-    <string name="request_code_edittext_code_confirm">Request code</string>
-    <string name="description_label_code_confirm"></string>
+    <string name="title_activity_code_confirm_activity">Confirm code</string>
+    <string name="request_code_edittext_code_confirm_activity">Request code</string>
+    <string name="description_label_code_confirm_activity">Put your request code here... edit...</string>
+    <string name="login_label_code_confirm_activity">Login</string>
     <!-- Endregion -->
 
 </resources>

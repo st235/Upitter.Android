@@ -23,26 +23,33 @@
             android:layout_marginTop="@dimen/activity_extra_margin"
             />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/description_label_code_confirm_activity"
+            />
+
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/country_body_company_login_fragment"
+            android:id="@+id/request_code_label_code_confirm_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:digits="+0123456789"
             android:maxLength="14"
             android:inputType="numberDecimal"
-            android:enabled="false"
-            android:hint="@string/request_code_edittext_code_confirm"
+            android:hint="@string/request_code_edittext_code_confirm_activity"
             />
 
         <Button
-            android:id="@+id/continue_registration_button_company_login_fragment"
+            android:id="@+id/login_label_code_confirm_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_long_margin"
             android:layout_marginLeft="@dimen/activity_short_margin"
             android:layout_marginRight="@dimen/activity_short_margin"
-            android:text="@string/continue_label_login_activity"
+            android:layout_marginBottom="16dp"
+            android:text="@string/login_label_code_confirm_activity"
             style="@style/Upitter.Button.Rounded.Watermelon"
             />
     </LinearLayout>

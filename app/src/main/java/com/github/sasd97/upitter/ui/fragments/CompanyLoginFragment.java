@@ -7,7 +7,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.RequestCodesConstants;
 import com.github.sasd97.upitter.models.CountryModel;
+import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.BusinessAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.CodeConfirmActivity;
@@ -29,6 +29,8 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.RECEIVED_PHONE;
 
 public class CompanyLoginFragment extends BaseFragment
         implements View.OnClickListener,
@@ -46,6 +48,8 @@ public class CompanyLoginFragment extends BaseFragment
     private Button continueRegistrationButton;
     private MaterialEditText countryDialCodeEditText;
     private MaterialEditText countryBodyCodeEditText;
+
+    private PhoneModel currentPhone;
 
     public static CompanyLoginFragment getFragment() {
         return new CompanyLoginFragment();
@@ -83,8 +87,13 @@ public class CompanyLoginFragment extends BaseFragment
 
     @Override
     public void onClick(View view) {
-        queryService.sendCodeRequest(countryBodyCodeEditText.getText().toString(),
-                countryDialCodeEditText.getText().toString().replaceAll("[^\\d]", ""));
+        currentPhone = new PhoneModel.Builder()
+                .dialCode(countryDialCodeEditText.getText().toString().replaceAll("[^\\d]", ""))
+                .phoneBody(countryBodyCodeEditText.getText().toString())
+                .build();
+
+        queryService.obtainCodeRequest(currentPhone.getPhoneBody(),
+                currentPhone.getDialCode());
     }
 
     @Override
@@ -141,7 +150,19 @@ public class CompanyLoginFragment extends BaseFragment
 
     @Override
     public void onCodeObtained() {
-        startActivity(new Intent(getActivity(), CodeConfirmActivity.class));
+        Intent intent = new Intent(getActivity(), CodeConfirmActivity.class);
+        intent.putExtra(RECEIVED_PHONE, currentPhone);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onAuthorize() {
+
+    }
+
+    @Override
+    public void onRegister(String temporaryToken) {
+
     }
 
     @Override

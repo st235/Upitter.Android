@@ -1,16 +1,20 @@
 package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.Toast;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.utils.Permissions;
 
 import static com.github.sasd97.upitter.holders.UserHolder.isUserCreate;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
@@ -50,6 +54,8 @@ public class LoginActivity extends BaseActivity
         viewPager.setAdapter(loginPagerAdapter);
         viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
+
+        Permissions.getPermissionToReceiveSMS(this);
     }
 
     @Override
@@ -124,5 +130,20 @@ public class LoginActivity extends BaseActivity
             loginPagerAdapter
                 .getUserLoginFragment()
                 .onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == Permissions.REQUEST_RECEIVE_SMS){
+            if (grantResults.length == 1 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "RECEIVE_SMS permission granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "RECEIVE_SMS permission denied", Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.services.query.factory;
 
+import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequestCodeResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.report.ReportResponseModel;
@@ -36,6 +37,7 @@ public interface BaseFactory {
     @POST("/authorization/phone/set/{number}/{countryCode}")
     Call<SimpleResponseModel> obtainRequestCode(@Path("number") String number, @Path("countryCode") String countryCode);
 
-    @POST("/authorization/phone/set/{number}/{countryCode}")
-    Call<SimpleResponseModel> sendRequestCode(@Path("number") String number, @Path("countryCode") String countryCode);
+    @FormUrlEncoded
+    @POST("/authorization/phone/verify/{number}/{countryCode}")
+    Call<AuthorizationRequestCodeResponseModel> sendRequestCode(@Path("number") String number, @Path("countryCode") String countryCode, @Field("code") String requestCode);
 }

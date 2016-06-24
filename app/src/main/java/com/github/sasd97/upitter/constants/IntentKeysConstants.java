@@ -7,4 +7,6 @@ public class IntentKeysConstants {
 
     public static final String RECEIVED_SMS_CODE = "RECEIVED_SMS_CODE";
     public static final String RECEIVED_SMS_CODES = "RECEIVED_SMS_CODES";
+
+    public static final String RECEIVED_PHONE = "RECEIVED_PHONE";
 }

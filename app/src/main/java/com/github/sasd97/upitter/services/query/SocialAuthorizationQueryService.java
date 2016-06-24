@@ -61,7 +61,6 @@ public class SocialAuthorizationQueryService {
         notify.enqueue(new Callback<AuthorizationResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationResponseModel> call, Response<AuthorizationResponseModel> response) {
-
                 if (response.body().isError()) {
                     ErrorResponseModel error = response.body().getError();
                     listener.onNotifyError(error.getCode(), error.getMessage());

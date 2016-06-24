@@ -10,20 +10,16 @@ import java.util.Locale;
 /**
  * Created by Alex on 10.06.2016.
  */
-public class AuthorizationResponseModel extends BaseResponseModel {
-
-    @SerializedName("response")
-    @Expose
-    private UserResponseModel mUserResponseModel;
+public class AuthorizationResponseModel extends BaseResponseModel<UserResponseModel> {
 
     public UserResponseModel getUser() {
-        return mUserResponseModel;
+        return mResponse;
     }
 
     @Override
     public String toString() {
         return String.format(Locale.getDefault(), "Response info: %1$s\nUser: %2$s",
                 getResponseInfo(),
-                mUserResponseModel == null ? "null" : mUserResponseModel.toString());
+                mResponse == null ? "null" : mResponse.toString());
     }
 }

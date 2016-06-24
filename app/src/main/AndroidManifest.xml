@@ -66,7 +66,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.CodeConfirmActivity"
-            android:label="@string/title_activity_code_confirm"
+            android:label="@string/title_activity_code_confirm_activity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
