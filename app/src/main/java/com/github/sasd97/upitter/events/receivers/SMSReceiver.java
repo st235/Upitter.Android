@@ -19,6 +19,7 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.RECEIVED_S
 /**
  * Created by alexander on 23.06.16.
  */
+
 public class SmsReceiver extends BroadcastReceiver {
 
     private final String PDUS_FORMAT = "pdus";

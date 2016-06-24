@@ -9,8 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ui.BusinessRegistrationActivity"
-    tools:showIn="@layout/business_registration_activity">
+    tools:context=".ui.BusinessRegistrationActivity">
 
 
     <LinearLayout
@@ -21,9 +20,32 @@
         <LinearLayout
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@drawable/rounded_image_placeholder_shape_grey_blue">
+            android:background="@drawable/rounded_image_placeholder_shape_grey_blue"
+            android:orientation="vertical">
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="14"
+                android:hint="Name"
+                app:met_maxCharacters="20"
+                />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                app:met_maxCharacters="200"
+                />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
