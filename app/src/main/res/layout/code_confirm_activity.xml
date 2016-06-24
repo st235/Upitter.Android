@@ -50,6 +50,7 @@
             android:layout_marginRight="@dimen/activity_short_margin"
             android:layout_marginBottom="16dp"
             android:text="@string/login_label_code_confirm_activity"
+            android:onClick="onLoginClick"
             style="@style/Upitter.Button.Rounded.Watermelon"
             />
     </LinearLayout>
