@@ -14,6 +14,8 @@
     <string name="title_gallery_activity">Upitter Gallery</string>
     <string name="progress_label_gallery_activity">Still progress&#8230;\nPlease, be patient</string>
     <string name="spinner_all_photos_gallery_activity">All</string>
+    <string name="title_gallery_album_preview_activity">Album preview</string>
+    <string name="image_of_gallery_album_preview_activity">of</string>
     <!-- Endregion -->
 
     <!-- Login activity region -->

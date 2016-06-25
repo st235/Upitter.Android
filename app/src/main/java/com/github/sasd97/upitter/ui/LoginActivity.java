@@ -19,7 +19,7 @@ import com.github.sasd97.upitter.utils.Permissions;
 
 import static com.github.sasd97.upitter.holders.UserHolder.isUserCreate;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
-import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
+
 public class LoginActivity extends BaseActivity
         implements ViewPager.OnPageChangeListener {
 
@@ -42,12 +42,20 @@ public class LoginActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+
         if (isUserCreate()) {
             Intent intent = new Intent(this, TapeActivity.class);
             startActivity(intent);
             finish();
             return;
         }
+
+        Intent hahaha = new Intent(this, GalleryActivity.class);
+//        intent.putExtra(GALLERY_MULTI_SELECTION_MODE, true);
+//        intent.putExtra(GALLERY_MULTI_SELECT_ITEMS_AMOUNT, 5);
+        startActivity(hahaha);
+        finish();
+
         initColors();
 
         loginPagerAdapter = new LoginPagerAdapter(this, getSupportFragmentManager());
@@ -57,10 +65,6 @@ public class LoginActivity extends BaseActivity
         tabLayout.setupWithViewPager(viewPager);
 
         Permissions.getPermissionToReceiveSMS(this);
-        Intent intent = new Intent(this, GalleryActivity.class);
-//        intent.putExtra(GALLERY_MULTI_SELECTION_MODE, true);
-//        intent.putExtra(GALLERY_MULTI_SELECT_ITEMS_AMOUNT, 5);
-        startActivity(intent);
     }
 
     @Override

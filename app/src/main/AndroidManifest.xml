@@ -84,5 +84,10 @@
             android:name=".ui.results.GalleryActivity"
             android:label="@string/title_gallery_activity"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".ui.schemas.GalleryAlbumPreviewActivity"
+            android:label="@string/title_gallery_album_preview_activity"
+            android:theme="@style/AppTheme" />
     </application>
 </manifest>
