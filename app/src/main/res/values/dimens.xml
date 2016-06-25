@@ -9,10 +9,16 @@
     <dimen name="activity_medium_text">18sp</dimen>
     <!-- Endregion -->
 
+    <!-- Autofit recycler view region -->
+    <dimen name="image_chooser_spacing">4dp</dimen>
+    <!-- Endregion -->
+
     <!-- Rounded button region. -->
     <dimen name="rounded_button_corner_radius">60dp</dimen>
     <dimen name="rounded_button_height">52dp</dimen>
     <dimen name="rounded_button_text_size">17sp</dimen>
+    <!-- Endregion -->
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>

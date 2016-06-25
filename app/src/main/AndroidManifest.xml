@@ -45,6 +45,7 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
             android:name=".ui.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -54,25 +55,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".ui.result.CountryCodeChooseActivity"
+            android:name=".ui.results.CountryCodeChooseActivity"
             android:parentActivityName=".ui.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.LoginActivity" />
         </activity>
+
         <activity
             android:name=".ui.TapeActivity"
             android:label="@string/title_activity_tape"
             android:theme="@style/AppTheme" />
+
         <activity
             android:name=".ui.CodeConfirmActivity"
             android:label="@string/title_activity_code_confirm_activity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ui.BusinessRegistrationActivity"
             android:label="@string/title_activity_bussines_registration"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.results.GalleryActivity"
+            android:label="@string/title_gallery_activity"
+            android:theme="@style/AppTheme" />
     </application>
 </manifest>

@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.ui.result;
+package com.github.sasd97.upitter.ui.results;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +12,6 @@ import com.github.sasd97.upitter.models.CountryModel;
 import com.github.sasd97.upitter.ui.adapters.CountryCodeChooseRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Countries;
-import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;

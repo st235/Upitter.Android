@@ -14,11 +14,11 @@ import java.util.Locale;
 public class CountryModel implements HeaderSkeleton {
 
     public enum RegionType {
-        AFRICA(R.color.africa_region),
-        OCEANIA(R.color.oceania_region),
-        ASIA(R.color.asia_region),
-        EUROPE(R.color.europe_region),
-        AMERICAS(R.color.americas_region);
+        AFRICA(R.color.colorAfricaRegion),
+        OCEANIA(R.color.colorOceaniaRegion),
+        ASIA(R.color.colorAsiaRegion),
+        EUROPE(R.color.colorEuropeRegion),
+        AMERICAS(R.color.colorAmericasRegion);
 
         private int colorResId;
 

@@ -10,6 +10,12 @@
         We prepared some information to you, that you could share it with us.</string>
     <!-- Endregion -->
 
+    <!-- Region gallery -->
+    <string name="title_gallery_activity">Upitter Gallery</string>
+    <string name="progress_label_gallery_activity">Still progress&#8230;\nPlease, be patient</string>
+    <string name="spinner_all_photos_gallery_activity">All</string>
+    <!-- Endregion -->
+
     <!-- Login activity region -->
     <string name="user_registration_tab_login_activity">User</string>
     <string name="company_registration_tab_login_activity">Company</string>

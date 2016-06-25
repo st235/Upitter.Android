@@ -14,11 +14,12 @@ import android.widget.Toast;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.ui.results.GalleryActivity;
 import com.github.sasd97.upitter.utils.Permissions;
 
 import static com.github.sasd97.upitter.holders.UserHolder.isUserCreate;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
-
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 public class LoginActivity extends BaseActivity
         implements ViewPager.OnPageChangeListener {
 
@@ -56,6 +57,10 @@ public class LoginActivity extends BaseActivity
         tabLayout.setupWithViewPager(viewPager);
 
         Permissions.getPermissionToReceiveSMS(this);
+        Intent intent = new Intent(this, GalleryActivity.class);
+//        intent.putExtra(GALLERY_MULTI_SELECTION_MODE, true);
+//        intent.putExtra(GALLERY_MULTI_SELECT_ITEMS_AMOUNT, 5);
+        startActivity(intent);
     }
 
     @Override

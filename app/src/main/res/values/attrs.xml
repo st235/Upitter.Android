@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <declare-styleable name="AutoFitRecyclerView">
+        <attr name="columnSpace" format="dimension" />
+        <attr name="columnWidth" format="dimension" />
+        <attr name="minColumnsAmount" format="integer" />
+        <attr name="maxColumnsAmount" format="integer" />
+        <attr name="minColumnsWidth" format="dimension" />
+        <attr name="maxColumnsWidth" format="dimension" />
+    </declare-styleable>
+</resources>

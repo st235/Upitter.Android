@@ -20,7 +20,7 @@ import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.BusinessAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.CodeConfirmActivity;
-import com.github.sasd97.upitter.ui.result.CountryCodeChooseActivity;
+import com.github.sasd97.upitter.ui.results.CountryCodeChooseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.utils.Countries;
 import com.github.sasd97.upitter.utils.ListUtils;

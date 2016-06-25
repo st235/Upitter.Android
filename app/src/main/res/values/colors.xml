@@ -21,10 +21,14 @@
     <!-- Endregion -->
 
     <!-- Country code chooser region. -->
-    <color name="africa_region">#DA50CB</color>
-    <color name="oceania_region">#02D085</color>
-    <color name="asia_region">#F1BB00</color>
-    <color name="europe_region">#48B0D2</color>
-    <color name="americas_region">#EF574B</color>
+    <color name="colorAfricaRegion">#DA50CB</color>
+    <color name="colorOceaniaRegion">#02D085</color>
+    <color name="colorAsiaRegion">#F1BB00</color>
+    <color name="colorEuropeRegion">#48B0D2</color>
+    <color name="colorAmericasRegion">#EF574B</color>
+    <!-- Endregion -->
+
+    <!-- Gallery region. -->
+    <color name="colorGalleryBackground">#313131</color>
     <!-- Endregion -->
 </resources>

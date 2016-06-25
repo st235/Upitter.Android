@@ -41,6 +41,7 @@ dependencies {
     compile 'com.simplecityapps:recyclerview-fastscroll:1.0.9'
     compile 'com.facebook.android:facebook-android-sdk:4.12.1'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    compile 'me.zhanghai.android.materialprogressbar:library:1.1.6'
     compile 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
     compile('com.twitter.sdk.android:twitter-core:1.6.6@aar') { transitive = true; }
 }
