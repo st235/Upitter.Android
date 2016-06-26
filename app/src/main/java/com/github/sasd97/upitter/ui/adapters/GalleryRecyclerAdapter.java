@@ -1,14 +1,12 @@
 package com.github.sasd97.upitter.ui.adapters;
 
 import android.content.Context;
-import android.media.Image;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -33,102 +31,104 @@ public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecycler
                                         implements Filterable {
 
     private Context context;
-
     private boolean isMultiSelectionMode;
 
     private int selectItemCounter = 0;
     private int maxSelectItemsAmount = 3;
 
-    private ArrayList<ImageSkeleton> multiSelectedItems;
-
+    private ArrayList<ImageSkeleton> multiSelectedList;
     private ArrayList<ImageSkeleton> imagesPathsOriginals;
-    private static ArrayList<ImageSkeleton> imagesPathsFiltered;
+    private ArrayList<ImageSkeleton> imagesPathsFiltered;
 
-    private static OnGalleryInteractionListener onGalleryInteractionListener;
+    private OnGalleryInteractionListener galleryInteractionListener;
 
-    public GalleryRecyclerAdapter(Context context, ArrayList<ImageSkeleton> imagesPaths, boolean isMultiSelectionMode, int maxSelectItemsAmount) {
+    public GalleryRecyclerAdapter(boolean isMultiSelectionMode,
+                                  int maxSelectItemsAmount,
+                                  @NonNull Context context,
+                                  @NonNull ArrayList<ImageSkeleton> imagesPaths) {
         this.context = context;
 
         this.isMultiSelectionMode = isMultiSelectionMode;
         this.maxSelectItemsAmount = maxSelectItemsAmount;
 
         this.imagesPathsOriginals = imagesPaths;
-
-        if (isMultiSelectionMode) multiSelectedItems = new ArrayList<>(maxSelectItemsAmount);
         imagesPathsFiltered = (ArrayList<ImageSkeleton>) imagesPaths.clone();
-    }
 
-    public <T extends AppCompatActivity & OnGalleryInteractionListener> void setOnImageChooserListener(T context) {
-        onGalleryInteractionListener = context;
+        if (isMultiSelectionMode) multiSelectedList = new ArrayList<>(maxSelectItemsAmount);
     }
 
     public void setOnImageChooserListener(OnGalleryInteractionListener listener) {
-        onGalleryInteractionListener = listener;
+        galleryInteractionListener = listener;
     }
 
     public class ImageChooserViewHolder extends RecyclerView.ViewHolder
                                                 implements View.OnClickListener {
 
         private ImageView imagePreview;
-        private NumerableCheckView multiSelectCheckBox;
+        private NumerableCheckView multiSelectCounterCheckView;
 
         public ImageChooserViewHolder(View itemView) {
             super(itemView);
 
+            itemView.setOnClickListener(this);
+
             imagePreview = (ImageView) itemView.findViewById(R.id.image_preview_gallery_thumbnail_single_view);
-            multiSelectCheckBox = (NumerableCheckView) itemView.findViewById(R.id.multi_select_checkbox_gallery_thumbnail_single_view);
+            multiSelectCounterCheckView = (NumerableCheckView) itemView.findViewById(R.id.multi_select_checkbox_gallery_thumbnail_single_view);
 
             if (!isMultiSelectionMode) {
-                itemView.setOnClickListener(this);
-                multiSelectCheckBox.setVisibility(View.GONE);
+                multiSelectCounterCheckView.setVisibility(View.GONE);
                 return;
             }
 
-            multiSelectCheckBox.setClickable(true);
-            multiSelectCheckBox.setOnClickListener(this);
+            multiSelectCounterCheckView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if (isMultiSelectionMode) {
-                boolean checkState = !imagesPathsFiltered.get(getAdapterPosition()).isChecked();
-                if (checkState && (selectItemCounter >= maxSelectItemsAmount || selectItemCounter < 0)) return; //overflow
-                final int currentPosition = getAdapterPosition();
-                final ImageSkeleton currentItem = imagesPathsFiltered.get(currentPosition);
-
-                if (checkState) {
-                    changeState(currentItem, true, selectItemCounter + 1);
-                    currentItem.setPosition(currentPosition);
-                    multiSelectedItems.add(selectItemCounter, currentItem);
-                    selectItemCounter++;
-                }
-                else {
-                    selectItemCounter--;
-                    multiSelectedItems.remove(currentItem.getSelectPosition() - 1);
-                    changeState(currentItem, false, selectItemCounter);
-
-                    int counter = 1;
-                    for (ImageSkeleton items: multiSelectedItems) {
-                        items.setSelectPosition(counter);
-                        notifyItemChanged(items.getPosition());
-                        counter++;
-                    }
-                }
-
-                onGalleryInteractionListener.onMultiChoose(currentPosition, selectItemCounter, currentItem);
+            if (!(v instanceof NumerableCheckView)) {
+                if (galleryInteractionListener != null)
+                    galleryInteractionListener.onThumbnailClick(getAdapterPosition(), imagesPathsFiltered.get(getAdapterPosition()));
                 return;
             }
 
-            if (onGalleryInteractionListener != null) {
-                onGalleryInteractionListener.onSingleChoose(getAdapterPosition(), imagesPathsFiltered.get(getAdapterPosition()));
+            if (!isMultiSelectionMode) return;
+
+            final int currentPosition = getAdapterPosition();
+            final ImageSkeleton currentItem = imagesPathsFiltered.get(currentPosition);
+            final boolean checkState = !currentItem.isChecked();
+
+            if (checkState && (selectItemCounter >= maxSelectItemsAmount || selectItemCounter < 0)) {
+                galleryInteractionListener.onMultiSelectionLimitExceeded();
+                return;
             }
+
+            if (checkState) {
+                changeSelectionState(currentItem, true, selectItemCounter + 1);
+                currentItem.setListPosition(currentPosition);
+                multiSelectedList.add(selectItemCounter, currentItem);
+                selectItemCounter++;
+            } else {
+                selectItemCounter--;
+                multiSelectedList.remove(currentItem.getMultiSelectCounter() - 1);
+                changeSelectionState(currentItem, false, selectItemCounter);
+
+                int counter = 1;
+                for (ImageSkeleton item: multiSelectedList) {
+                    item.setMultiSelectCounter(counter);
+                    notifyItemChanged(item.getListPosition());
+                    counter++;
+                }
+            }
+
+            if (galleryInteractionListener != null)
+            galleryInteractionListener.onMultiSelectionCounterClick(getAdapterPosition(), multiSelectedList);
         }
 
-        private void changeState(ImageSkeleton item, boolean state, int position) {
-            item.setSelectPosition(position);
+        private void changeSelectionState(ImageSkeleton item, boolean state, int position) {
+            item.setMultiSelectCounter(position);
             item.setCheck(state);
-            multiSelectCheckBox.setPosition(position);
-            multiSelectCheckBox.setChecked(state);
+            multiSelectCounterCheckView.setPosition(position);
+            multiSelectCounterCheckView.setChecked(state);
         }
     }
 
@@ -149,8 +149,8 @@ public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecycler
                 .centerCrop()
                 .into(holder.imagePreview);
 
-        holder.multiSelectCheckBox.setPosition(imagesPathsFiltered.get(position).getSelectPosition());
-        holder.multiSelectCheckBox.setChecked(imagesPathsFiltered.get(position).isChecked());
+        holder.multiSelectCounterCheckView.setPosition(imagesPathsFiltered.get(position).getMultiSelectCounter());
+        holder.multiSelectCounterCheckView.setChecked(imagesPathsFiltered.get(position).isChecked());
     }
 
     @Override
@@ -168,18 +168,17 @@ public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecycler
         return new GalleryImageFilter(this, imagesPathsOriginals);
     }
 
-    public void filterData(ArrayList<ImageSkeleton> filteredData) {
+    public void filter(ArrayList<ImageSkeleton> filteredData) {
         imagesPathsFiltered.clear();
         imagesPathsFiltered = filteredData;
         notifyDataSetChanged();
     }
 
-    public ArrayList<String> getFiltered() {
+    public ArrayList<String> getFilterPathList() {
         return PhotoMutator.backMutate(imagesPathsFiltered);
     }
 
-    public ArrayList<ImageSkeleton> getFilteredPhotos() {
+    public ArrayList<ImageSkeleton> getFilterImageList() {
         return imagesPathsFiltered;
     }
-
 }

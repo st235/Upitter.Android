@@ -13,6 +13,7 @@ import com.github.sasd97.upitter.R;
 /**
  * Created by Alexadner Dadukin on 25.06.2016.
  */
+
 public class NumerableCheckView extends LinearLayout {
 
     private int position = 0;
@@ -38,7 +39,8 @@ public class NumerableCheckView extends LinearLayout {
     }
 
     private void init(Context context) {
-       rootView = LayoutInflater.from(context).inflate(R.layout.numerable_check_view_single_view, this);
+        setClickable(true);
+        rootView = LayoutInflater.from(context).inflate(R.layout.numerable_check_view_single_view, this);
 
         checkSignImageView = (ImageView) rootView.findViewById(R.id.check_sign_numerable_check_box_single_view);
         checkPositionTextView = (TextView) rootView.findViewById(R.id.check_position_numerable_check_box_single_view);

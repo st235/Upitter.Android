@@ -1,31 +1,17 @@
 package com.github.sasd97.upitter.ui.schemas;
 
 import android.content.Intent;
-import android.graphics.Matrix;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.utils.Names;
+import com.github.sasd97.upitter.ui.adapters.GalleryAlbumPagerAdapter;
+import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
@@ -33,20 +19,18 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
-
 public class GalleryAlbumPreviewActivity extends AppCompatActivity {
+
+    private String OF_PREFIX;
+    private String TITLE_SCHEMA = "%1$d %2$s %3$d";
+
+    private int albumSize = 0;
 
     private ArrayList<String> imagePaths;
     private int currentGalleryPosition;
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-
-    private int albumSize = 0;
-    private String ofPrefix;
-    private String TITLE_SCHEMA = "%1$d %2$s %3$d";
+    private GalleryAlbumPagerAdapter mSectionsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,21 +41,16 @@ public class GalleryAlbumPreviewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        SlidrConfig config = new SlidrConfig.Builder()
-                                .position(SlidrPosition.VERTICAL)
-                                .sensitivity(0.1f)
-                                .build();
+        Slidr.attach(this, SlidrUtils.config(SlidrPosition.VERTICAL, 0.1f));
 
-        Slidr.attach(this, config);
-
-        ofPrefix = getString(R.string.image_of_gallery_album_preview_activity);
+        OF_PREFIX = getString(R.string.image_of_gallery_album_preview_activity);
 
         imagePaths = getIntent().getStringArrayListExtra(LIST_ATTACH);
         currentGalleryPosition = getIntent().getIntExtra(POSITION_ATTACH, 0);
 
         albumSize = imagePaths.size();
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), imagePaths);
+        mSectionsPagerAdapter = new GalleryAlbumPagerAdapter(getSupportFragmentManager(), imagePaths);
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(currentGalleryPosition);
@@ -80,7 +59,7 @@ public class GalleryAlbumPreviewActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 toolbar.setTitle(String.format(Locale.getDefault(), TITLE_SCHEMA,
-                        (position + 1), ofPrefix, albumSize));
+                        (position + 1), OF_PREFIX, albumSize));
             }
 
             @Override
@@ -153,40 +132,6 @@ public class GalleryAlbumPreviewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static class PlaceholderFragment extends Fragment {
-
-        private PhotoView detailView = null;
-
-        public PlaceholderFragment() {
-        }
-
-        public static PlaceholderFragment newInstance(int position, String imagePath) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(POSITION_ATTACH, position);
-            args.putString(PATH_ATTACH, imagePath);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.gallery_album_preview_fragment, container, false);
-            detailView = (PhotoView) rootView.findViewById(R.id.detail_image);
-
-            Glide.with(getActivity())
-                    .load(Names
-                            .getInstance()
-                            .getFilePath(getArguments().getString(PATH_ATTACH))
-                            .toString())
-                    .fitCenter()
-                    .into(detailView);
-
-            return rootView;
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -194,31 +139,6 @@ public class GalleryAlbumPreviewActivity extends AppCompatActivity {
             intent.putExtra(PUT_CROPPED_IMAGE, data.getStringExtra(PUT_CROPPED_IMAGE));
             setResult(RESULT_OK, intent);
             finish();
-        }
-    }
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        private ArrayList<String> data;
-
-        public SectionsPagerAdapter(FragmentManager fm, ArrayList<String> data) {
-            super(fm);
-            this.data = data;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position, data.get(position));
-        }
-
-        @Override
-        public int getCount() {
-            return data.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "Hello";
         }
     }
 }

@@ -3,6 +3,11 @@
     <string name="app_name">Upitter</string>
     <!-- Endregion -->
 
+    <!-- Region permissions -->
+    <string name="permission_granted">Permission granted</string>
+    <string name="permission_denied">Permission denied</string>
+    <!-- Endregion -->
+
     <!-- Region Send Crash Report -->
     <string name="crash_title_message">Upitter had been broken</string>
     <string name="crash_ticker_message">Help us to improve Upitter</string>

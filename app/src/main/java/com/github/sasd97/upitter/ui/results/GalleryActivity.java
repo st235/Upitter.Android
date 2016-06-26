@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -36,7 +38,8 @@ import java.util.Locale;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 
 public class GalleryActivity extends BaseActivity
-        implements AdapterView.OnItemSelectedListener,
+        implements View.OnClickListener,
+        AdapterView.OnItemSelectedListener,
         OnSearchListener,
         OnGalleryInteractionListener {
 
@@ -74,18 +77,14 @@ public class GalleryActivity extends BaseActivity
 
         spinner.setOnItemSelectedListener(this);
 
-        galleryRecyclerAdapter = new GalleryRecyclerAdapter(this, new ArrayList<ImageSkeleton>(), isMultiSelectionMode, multiSelectMaxAmount);
+        galleryRecyclerAdapter = new GalleryRecyclerAdapter(isMultiSelectionMode, multiSelectMaxAmount,
+                this, new ArrayList<ImageSkeleton>());
 
         imageGridRecyclerView.setHasFixedSize(true);
         galleryRecyclerAdapter.setOnImageChooserListener(this);
         imageGridRecyclerView.setAdapter(galleryRecyclerAdapter);
 
-        applyFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSelected();
-            }
-        });
+        applyFab.setOnClickListener(this);
 
         Search.search(this);
     }
@@ -128,6 +127,20 @@ public class GalleryActivity extends BaseActivity
     }
 
     @Override
+    public void onClick(View view) {
+        ArrayList<String> finalPaths = new ArrayList<>();
+        for (ImageSkeleton photo: galleryRecyclerAdapter.getFilterImageList())
+            if (photo.isChecked()) finalPaths.add(photo.getPath());
+
+        if (finalPaths.size() == 0) return;
+
+        Intent data = new Intent();
+        data.putStringArrayListExtra(PUT_CROPPED_IMAGE, finalPaths);
+        setResult(RESULT_OK, data);
+        finish();
+    }
+
+    @Override
     public void onSearched(ArrayList<String> paths) {
         spinner.setAdapter(gallerySpinnerAdapter);
         spinner.setVisibility(View.VISIBLE);
@@ -166,54 +179,51 @@ public class GalleryActivity extends BaseActivity
     @Override
     public void onSearchError() {
         // TODO Search error ???
-        Log.d("SSS", "Error happenes");
+        Log.d("ERROR", "Error happenes");
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-       galleryRecyclerAdapter.getFilter().filter(gallerySpinnerAdapter.getFolder(position).getPath());
+       galleryRecyclerAdapter.getFilter().filter(gallerySpinnerAdapter.getAlbum(position).getPath());
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {}
 
-    public void onSelected() {
-        ArrayList<String> finalPaths = new ArrayList<>();
-        for (ImageSkeleton photo: galleryRecyclerAdapter.getFilteredPhotos())
-            if (photo.isChecked()) finalPaths.add(photo.getPath());
-
-        if (finalPaths.size() == 0) return;
-
-        Intent data = new Intent();
-        data.putStringArrayListExtra(PUT_CROPPED_IMAGE, finalPaths);
-        setResult(RESULT_OK, data);
-        finish();
-    }
-
     @Override
-    public void onSingleChoose(int position, ImageSkeleton path) {
+    public void onThumbnailClick(int position, ImageSkeleton path) {
+        Intent intent = new Intent(this, GalleryAlbumPreviewActivity.class);
+        intent.putExtra(PATH_ATTACH, path.getPath());
+        intent.putExtra(POSITION_ATTACH, position);
+        intent.putStringArrayListExtra(LIST_ATTACH, galleryRecyclerAdapter.getFilterPathList());
+
         if (!isMultiSelectionMode) {
-            Intent intent = new Intent(this, GalleryAlbumPreviewActivity.class);
-            intent.putExtra(PATH_ATTACH, path.getPath());
-            intent.putExtra(POSITION_ATTACH, position);
-            intent.putStringArrayListExtra(LIST_ATTACH, galleryRecyclerAdapter.getFiltered());
             startActivityForResult(intent, 123);
+            return;
         }
+
+        startActivity(intent);
     }
 
     @Override
-    public void onMultiChoose(int position, int counter, ImageSkeleton path) {
-        Log.d("ALEXANDER", String.format(Locale.getDefault(), "%1$d / %2$d", counter, multiSelectMaxAmount));
-        // counterTextView.setText(String.format(Locale.getDefault(), "%1$d / 3", counter));
+    public void onMultiSelectionCounterClick(int position, ArrayList<ImageSkeleton> images) {
+    }
+
+    @Override
+    public void onMultiSelectionLimitExceeded() {
+        Animation shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake);
+        if (!applyFab.isShown()) applyFab.show();
+        applyFab.startAnimation(shakeAnimation);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            Intent intent = new Intent();
-            intent.putExtra(PUT_CROPPED_IMAGE, data.getStringExtra(PUT_CROPPED_IMAGE));
-            setResult(RESULT_OK, intent);
-            finish();
-        }
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
+
+        Intent intent = new Intent();
+        intent.putExtra(PUT_CROPPED_IMAGE, data.getStringExtra(PUT_CROPPED_IMAGE));
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

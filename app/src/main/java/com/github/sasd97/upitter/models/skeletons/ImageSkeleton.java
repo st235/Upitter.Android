@@ -5,10 +5,11 @@ package com.github.sasd97.upitter.models.skeletons;
  */
 public class ImageSkeleton implements CheckableSkeleton {
 
-    private boolean mIsChecked = false;
     private String mImagePath;
-    private int mSelectPosition = -1;
-    private int mPosition = -1;
+    private boolean mIsChecked = false;
+
+    private int mListPosition = -1;
+    private int mMultiSelectCounter = -1;
 
     private ImageSkeleton(Builder builder) {
         mIsChecked = builder.checked;
@@ -29,24 +30,20 @@ public class ImageSkeleton implements CheckableSkeleton {
         mIsChecked = checkState;
     }
 
-    public void setPosition(int position) {
-        mPosition = position;
+    public void setListPosition(int position) {
+        mListPosition = position;
     }
 
-    public int getPosition() {
-        return mPosition;
+    public int getListPosition() {
+        return mListPosition;
     }
 
-    public void setSelectPosition(int selectPosition) {
-        mSelectPosition = selectPosition;
+    public void setMultiSelectCounter(int selectPosition) {
+        mMultiSelectCounter = selectPosition;
     }
 
-    public int getSelectPosition() {
-        return mSelectPosition;
-    }
-
-    public void clearSelectPosition() {
-        mSelectPosition = -1;
+    public int getMultiSelectCounter() {
+        return mMultiSelectCounter;
     }
 
     @Override

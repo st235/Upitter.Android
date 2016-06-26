@@ -85,7 +85,7 @@ public class GallerySpinnerAdapter extends ArrayAdapter {
         return convertView;
     }
 
-    public FolderModel getFolder(int position) {
+    public FolderModel getAlbum(int position) {
         return folders.get(position);
     }
 }

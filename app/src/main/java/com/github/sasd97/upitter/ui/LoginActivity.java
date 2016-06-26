@@ -19,6 +19,7 @@ import com.github.sasd97.upitter.utils.Permissions;
 
 import static com.github.sasd97.upitter.holders.UserHolder.isUserCreate;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 
 public class LoginActivity extends BaseActivity
         implements ViewPager.OnPageChangeListener {
@@ -50,11 +51,13 @@ public class LoginActivity extends BaseActivity
             return;
         }
 
+        /* TEST AREA */
         Intent hahaha = new Intent(this, GalleryActivity.class);
-//        intent.putExtra(GALLERY_MULTI_SELECTION_MODE, true);
-//        intent.putExtra(GALLERY_MULTI_SELECT_ITEMS_AMOUNT, 5);
+        hahaha.putExtra(GALLERY_MULTI_SELECTION_MODE, false);
+        hahaha.putExtra(GALLERY_MULTI_SELECT_ITEMS_AMOUNT, 10);
         startActivity(hahaha);
         finish();
+        /* TEST AREA */
 
         initColors();
 
@@ -143,16 +146,16 @@ public class LoginActivity extends BaseActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == Permissions.REQUEST_RECEIVE_SMS){
-            if (grantResults.length == 1 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "RECEIVE_SMS permission granted", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "RECEIVE_SMS permission denied", Toast.LENGTH_SHORT).show();
-            }
-
-        }else{
+        if(requestCode != Permissions.REQUEST_RECEIVE_SMS){
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            return;
         }
-    }
+
+        if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, getString(R.string.permission_granted), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
+}
 }

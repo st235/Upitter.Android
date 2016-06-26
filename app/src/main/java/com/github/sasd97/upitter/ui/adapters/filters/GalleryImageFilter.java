@@ -43,6 +43,6 @@ public class GalleryImageFilter extends Filter {
 
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
-        galleryRecyclerAdapter.filterData((ArrayList<ImageSkeleton>) results.values);
+        galleryRecyclerAdapter.filter((ArrayList<ImageSkeleton>) results.values);
     }
 }
