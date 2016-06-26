@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.isseiaoki.simplecropview.CropImageView
+        android:id="@+id/image_cropper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:scv_crop_mode="square"
+        android:layout_above="@+id/navigation_crop_layout"
+        />
+
+    <LinearLayout
+        android:id="@+id/navigation_crop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:background="#1b1b1b">
+
+        <android.support.v7.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            app:orientation="horizontal"
+            app:columnCount="2"
+            app:rowCount="1">
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                app:layout_column="0"
+                app:layout_columnWeight="1"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/rotate_view_crop_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:background="?android:selectableItemBackground"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_rotate_90_degrees_ccw_white_24dp"
+                        android:scaleType="centerInside"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:text="Rotate"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:background="?android:selectableItemBackground">
+
+                <LinearLayout
+                    android:id="@+id/free_mode_view_crop_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:background="?android:selectableItemBackground"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_settings_overscan_white_24dp"
+                        android:scaleType="centerInside"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:text="Free mode"/>
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.GridLayout>
+    </LinearLayout>
+</RelativeLayout>

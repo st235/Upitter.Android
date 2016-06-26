@@ -29,10 +29,77 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/transparent"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-        </android.support.v7.widget.Toolbar>
-
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            />
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="8dp"
+        app:orientation="horizontal"
+        app:columnCount="2"
+        app:rowCount="1">
+
+        <LinearLayout
+            android:id="@+id/edit_gallery_album_preview_activity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:onClick="onEditClick"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            android:gravity="center"
+            android:background="?android:selectableItemBackground">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_edit_white_24dp"
+                android:scaleType="centerInside"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:text="@string/edit_gallery_album_preview_activity"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/apply_gallery_album_preview_activity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:onClick="onApplyClick"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            android:gravity="center"
+            android:background="?android:selectableItemBackground">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_done_white_24dp"
+                android:scaleType="centerInside"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:text="@string/apply_gallery_album_preview_activity"
+                />
+
+        </LinearLayout>
+    </android.support.v7.widget.GridLayout>
 </android.support.design.widget.CoordinatorLayout>

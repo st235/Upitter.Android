@@ -7,9 +7,12 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.adapters.GalleryAlbumPagerAdapter;
+import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.ui.results.EditImageActivity;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
@@ -19,7 +22,7 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class GalleryAlbumPreviewActivity extends AppCompatActivity {
+public class GalleryAlbumPreviewActivity extends BaseActivity {
 
     private String OF_PREFIX;
     private String TITLE_SCHEMA = "%1$d %2$s %3$d";
@@ -72,51 +75,25 @@ public class GalleryAlbumPreviewActivity extends AppCompatActivity {
 
             }
         });
-
-//        BottomBar bottomBar = BottomBar.attach(this, savedInstanceState);
-//        bottomBar.useDarkTheme();
-//        bottomBar.setItemsFromMenu(R.menu.bottom_menu_detailded, new OnMenuTabClickListener() {
-//            @Override
-//            public void onMenuTabSelected(@IdRes int menuItemId) {
-//                switch (menuItemId) {
-////                    case R.id.bottom_bar_preview:
-////                        onBackPressed();
-////                        break;
-//                    case R.id.bottom_bar_edit:
-//                        Intent intent = new Intent(GalleryAlbumPreviewActivity.this, EditImageActivity.class);
-//                        intent.putExtra(PATH_ATTACH, imagePaths.get(mViewPager.getCurrentItem()));
-//                        startActivityForResult(intent, EDIT_SCREEN_START_ID);
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//
-//            @Override
-//            public void onMenuTabReSelected(@IdRes int menuItemId) {
-//                switch (menuItemId) {
-//                    case R.id.bottom_bar_preview:
-//                        onBackPressed();
-//                        break;
-//                    case R.id.bottom_bar_apply:
-//                        Intent result = new Intent();
-//                        result.putExtra(PUT_CROPPED_IMAGE, imagePaths.get(mViewPager.getCurrentItem()));
-//                        setResult(RESULT_OK, result);
-//                        finish();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
     }
 
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_detailed, menu);
-//        return true;
-//    }
+    @Override
+    protected void bindViews() {
+
+    }
+
+    public void onApplyClick(View v) {
+        Intent result = new Intent();
+        result.putExtra(PUT_CROPPED_IMAGE, imagePaths.get(mViewPager.getCurrentItem()));
+        setResult(RESULT_OK, result);
+        finish();
+    }
+
+    public void onEditClick(View v) {
+        Intent intent = new Intent(GalleryAlbumPreviewActivity.this, EditImageActivity.class);
+        intent.putExtra(PATH_ATTACH, imagePaths.get(mViewPager.getCurrentItem()));
+        startActivityForResult(intent, 12);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

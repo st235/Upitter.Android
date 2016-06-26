@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_bar_filter"
+        android:icon="@drawable/ic_photo_filter_white_24dp"
+        android:title="Filters"
+        />
+
+    <item
+        android:id="@+id/bottom_bar_crop"
+        android:icon="@drawable/ic_crop_white_24dp"
+        android:title="Crop"
+        />
+</menu>

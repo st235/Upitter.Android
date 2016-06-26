@@ -21,6 +21,8 @@
     <string name="spinner_all_photos_gallery_activity">All</string>
     <string name="title_gallery_album_preview_activity">Album preview</string>
     <string name="image_of_gallery_album_preview_activity">of</string>
+    <string name="edit_gallery_album_preview_activity">Edit</string>
+    <string name="apply_gallery_album_preview_activity">Apply</string>
     <!-- Endregion -->
 
     <!-- Login activity region -->
@@ -62,6 +64,35 @@
     <string name="description_label_code_confirm_activity">Put your request code here... edit...</string>
     <string name="login_label_code_confirm_activity">Login</string>
     <string name="title_activity_bussines_registration">Business Registration</string>
+    <!-- Endregion -->
+
+    <!-- Filters region -->
+    <string-array name="filter_list">
+        <item>DEFAULT</item>
+        <item>1997</item>
+        <item>AMARO</item>
+        <item>BRANNAN</item>
+        <item>EARLYBIRD</item>
+        <item>HEFE</item>
+        <item>HUDSON</item>
+        <item>INKWELL</item>
+        <item>LOMO</item>
+        <item>LORDKELVIN</item>
+        <item>NASHVILLE</item>
+        <item>RISE</item>
+        <item>SIERRA</item>
+        <item>SUTRO</item>
+        <item>TOASTER</item>
+        <item>VALENCIA</item>
+        <item>WALDEN</item>
+        <item>XPROLL</item>
+        <item>CONTRAST</item>
+        <item>BRIGHTNESS</item>
+        <item>SEPIA</item>
+        <item>VIGNETTE</item>
+        <item>TONECURVE</item>
+        <item>LOOKUP</item>
+    </string-array>
     <!-- Endregion -->
 
 </resources>

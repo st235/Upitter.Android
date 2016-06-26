@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Upitter"
@@ -87,6 +89,11 @@
 
         <activity
             android:name=".ui.schemas.GalleryAlbumPreviewActivity"
+            android:label="@string/title_gallery_album_preview_activity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".ui.results.EditImageActivity"
             android:label="@string/title_gallery_album_preview_activity"
             android:theme="@style/AppTheme" />
     </application>
