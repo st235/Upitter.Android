@@ -49,22 +49,35 @@
         <item name="android:textColor">@color/rounded_button_watermelon_text_selector</item>
     </style>
 
-
     <style name="Upitter.Button.Rounded.Facebook" parent="@style/Upitter.Button.Rounded">
         <item name="android:background">@drawable/rounded_button_shape_facebook_blue</item>
         <item name="android:textColor">@color/rounded_button_watermelon_text_selector</item>
     </style>
-
 
     <style name="Upitter.Button.Rounded.Google" parent="@style/Upitter.Button.Rounded">
         <item name="android:background">@drawable/rounded_button_shape_google_red</item>
         <item name="android:textColor">@color/rounded_button_watermelon_text_selector</item>
     </style>
 
-
     <style name="Upitter.Button.Rounded.White" parent="@style/Upitter.Button.Rounded">
         <item name="android:background">@drawable/rounded_button_shape_white</item>
         <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="Upitter.Button.Rounded.BabyBlue.Light" parent="@style/Upitter.Button.Rounded">
+        <item name="android:background">@drawable/rounded_button_shape_baby_blue_light</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <!-- Endregion -->
+
+    <!-- Layout buttons region -->
+    <style name="Upitter.LayoutButton.Rounded" parent="@style/AppTheme">
+        <item name="android:layout_height">@dimen/rounded_button_height</item>
+        <item name="android:textSize">@dimen/rounded_button_text_size</item>
+    </style>
+
+    <style name="Upitter.LayoutButton.Rounded.BabyBlue.Light" parent="@style/Upitter.LayoutButton.Rounded">
+        <item name="android:background">@drawable/rounded_button_shape_baby_blue_light</item>
     </style>
     <!-- Endregion -->
 

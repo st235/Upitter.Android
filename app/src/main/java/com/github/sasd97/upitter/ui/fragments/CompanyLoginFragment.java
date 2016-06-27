@@ -37,7 +37,7 @@ public class CompanyLoginFragment extends BaseFragment
         Countries.OnLoadListener,
         DialCodeWatcher.OnCountryReadyListener,
         LocationService.OnLocationListener,
-        BusinessAuthorizationQueryService.onBusinessAuthorizationListener {
+        BusinessAuthorizationQueryService.OnBusinessAuthorizationListener {
 
     private String COUNTRY_NOT_VALID;
 

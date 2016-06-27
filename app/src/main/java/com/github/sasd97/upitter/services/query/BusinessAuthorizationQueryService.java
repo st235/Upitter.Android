@@ -1,7 +1,6 @@
 package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequestCodeResponseModel;
@@ -17,20 +16,20 @@ import retrofit2.Response;
  */
 public class BusinessAuthorizationQueryService {
 
-    public interface onBusinessAuthorizationListener {
+    public interface OnBusinessAuthorizationListener {
         void onCodeObtained();
         void onSendCodeError();
         void onAuthorize();
         void onRegister(String temporaryToken);
     }
 
-    private onBusinessAuthorizationListener listener;
+    private OnBusinessAuthorizationListener listener;
 
-    private BusinessAuthorizationQueryService(onBusinessAuthorizationListener listener) {
+    private BusinessAuthorizationQueryService(OnBusinessAuthorizationListener listener) {
         this.listener = listener;
     }
 
-    public static BusinessAuthorizationQueryService getService(onBusinessAuthorizationListener listener) {
+    public static BusinessAuthorizationQueryService getService(OnBusinessAuthorizationListener listener) {
         return new BusinessAuthorizationQueryService(listener);
     }
 

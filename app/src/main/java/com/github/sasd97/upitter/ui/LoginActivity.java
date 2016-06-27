@@ -51,14 +51,6 @@ public class LoginActivity extends BaseActivity
             return;
         }
 
-        /* TEST AREA */
-        Intent hahaha = new Intent(this, GalleryActivity.class);
-        hahaha.putExtra(GALLERY_MULTI_SELECTION_MODE, false);
-        hahaha.putExtra(GALLERY_MULTI_SELECT_ITEMS_AMOUNT, 10);
-        startActivity(hahaha);
-        finish();
-        /* TEST AREA */
-
         initColors();
 
         loginPagerAdapter = new LoginPagerAdapter(this, getSupportFragmentManager());

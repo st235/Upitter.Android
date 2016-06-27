@@ -10,6 +10,7 @@ public interface RequestCodesConstants {
     int TWITTER_SIGN_IN_REQUEST = 140;
 
     int COUNTRY_CHOOSE_LIST_REQUEST = 9;
+    int GALLERY_ACTIVITY_REQUEST = 892;
 
     String CODE_RECEIVER_INTENT_NAME = "com.github.sasd97.recievers.HANDLE_SMS_CODE";
 }

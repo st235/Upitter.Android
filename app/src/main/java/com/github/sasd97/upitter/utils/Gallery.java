@@ -1,12 +1,14 @@
 package com.github.sasd97.upitter.utils;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.FolderModel;
+import com.github.sasd97.upitter.ui.results.GalleryActivity;
 
 import java.util.ArrayList;
-
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 
 /**
  * Created by Alex on 07.02.2016.
@@ -35,5 +37,35 @@ public class Gallery {
         all.amount(allAmount);
         all.name(ALL_NAME);
         return all.build();
+    }
+
+    public static class Builder {
+
+        private Context from = null;
+        private Class<?> to = GalleryActivity.class;
+        private boolean multiSelectionMode = false;
+        private int selectionMaxCounter = 1;
+
+        public Builder from(Context from) {
+            this.from = from;
+            return this;
+        }
+
+        public Builder multiSelectionMode(boolean multiSelectionMode) {
+            this.multiSelectionMode = multiSelectionMode;
+            return this;
+        }
+
+        public Builder selectionMaxCounter(int selectionMaxCounter) {
+            this.selectionMaxCounter = selectionMaxCounter;
+            return this;
+        }
+
+        public Intent build() {
+            Intent galleryIntent = new Intent(from, to);
+            galleryIntent.putExtra(GALLERY_MULTI_SELECTION_MODE, this.multiSelectionMode);
+            galleryIntent.putExtra(GALLERY_MULTI_SELECT_ITEMS_AMOUNT, this.selectionMaxCounter);
+            return galleryIntent;
+        }
     }
 }

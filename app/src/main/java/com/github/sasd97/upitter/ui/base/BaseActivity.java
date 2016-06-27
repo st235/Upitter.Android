@@ -14,6 +14,8 @@ import android.view.WindowManager;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    private View rootView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,5 +37,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void setToolbar(@IdRes int toolbarId) {
         Toolbar toolbar = findById(toolbarId);
         setSupportActionBar(toolbar);
+    }
+
+    protected View getRootView() {
+        if (rootView == null) rootView = findViewById(android.R.id.content);
+        return rootView;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bindViews();
     }
 }

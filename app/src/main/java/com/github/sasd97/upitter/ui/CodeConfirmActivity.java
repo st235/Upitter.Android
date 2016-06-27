@@ -1,9 +1,10 @@
 package com.github.sasd97.upitter.ui;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.github.sasd97.upitter.R;
@@ -19,12 +20,12 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
 
-import static com.github.sasd97.upitter.constants.IntentKeysConstants.RECEIVED_PHONE;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CODE_RECEIVER_INTENT_NAME;
 
 public class CodeConfirmActivity extends BaseActivity implements
         RequestCodeReceiver.OnRequestCodeReceiveListener,
-        BusinessAuthorizationQueryService.onBusinessAuthorizationListener {
+        BusinessAuthorizationQueryService.OnBusinessAuthorizationListener {
 
     private final String UPITTER_SMS_HEADER = "999999";
 
@@ -47,10 +48,7 @@ public class CodeConfirmActivity extends BaseActivity implements
     }
 
     public void onLoginClick(View v) {
-        queryService.sendRequestCode(
-                currentPhone.getPhoneBody(),
-                currentPhone.getDialCode(),
-                requestCodeEditText.getText().toString());
+        setRequestCode(requestCodeEditText.getText().toString());
     }
 
     @Override
@@ -67,13 +65,8 @@ public class CodeConfirmActivity extends BaseActivity implements
     @Override
     protected void onPause() {
         super.onPause();
-        if (requestCodeReceiver != null) unregisterReceiver(requestCodeReceiver);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (requestCodeReceiver != null) unregisterReceiver(requestCodeReceiver);
+        if (requestCodeReceiver != null)
+            unregisterReceiver(requestCodeReceiver);
     }
 
     @Override
@@ -83,7 +76,9 @@ public class CodeConfirmActivity extends BaseActivity implements
 
     @Override
     public void onSendCodeError() {
-
+        Snackbar
+                .make(getRootView(), "Error", Snackbar.LENGTH_SHORT)
+                .show();
     }
 
     @Override
@@ -93,7 +88,9 @@ public class CodeConfirmActivity extends BaseActivity implements
 
     @Override
     public void onRegister(String temporaryToken) {
-        Log.d("TEMP_TOKEN", temporaryToken);
+        Intent intent = new Intent(this, BusinessRegistrationActivity.class);
+        intent.putExtra(RECEIVED_TEMPORARY_TOKEN, temporaryToken);
+        startActivity(intent);
     }
 
     @Override

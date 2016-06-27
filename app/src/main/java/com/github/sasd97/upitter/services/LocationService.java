@@ -51,7 +51,7 @@ public class LocationService implements LocationListener {
         locationManager = (LocationManager)
                 context.getSystemService(Context.LOCATION_SERVICE);
 
-        geocoder = new Geocoder(context, Locale.getDefault());
+        geocoder = new Geocoder(context, Locale.ENGLISH);
 
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
