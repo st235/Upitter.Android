@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,8 +15,8 @@ import java.util.List;
 
 public final class ListUtils {
 
-    public interface OnSelectListener<T>{
-        boolean isSelectable(T other);
+    public interface OnListInteractionListener<T>{
+        boolean isFit(T other);
     }
 
     private ListUtils() {}
@@ -41,10 +42,18 @@ public final class ListUtils {
         return result;
     }
 
-    public static <T> T select(@NonNull List<T> list, @NonNull OnSelectListener<T> listener) {
+    public static <T> T select(@NonNull List<T> list, @NonNull OnListInteractionListener<T> listener) {
         for (T item: list)
-            if (listener.isSelectable(item))
+            if (listener.isFit(item))
                 return item;
         return null;
+    }
+    
+    public static <T> List<T> filter(@NonNull List<T> list, @NonNull OnListInteractionListener<T> listener) {
+        List<T> result = new ArrayList<>();
+        for (T item: list)
+            if (listener.isFit(item))
+                result.add(item);
+        return result;
     }
 }

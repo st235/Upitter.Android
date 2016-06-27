@@ -14,6 +14,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Alexander Dadukin on 06.06.2016.
@@ -44,5 +45,5 @@ public interface BaseFactory {
     Call<AuthorizationRequestCodeResponseModel> sendRequestCode(@Path("number") String number, @Path("countryCode") String countryCode, @Field("code") String requestCode);
 
     @GET("/categories")
-    Call<CatergoriesResponseModel> getCategories();
+    Call<CatergoriesResponseModel> getCategories(@Query("ln") String language);
 }

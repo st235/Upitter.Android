@@ -132,9 +132,9 @@ public class CompanyLoginFragment extends BaseFragment
 
     @Override
     public void onAddressReady(final Address address) {
-        CountryModel country = ListUtils.select(Countries.getCountries(), new ListUtils.OnSelectListener<CountryModel>() {
+        CountryModel country = ListUtils.select(Countries.getCountries(), new ListUtils.OnListInteractionListener<CountryModel>() {
             @Override
-            public boolean isSelectable(CountryModel other) {
+            public boolean isFit(CountryModel other) {
                 return other.getName().contains(address.getCountryName());
             }
         });

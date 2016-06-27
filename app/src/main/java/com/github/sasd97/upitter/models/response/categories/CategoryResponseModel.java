@@ -27,19 +27,19 @@ public class CategoryResponseModel extends BaseResponseModel {
     @Expose
     private String mAvatarUrl;
 
-    private int getId() {
+    public int getId() {
         return mId;
     }
 
-    private String getTitle() {
+    public String getTitle() {
         return mTitle;
     }
 
-    private int getParentId() {
+    public int getParentId() {
         return mParentId;
     }
 
-    private String getLogoUrl() {
+    public String getLogoUrl() {
         return mAvatarUrl;
     }
 

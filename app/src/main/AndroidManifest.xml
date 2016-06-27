@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -16,7 +16,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="DATABASE"
             android:value="upitter_base.db" />
@@ -47,7 +46,6 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name=".ui.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -57,7 +55,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.results.CountryCodeChooseActivity"
             android:parentActivityName=".ui.LoginActivity"
@@ -66,35 +63,39 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.LoginActivity" />
         </activity>
-
         <activity
             android:name=".ui.TapeActivity"
             android:label="@string/title_activity_tape"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".ui.CodeConfirmActivity"
             android:label="@string/title_activity_code_confirm_activity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.BusinessRegistrationActivity"
             android:label="@string/title_activity_bussines_registration"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.results.GalleryActivity"
             android:label="@string/title_gallery_activity"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".ui.schemas.GalleryAlbumPreviewActivity"
             android:label="@string/title_gallery_album_preview_activity"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".ui.results.EditImageActivity"
             android:label="@string/title_gallery_album_preview_activity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.results.CategoriesActivity"
+            android:label="@string/title_categories_activity"
+            android:parentActivityName=".ui.BusinessRegistrationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.BusinessRegistrationActivity" />
+        </activity>
     </application>
+
 </manifest>

@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,32 +14,28 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
-import com.github.sasd97.upitter.services.query.BusinessRegistrationQueryService;
+import com.github.sasd97.upitter.services.query.CategoriesQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
+import com.github.sasd97.upitter.ui.results.CategoriesActivity;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.Names;
 
-import java.util.List;
-
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.PUT_CROPPED_IMAGE;
+import static com.github.sasd97.upitter.constants.RequestCodesConstants.CATEGORIES_ACTIVITY_REQUEST;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.GALLERY_ACTIVITY_REQUEST;
 
 /**
  * Created by Alexadner Dadukin on 24.06.2016.
  */
-public class BaseBusinessRegistrationFragment extends BaseFragment
-        implements BusinessRegistrationQueryService.OnBusinessRegistrationListener {
+public class BaseBusinessRegistrationFragment extends BaseFragment {
 
     private ImageView avatarImageView;
     private LinearLayout avatarLayout;
     private RelativeLayout categoriesLayout;
-
-    private BusinessRegistrationQueryService queryService;
 
     public static BaseBusinessRegistrationFragment getFragment() {
         return new BaseBusinessRegistrationFragment();
@@ -56,9 +50,6 @@ public class BaseBusinessRegistrationFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        queryService = BusinessRegistrationQueryService.getService(this);
-        queryService.getCategories();
 
         avatarLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +80,7 @@ public class BaseBusinessRegistrationFragment extends BaseFragment
     }
 
     public void onCategoryChooseClick() {
-
+        startActivityForResult(new Intent(getActivity(), CategoriesActivity.class), CATEGORIES_ACTIVITY_REQUEST);
     }
 
     private void handleAvatarIntent(@NonNull Intent intent) {
@@ -105,15 +96,7 @@ public class BaseBusinessRegistrationFragment extends BaseFragment
                 .into(avatarImageView);
     }
 
-    @Override
-    public void onGetCategories(List<CategoryResponseModel> categories) {
-        for (CategoryResponseModel category: categories) {
-            Log.d("HELLO_WORLD", category.toString());
-        }
-    }
-
-    @Override
-    public void onError() {
+    private void handleCategoriesIntent(@NonNull Intent intent) {
 
     }
 
@@ -121,6 +104,13 @@ public class BaseBusinessRegistrationFragment extends BaseFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != BaseActivity.RESULT_OK) return;
-        if (requestCode == GALLERY_ACTIVITY_REQUEST) handleAvatarIntent(data);
+        if (requestCode == GALLERY_ACTIVITY_REQUEST) {
+            handleAvatarIntent(data);
+            return;
+        }
+        if (requestCode == CATEGORIES_ACTIVITY_REQUEST) {
+            handleCategoriesIntent(data);
+            return;
+        }
     }
 }

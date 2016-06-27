@@ -66,6 +66,10 @@
     <string name="title_activity_bussines_registration">Business Registration</string>
     <!-- Endregion -->
 
+    <!-- Region categories activity -->
+    <string name="title_categories_activity">Categories</string>
+    <!-- Endregion -->
+
     <!-- Filters region -->
     <string-array name="filter_list">
         <item>DEFAULT</item>

@@ -49,9 +49,9 @@ public final class DialCodeWatcher implements TextWatcher {
     public void afterTextChanged(Editable editable) {
         final String text = editable.toString();
 
-        CountryModel countryModel = ListUtils.select(Countries.getCountries(), new ListUtils.OnSelectListener<CountryModel>() {
+        CountryModel countryModel = ListUtils.select(Countries.getCountries(), new ListUtils.OnListInteractionListener<CountryModel>() {
             @Override
-            public boolean isSelectable(CountryModel other) {
+            public boolean isFit(CountryModel other) {
                 return other.getDialCode().equals(text.replaceAll(DECIMAL_REGEX, ""));
             }
         });

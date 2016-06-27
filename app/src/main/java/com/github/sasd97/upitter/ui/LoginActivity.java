@@ -51,6 +51,13 @@ public class LoginActivity extends BaseActivity
             return;
         }
 
+        /* TEST REGION */
+        Intent intent = new Intent(this, BusinessRegistrationActivity.class);
+        intent.putExtra(RECEIVED_TEMPORARY_TOKEN, "234lkkfjlsjfsklr4534dlksfjlkds");
+        startActivity(intent);
+        finish();
+        /* TEST REGION */
+
         initColors();
 
         loginPagerAdapter = new LoginPagerAdapter(this, getSupportFragmentManager());
