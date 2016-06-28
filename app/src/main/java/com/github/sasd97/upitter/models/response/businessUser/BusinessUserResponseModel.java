@@ -12,20 +12,20 @@ public class BusinessUserResponseModel extends BaseResponseModel {
     @SerializedName("name")
     @Expose
     private String mName;
-
-    @SerializedName("activity")
-    @Expose
-    private String mName;
-
-    @SerializedName("phone")
-    @Expose
-    private String mName;
-
-    @SerializedName("site")
-    @Expose
-    private String mName;
-
-    @SerializedName("coordina")
-    @Expose
-    private String mName;
+//
+//    @SerializedName("activity")
+//    @Expose
+//    private String mName;
+//
+//    @SerializedName("phone")
+//    @Expose
+//    private String mName;
+//
+//    @SerializedName("site")
+//    @Expose
+//    private String mName;
+//
+//    @SerializedName("coordina")
+//    @Expose
+//    private String mName;
 }
