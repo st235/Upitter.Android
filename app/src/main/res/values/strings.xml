@@ -68,6 +68,18 @@
 
     <!-- Region categories activity -->
     <string name="title_categories_activity">Categories</string>
+    <string name="category_select_categories_activity">Select</string>
+    <!-- Endregion -->
+
+    <!-- Region business registration activity -->
+    <string name="name_label_business_registration_activity">Company name</string>
+    <string name="description_label_business_registration_activity">Company description</string>
+    <string name="categories_label_business_registration_activity">Choose category</string>
+    <string name="contacts_label_business_registration_activity">Set up the contact information:</string>
+    <string name="phone_label_business_registration_activity">Contact phone</string>
+    <string name="add_phone_label_business_registration_activity">Add phone</string>
+    <string name="site_label_business_registration_activity">Site</string>
+    <string name="set_coordinates_business_registration_activity">Set position</string>
     <!-- Endregion -->
 
     <!-- Filters region -->

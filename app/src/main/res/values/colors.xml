@@ -9,6 +9,7 @@
     <color name="colorHeaderPrimary">#000000</color>
     <color name="colorShadow">#F0F3F8</color>
     <color name="colorShadowDark">#87A3B9</color>
+    <color name="colorBlack">#000</color>
     <!-- Endregion -->
 
     <!-- Login activity region. -->
@@ -18,7 +19,8 @@
     <color name="colorFacebook">#3A559D</color>
     <color name="colorGoogle">#DC4A38</color>
     <color name="colorDivider">#5D95CE</color>
-    <color name="colorLightBabyBlue">#8BA2B8</color>
+    <color name="colorLightBabyBlue">#DDE6F0</color>
+    <color name="colorShapeStroke">#8BA2B8</color>
     <!-- Endregion -->
 
     <!-- Country code chooser region. -->

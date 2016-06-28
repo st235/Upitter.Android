@@ -6,7 +6,7 @@
     android:id="@+id/root_view_login_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorStartBackground"
+    android:background="@color/colorEndBackground"
     android:fitsSystemWindows="true"
     tools:context="com.github.sasd97.upitter.ui.results.CategoriesActivity">
 
@@ -30,6 +30,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_categories_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom|end"
+        android:onClick="onConfirmSelection"
+        android:src="@drawable/ic_done_white_24dp"
         />
 
 </android.support.design.widget.CoordinatorLayout>

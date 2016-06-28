@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.services.query.factory;
 
+import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequestCodeResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
@@ -8,8 +9,13 @@ import com.github.sasd97.upitter.models.response.report.ReportResponseModel;
 
 import org.json.JSONObject;
 
+import java.util.Map;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -31,18 +37,33 @@ public interface BaseFactory {
 
     @FormUrlEncoded
     @POST("authorization/twitter/verify")
-    Call<AuthorizationResponseModel> authorizeWithTwitter(@Field("token") String token, @Field("secret") String secret);
+    Call<AuthorizationResponseModel> authorizeWithTwitter(@Field("token") String token,
+                                                          @Field("secret") String secret);
 
     @FormUrlEncoded
     @POST("support/android/{id}")
-    Call<ReportResponseModel> sendCrashReport(@Path("id") String id, @Field("log") JSONObject trace);
+    Call<ReportResponseModel> sendCrashReport(@Path("id") String id,
+                                              @Field("log") JSONObject trace);
 
     @POST("/authorization/phone/set/{number}/{countryCode}")
-    Call<SimpleResponseModel> obtainRequestCode(@Path("number") String number, @Path("countryCode") String countryCode);
+    Call<SimpleResponseModel> obtainRequestCode(@Path("number") String number,
+                                                @Path("countryCode") String countryCode);
 
     @FormUrlEncoded
     @POST("/authorization/phone/verify/{number}/{countryCode}")
-    Call<AuthorizationRequestCodeResponseModel> sendRequestCode(@Path("number") String number, @Path("countryCode") String countryCode, @Field("code") String requestCode);
+    Call<AuthorizationRequestCodeResponseModel> sendRequestCode(@Path("number") String number,
+                                                                @Path("countryCode") String countryCode,
+                                                                @Field("code") String requestCode);
+
+    @FormUrlEncoded
+    @POST("/authorization/phone/add_info/{number}/{countryCode}")
+    Call<BaseResponseModel> registerBusinessUser(@Path("number") String number,
+                                                 @Path("countryCode") String countryCode,
+                                                 @Field("token") String token,
+                                                 @Field("name") String name,
+                                                 @Field("activity") int category,
+                                                 @Field("phone") RequestBody phone,
+                                                 @Field("site") String site);
 
     @GET("/categories")
     Call<CatergoriesResponseModel> getCategories(@Query("ln") String language);
