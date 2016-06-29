@@ -34,6 +34,9 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="@string/fabric_api_id" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_api_key" />
 
         <receiver android:name=".events.receivers.SmsReceiver">
             <intent-filter>
@@ -90,6 +93,15 @@
         <activity
             android:name=".ui.results.CategoriesActivity"
             android:label="@string/title_categories_activity"
+            android:parentActivityName=".ui.BusinessRegistrationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.BusinessRegistrationActivity" />
+        </activity>
+        <activity
+            android:name=".ui.results.MapChooseActivity"
+            android:label="@string/title_map_choose_activity"
             android:parentActivityName=".ui.BusinessRegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

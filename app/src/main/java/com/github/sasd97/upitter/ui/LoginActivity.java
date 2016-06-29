@@ -15,6 +15,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.results.GalleryActivity;
+import com.github.sasd97.upitter.ui.results.MapChooseActivity;
 import com.github.sasd97.upitter.utils.Permissions;
 
 import static com.github.sasd97.upitter.holders.UserHolder.isUserCreate;
@@ -52,10 +53,10 @@ public class LoginActivity extends BaseActivity
         }
 
         /* TEST REGION */
-//        Intent intent = new Intent(this, BusinessRegistrationActivity.class);
-//        intent.putExtra(RECEIVED_TEMPORARY_TOKEN, "234lkkfjlsjfsklr4534dlksfjlkds");
-//        startActivity(intent);
-//        finish();
+        Intent intent = new Intent(this, MapChooseActivity.class);
+        //intent.putExtra(RECEIVED_TEMPORARY_TOKEN, "234lkkfjlsjfsklr4534dlksfjlkds");
+        startActivity(intent);
+        finish();
         /* TEST REGION */
 
         initColors();

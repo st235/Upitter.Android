@@ -82,6 +82,10 @@
     <string name="set_coordinates_business_registration_activity">Set position</string>
     <!-- Endregion -->
 
+    <!-- Map activity region -->
+    <string name="title_map_choose_activity">Map</string>
+    <!-- Endregion -->
+
     <!-- Filters region -->
     <string-array name="filter_list">
         <item>DEFAULT</item>
@@ -110,5 +114,4 @@
         <item>LOOKUP</item>
     </string-array>
     <!-- Endregion -->
-
 </resources>

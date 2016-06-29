@@ -7,6 +7,10 @@ import com.github.sasd97.upitter.ui.fragments.BaseBusinessRegistrationFragment;
 
 public class BusinessRegistrationActivity extends BaseActivity {
 
+    public interface OnBusinessRegistrationListener {
+        void onBaseInfoPrepared();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
