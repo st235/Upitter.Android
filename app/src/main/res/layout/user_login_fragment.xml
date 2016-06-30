@@ -11,95 +11,107 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.github.sasd97.upitter.ui.fragments.UserLoginFragment">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorShadow"
-        android:layout_marginTop="@dimen/activity_medium_margin"
-        android:text="@string/sign_in_with_login_activity"
-        android:gravity="center"
-        tools:text="Alexander"
-        />
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-    <Button
-        android:id="@+id/twitter_button_user_login_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/activity_short_margin"
-        android:layout_marginLeft="@dimen/activity_short_margin"
-        android:layout_marginRight="@dimen/activity_short_margin"
-        android:padding="8dp"
-        android:drawableLeft="@drawable/ic_twitter"
-        android:drawableStart="@drawable/ic_twitter"
-        android:text="Twitter"
-        style="@style/Upitter.Button.Rounded.Twitter"
-        />
-
-
-    <Button
-        android:id="@+id/facebook_button_user_login_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/activity_short_margin"
-        android:layout_marginLeft="@dimen/activity_short_margin"
-        android:layout_marginRight="@dimen/activity_short_margin"
-        android:padding="8dp"
-        android:drawableLeft="@drawable/ic_facebook"
-        android:drawableStart="@drawable/ic_facebook"
-        android:text="Facebook"
-        style="@style/Upitter.Button.Rounded.Facebook"
-        />
-
-    <Button
-        android:id="@+id/google_plus_button_user_login_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_short_margin"
-        android:layout_marginLeft="@dimen/activity_short_margin"
-        android:layout_marginRight="@dimen/activity_short_margin"
-        android:padding="8dp"
-        android:drawableLeft="@drawable/ic_google_plus"
-        android:drawableStart="@drawable/ic_google_plus"
-        android:text="@string/google_plus_label_login_activity"
-        style="@style/Upitter.Button.Rounded.Google"
-        />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_long_margin"
-        android:layout_marginLeft="@dimen/activity_short_margin"
-        android:layout_marginRight="@dimen/activity_short_margin">
-
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/colorDivider"
-            android:layout_centerInParent="true"
-            />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            android:background="@drawable/circle_textview_shape_baby_blue"
-            android:textColor="@android:color/white"
-            android:textAllCaps="true"
-            android:text="@string/divider_text_login_activity"
-            />
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorShadow"
+                    android:layout_marginTop="@dimen/activity_medium_margin"
+                    android:text="@string/sign_in_with_login_activity"
+                    android:gravity="center"
+                    tools:text="Alexander"
+                    />
 
-    <Button
-        android:id="@+id/skip_button_user_login_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_long_margin"
-        android:layout_marginLeft="@dimen/activity_short_margin"
-        android:layout_marginRight="@dimen/activity_short_margin"
-        android:text="@string/skip_registration_label_login_activity"
-        style="@style/Upitter.Button.Rounded.White"
-        />
+                <Button
+                    android:id="@+id/twitter_button_user_login_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/activity_short_margin"
+                    android:layout_marginLeft="@dimen/activity_short_margin"
+                    android:layout_marginRight="@dimen/activity_short_margin"
+                    android:padding="8dp"
+                    android:drawableLeft="@drawable/ic_twitter"
+                    android:drawableStart="@drawable/ic_twitter"
+                    android:text="Twitter"
+                    style="@style/Upitter.Button.Rounded.Twitter"
+                    />
+
+
+                <Button
+                    android:id="@+id/facebook_button_user_login_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/activity_short_margin"
+                    android:layout_marginLeft="@dimen/activity_short_margin"
+                    android:layout_marginRight="@dimen/activity_short_margin"
+                    android:padding="8dp"
+                    android:drawableLeft="@drawable/ic_facebook"
+                    android:drawableStart="@drawable/ic_facebook"
+                    android:text="Facebook"
+                    style="@style/Upitter.Button.Rounded.Facebook"
+                    />
+
+                <Button
+                    android:id="@+id/google_plus_button_user_login_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_short_margin"
+                    android:layout_marginLeft="@dimen/activity_short_margin"
+                    android:layout_marginRight="@dimen/activity_short_margin"
+                    android:padding="8dp"
+                    android:drawableLeft="@drawable/ic_google_plus"
+                    android:drawableStart="@drawable/ic_google_plus"
+                    android:text="@string/google_plus_label_login_activity"
+                    style="@style/Upitter.Button.Rounded.Google"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_long_margin"
+                    android:layout_marginLeft="@dimen/activity_short_margin"
+                    android:layout_marginRight="@dimen/activity_short_margin">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/colorDivider"
+                        android:layout_centerInParent="true"
+                        />
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:gravity="center"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/circle_textview_shape_baby_blue"
+                        android:textColor="@android:color/white"
+                        android:textAllCaps="true"
+                        android:text="@string/divider_text_login_activity"
+                        />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/skip_button_user_login_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_long_margin"
+                    android:layout_marginLeft="@dimen/activity_short_margin"
+                    android:layout_marginRight="@dimen/activity_short_margin"
+                    android:text="@string/skip_registration_label_login_activity"
+                    style="@style/Upitter.Button.Rounded.White"
+                    />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
