@@ -53,10 +53,10 @@ public class LoginActivity extends BaseActivity
         }
 
         /* TEST REGION */
-        Intent intent = new Intent(this, MapChooseActivity.class);
+        //Intent intent = new Intent(this, MapChooseActivity.class);
         //intent.putExtra(RECEIVED_TEMPORARY_TOKEN, "234lkkfjlsjfsklr4534dlksfjlkds");
-        startActivity(intent);
-        finish();
+        //startActivity(intent);
+        //finish();
         /* TEST REGION */
 
         initColors();

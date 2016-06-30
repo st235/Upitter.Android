@@ -15,8 +15,12 @@ import java.util.List;
 
 public final class ListUtils {
 
-    public interface OnListInteractionListener<T>{
+    public interface OnListInteractionListener<T> {
         boolean isFit(T other);
+    }
+
+    public interface OnListMutateListener<T, M> {
+        M mutate(T object);
     }
 
     private ListUtils() {}
@@ -54,6 +58,13 @@ public final class ListUtils {
         for (T item: list)
             if (listener.isFit(item))
                 result.add(item);
+        return result;
+    }
+
+    public static <T, M> List<M> mutate(@NonNull List<T> list, @NonNull OnListMutateListener<T, M> listener) {
+        List<M> result = new ArrayList<>();
+        for (T item: list)
+            result.add(listener.mutate(item));
         return result;
     }
 }

@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.services.query.factory;
 
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
+import com.github.sasd97.upitter.models.response.authorization.AuthorizationBusinessUserResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequestCodeResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
@@ -9,6 +10,8 @@ import com.github.sasd97.upitter.models.response.report.ReportResponseModel;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -55,16 +58,12 @@ public interface BaseFactory {
                                                                 @Path("countryCode") String countryCode,
                                                                 @Field("code") String requestCode);
 
-    @FormUrlEncoded
     @POST("/authorization/phone/add_info/{number}/{countryCode}")
-    Call<BaseResponseModel> registerBusinessUser(@Path("number") String number,
-                                                 @Path("countryCode") String countryCode,
-                                                 @Field("token") String token,
-                                                 @Field("name") String name,
-                                                 @Field("activity") int category,
-                                                 @Field("phone") RequestBody phone,
-                                                 @Field("site") String site);
+    Call<AuthorizationBusinessUserResponseModel> registerBusinessUser(@Path("number") String number,
+                                                                      @Path("countryCode") String countryCode,
+                                                                      @Body RequestBody businessUser);
 
     @GET("/categories")
     Call<CatergoriesResponseModel> getCategories(@Query("ln") String language);
+
 }

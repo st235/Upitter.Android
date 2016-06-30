@@ -1,5 +1,7 @@
 package com.github.sasd97.upitter.services;
 
+import android.support.annotation.NonNull;
+
 import com.github.sasd97.upitter.services.query.factory.BaseFactory;
 import com.github.sasd97.upitter.services.query.factory.FileServerFactory;
 
@@ -24,6 +26,8 @@ import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SUB_ASTRA
 public final class RestService {
 
     private static final String IMAGE_MEDIATYPE = "image/*";
+    private static final String JSON_MEDIATYPE = "application/json";
+
     private static final String FILE_MULTIPART_SCHEMA = "files\"; filename=\"%1$s";
 
     private static BaseFactory baseFactory;
@@ -33,7 +37,7 @@ public final class RestService {
 
     public static void init() {
         Retrofit baseAPI = new Retrofit.Builder()
-                .baseUrl(BASE_SUB_API_URL)
+                .baseUrl(BASE_SUB_ASTRAL_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -59,5 +63,9 @@ public final class RestService {
         RequestBody photoBody = RequestBody.create(MediaType.parse(IMAGE_MEDIATYPE), image);
         map.put(String.format(Locale.ENGLISH, FILE_MULTIPART_SCHEMA, image.getName()), photoBody);
         return map;
+    }
+
+    public static RequestBody obtainJsonRaw(@NonNull String jsonRaw) {
+        return RequestBody.create(MediaType.parse(JSON_MEDIATYPE), jsonRaw);
     }
 }
