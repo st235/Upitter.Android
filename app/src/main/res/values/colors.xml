@@ -34,4 +34,10 @@
     <!-- Gallery region. -->
     <color name="colorGalleryBackground">#313131</color>
     <!-- Endregion -->
+
+    <!-- Navigation drawer region. -->
+    <color name="colorNavigationDrawerBackground">#384657</color>
+    <color name="colorNavigationDrawerAccent">#303F4F</color>
+    <color name="colorNavigationDrawerLight">#4C5968</color>
+    <!-- Endregion -->
 </resources>

@@ -114,4 +114,14 @@
         <item>LOOKUP</item>
     </string-array>
     <!-- Endregion -->
+
+    <!-- Create post region -->
+    <string name="title_create_post_activity">Create post</string>
+    <string name="whats_up_label_create_post_activity">You can publish your services and news here&#8230;</string>
+    <string name="category_label_create_post_activity">Category:</string>
+    <string name="address_label_create_post_activity">Address(es)</string>
+    <string name="photo_label_create_post_activity">Photos</string>
+    <string name="quiz_label_create_post_activity">Quiz</string>
+    <string name="send_label_create_post_activity">Send</string>
+    <!-- Endregion -->
 </resources>

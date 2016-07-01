@@ -69,7 +69,7 @@
         <activity
             android:name=".ui.TapeActivity"
             android:label="@string/title_activity_tape"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.CodeConfirmActivity"
             android:label="@string/title_activity_code_confirm_activity"
@@ -107,6 +107,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.BusinessRegistrationActivity" />
+        </activity>
+        <activity android:name=".ui.CreatePostActivity"
+            android:label="@string/title_create_post_activity"
+            android:parentActivityName=".ui.TapeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.TapeActivity" />
         </activity>
     </application>
 

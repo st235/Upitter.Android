@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:layout_above="@+id/navigation_bottom_publication">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/post_description_create_post_activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxLength="400"
+            android:hint="@string/whats_up_label_create_post_activity"
+            android:gravity="top"
+            android:textCursorDrawable="@drawable/create_post_cursor_drawable"
+            app:met_hideUnderline="true"
+            app:met_maxCharacters="400"
+            app:met_floatingLabel="normal"
+            app:met_baseColor="@android:color/black"
+            app:met_primaryColor="@color/colorPrimary"
+            />
+
+        <LinearLayout
+            android:id="@+id/categories_layout_create_post_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            android:background="@drawable/rounded_primary_color_rounded_ripple">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/current_badge_preview_publication"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/current_badge_title_publication"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/colorShadowDark"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                tools:text="Badge XXX"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/navigation_bottom_publication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/photo_placeholder_publication"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:background="#f2f6f8"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/image_placeholder_recyclerview_publication"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center"
+            android:background="#e5eef2">
+
+            <android.support.v7.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:orientation="horizontal"
+                app:columnCount="4"
+                app:rowCount="1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:onClick="onAnonymousClick"
+                    app:layout_column="0"
+                    app:layout_columnWeight="2"
+                    android:gravity="center"
+                    android:background="?android:selectableItemBackground">
+
+                    <ImageView
+                        android:id="@+id/anonymous_image_view_publication"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_icon_map"
+                        android:scaleType="centerInside"
+                        />
+
+                    <TextView
+                        android:id="@+id/anonymous_text_view_publication"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/colorShadowDark"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:text="@string/address_label_create_post_activity"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:onClick="onQuizClick"
+                    app:layout_column="1"
+                    app:layout_columnWeight="2"
+                    android:gravity="center"
+                    android:background="?android:selectableItemBackground">
+
+                    <ImageView
+                        android:id="@+id/quiz_image_view_publication"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_icon_quiz"
+                        android:scaleType="centerInside"
+                        />
+
+                    <TextView
+                        android:id="@+id/quiz_text_view_publication"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/colorShadowDark"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:text="@string/quiz_label_create_post_activity"
+                        />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:onClick="onPhotosClick"
+                    app:layout_column="2"
+                    app:layout_row="0"
+                    app:layout_columnWeight="2"
+                    android:gravity="center"
+                    android:background="?android:selectableItemBackground">
+
+                    <ImageView
+                        android:id="@+id/photos_image_view_publication"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_icon_add_photo"
+                        android:scaleType="centerInside"
+                        />
+
+                    <TextView
+                        android:id="@+id/photos_text_view_publication"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/colorShadowDark"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:text="@string/photo_label_create_post_activity"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:layout_column="3"
+                    app:layout_columnWeight="3">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/send_label_create_post_activity"
+                        android:onClick="onSendClick"
+                        android:layout_gravity="center"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        />
+
+                </LinearLayout>
+            </android.support.v7.widget.GridLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
