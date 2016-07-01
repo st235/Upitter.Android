@@ -80,6 +80,7 @@
     <string name="add_phone_label_business_registration_activity">Add phone</string>
     <string name="site_label_business_registration_activity">Site</string>
     <string name="set_coordinates_business_registration_activity">Set position</string>
+    <string name="choose_avatar_business_registration_activity">Choose your\navatar</string>
     <!-- Endregion -->
 
     <!-- Map activity region -->

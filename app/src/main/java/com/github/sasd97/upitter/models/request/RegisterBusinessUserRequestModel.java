@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alexander on 30.06.16.
  */
-public class RegisterBusinessUserRequestModel {
+public class RegisterBusinessUserRequestModel extends BaseRequestModel {
 
     private String name;
     private String temporaryToken;
@@ -47,7 +47,8 @@ public class RegisterBusinessUserRequestModel {
         return this;
     }
 
-    public String toJSON() {
+    @Override
+    public String toJson() {
         return new Gson().toJson(this);
     }
 }

@@ -19,6 +19,11 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.components.ImageUploaderView;
+import com.github.sasd97.upitter.events.OnBusinessRegistrationListener;
+import com.github.sasd97.upitter.models.BusinessUserModel;
+import com.github.sasd97.upitter.models.response.businessUser.BusinessUserResponseModel;
+import com.github.sasd97.upitter.ui.BusinessRegistrationActivity;
 import com.github.sasd97.upitter.ui.adapters.PhonesRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
@@ -26,6 +31,7 @@ import com.github.sasd97.upitter.ui.results.CategoriesActivity;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.Names;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
 
@@ -41,19 +47,27 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.GALLERY_
  */
 public class BaseBusinessRegistrationFragment extends BaseFragment {
 
+    private OnBusinessRegistrationListener listener;
+
     private ArrayList<Integer> categoriesSelected;
     private ArrayList<String> contactPhones;
 
-    private ImageView avatarImageView;
-    private LinearLayout avatarLayout;
+    private ImageUploaderView avatarImageUploaderView;
     private RelativeLayout categoriesLayout;
+    private Button setPositionButton;
+
+    private MaterialEditText companyNameEditText;
+    private MaterialEditText companyDescriptionEditText;
+    private MaterialEditText companySiteEditText;
 
     private RelativeLayout addPhoneLayout;
     private RecyclerView phonesRecyclerView;
     private PhonesRecyclerAdapter phonesRecyclerAdapter;
 
-    public static BaseBusinessRegistrationFragment getFragment() {
-        return new BaseBusinessRegistrationFragment();
+    public static BaseBusinessRegistrationFragment getFragment(OnBusinessRegistrationListener listener) {
+        BaseBusinessRegistrationFragment fragment = new BaseBusinessRegistrationFragment();
+        fragment.setRegistrationListener(listener);
+        return fragment;
     }
 
     @Nullable
@@ -66,7 +80,7 @@ public class BaseBusinessRegistrationFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        avatarLayout.setOnClickListener(new View.OnClickListener() {
+        avatarImageUploaderView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onAvatarChooseClick();
@@ -82,6 +96,12 @@ public class BaseBusinessRegistrationFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 onAddPhoneClick();
+            }
+        });
+        setPositionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddressChooseClick();
             }
         });
 
@@ -114,42 +134,49 @@ public class BaseBusinessRegistrationFragment extends BaseFragment {
 
     @Override
     protected void bindViews() {
-        avatarImageView = findById(R.id.avatar_business_registration_base_fragment);
-        avatarLayout = findById(R.id.avatar_url_business_registration_base_fragment);
+        avatarImageUploaderView = findById(R.id.avatar_url_business_registration_base_fragment);
         categoriesLayout = findById(R.id.categories_choose_business_registration_base_fragment);
         phonesRecyclerView = findById(R.id.phones_recyclerview_registration_base_fragment);
         addPhoneLayout = findById(R.id.add_phone_button_registration_base_fragment);
+        companyNameEditText = findById(R.id.name_edittext_business_registration_base_fragment);
+        companyDescriptionEditText = findById(R.id.description_edittext_business_registration_base_fragment);
+        companySiteEditText = findById(R.id.site_edittext_business_registration_base_fragment);
+        setPositionButton = findById(R.id.set_position_business_registration_base_fragment);
     }
 
-    public void onAddPhoneClick() {
+    private void setRegistrationListener(OnBusinessRegistrationListener listener) {
+        this.listener = listener;
+    }
+
+    private void onAddressChooseClick() {
+        BusinessUserModel.Builder userBuilder =
+                new BusinessUserModel
+                        .Builder()
+                        .name(companyNameEditText.getText().toString())
+                        .description(companyDescriptionEditText.getText().toString());
+    }
+
+    private void onAddPhoneClick() {
         LinearLayout.LayoutParams lp =
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         phonesRecyclerAdapter.addPhone();
         phonesRecyclerView.setLayoutParams(lp);
     }
 
-    public void onAvatarChooseClick() {
+    private void onAvatarChooseClick() {
         startActivityForResult(new Gallery.Builder()
                 .from(getContext())
                 .multiSelectionMode(false)
                 .build(), GALLERY_ACTIVITY_REQUEST);
     }
 
-    public void onCategoryChooseClick() {
+    private void onCategoryChooseClick() {
         startActivityForResult(new Intent(getActivity(), CategoriesActivity.class), CATEGORIES_ACTIVITY_REQUEST);
     }
 
     private void handleAvatarIntent(@NonNull Intent intent) {
         String path = intent.getStringExtra(PUT_CROPPED_IMAGE);
-
-        Glide
-                .with(this)
-                .load(Names
-                        .getInstance()
-                        .getFilePath(path)
-                        .toString())
-                .bitmapTransform(new CenterCrop(getContext()), new RoundedCornersTransformation(getContext(), Dimens.dpToPx(4), 0))
-                .into(avatarImageView);
+        avatarImageUploaderView.uploadPhoto(path, null);
     }
 
     private void handleCategoriesIntent(@NonNull Intent intent) {

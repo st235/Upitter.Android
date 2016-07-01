@@ -1,8 +1,6 @@
 package com.github.sasd97.upitter.services.query;
 
-import android.graphics.Point;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.PhoneModel;
@@ -11,18 +9,12 @@ import com.github.sasd97.upitter.models.request.RegisterBusinessUserRequestModel
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationBusinessUserResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequestCodeResponseModel;
-import com.github.sasd97.upitter.models.response.categories.CatergoriesResponseModel;
 import com.github.sasd97.upitter.models.response.requestCode.RequestCodeResponseModel;
 import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.utils.ListUtils;
-import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -124,7 +116,7 @@ public class BusinessAuthorizationQueryService {
                 .coordinates(coors)
                 .site(site);
 
-        RequestBody body = RestService.obtainJsonRaw(register.toJSON());
+        RequestBody body = RestService.obtainJsonRaw(register.toJson());
 
         Call<AuthorizationBusinessUserResponseModel> registerCall = RestService.baseFactory().registerBusinessUser(phone.getPhoneBody(), phone.getDialCode(), body);
         registerCall.enqueue(new Callback<AuthorizationBusinessUserResponseModel>() {

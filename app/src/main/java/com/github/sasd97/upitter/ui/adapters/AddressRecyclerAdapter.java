@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.sasd97.upitter.R;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 /**
  * Created by alexander on 28.06.16.
@@ -15,6 +16,9 @@ import com.github.sasd97.upitter.R;
 public class AddressRecyclerAdapter extends RecyclerView.Adapter<AddressRecyclerAdapter.AddressViewHolder> {
 
     public class AddressViewHolder extends RecyclerView.ViewHolder {
+
+        //private MaterialEditText
+
         public AddressViewHolder(View itemView) {
             super(itemView);
         }
