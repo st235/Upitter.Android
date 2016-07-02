@@ -25,6 +25,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 /**
  * Created by Alexadner Dadukin on 30.06.2016.
  */
+
 public class ImageUploaderView extends LinearLayout implements FileUploadQueryService.OnFileUploadListener {
 
     public interface OnImageUploadListener {

@@ -12,7 +12,7 @@ import com.github.sasd97.upitter.ui.base.BaseFragment;
 /**
  * Created by alexander on 28.06.16.
  */
-public class AddressBusinessRegistrationFragment extends BaseFragment {
+public class CompanyAddressRegistrationFragment extends BaseFragment {
 
     @Nullable
     @Override

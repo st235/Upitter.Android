@@ -11,7 +11,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.receivers.RequestCodeReceiver;
 import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.models.SmsModel;
-import com.github.sasd97.upitter.services.query.BusinessAuthorizationQueryService;
+import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
@@ -25,7 +25,7 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.CODE_REC
 
 public class CodeConfirmActivity extends BaseActivity implements
         RequestCodeReceiver.OnRequestCodeReceiveListener,
-        BusinessAuthorizationQueryService.OnBusinessAuthorizationListener {
+        CompanyAuthorizationQueryService.OnBusinessAuthorizationListener {
 
     private final String UPITTER_SMS_HEADER = "999999";
 
@@ -33,7 +33,7 @@ public class CodeConfirmActivity extends BaseActivity implements
     private MaterialEditText requestCodeEditText;
 
     private PhoneModel currentPhone;
-    private BusinessAuthorizationQueryService queryService;
+    private CompanyAuthorizationQueryService queryService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class CodeConfirmActivity extends BaseActivity implements
         setContentView(R.layout.code_confirm_activity);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
 
-        queryService = BusinessAuthorizationQueryService.getService(this);
+        queryService = CompanyAuthorizationQueryService.getService(this);
 
         requestCodeReceiver = RequestCodeReceiver.getReceiver(this);
         currentPhone = getIntent().getParcelableExtra(RECEIVED_PHONE);
@@ -88,7 +88,7 @@ public class CodeConfirmActivity extends BaseActivity implements
 
     @Override
     public void onRegister(String temporaryToken) {
-        Intent intent = new Intent(this, BusinessRegistrationActivity.class);
+        Intent intent = new Intent(this, CompanyRegistrationActivity.class);
         intent.putExtra(RECEIVED_TEMPORARY_TOKEN, temporaryToken);
         startActivity(intent);
     }

@@ -1,7 +1,6 @@
 package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.github.sasd97.upitter.models.response.ErrorResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
@@ -15,7 +14,7 @@ import retrofit2.Response;
 /**
  * Created by Alex on 10.06.2016.
  */
-public class SocialAuthorizationQueryService {
+public class UserAuthorizationQueryService {
 
     public interface OnSocialAuthorizationListener {
         void onServerNotify(UserResponseModel userResponseModel);
@@ -24,12 +23,12 @@ public class SocialAuthorizationQueryService {
 
     private OnSocialAuthorizationListener listener;
 
-    private SocialAuthorizationQueryService(OnSocialAuthorizationListener listener) {
+    private UserAuthorizationQueryService(OnSocialAuthorizationListener listener) {
         this.listener = listener;
     }
 
-    public static SocialAuthorizationQueryService getService(OnSocialAuthorizationListener listener) {
-        return new SocialAuthorizationQueryService(listener);
+    public static UserAuthorizationQueryService getService(OnSocialAuthorizationListener listener) {
+        return new UserAuthorizationQueryService(listener);
     }
 
     public void notifyByGoogle(@NonNull String tokenId) {

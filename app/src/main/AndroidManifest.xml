@@ -75,7 +75,7 @@
             android:label="@string/title_activity_code_confirm_activity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.BusinessRegistrationActivity"
+            android:name=".ui.CompanyRegistrationActivity"
             android:label="@string/title_activity_bussines_registration"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -93,20 +93,20 @@
         <activity
             android:name=".ui.results.CategoriesActivity"
             android:label="@string/title_categories_activity"
-            android:parentActivityName=".ui.BusinessRegistrationActivity"
+            android:parentActivityName=".ui.CompanyRegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.BusinessRegistrationActivity" />
+                android:value=".ui.CompanyRegistrationActivity" />
         </activity>
         <activity
             android:name=".ui.results.MapChooseActivity"
             android:label="@string/title_map_choose_activity"
-            android:parentActivityName=".ui.BusinessRegistrationActivity"
+            android:parentActivityName=".ui.CompanyRegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.BusinessRegistrationActivity" />
+                android:value=".ui.CompanyRegistrationActivity" />
         </activity>
         <activity android:name=".ui.CreatePostActivity"
             android:label="@string/title_create_post_activity"

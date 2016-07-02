@@ -7,35 +7,25 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.components.ImageUploaderView;
-import com.github.sasd97.upitter.events.OnBusinessRegistrationListener;
-import com.github.sasd97.upitter.models.BusinessUserModel;
-import com.github.sasd97.upitter.models.response.businessUser.BusinessUserResponseModel;
-import com.github.sasd97.upitter.ui.BusinessRegistrationActivity;
+import com.github.sasd97.upitter.events.OnCompanyRegistrationListener;
+import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.ui.adapters.PhonesRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.results.CategoriesActivity;
-import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Gallery;
-import com.github.sasd97.upitter.utils.Names;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
-
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.CATEGORIES_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.PUT_CROPPED_IMAGE;
@@ -45,9 +35,9 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.GALLERY_
 /**
  * Created by Alexadner Dadukin on 24.06.2016.
  */
-public class BaseBusinessRegistrationFragment extends BaseFragment {
+public class CompanyBaseRegistrationFragment extends BaseFragment {
 
-    private OnBusinessRegistrationListener listener;
+    private OnCompanyRegistrationListener listener;
 
     private ArrayList<Integer> categoriesSelected;
     private ArrayList<String> contactPhones;
@@ -64,8 +54,8 @@ public class BaseBusinessRegistrationFragment extends BaseFragment {
     private RecyclerView phonesRecyclerView;
     private PhonesRecyclerAdapter phonesRecyclerAdapter;
 
-    public static BaseBusinessRegistrationFragment getFragment(OnBusinessRegistrationListener listener) {
-        BaseBusinessRegistrationFragment fragment = new BaseBusinessRegistrationFragment();
+    public static CompanyBaseRegistrationFragment getFragment(OnCompanyRegistrationListener listener) {
+        CompanyBaseRegistrationFragment fragment = new CompanyBaseRegistrationFragment();
         fragment.setRegistrationListener(listener);
         return fragment;
     }
@@ -144,13 +134,13 @@ public class BaseBusinessRegistrationFragment extends BaseFragment {
         setPositionButton = findById(R.id.set_position_business_registration_base_fragment);
     }
 
-    private void setRegistrationListener(OnBusinessRegistrationListener listener) {
+    private void setRegistrationListener(OnCompanyRegistrationListener listener) {
         this.listener = listener;
     }
 
     private void onAddressChooseClick() {
-        BusinessUserModel.Builder userBuilder =
-                new BusinessUserModel
+        CompanyModel.Builder userBuilder =
+                new CompanyModel
                         .Builder()
                         .name(companyNameEditText.getText().toString())
                         .description(companyDescriptionEditText.getText().toString());

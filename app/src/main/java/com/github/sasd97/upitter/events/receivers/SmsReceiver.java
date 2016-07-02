@@ -22,7 +22,7 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.RECEIVED_S
 
 public class SmsReceiver extends BroadcastReceiver {
 
-    private final String PDUS_FORMAT = "pdus";
+    private static final String PDUS_FORMAT = "pdus";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -32,8 +32,6 @@ public class SmsReceiver extends BroadcastReceiver {
         if (bundle != null) {
             Object[] pdus = (Object[]) bundle.get(PDUS_FORMAT);
             messages = new SmsMessage[pdus.length];
-
-            Log.d("SMS", "SMS_RECEIVED");
 
             if (Build.VERSION.SDK_INT >= 19) messages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
             else for (int i = 0; i < messages.length; i++) messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
@@ -47,11 +45,6 @@ public class SmsReceiver extends BroadcastReceiver {
                                 .author(sms.getDisplayOriginatingAddress())
                                 .body(sms.getMessageBody())
                                 .build());
-            Log.d("SMS_RECEIVER_BODY", sms.getDisplayMessageBody());
-            Log.d("SMS_RECEIVER_ADDRESS", sms.getDisplayOriginatingAddress());
-            Log.d("SMS_RECEIVER_BODY", sms.getMessageBody());
-            Log.d("SMS_RECEIVER_TIMESTAMP", sms.getTimestampMillis()+ "");
-            Log.d("SMS_RECEIVER_STATUS", sms.getStatus() + "");
         }
 
         Intent sendIntent = new Intent(CODE_RECEIVER_INTENT_NAME);

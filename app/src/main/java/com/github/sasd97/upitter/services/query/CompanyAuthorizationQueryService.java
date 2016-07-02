@@ -2,16 +2,14 @@ package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
 
+import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.PhoneModel;
-import com.github.sasd97.upitter.models.request.CoordinatesRequestModel;
-import com.github.sasd97.upitter.models.request.RegisterBusinessUserRequestModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
-import com.github.sasd97.upitter.models.response.authorization.AuthorizationBusinessUserResponseModel;
+import com.github.sasd97.upitter.models.response.authorization.AuthorizationCompanyResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequestCodeResponseModel;
 import com.github.sasd97.upitter.models.response.requestCode.RequestCodeResponseModel;
 import com.github.sasd97.upitter.services.RestService;
-import com.github.sasd97.upitter.utils.ListUtils;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ import retrofit2.Response;
 /**
  * Created by alexander on 23.06.16.
  */
-public class BusinessAuthorizationQueryService {
+public class CompanyAuthorizationQueryService {
 
     public interface OnBusinessAuthorizationListener {
         void onCodeObtained();
@@ -34,12 +32,12 @@ public class BusinessAuthorizationQueryService {
 
     private OnBusinessAuthorizationListener listener;
 
-    private BusinessAuthorizationQueryService(OnBusinessAuthorizationListener listener) {
+    private CompanyAuthorizationQueryService(OnBusinessAuthorizationListener listener) {
         this.listener = listener;
     }
 
-    public static BusinessAuthorizationQueryService getService(OnBusinessAuthorizationListener listener) {
-        return new BusinessAuthorizationQueryService(listener);
+    public static CompanyAuthorizationQueryService getService(OnBusinessAuthorizationListener listener) {
+        return new CompanyAuthorizationQueryService(listener);
     }
 
     public void obtainCodeRequest(@NonNull String number,
@@ -89,44 +87,37 @@ public class BusinessAuthorizationQueryService {
         });
     }
 
-    public void registerBusinessUser(@NonNull String name,
-                                     @NonNull String description,
-                                     @NonNull PhoneModel phone,
-                                     int category,
-                                     @NonNull List<String> contactPhones,
-                                     @NonNull String temporaryToken,
-                                     @NonNull List<CoordinatesModel> coordinates,
-                                     @NonNull String site) {
+    public void registerCompanyUser(@NonNull String name,
+                                    @NonNull String description,
+                                    @NonNull PhoneModel phone,
+                                    int category,
+                                    @NonNull List<String> contactPhones,
+                                    @NonNull String temporaryToken,
+                                    @NonNull List<CoordinatesModel> coordinates,
+                                    @NonNull String site) {
 
-        List<CoordinatesRequestModel> coors = ListUtils.mutate(coordinates, new ListUtils.OnListMutateListener<CoordinatesModel, CoordinatesRequestModel>() {
-            @Override
-            public CoordinatesRequestModel mutate(CoordinatesModel object) {
-                return new CoordinatesRequestModel()
-                        .setLatitude(object.getLatitude())
-                        .setLongitude(object.getLongitude());
-            }
-        });
-
-        RegisterBusinessUserRequestModel register =
-                RegisterBusinessUserRequestModel
-                .getRequest()
+        CompanyModel register =
+                new CompanyModel.Builder()
                 .name(name)
+                .description(description)
                 .temporaryToken(temporaryToken)
                 .category(category)
-                .coordinates(coors)
-                .site(site);
+                .contactPhones(contactPhones)
+                .coordinates(coordinates)
+                .site(site)
+                .build();
 
         RequestBody body = RestService.obtainJsonRaw(register.toJson());
 
-        Call<AuthorizationBusinessUserResponseModel> registerCall = RestService.baseFactory().registerBusinessUser(phone.getPhoneBody(), phone.getDialCode(), body);
-        registerCall.enqueue(new Callback<AuthorizationBusinessUserResponseModel>() {
+        Call<AuthorizationCompanyResponseModel> registerCall = RestService.baseFactory().registerBusinessUser(phone.getPhoneBody(), phone.getDialCode(), body);
+        registerCall.enqueue(new Callback<AuthorizationCompanyResponseModel>() {
             @Override
-            public void onResponse(Call<AuthorizationBusinessUserResponseModel> call, Response<AuthorizationBusinessUserResponseModel> response) {
+            public void onResponse(Call<AuthorizationCompanyResponseModel> call, Response<AuthorizationCompanyResponseModel> response) {
 
             }
 
             @Override
-            public void onFailure(Call<AuthorizationBusinessUserResponseModel> call, Throwable t) {
+            public void onFailure(Call<AuthorizationCompanyResponseModel> call, Throwable t) {
 
             }
         });

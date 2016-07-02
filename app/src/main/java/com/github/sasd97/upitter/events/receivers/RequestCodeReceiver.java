@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.telephony.SmsMessage;
-import android.util.Log;
 
 import com.github.sasd97.upitter.models.SmsModel;
 
@@ -15,6 +13,7 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.RECEIVED_S
 /**
  * Created by Alexadner Dadukin on 23.06.2016.
  */
+
 public class RequestCodeReceiver extends BroadcastReceiver {
 
     public interface OnRequestCodeReceiveListener {

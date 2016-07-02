@@ -11,7 +11,6 @@ import com.github.sasd97.upitter.models.FolderModel;
  */
 
 public interface OnSearchListener {
-
     void onSearched(ArrayList<String> list);
     void onSearchError();
 

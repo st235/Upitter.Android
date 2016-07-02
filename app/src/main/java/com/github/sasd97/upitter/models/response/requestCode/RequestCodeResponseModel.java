@@ -1,6 +1,6 @@
 package com.github.sasd97.upitter.models.response.requestCode;
 
-import com.github.sasd97.upitter.models.response.businessUser.BusinessUserResponseModel;
+import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -22,7 +22,7 @@ public class RequestCodeResponseModel {
 
     @SerializedName("user")
     @Expose
-    private BusinessUserResponseModel mBusinessUser;
+    private CompanyResponseModel mBusinessUser;
 
     public boolean isAuthorized() {
         return mIsAuthorized;

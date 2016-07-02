@@ -1,7 +1,6 @@
 package com.github.sasd97.upitter.services.query.factory;
 
-import com.github.sasd97.upitter.models.response.BaseResponseModel;
-import com.github.sasd97.upitter.models.response.authorization.AuthorizationBusinessUserResponseModel;
+import com.github.sasd97.upitter.models.response.authorization.AuthorizationCompanyResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequestCodeResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
@@ -10,15 +9,10 @@ import com.github.sasd97.upitter.models.response.report.ReportResponseModel;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -59,9 +53,9 @@ public interface BaseFactory {
                                                                 @Field("code") String requestCode);
 
     @POST("/authorization/phone/add_info/{number}/{countryCode}")
-    Call<AuthorizationBusinessUserResponseModel> registerBusinessUser(@Path("number") String number,
-                                                                      @Path("countryCode") String countryCode,
-                                                                      @Body RequestBody businessUser);
+    Call<AuthorizationCompanyResponseModel> registerBusinessUser(@Path("number") String number,
+                                                                 @Path("countryCode") String countryCode,
+                                                                 @Body RequestBody businessUser);
 
     @GET("/categories")
     Call<CatergoriesResponseModel> getCategories(@Query("ln") String language);

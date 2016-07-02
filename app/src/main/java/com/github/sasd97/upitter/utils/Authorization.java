@@ -9,7 +9,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.LoggingBehavior;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.services.query.SocialAuthorizationQueryService;
+import com.github.sasd97.upitter.services.query.UserAuthorizationQueryService;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -83,7 +83,7 @@ public final class Authorization {
         return facebookClient;
     }
 
-    public static void obtainGoogle(SocialAuthorizationQueryService service, GoogleSignInResult result) {
+    public static void obtainGoogle(UserAuthorizationQueryService service, GoogleSignInResult result) {
         GoogleSignInAccount googleAccount = result.getSignInAccount();
         service.notifyByGoogle(googleAccount.getIdToken());
     }

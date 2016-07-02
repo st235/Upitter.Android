@@ -9,7 +9,11 @@ import com.github.sasd97.upitter.utils.Prefs;
 
 public class UserHolder {
 
+    //  TODO: make it abstract factory
+
     private static final String USER = "USER_AVAILABLE";
+    private static final String USER_TYPE = "USER_TYPE";
+
     private static final String USER_ID = "USER_ID";
     private static final String USER_NAME = "USER_NAME";
     private static final String USER_SURNAME = "USER_SURNAME";

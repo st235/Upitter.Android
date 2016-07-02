@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -22,7 +21,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.holders.UserHolder;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.models.response.user.UserResponseModel;
-import com.github.sasd97.upitter.services.query.SocialAuthorizationQueryService;
+import com.github.sasd97.upitter.services.query.UserAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.TapeActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.utils.Authorization;
@@ -47,10 +46,10 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_
 public class UserLoginFragment extends BaseFragment
         implements GoogleApiClient.OnConnectionFailedListener,
         FacebookCallback<LoginResult>,
-        SocialAuthorizationQueryService.OnSocialAuthorizationListener {
+        UserAuthorizationQueryService.OnSocialAuthorizationListener {
 
     private GoogleApiClient googleClient;
-    private SocialAuthorizationQueryService service = SocialAuthorizationQueryService.getService(this);
+    private UserAuthorizationQueryService service = UserAuthorizationQueryService.getService(this);
 
     private Button signFacebookButton;
     private Button signGoogleButton;

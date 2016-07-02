@@ -5,8 +5,8 @@ import java.util.ArrayList;
 /**
  * Created by Alex on 09.02.2016.
  */
-public interface OnSaveListener {
 
+public interface OnSaveListener {
     void onSave(ArrayList<String> paths);
     void onSaveError();
 }

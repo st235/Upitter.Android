@@ -1,26 +1,52 @@
 package com.github.sasd97.upitter.models;
 
-import com.github.sasd97.upitter.models.CoordinatesModel;
-import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
+import com.github.sasd97.upitter.models.skeletons.RequestSkeleton;
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 /**
  * Created by Alexadner Dadukin on 30.06.2016.
  */
-public class BusinessUserModel extends BaseResponseModel {
+public class CompanyModel extends BaseResponseModel
+        implements RequestSkeleton {
 
+    @SerializedName("name")
+    @Expose
     private String mName;
+
+    @SerializedName("")
+    @Expose
     private String mDescription;
+
+    @SerializedName("category")
+    @Expose
     private int mCategory;
+
     private PhoneModel mPhone;
+
+    @SerializedName("contactPhones")
+    @Expose
     private List<String> mContactPhones;
+
+    @SerializedName("site")
+    @Expose
     private String mSite;
+
+    @SerializedName("coordinates")
+    @Expose
     private List<CoordinatesModel> mCoordinates;
+
+    @SerializedName("temporaryToken")
+    @Expose
+    private String mTemporaryToken;
+
     private String mAccessToken;
 
-    private BusinessUserModel(Builder builder) {
+    private CompanyModel(Builder builder) {
         mName = builder.name;
         mDescription = builder.description;
         mCategory = builder.category;
@@ -29,6 +55,11 @@ public class BusinessUserModel extends BaseResponseModel {
         mSite = builder.site;
         mCoordinates = builder.coordinates;
         mAccessToken = builder.accessToken;
+    }
+
+    @Override
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 
     public static class Builder {
@@ -41,6 +72,7 @@ public class BusinessUserModel extends BaseResponseModel {
         private String site;
         private List<CoordinatesModel> coordinates;
         private String accessToken;
+        private String temporaryToken;
 
         public Builder name(String name) {
             this.name = name;
@@ -82,8 +114,13 @@ public class BusinessUserModel extends BaseResponseModel {
             return this;
         }
 
-        public BusinessUserModel build() {
-            return new BusinessUserModel(this);
+        public Builder temporaryToken(String temporaryToken) {
+            this.temporaryToken = temporaryToken;
+            return this;
+        }
+
+        public CompanyModel build() {
+            return new CompanyModel(this);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.models.response.businessUser;
+package com.github.sasd97.upitter.models.response.company;
 
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.response.coordinates.CoordinatesResponseModel;
@@ -12,7 +12,7 @@ import java.util.Locale;
 /**
  * Created by alexander on 28.06.16.
  */
-public class BusinessUserResponseModel extends BaseResponseModel {
+public class CompanyResponseModel extends BaseResponseModel {
 
     @SerializedName("customId")
     @Expose

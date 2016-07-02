@@ -3,6 +3,7 @@ package com.github.sasd97.upitter.models.skeletons;
 /**
  * Created by Alex on 18.05.2016.
  */
+
 public class ImageSkeleton implements CheckableSkeleton {
 
     private String mImagePath;

@@ -14,13 +14,10 @@ import android.widget.Toast;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.results.GalleryActivity;
-import com.github.sasd97.upitter.ui.results.MapChooseActivity;
 import com.github.sasd97.upitter.utils.Permissions;
 
 import static com.github.sasd97.upitter.holders.UserHolder.isUserCreate;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
-import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 
 public class LoginActivity extends BaseActivity
         implements ViewPager.OnPageChangeListener {
@@ -53,7 +50,7 @@ public class LoginActivity extends BaseActivity
         }
 
         /* TEST REGION */
-        Intent intent = new Intent(this, BusinessRegistrationActivity.class);
+        Intent intent = new Intent(this, CompanyRegistrationActivity.class);
         //intent.putExtra(RECEIVED_TEMPORARY_TOKEN, "234lkkfjlsjfsklr4534dlksfjlkds");
         startActivity(intent);
         finish();

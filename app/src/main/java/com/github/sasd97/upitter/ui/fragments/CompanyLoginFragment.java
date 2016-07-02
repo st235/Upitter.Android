@@ -18,7 +18,7 @@ import com.github.sasd97.upitter.constants.RequestCodesConstants;
 import com.github.sasd97.upitter.models.CountryModel;
 import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.services.LocationService;
-import com.github.sasd97.upitter.services.query.BusinessAuthorizationQueryService;
+import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.CodeConfirmActivity;
 import com.github.sasd97.upitter.ui.results.CountryCodeChooseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
@@ -37,12 +37,12 @@ public class CompanyLoginFragment extends BaseFragment
         Countries.OnLoadListener,
         DialCodeWatcher.OnCountryReadyListener,
         LocationService.OnLocationListener,
-        BusinessAuthorizationQueryService.OnBusinessAuthorizationListener {
+        CompanyAuthorizationQueryService.OnBusinessAuthorizationListener {
 
     private String COUNTRY_NOT_VALID;
 
     private LocationService locationService;
-    private BusinessAuthorizationQueryService queryService;
+    private CompanyAuthorizationQueryService queryService;
 
     private TextView countryDisplayTextView;
     private Button continueRegistrationButton;
@@ -60,7 +60,7 @@ public class CompanyLoginFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         locationService = LocationService.getService(this);
-        queryService = BusinessAuthorizationQueryService.getService(this);
+        queryService = CompanyAuthorizationQueryService.getService(this);
         return inflater.inflate(R.layout.company_login_fragment, container, false);
     }
 

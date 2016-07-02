@@ -2,7 +2,6 @@ package com.github.sasd97.upitter.components;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.annotation.DimenRes;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -13,6 +12,7 @@ import android.view.View;
 /**
  * Created by Alex on 03.02.2016.
  */
+
 public class AutoFitItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final int VERTICAL = OrientationHelper.VERTICAL;

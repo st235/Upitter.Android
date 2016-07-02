@@ -2,16 +2,16 @@ package com.github.sasd97.upitter.ui;
 
 import android.os.Bundle;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.events.OnBusinessRegistrationListener;
-import com.github.sasd97.upitter.models.BusinessUserModel;
+import com.github.sasd97.upitter.events.OnCompanyRegistrationListener;
+import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.fragments.BaseBusinessRegistrationFragment;
+import com.github.sasd97.upitter.ui.fragments.CompanyBaseRegistrationFragment;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
-public class BusinessRegistrationActivity extends BaseActivity
-    implements OnBusinessRegistrationListener {
+public class CompanyRegistrationActivity extends BaseActivity
+    implements OnCompanyRegistrationListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class BusinessRegistrationActivity extends BaseActivity
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_holder_business_registration_activity, BaseBusinessRegistrationFragment.getFragment(this))
+                .add(R.id.fragment_holder_business_registration_activity, CompanyBaseRegistrationFragment.getFragment(this))
                 .commit();
     }
 
@@ -29,7 +29,7 @@ public class BusinessRegistrationActivity extends BaseActivity
     protected void bindViews() {}
 
     @Override
-    public void onBaseInfoPrepared(String temporaryToken, BusinessUserModel.Builder builder) {
+    public void onBaseInfoPrepared(String temporaryToken, CompanyModel.Builder builder) {
 
     }
 }

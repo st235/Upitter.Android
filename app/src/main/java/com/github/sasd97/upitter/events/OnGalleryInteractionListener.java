@@ -1,7 +1,6 @@
 package com.github.sasd97.upitter.events;
 
 import com.github.sasd97.upitter.models.skeletons.ImageSkeleton;
-
 import java.util.ArrayList;
 
 /**
@@ -9,7 +8,6 @@ import java.util.ArrayList;
  */
 
 public interface OnGalleryInteractionListener {
-
     void onThumbnailClick(int position, ImageSkeleton path);
     void onMultiSelectionCounterClick(int position, ArrayList<ImageSkeleton> selected);
     void onMultiSelectionLimitExceeded();
