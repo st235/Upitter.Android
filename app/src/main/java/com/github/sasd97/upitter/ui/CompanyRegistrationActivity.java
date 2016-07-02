@@ -16,7 +16,7 @@ public class CompanyRegistrationActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.business_registration_activity);
+        setContentView(R.layout.company_registration_activity);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
 
         getSupportFragmentManager()

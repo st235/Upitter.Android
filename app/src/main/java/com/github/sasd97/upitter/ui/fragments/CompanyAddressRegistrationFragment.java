@@ -17,7 +17,7 @@ public class CompanyAddressRegistrationFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.business_registration_address_fragment, container, false);
+        return inflater.inflate(R.layout.company_registration_address_fragment, container, false);
     }
 
     @Override
