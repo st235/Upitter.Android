@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.github.sasd97.upitter.holders.UserHolder;
-import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.utils.Assets;
 import com.github.sasd97.upitter.utils.Authorization;
@@ -47,6 +46,8 @@ import org.acra.annotation.ReportsCrashes;
 )
 public class Upitter extends Application {
 
+    private static UserHolder holder;
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -65,6 +66,8 @@ public class Upitter extends Application {
         Palette.init(this);
         Prefs.init(this);
         RestService.init();
+
+        holder = UserHolder.init();
     }
 
     @Override
@@ -73,7 +76,11 @@ public class Upitter extends Application {
         SugarContext.terminate();
     }
 
-    public static UserModel user() {
-        return UserHolder.get();
+    public static void setHolder(UserHolder h) {
+        holder = h;
+    }
+
+    public static UserHolder getHolder() {
+        return holder;
     }
 }

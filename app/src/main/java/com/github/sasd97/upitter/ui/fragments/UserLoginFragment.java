@@ -18,8 +18,8 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.holders.UserHolder;
-import com.github.sasd97.upitter.models.UserModel;
+import com.github.sasd97.upitter.holders.PeopleHolder;
+import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.response.user.UserResponseModel;
 import com.github.sasd97.upitter.services.query.UserAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.TapeActivity;
@@ -38,6 +38,8 @@ import java.util.Arrays;
 
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.GOOGLE_SIGN_IN_REQUEST;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
+import static com.github.sasd97.upitter.Upitter.*;
+
 
 /**
  * Created by Alexander Dadukin on 06.06.2016.
@@ -140,7 +142,7 @@ public class UserLoginFragment extends BaseFragment
 
     @Override
     public void onServerNotify(UserResponseModel userResponseModel) {
-        UserModel.Builder builder = new UserModel
+        PeopleModel.Builder builder = new PeopleModel
                 .Builder()
                 .nickname(userResponseModel.getNickname())
                 .sex(userResponseModel.getSex())
@@ -153,7 +155,8 @@ public class UserLoginFragment extends BaseFragment
         if (userResponseModel.isField(userResponseModel.getAvatarUrl())) builder.avatarUrl(userResponseModel.getAvatarUrl());
         if (userResponseModel.isField(userResponseModel.getEmail())) builder.email(userResponseModel.getEmail());
 
-        UserHolder.save(builder.build());
+        setHolder(PeopleHolder.getHolder());
+        getHolder().save(builder.build());
 
         Snackbar
                 .make(getView(), getString(R.string.authorized_successfully_login_activity), Snackbar.LENGTH_LONG)
@@ -192,7 +195,6 @@ public class UserLoginFragment extends BaseFragment
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) Authorization.obtainGoogle(service, result);
             else showErrorSnackbar();
-            return;
         }
     }
 }

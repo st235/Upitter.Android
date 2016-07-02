@@ -1,6 +1,5 @@
 package com.github.sasd97.upitter.models;
 
-import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.skeletons.RequestSkeleton;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
@@ -11,14 +10,16 @@ import java.util.List;
 /**
  * Created by Alexadner Dadukin on 30.06.2016.
  */
-public class CompanyModel extends BaseResponseModel
+public class CompanyModel extends UserModel
         implements RequestSkeleton {
+
+    private String mId;
 
     @SerializedName("name")
     @Expose
     private String mName;
 
-    @SerializedName("")
+    @SerializedName("description")
     @Expose
     private String mDescription;
 
@@ -44,6 +45,9 @@ public class CompanyModel extends BaseResponseModel
     @Expose
     private String mTemporaryToken;
 
+    private boolean mIsVerify = false;
+    private String mAvatarUrl;
+
     private String mAccessToken;
 
     private CompanyModel(Builder builder) {
@@ -55,6 +59,41 @@ public class CompanyModel extends BaseResponseModel
         mSite = builder.site;
         mCoordinates = builder.coordinates;
         mAccessToken = builder.accessToken;
+    }
+
+    @Override
+    public String getId() {
+        return mId;
+    }
+
+    @Override
+    public String getName() {
+        return mName;
+    }
+
+    @Override
+    public String getAvatarUrl() {
+        return mAvatarUrl;
+    }
+
+    @Override
+    public String getDescription() {
+        return mDescription;
+    }
+
+    @Override
+    public String getAccessToken() {
+        return mAccessToken;
+    }
+
+    @Override
+    public boolean isVerify() {
+        return mIsVerify;
+    }
+
+    @Override
+    public UserType getType() {
+        return UserType.Company;
     }
 
     @Override

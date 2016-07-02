@@ -16,7 +16,7 @@ import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Permissions;
 
-import static com.github.sasd97.upitter.holders.UserHolder.isUserCreate;
+import static com.github.sasd97.upitter.holders.PeopleHolder.isUserCreate;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
 
 public class LoginActivity extends BaseActivity
