@@ -16,7 +16,7 @@ import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Permissions;
 
-import static com.github.sasd97.upitter.holders.PeopleHolder.isUserCreate;
+import static com.github.sasd97.upitter.holders.PeopleHolder.isUserAvailable;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
 
 public class LoginActivity extends BaseActivity
@@ -42,7 +42,7 @@ public class LoginActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        if (isUserCreate()) {
+        if (isUserAvailable()) {
             Intent intent = new Intent(this, TapeActivity.class);
             startActivity(intent);
             finish();
