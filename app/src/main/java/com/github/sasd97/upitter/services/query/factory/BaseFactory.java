@@ -53,9 +53,9 @@ public interface BaseFactory {
                                                                 @Field("code") String requestCode);
 
     @POST("/authorization/phone/add_info/{number}/{countryCode}")
-    Call<AuthorizationCompanyResponseModel> registerBusinessUser(@Path("number") String number,
-                                                                 @Path("countryCode") String countryCode,
-                                                                 @Body RequestBody businessUser);
+    Call<AuthorizationCompanyResponseModel> registerCompany(@Path("number") String number,
+                                                            @Path("countryCode") String countryCode,
+                                                            @Body RequestBody businessUser);
 
     @GET("/categories")
     Call<CatergoriesResponseModel> getCategories(@Query("ln") String language);

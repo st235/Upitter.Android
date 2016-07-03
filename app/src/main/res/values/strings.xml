@@ -88,6 +88,9 @@
     <string name="set_coordinates_company_registration_activity">Set position</string>
     <string name="choose_avatar_company_registration_activity">Choose your\navatar</string>
     <string name="finish_registration_label_company_registration_activity">Finish</string>
+    <string name="not_present_category_company_registration_activity">There is no choose categories</string>
+    <string name="extra_information_was_not_supply_company_registration_activity">Some extra information was not supply, you want to continue?</string>
+    <string name="ignore_extra_company_registration_activity">Ignore</string>
     <!-- Endregion -->
 
     <!-- Map activity region -->

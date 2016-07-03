@@ -32,6 +32,10 @@ public class RequestCodeResponseModel {
         return mTemporaryToken;
     }
 
+    public CompanyResponseModel getCompany() {
+        return mBusinessUser;
+    }
+
     @Override
     public String toString() {
         return String.format(Locale.getDefault(), "Is authorized: %1$b, TemporaryToken: %2$s",

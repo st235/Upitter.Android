@@ -11,6 +11,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.receivers.RequestCodeReceiver;
 import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.models.SmsModel;
+import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.SlidrUtils;
@@ -25,7 +26,7 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.CODE_REC
 
 public class CodeConfirmActivity extends BaseActivity implements
         RequestCodeReceiver.OnRequestCodeReceiveListener,
-        CompanyAuthorizationQueryService.OnBusinessAuthorizationListener {
+        CompanyAuthorizationQueryService.OnCompanyAuthorizationListener {
 
     private String WRONG_REQUEST_CODE;
     private final String UPITTER_SMS_HEADER = "999999";
@@ -85,7 +86,7 @@ public class CodeConfirmActivity extends BaseActivity implements
     }
 
     @Override
-    public void onAuthorize() {
+    public void onAuthorize(CompanyResponseModel companyResponseModel) {
 
     }
 
@@ -93,6 +94,7 @@ public class CodeConfirmActivity extends BaseActivity implements
     public void onRegister(String temporaryToken) {
         Intent intent = new Intent(this, CompanyRegistrationActivity.class);
         intent.putExtra(RECEIVED_TEMPORARY_TOKEN, temporaryToken);
+        intent.putExtra(RECEIVED_PHONE, currentPhone);
         startActivity(intent);
     }
 

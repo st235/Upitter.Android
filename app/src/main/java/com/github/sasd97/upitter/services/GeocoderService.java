@@ -5,6 +5,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.github.sasd97.upitter.models.CoordinatesModel;
 
@@ -59,7 +60,11 @@ public class GeocoderService extends AsyncTask<CoordinatesModel, Void, Coordinat
     protected void onPostExecute(CoordinatesModel coordinatesModel) {
         super.onPostExecute(coordinatesModel);
 
-        if (coordinatesModel == null) listener.onAddressFail();
+        if (coordinatesModel == null ||
+                coordinatesModel.getAddress() == null) {
+            listener.onAddressFail();
+            return;
+        }
         listener.onAddressReady(coordinatesModel);
     }
 }

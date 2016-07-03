@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.OnCompanyRegistrationListener;
 import com.github.sasd97.upitter.models.CompanyModel;
+import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.fragments.CompanyAddressRegistrationFragment;
 import com.github.sasd97.upitter.ui.fragments.CompanyBaseRegistrationFragment;
@@ -13,6 +14,7 @@ import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.RECEIVED_PHONE;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.RECEIVED_TEMPORARY_TOKEN;
 
 public class CompanyRegistrationActivity extends BaseActivity
@@ -37,6 +39,8 @@ public class CompanyRegistrationActivity extends BaseActivity
     @Override
     public void onBaseInfoPrepared(@NonNull CompanyModel.Builder builder) {
         builder.temporaryToken(getIntent().getStringExtra(RECEIVED_TEMPORARY_TOKEN));
+        PhoneModel phoneModel = getIntent().getParcelableExtra(RECEIVED_PHONE);
+        builder.phone(phoneModel);
 
         getSupportFragmentManager()
                 .beginTransaction()

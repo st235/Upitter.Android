@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Alexadner Dadukin on 30.06.2016.
@@ -60,6 +61,8 @@ public class CompanyModel extends UserModel
         mSite = builder.site;
         mCoordinates = builder.coordinates;
         mAccessToken = builder.accessToken;
+        mTemporaryToken = builder.temporaryToken;
+        mAvatarUrl = builder.avatarUrl;
     }
 
     @Override
@@ -87,6 +90,14 @@ public class CompanyModel extends UserModel
         return mAccessToken;
     }
 
+    public String getTemporaryToken() {
+        return mTemporaryToken;
+    }
+
+    public PhoneModel getPhone() {
+        return mPhone;
+    }
+
     @Override
     public boolean isVerify() {
         return mIsVerify;
@@ -100,6 +111,12 @@ public class CompanyModel extends UserModel
     @Override
     public String toJson() {
         return new Gson().toJson(this);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.getDefault(), "User with id %1$s",
+                mId == null ? "Null" : mId);
     }
 
     public static class Builder {

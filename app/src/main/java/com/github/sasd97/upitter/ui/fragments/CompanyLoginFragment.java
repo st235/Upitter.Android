@@ -2,7 +2,6 @@ package com.github.sasd97.upitter.ui.fragments;
 
 
 import android.content.Intent;
-import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +18,7 @@ import com.github.sasd97.upitter.constants.RequestCodesConstants;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.CountryModel;
 import com.github.sasd97.upitter.models.PhoneModel;
+import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.services.GeocoderService;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
@@ -41,7 +41,7 @@ public class CompanyLoginFragment extends BaseFragment
         DialCodeWatcher.OnCountryReadyListener,
         LocationService.OnLocationListener,
         GeocoderService.OnAddressListener,
-        CompanyAuthorizationQueryService.OnBusinessAuthorizationListener {
+        CompanyAuthorizationQueryService.OnCompanyAuthorizationListener {
 
     private boolean notACountryCode = false;
     private String COUNTRY_NOT_VALID;
@@ -143,6 +143,8 @@ public class CompanyLoginFragment extends BaseFragment
 
     @Override
     public void onAddressReady(final CoordinatesModel address) {
+        Log.d("ADDRESS_IS_NULL", address == null ? "NULL" : address.toString());
+
         CountryModel country = ListUtils.select(Countries.getCountries(), new ListUtils.OnListInteractionListener<CountryModel>() {
             @Override
             public boolean isFit(CountryModel other) {
@@ -172,7 +174,7 @@ public class CompanyLoginFragment extends BaseFragment
     }
 
     @Override
-    public void onAuthorize() {
+    public void onAuthorize(CompanyResponseModel companyResponseModel) {
 
     }
 

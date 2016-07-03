@@ -95,6 +95,7 @@ public class CategoriesActivity extends BaseActivity
         Intent resultIntent = new Intent();
         resultIntent.putIntegerArrayListExtra(CATEGORIES_ATTACH, categoryRecyclerAdapter.getSelected());
         setResult(RESULT_OK, resultIntent);
+        finish();
     }
 
     @Override

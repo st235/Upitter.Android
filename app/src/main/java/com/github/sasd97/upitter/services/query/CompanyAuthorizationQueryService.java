@@ -4,15 +4,12 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.github.sasd97.upitter.models.CompanyModel;
-import com.github.sasd97.upitter.models.CoordinatesModel;
-import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationCompanyResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequestCodeResponseModel;
+import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.requestCode.RequestCodeResponseModel;
 import com.github.sasd97.upitter.services.RestService;
-
-import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -24,20 +21,20 @@ import retrofit2.Response;
  */
 public class CompanyAuthorizationQueryService {
 
-    public interface OnBusinessAuthorizationListener {
+    public interface OnCompanyAuthorizationListener {
         void onCodeObtained();
         void onSendCodeError();
-        void onAuthorize();
+        void onAuthorize(CompanyResponseModel companyModel);
         void onRegister(String temporaryToken);
     }
 
-    private OnBusinessAuthorizationListener listener;
+    private OnCompanyAuthorizationListener listener;
 
-    private CompanyAuthorizationQueryService(OnBusinessAuthorizationListener listener) {
+    private CompanyAuthorizationQueryService(OnCompanyAuthorizationListener listener) {
         this.listener = listener;
     }
 
-    public static CompanyAuthorizationQueryService getService(OnBusinessAuthorizationListener listener) {
+    public static CompanyAuthorizationQueryService getService(OnCompanyAuthorizationListener listener) {
         return new CompanyAuthorizationQueryService(listener);
     }
 
@@ -77,7 +74,13 @@ public class CompanyAuthorizationQueryService {
                 }
 
                 RequestCodeResponseModel responseModel = response.body().getRequestCode();
+                if (!response.body().isSuccess()) {
+                    listener.onSendCodeError();
+                    return;
+                }
+
                 if (!responseModel.isAuthorized()) listener.onRegister(responseModel.getTemporaryToken());
+                else listener.onAuthorize(responseModel.getCompany());
             }
 
             @Override
@@ -88,38 +91,37 @@ public class CompanyAuthorizationQueryService {
         });
     }
 
-    public void registerCompanyUser(@NonNull String name,
-                                    @NonNull String description,
-                                    @NonNull PhoneModel phone,
-                                    @NonNull List<Integer> categories,
-                                    @NonNull List<String> contactPhones,
-                                    @NonNull String temporaryToken,
-                                    @NonNull List<CoordinatesModel> coordinates,
-                                    @NonNull String site) {
-
-        CompanyModel register =
-                new CompanyModel.Builder()
-                .name(name)
-                .description(description)
-                .temporaryToken(temporaryToken)
-                .categories(categories)
-                .contactPhones(contactPhones)
-                .coordinates(coordinates)
-                .site(site)
-                .build();
-
+    public void registerCompanyUser(@NonNull CompanyModel.Builder builder) {
+        CompanyModel register = builder.build();
         RequestBody body = RestService.obtainJsonRaw(register.toJson());
 
-        Call<AuthorizationCompanyResponseModel> registerCall = RestService.baseFactory().registerBusinessUser(phone.getPhoneBody(), phone.getDialCode(), body);
+        Call<AuthorizationCompanyResponseModel> registerCall = RestService.baseFactory()
+                .registerCompany(register.getPhone().getPhoneBody(), register.getPhone().getDialCode(), body);
+
+        Log.d("USER", register.toString());
+        Log.d("PHONe", register.getPhone().toString());
+        Log.d("PHONe", register.getTemporaryToken());
+
         registerCall.enqueue(new Callback<AuthorizationCompanyResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationCompanyResponseModel> call, Response<AuthorizationCompanyResponseModel> response) {
+                Log.d("REQUEST", call.request().url().toString());
 
+                if (response.body().isError()) {
+                    listener.onSendCodeError();
+                    return;
+                }
+
+                if (response.body().isSuccess()) listener.onAuthorize(response.body().getBusinessUser());
             }
 
             @Override
             public void onFailure(Call<AuthorizationCompanyResponseModel> call, Throwable t) {
+                Log.d("REQUEST", call.request().url().toString());
 
+
+                t.printStackTrace();
+                listener.onSendCodeError();
             }
         });
     }

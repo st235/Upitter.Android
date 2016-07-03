@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +37,10 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.GALLERY_
 /**
  * Created by Alexadner Dadukin on 24.06.2016.
  */
+
 public class CompanyBaseRegistrationFragment extends BaseFragment implements ImageUploaderView.OnImageUploadListener {
+
+    private String EMPTY_ERROR;
 
     private OnCompanyRegistrationListener listener;
     private CompanyModel.Builder companyBuilder;
@@ -71,10 +76,15 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        EMPTY_ERROR = getString(R.string.empty_field);
+
+        companyBuilder =
+                new CompanyModel
+                        .Builder();
+
         avatarImageUploaderView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onAvatarChooseClick();
+            public void onClick(View view) { onAvatarChooseClick();
             }
         });
         categoriesLayout.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +102,7 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
         setPositionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onAddressChooseClick();
+                onAddressChooseClick(true);
             }
         });
 
@@ -139,10 +149,10 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
         this.listener = listener;
     }
 
-    private void onAddressChooseClick() {
-        companyBuilder =
-                new CompanyModel
-                        .Builder()
+    private void onAddressChooseClick(boolean isExtraRequired) {
+        if (!validateForm(isExtraRequired)) return;
+
+        companyBuilder
                         .name(companyNameEditText.getText().toString())
                         .description(companyDescriptionEditText.getText().toString())
                         .site(companySiteEditText.getText().toString());
@@ -181,6 +191,41 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
     @Override
     public void onUpload(String path) {
         companyBuilder.avatarUrl(path);
+    }
+
+    private boolean validateForm(boolean isExtraRequired) {
+        boolean result = true;
+
+        if (companyNameEditText.getText().length() == 0){
+            companyNameEditText.setError(EMPTY_ERROR);
+            result = false;
+        }
+        if (companyDescriptionEditText.getText().length() == 0) {
+            companyDescriptionEditText.setError(EMPTY_ERROR);
+            result =  false;
+        }
+        if (categoriesSelected == null || categoriesSelected.size() == 0) {
+            Snackbar.make(getView(), getString(R.string.not_present_category_company_registration_activity), Snackbar.LENGTH_LONG).show();
+            result =  false;
+        }
+
+        if (!result) return false;
+        if (!isExtraRequired) return result;
+
+        if (contactPhones == null || contactPhones.size() == 0 || companySiteEditText.getText().length() == 0) {
+            Snackbar
+                    .make(getView(), getString(R.string.extra_information_was_not_supply_company_registration_activity), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.ignore_extra_company_registration_activity), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            onAddressChooseClick(false);
+                        }
+                    })
+                    .show();
+            result =  false;
+        }
+
+        return result;
     }
 
     @Override

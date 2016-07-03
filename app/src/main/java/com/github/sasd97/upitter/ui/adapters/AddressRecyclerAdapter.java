@@ -62,5 +62,9 @@ public class AddressRecyclerAdapter extends RecyclerView.Adapter<AddressRecycler
         coordinates.add(coordinatesModel);
         notifyItemInserted(coordinates.size());
     }
+
+    public List<CoordinatesModel> getCoordinates() {
+        return coordinates;
+    }
 }
 
