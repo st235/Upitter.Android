@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:met_floatingLabel="highlight"
-                    android:hint="@string/name_label_business_registration_activity"
+                    android:hint="@string/name_label_company_registration_activity"
                     app:met_maxCharacters="20"
                     />
 
@@ -44,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:met_floatingLabel="highlight"
-                    android:hint="@string/description_label_business_registration_activity"
+                    android:hint="@string/description_label_company_registration_activity"
                     app:met_maxCharacters="200"
                     />
         </LinearLayout>
@@ -72,7 +72,7 @@
                 android:textColor="@color/colorPrimary"
                 android:layout_centerInParent="true"
                 android:textSize="18sp"
-                android:text="@string/categories_label_business_registration_activity"
+                android:text="@string/categories_label_company_registration_activity"
                 />
         </RelativeLayout>
 
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="@string/contacts_label_business_registration_activity"
+            android:text="@string/contacts_label_company_registration_activity"
             />
 
         <android.support.v7.widget.RecyclerView
@@ -115,7 +115,7 @@
                 android:textColor="@color/colorPrimary"
                 android:layout_centerInParent="true"
                 android:textSize="18sp"
-                android:text="@string/add_phone_label_business_registration_activity"
+                android:text="@string/add_phone_label_company_registration_activity"
                 />
         </RelativeLayout>
 
@@ -126,7 +126,7 @@
             android:gravity="center"
             android:maxLength="50"
             android:layout_marginTop="8dp"
-            android:hint="@string/site_label_business_registration_activity"
+            android:hint="@string/site_label_company_registration_activity"
             app:met_floatingLabel="highlight"
             />
 
@@ -137,7 +137,7 @@
             android:layout_marginLeft="@dimen/activity_short_margin"
             android:layout_marginRight="@dimen/activity_short_margin"
             android:layout_marginBottom="16dp"
-            android:text="@string/set_coordinates_business_registration_activity"
+            android:text="@string/set_coordinates_company_registration_activity"
             style="@style/Upitter.Button.Rounded.Watermelon"
             />
     </LinearLayout>

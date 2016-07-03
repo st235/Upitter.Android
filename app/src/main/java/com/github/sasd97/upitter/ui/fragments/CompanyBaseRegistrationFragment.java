@@ -35,9 +35,10 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.GALLERY_
 /**
  * Created by Alexadner Dadukin on 24.06.2016.
  */
-public class CompanyBaseRegistrationFragment extends BaseFragment {
+public class CompanyBaseRegistrationFragment extends BaseFragment implements ImageUploaderView.OnImageUploadListener {
 
     private OnCompanyRegistrationListener listener;
+    private CompanyModel.Builder companyBuilder;
 
     private ArrayList<Integer> categoriesSelected;
     private ArrayList<String> contactPhones;
@@ -139,11 +140,14 @@ public class CompanyBaseRegistrationFragment extends BaseFragment {
     }
 
     private void onAddressChooseClick() {
-        CompanyModel.Builder userBuilder =
+        companyBuilder =
                 new CompanyModel
                         .Builder()
                         .name(companyNameEditText.getText().toString())
-                        .description(companyDescriptionEditText.getText().toString());
+                        .description(companyDescriptionEditText.getText().toString())
+                        .site(companySiteEditText.getText().toString());
+
+        listener.onBaseInfoPrepared(companyBuilder);
     }
 
     private void onAddPhoneClick() {
@@ -166,11 +170,17 @@ public class CompanyBaseRegistrationFragment extends BaseFragment {
 
     private void handleAvatarIntent(@NonNull Intent intent) {
         String path = intent.getStringExtra(PUT_CROPPED_IMAGE);
-        avatarImageUploaderView.uploadPhoto(path, null);
+        avatarImageUploaderView.uploadPhoto(path, this);
     }
 
     private void handleCategoriesIntent(@NonNull Intent intent) {
         categoriesSelected = intent.getIntegerArrayListExtra(CATEGORIES_ATTACH);
+        companyBuilder.categories(categoriesSelected);
+    }
+
+    @Override
+    public void onUpload(String path) {
+        companyBuilder.avatarUrl(path);
     }
 
     @Override

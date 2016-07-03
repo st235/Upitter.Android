@@ -13,6 +13,7 @@ public interface RequestCodesConstants {
     int COUNTRY_CHOOSE_LIST_REQUEST = 1000;
     int GALLERY_ACTIVITY_REQUEST = 1001;
     int CATEGORIES_ACTIVITY_REQUEST = 1002;
+    int CHOOSE_ON_MAP_POINT_REQUEST = 1003;
 
     String CODE_RECEIVER_INTENT_NAME = "com.github.sasd97.recievers.HANDLE_SMS_CODE";
 }

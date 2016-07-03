@@ -1,14 +1,19 @@
 package com.github.sasd97.upitter.ui.results;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.View;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.constants.IntentKeysConstants;
+import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.SlidrUtils;
@@ -22,9 +27,10 @@ import com.r0adkll.slidr.model.SlidrPosition;
 
 public class MapChooseActivity extends BaseActivity implements OnMapReadyCallback, LocationService.OnLocationListener {
 
-    private LocationService locationService = LocationService.getService(this);
     private GoogleMap googleMap;
+    private FloatingActionButton confirmFab;
 
+    private LocationService locationService = LocationService.getService(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +38,29 @@ public class MapChooseActivity extends BaseActivity implements OnMapReadyCallbac
         setContentView(R.layout.map_choose_activity);
         setToolbar(R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.2f));
+        Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.05f));
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        confirmFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onResultClick();
+            }
+        });
     }
 
     @Override
     protected void bindViews() {
-
+        confirmFab = findById(R.id.fab);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         locationService.init(this);
+        confirmFab.show();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -65,19 +79,27 @@ public class MapChooseActivity extends BaseActivity implements OnMapReadyCallbac
 
     @Override
     public void onLocationFind(Location location) {
-        Log.d("LOCATION", location.toString());
         moveToPoint(googleMap, new LatLng(location.getLatitude(), location.getLongitude()));
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d("CHANGED", location.toString());
         moveToPoint(googleMap, new LatLng(location.getLatitude(), location.getLongitude()));
     }
 
-    @Override
-    public void onAddressReady(Address address) {
+    public void onResultClick() {
+        LatLng coordinates = googleMap.getCameraPosition().target;
+        CoordinatesModel coordinatesModel
+                = new CoordinatesModel
+                .Builder()
+                .latitude(coordinates.latitude)
+                .longitude(coordinates.longitude)
+                .build();
 
+        Intent result = new Intent();
+        result.putExtra(IntentKeysConstants.COORDINATES_ATTACH, coordinatesModel);
+        setResult(RESULT_OK, result);
+        finish();
     }
 
     private void moveToPoint(GoogleMap googleMap, LatLng points) {

@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,10 @@ import android.widget.TextView;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.RequestCodesConstants;
+import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.CountryModel;
 import com.github.sasd97.upitter.models.PhoneModel;
+import com.github.sasd97.upitter.services.GeocoderService;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.CodeConfirmActivity;
@@ -37,9 +40,12 @@ public class CompanyLoginFragment extends BaseFragment
         Countries.OnLoadListener,
         DialCodeWatcher.OnCountryReadyListener,
         LocationService.OnLocationListener,
+        GeocoderService.OnAddressListener,
         CompanyAuthorizationQueryService.OnBusinessAuthorizationListener {
 
+    private boolean notACountryCode = false;
     private String COUNTRY_NOT_VALID;
+    private String EMPTY_FIELD;
 
     private LocationService locationService;
     private CompanyAuthorizationQueryService queryService;
@@ -68,6 +74,7 @@ public class CompanyLoginFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         COUNTRY_NOT_VALID = getString(R.string.nothing_found_country_code_choose);
+        EMPTY_FIELD = getString(R.string.empty_field);
 
         Countries.obtainCountries(this);
         continueRegistrationButton.setOnClickListener(this);
@@ -87,6 +94,8 @@ public class CompanyLoginFragment extends BaseFragment
 
     @Override
     public void onClick(View view) {
+        if (!validateForms()) return;
+
         currentPhone = new PhoneModel.Builder()
                 .dialCode(countryDialCodeEditText.getText().toString().replaceAll("[^\\d]", ""))
                 .phoneBody(countryBodyCodeEditText.getText().toString())
@@ -111,11 +120,13 @@ public class CompanyLoginFragment extends BaseFragment
 
     @Override
     public void onCountryReady(CountryModel country) {
+        notACountryCode = false;
         countryDisplayTextView.setText(country.getName());
     }
 
     @Override
     public void onNotCountry() {
+        notACountryCode = true;
         countryDisplayTextView.setText(COUNTRY_NOT_VALID);
         countryDialCodeEditText.setError("");
     }
@@ -127,15 +138,15 @@ public class CompanyLoginFragment extends BaseFragment
 
     @Override
     public void onLocationChanged(Location location) {
-        locationService.getAddress(location);
+        GeocoderService.find(getContext(), CoordinatesModel.fromLocation(location), this);
     }
 
     @Override
-    public void onAddressReady(final Address address) {
+    public void onAddressReady(final CoordinatesModel address) {
         CountryModel country = ListUtils.select(Countries.getCountries(), new ListUtils.OnListInteractionListener<CountryModel>() {
             @Override
             public boolean isFit(CountryModel other) {
-                return other.getName().contains(address.getCountryName());
+                return other.getName().contains(address.getAddress().getCountryName());
             }
         });
 
@@ -146,6 +157,11 @@ public class CompanyLoginFragment extends BaseFragment
 
         countryDisplayTextView.setText(country.getName());
         countryDialCodeEditText.setText(String.format(Locale.getDefault(), "+%1$s", country.getDialCode()));
+    }
+
+    @Override
+    public void onAddressFail() {
+
     }
 
     @Override
@@ -170,6 +186,23 @@ public class CompanyLoginFragment extends BaseFragment
         Snackbar
                 .make(getView(), getString(R.string.code_confirm_request_filed), Snackbar.LENGTH_SHORT)
                 .show();
+    }
+
+    private boolean validateForms() {
+        if (notACountryCode) {
+            countryDialCodeEditText.setError("");
+            return false;
+        }
+        else if (countryDialCodeEditText.getText().length() == 0) {
+            countryDialCodeEditText.setText(EMPTY_FIELD);
+            return false;
+        }
+        if (countryBodyCodeEditText.getText().length() == 0) {
+            countryBodyCodeEditText.setError(EMPTY_FIELD);
+            return false;
+        }
+
+        return true;
     }
 
     public void prepareCountryDisplay(TextView display) {

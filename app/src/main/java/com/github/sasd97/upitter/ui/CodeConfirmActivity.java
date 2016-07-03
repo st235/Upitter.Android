@@ -27,6 +27,7 @@ public class CodeConfirmActivity extends BaseActivity implements
         RequestCodeReceiver.OnRequestCodeReceiveListener,
         CompanyAuthorizationQueryService.OnBusinessAuthorizationListener {
 
+    private String WRONG_REQUEST_CODE;
     private final String UPITTER_SMS_HEADER = "999999";
 
     private RequestCodeReceiver requestCodeReceiver;
@@ -40,6 +41,7 @@ public class CodeConfirmActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.code_confirm_activity);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
+        WRONG_REQUEST_CODE = getString(R.string.wrong_request_code_confirm_activity);
 
         queryService = CompanyAuthorizationQueryService.getService(this);
 
@@ -48,6 +50,7 @@ public class CodeConfirmActivity extends BaseActivity implements
     }
 
     public void onLoginClick(View v) {
+        if (!validateForms()) return;
         setRequestCode(requestCodeEditText.getText().toString());
     }
 
@@ -98,6 +101,7 @@ public class CodeConfirmActivity extends BaseActivity implements
         for (SmsModel sms: messages) {
             if (sms.getAuthor().equalsIgnoreCase(UPITTER_SMS_HEADER)) {
                 setRequestCode(sms.getBody().replaceAll("[^\\d]", ""));
+                return;
             }
         }
     }
@@ -108,5 +112,14 @@ public class CodeConfirmActivity extends BaseActivity implements
                 currentPhone.getPhoneBody(),
                 currentPhone.getDialCode(),
                 requestCode);
+    }
+
+    private boolean validateForms() {
+        if (requestCodeEditText.getText().length() == 0) {
+            requestCodeEditText.setError(WRONG_REQUEST_CODE);
+            return false;
+        }
+
+        return true;
     }
 }

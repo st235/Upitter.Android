@@ -1,6 +1,7 @@
 <resources>
     <!-- Base application region. -->
     <string name="app_name">Upitter</string>
+    <string name="empty_field">Empty</string>
     <!-- Endregion -->
 
     <!-- Region permissions -->
@@ -61,9 +62,11 @@
     <!-- Code confirm activity region -->
     <string name="title_activity_code_confirm_activity">Confirm code</string>
     <string name="request_code_edittext_code_confirm_activity">Request code</string>
-    <string name="description_label_code_confirm_activity">Put your request code here... edit...</string>
+    <string name="description_label_code_confirm_activity">We are sent to your phone a request code.
+        If the authorization is not passed automatically, please enter it in the field as below.</string>
     <string name="login_label_code_confirm_activity">Login</string>
     <string name="title_activity_bussines_registration">Business Registration</string>
+    <string name="wrong_request_code_confirm_activity">Wrong request code</string>
     <!-- Endregion -->
 
     <!-- Region categories activity -->
@@ -72,15 +75,19 @@
     <!-- Endregion -->
 
     <!-- Region business registration activity -->
-    <string name="name_label_business_registration_activity">Company name</string>
-    <string name="description_label_business_registration_activity">Company description</string>
-    <string name="categories_label_business_registration_activity">Choose category</string>
-    <string name="contacts_label_business_registration_activity">Set up the contact information:</string>
-    <string name="phone_label_business_registration_activity">Contact phone</string>
-    <string name="add_phone_label_business_registration_activity">Add phone</string>
-    <string name="site_label_business_registration_activity">Site</string>
-    <string name="set_coordinates_business_registration_activity">Set position</string>
-    <string name="choose_avatar_business_registration_activity">Choose your\navatar</string>
+    <string name="name_label_company_registration_activity">Company name</string>
+    <string name="description_label_company_registration_activity">Company description</string>
+    <string name="categories_label_company_registration_activity">Choose category</string>
+    <string name="contacts_label_company_registration_activity">Set up the contact information:</string>
+    <string name="phone_label_company_registration_activity">Contact phone</string>
+    <string name="add_phone_label_company_registration_activity">Add phone</string>
+    <string name="add_position_label_company_registration_activity">Add position</string>
+    <string name="choose_you_current_position_label_company_registration_activity">Choose you current position:</string>
+    <string name="site_label_company_registration_activity">Site</string>
+    <string name="position_label_company_registration_activity">Your position</string>
+    <string name="set_coordinates_company_registration_activity">Set position</string>
+    <string name="choose_avatar_company_registration_activity">Choose your\navatar</string>
+    <string name="finish_registration_label_company_registration_activity">Finish</string>
     <!-- Endregion -->
 
     <!-- Map activity region -->

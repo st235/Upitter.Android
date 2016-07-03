@@ -1,14 +1,19 @@
 package com.github.sasd97.upitter.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.OnCompanyRegistrationListener;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.ui.fragments.CompanyAddressRegistrationFragment;
 import com.github.sasd97.upitter.ui.fragments.CompanyBaseRegistrationFragment;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
+
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.RECEIVED_TEMPORARY_TOKEN;
 
 public class CompanyRegistrationActivity extends BaseActivity
     implements OnCompanyRegistrationListener {
@@ -22,6 +27,7 @@ public class CompanyRegistrationActivity extends BaseActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_holder_business_registration_activity, CompanyBaseRegistrationFragment.getFragment(this))
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -29,7 +35,13 @@ public class CompanyRegistrationActivity extends BaseActivity
     protected void bindViews() {}
 
     @Override
-    public void onBaseInfoPrepared(String temporaryToken, CompanyModel.Builder builder) {
+    public void onBaseInfoPrepared(@NonNull CompanyModel.Builder builder) {
+        builder.temporaryToken(getIntent().getStringExtra(RECEIVED_TEMPORARY_TOKEN));
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_holder_business_registration_activity, CompanyAddressRegistrationFragment.getFragment(builder))
+                .addToBackStack(null)
+                .commit();
     }
 }

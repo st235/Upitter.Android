@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class CompanyModel extends UserModel
 
     @SerializedName("category")
     @Expose
-    private int mCategory;
+    private List<Integer> mCategories;
 
     private PhoneModel mPhone;
 
@@ -53,7 +54,7 @@ public class CompanyModel extends UserModel
     private CompanyModel(Builder builder) {
         mName = builder.name;
         mDescription = builder.description;
-        mCategory = builder.category;
+        mCategories = builder.categories;
         mPhone = builder.phone;
         mContactPhones = builder.contactPhones;
         mSite = builder.site;
@@ -105,7 +106,8 @@ public class CompanyModel extends UserModel
 
         private String name;
         private String description;
-        private int category;
+        private String avatarUrl;
+        private List<Integer> categories;
         private PhoneModel phone;
         private List<String> contactPhones;
         private String site;
@@ -123,8 +125,13 @@ public class CompanyModel extends UserModel
             return this;
         }
 
-        public Builder category(int category) {
-            this.category = category;
+        public Builder categories(List<Integer> categories) {
+            this.categories = categories;
+            return this;
+        }
+
+        public Builder avatarUrl(String avatarUrl) {
+            this.avatarUrl = avatarUrl;
             return this;
         }
 

@@ -1,12 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ui.CompanyRegistrationActivity"
-    />
+    tools:context=".ui.CompanyRegistrationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_above="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/choose_you_current_position_label_company_registration_activity"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_company_registration_address_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_long_margin"
+        android:layout_marginLeft="@dimen/activity_long_margin"
+        android:layout_marginRight="@dimen/activity_long_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
+
+        <RelativeLayout
+            style="@style/Upitter.LayoutButton.Rounded.BabyBlue.Light"
+            android:id="@+id/add_position_company_registration_address_fragment"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_icon_add_more"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:text="@string/add_position_label_company_registration_activity"
+                />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/set_position_business_registration_base_fragment"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:text="@string/finish_registration_label_company_registration_activity"
+            style="@style/Upitter.Button.Rounded.Watermelon"
+            />
+    </LinearLayout>
+</RelativeLayout>

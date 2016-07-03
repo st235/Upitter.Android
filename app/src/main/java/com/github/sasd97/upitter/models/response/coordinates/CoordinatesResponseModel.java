@@ -13,17 +13,17 @@ public class CoordinatesResponseModel extends BaseResponseModel {
 
     @SerializedName("latitude")
     @Expose
-    private float mLatitude;
+    private double mLatitude;
 
     @SerializedName("longitude")
     @Expose
-    private float mLongitude;
+    private double mLongitude;
 
-    public float getLatitude() {
+    public double getLatitude() {
         return mLatitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return mLongitude;
     }
 

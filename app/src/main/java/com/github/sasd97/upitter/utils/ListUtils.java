@@ -47,6 +47,8 @@ public final class ListUtils {
     }
 
     public static <T> T select(@NonNull List<T> list, @NonNull OnListInteractionListener<T> listener) {
+        if (list == null) return null;
+
         for (T item: list)
             if (listener.isFit(item))
                 return item;
@@ -54,6 +56,8 @@ public final class ListUtils {
     }
     
     public static <T> List<T> filter(@NonNull List<T> list, @NonNull OnListInteractionListener<T> listener) {
+        if (list == null) return null;
+
         List<T> result = new ArrayList<>();
         for (T item: list)
             if (listener.isFit(item))

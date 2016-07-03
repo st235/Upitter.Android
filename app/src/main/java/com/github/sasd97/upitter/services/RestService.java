@@ -14,6 +14,7 @@ import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.github.sasd97.upitter.constants.MethodConstants.BASE_API_URL;
 import static com.github.sasd97.upitter.constants.MethodConstants.BASE_SUB_API_URL;
 import static com.github.sasd97.upitter.constants.MethodConstants.BASE_SUB_ASTRAL_API_URL;
 import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SERVER_API_URL;

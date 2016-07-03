@@ -9,9 +9,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+
+import com.github.sasd97.upitter.models.CoordinatesModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,17 +28,14 @@ public class LocationService implements LocationListener {
     public interface OnLocationListener {
         void onLocationFind(Location location);
         void onLocationChanged(Location location);
-        void onAddressReady(Address address);
     }
 
     private final long MIN_TIME = 2000;
     private final float MIN_DISTANCE = 10;
 
     private LocationManager locationManager;
-    private Geocoder geocoder;
 
     private Location currentLocation;
-    private Address currentAddress;
 
     private OnLocationListener listener;
 
@@ -50,8 +50,6 @@ public class LocationService implements LocationListener {
     public void init(Context context) {
         locationManager = (LocationManager)
                 context.getSystemService(Context.LOCATION_SERVICE);
-
-        geocoder = new Geocoder(context, Locale.ENGLISH);
 
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
@@ -91,15 +89,5 @@ public class LocationService implements LocationListener {
     @Override
     public void onProviderDisabled(String s) {
 
-    }
-
-    public void getAddress(Location location) {
-        try {
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            currentAddress = addresses.get(0);
-            listener.onAddressReady(currentAddress);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

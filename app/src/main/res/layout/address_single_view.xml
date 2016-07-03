@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
-    <Button
-        android:id="@+id/button_address_single_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/choose_button_address_single_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circle_baby_blue_shape"
+        android:src="@drawable/ic_icon_map"
+        android:scaleType="centerInside"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         />
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/geocoder_address_single_view"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/geocoder_textview_address_single_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textSize="18sp"
+        android:singleLine="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toRightOf="@+id/choose_button_address_single_view"
+        android:layout_toEndOf="@+id/choose_button_address_single_view"
+        android:layout_centerVertical="true"
+        tools:text="Alex"
         />
-</LinearLayout>
+</RelativeLayout>

@@ -42,6 +42,6 @@
         android:gravity="center"
         android:textColor="@color/colorShapeStroke"
         android:padding="32dp"
-        android:text="@string/choose_avatar_business_registration_activity"
+        android:text="@string/choose_avatar_company_registration_activity"
         />
 </LinearLayout>

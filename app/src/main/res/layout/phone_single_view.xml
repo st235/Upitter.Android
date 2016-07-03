@@ -13,7 +13,7 @@
         android:digits="+0123456789"
         android:maxLength="14"
         android:inputType="numberDecimal"
-        android:hint="@string/phone_label_business_registration_activity"
+        android:hint="@string/phone_label_company_registration_activity"
         app:met_floatingLabel="highlight"
         />
 </LinearLayout>

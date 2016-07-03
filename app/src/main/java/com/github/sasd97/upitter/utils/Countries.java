@@ -17,6 +17,7 @@ import java.util.Collections;
 /**
  * Created by Alex on 09.06.2016.
  */
+
 public final class Countries extends AsyncTask<Void, Void, ArrayList<CountryModel>> {
 
     public interface OnLoadListener {
@@ -28,7 +29,7 @@ public final class Countries extends AsyncTask<Void, Void, ArrayList<CountryMode
 
     private static final String COUNTRIES_JSON = "countries.json";
     private static final String FIELD_COUNTRY_NAME = "name";
-    private static final String FIELD_COUNTRY_NAME_OFFICIAL = "official";
+    private static final String FIELD_COUNTRY_NAME_OFFICIAL = "common";
     private static final String FIELD_COUNTRY_NAME_NATIVE = "native";
     private static final String FIELD_COUNTRY_CALLING_CODES = "callingCode";
     private static final String FIELD_COUNTRY_CODE = "cca2";

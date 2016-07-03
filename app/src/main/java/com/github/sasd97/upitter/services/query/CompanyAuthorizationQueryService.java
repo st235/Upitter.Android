@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
@@ -90,7 +91,7 @@ public class CompanyAuthorizationQueryService {
     public void registerCompanyUser(@NonNull String name,
                                     @NonNull String description,
                                     @NonNull PhoneModel phone,
-                                    int category,
+                                    @NonNull List<Integer> categories,
                                     @NonNull List<String> contactPhones,
                                     @NonNull String temporaryToken,
                                     @NonNull List<CoordinatesModel> coordinates,
@@ -101,7 +102,7 @@ public class CompanyAuthorizationQueryService {
                 .name(name)
                 .description(description)
                 .temporaryToken(temporaryToken)
-                .category(category)
+                .categories(categories)
                 .contactPhones(contactPhones)
                 .coordinates(coordinates)
                 .site(site)
