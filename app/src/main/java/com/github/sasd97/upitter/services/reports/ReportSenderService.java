@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.services.query.ReportQueryService;
 
 import org.acra.ReportField;
@@ -32,7 +33,7 @@ public class ReportSenderService implements ReportSender, ReportQueryService.OnR
     }
 
     @Override
-    public void onSendError() {
-        Log.d("REPORT_STATUS", "ERROR");
+    public void onError(ErrorModel errorModel) {
+        Log.d("REPORT_STATUS", errorModel.toString());
     }
 }

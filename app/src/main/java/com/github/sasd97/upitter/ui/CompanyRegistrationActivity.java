@@ -29,7 +29,6 @@ public class CompanyRegistrationActivity extends BaseActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_holder_business_registration_activity, CompanyBaseRegistrationFragment.getFragment(this))
-                .addToBackStack(null)
                 .commit();
     }
 

@@ -17,6 +17,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.RequestCodesConstants;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.CountryModel;
+import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.services.GeocoderService;
@@ -184,10 +185,14 @@ public class CompanyLoginFragment extends BaseFragment
     }
 
     @Override
-    public void onSendCodeError() {
+    public void onError(ErrorModel errorModel) {
         Snackbar
                 .make(getView(), getString(R.string.code_confirm_request_filed), Snackbar.LENGTH_SHORT)
                 .show();
+    }
+
+    @Override
+    public void onSendCodeError(int attemptsAmount) {
     }
 
     private boolean validateForms() {

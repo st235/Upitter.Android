@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.models.response;
 
+import com.github.sasd97.upitter.models.ErrorModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -30,8 +31,12 @@ public abstract class BaseResponseModel<T> {
         return mError != null;
     }
 
-    public ErrorResponseModel getError() {
-        return mError;
+    public ErrorModel getError() {
+        return new ErrorModel
+                .Builder()
+                .code(mError.getCode())
+                .message(mError.getMessage())
+                .build();
     }
 
     public T getResponseModel() {

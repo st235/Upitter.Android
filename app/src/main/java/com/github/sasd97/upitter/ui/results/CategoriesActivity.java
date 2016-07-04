@@ -12,6 +12,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
 import com.github.sasd97.upitter.services.query.CategoriesQueryService;
 import com.github.sasd97.upitter.ui.adapters.CategoryRecyclerAdapter;
@@ -129,7 +130,7 @@ public class CategoriesActivity extends BaseActivity
     }
 
     @Override
-    public void onError() {
+    public void onError(ErrorModel errorModel) {
 
     }
 }

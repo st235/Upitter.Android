@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.receivers.RequestCodeReceiver;
+import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.models.SmsModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
@@ -20,6 +21,7 @@ import com.r0adkll.slidr.model.SlidrPosition;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CODE_RECEIVER_INTENT_NAME;
@@ -79,7 +81,19 @@ public class CodeConfirmActivity extends BaseActivity implements
     }
 
     @Override
-    public void onSendCodeError() {
+    public void onSendCodeError(int attempts) {
+        final String attemptsCounter = String.format(Locale.getDefault(), "%1$s %2$d %3$s",
+                getString(R.string.attempts_number_company_registration_activity),
+                attempts,
+                getString(R.string.attempts_of_company_registration_activity));
+
+        Snackbar
+                .make(getRootView(), attemptsCounter, Snackbar.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    public void onError(ErrorModel error) {
         Snackbar
                 .make(getRootView(), "Error", Snackbar.LENGTH_SHORT)
                 .show();
@@ -96,6 +110,7 @@ public class CodeConfirmActivity extends BaseActivity implements
         intent.putExtra(RECEIVED_TEMPORARY_TOKEN, temporaryToken);
         intent.putExtra(RECEIVED_PHONE, currentPhone);
         startActivity(intent);
+        finish();
     }
 
     @Override

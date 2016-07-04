@@ -3,6 +3,7 @@ package com.github.sasd97.upitter.components;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.services.query.FileUploadQueryService;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
@@ -26,7 +28,8 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  * Created by Alexadner Dadukin on 30.06.2016.
  */
 
-public class ImageUploaderView extends LinearLayout implements FileUploadQueryService.OnFileUploadListener {
+public class ImageUploaderView extends LinearLayout implements
+        FileUploadQueryService.OnFileUploadListener {
 
     public interface OnImageUploadListener {
         void onUpload(String path);
@@ -39,6 +42,7 @@ public class ImageUploaderView extends LinearLayout implements FileUploadQuerySe
     private ImageView imagePreviewImageView;
     private TextView helpTextView;
     private CircularProgressView circularProgressView;
+    private ImageView successIndicatorImageView;
 
     public ImageUploaderView(Context context) {
         super(context);
@@ -65,7 +69,7 @@ public class ImageUploaderView extends LinearLayout implements FileUploadQuerySe
         imagePreviewImageView = (ImageView) rootView.findViewById(R.id.image_preview_image_uploader_single_view);
         helpTextView = (TextView) rootView.findViewById(R.id.text_view_image_uploader_single_view);
         circularProgressView = (CircularProgressView) rootView.findViewById(R.id.progress_view_image_uploader_single_view);
-
+        successIndicatorImageView = (ImageView) rootView.findViewById(R.id.success_indicator_image_uploader_single_view);
     }
 
     public void uploadPhoto(@NonNull String photoPath, @NonNull OnImageUploadListener listener) {
@@ -88,15 +92,17 @@ public class ImageUploaderView extends LinearLayout implements FileUploadQuerySe
 
         helpTextView.setVisibility(GONE);
         circularProgressView.setVisibility(VISIBLE);
+        service.uploadImage("1", photoPath, "image", "photo");
     }
 
     @Override
-    public void onUpload() {
+    public void onUpload(String path) {
         circularProgressView.setVisibility(GONE);
+        successIndicatorImageView.setVisibility(VISIBLE);
     }
 
     @Override
-    public void onError() {
-
+    public void onError(ErrorModel errorModel) {
+        Log.d("PATH", errorModel.toString());
     }
 }

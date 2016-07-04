@@ -19,6 +19,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.holders.PeopleHolder;
+import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.response.user.UserResponseModel;
 import com.github.sasd97.upitter.services.query.UserAuthorizationQueryService;
@@ -166,8 +167,7 @@ public class UserLoginFragment extends BaseFragment
     }
 
     @Override
-    public void onNotifyError(int code, String message) {
-        Log.d("CODE", String.valueOf(code));
+    public void onError(ErrorModel errorModel) {
         showErrorSnackbar();
     }
 

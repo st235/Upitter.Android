@@ -17,6 +17,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.IntentKeysConstants;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
+import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.services.GeocoderService;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
@@ -115,7 +116,12 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
     }
 
     @Override
-    public void onSendCodeError() {
+    public void onSendCodeError(int attemptsAmount) {
+
+    }
+
+    @Override
+    public void onError(ErrorModel errorModel) {
 
     }
 

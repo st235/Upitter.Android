@@ -42,22 +42,22 @@ public interface BaseFactory {
     Call<ReportResponseModel> sendCrashReport(@Path("id") String id,
                                               @Field("log") JSONObject trace);
 
-    @POST("/authorization/phone/set/{number}/{countryCode}")
+    @POST("authorization/phone/set/{number}/{countryCode}")
     Call<SimpleResponseModel> obtainRequestCode(@Path("number") String number,
                                                 @Path("countryCode") String countryCode);
 
     @FormUrlEncoded
-    @POST("/authorization/phone/verify/{number}/{countryCode}")
+    @POST("authorization/phone/verify/{number}/{countryCode}")
     Call<AuthorizationRequestCodeResponseModel> sendRequestCode(@Path("number") String number,
                                                                 @Path("countryCode") String countryCode,
                                                                 @Field("code") String requestCode);
 
-    @POST("/authorization/phone/add_info/{number}/{countryCode}")
+    @POST("authorization/phone/add_info/{number}/{countryCode}")
     Call<AuthorizationCompanyResponseModel> registerCompany(@Path("number") String number,
                                                             @Path("countryCode") String countryCode,
                                                             @Body RequestBody businessUser);
 
-    @GET("/categories")
+    @GET("categories")
     Call<CatergoriesResponseModel> getCategories(@Query("ln") String language);
 
 }

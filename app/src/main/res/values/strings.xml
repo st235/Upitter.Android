@@ -74,7 +74,7 @@
     <string name="category_select_categories_activity">Select</string>
     <!-- Endregion -->
 
-    <!-- Region business registration activity -->
+    <!-- Region company registration activity -->
     <string name="name_label_company_registration_activity">Company name</string>
     <string name="description_label_company_registration_activity">Company description</string>
     <string name="categories_label_company_registration_activity">Choose category</string>
@@ -91,6 +91,8 @@
     <string name="not_present_category_company_registration_activity">There is no choose categories</string>
     <string name="extra_information_was_not_supply_company_registration_activity">Some extra information was not supply, you want to continue?</string>
     <string name="ignore_extra_company_registration_activity">Ignore</string>
+    <string name="attempts_number_company_registration_activity">Wrong code. Attempt:</string>
+    <string name="attempts_of_company_registration_activity">of 5</string>
     <!-- Endregion -->
 
     <!-- Map activity region -->

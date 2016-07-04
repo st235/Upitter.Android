@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
 
+import com.github.sasd97.upitter.events.OnErrorQueryListener;
 import com.github.sasd97.upitter.models.response.report.ReportResponseModel;
 import com.github.sasd97.upitter.services.RestService;
 
@@ -16,9 +17,8 @@ import retrofit2.Response;
  */
 public class ReportQueryService {
 
-    public interface OnReportSendListener {
+    public interface OnReportSendListener extends OnErrorQueryListener {
         void onSend();
-        void onSendError();
     }
 
     private OnReportSendListener listener;
@@ -36,18 +36,14 @@ public class ReportQueryService {
         sendReport.enqueue(new Callback<ReportResponseModel>() {
             @Override
             public void onResponse(Call<ReportResponseModel> call, Response<ReportResponseModel> response) {
-                if (response.body().isError()) {
-                    listener.onSendError();
-                    return;
-                }
-
+                if (!RestService.handleError(response, listener)) return;
                 listener.onSend();
             }
 
             @Override
             public void onFailure(Call<ReportResponseModel> call, Throwable t) {
                 t.printStackTrace();
-                listener.onSendError();
+                listener.onError(RestService.getEmptyError());
             }
         });
     }

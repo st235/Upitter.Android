@@ -33,6 +33,19 @@
             android:visibility="gone"
             />
 
+        <ImageView
+            android:id="@+id/success_indicator_image_uploader_single_view"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/cirlcle_green_md500_shape"
+            android:src="@drawable/ic_done_white_18dp"
+            android:scaleType="centerInside"
+            android:layout_margin="4dp"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <TextView

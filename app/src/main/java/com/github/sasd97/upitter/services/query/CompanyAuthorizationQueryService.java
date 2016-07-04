@@ -3,6 +3,7 @@ package com.github.sasd97.upitter.services.query;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.github.sasd97.upitter.events.OnErrorQueryListener;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationCompanyResponseModel;
@@ -21,9 +22,9 @@ import retrofit2.Response;
  */
 public class CompanyAuthorizationQueryService {
 
-    public interface OnCompanyAuthorizationListener {
+    public interface OnCompanyAuthorizationListener extends OnErrorQueryListener {
         void onCodeObtained();
-        void onSendCodeError();
+        void onSendCodeError(int attemptsAmount);
         void onAuthorize(CompanyResponseModel companyModel);
         void onRegister(String temporaryToken);
     }
@@ -45,18 +46,14 @@ public class CompanyAuthorizationQueryService {
 
             @Override
             public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
-                if (response.body().isError()) {
-                    listener.onSendCodeError();
-                    return;
-                }
-
+                if (!RestService.handleError(response, listener)) return;
                 listener.onCodeObtained();
             }
 
             @Override
             public void onFailure(Call<SimpleResponseModel> call, Throwable t) {
                 t.printStackTrace();
-                listener.onSendCodeError();
+                listener.onError(RestService.getEmptyError());
             }
         });
     }
@@ -68,14 +65,11 @@ public class CompanyAuthorizationQueryService {
         sendRequest.enqueue(new Callback<AuthorizationRequestCodeResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationRequestCodeResponseModel> call, Response<AuthorizationRequestCodeResponseModel> response) {
-                if (response.body().isError()) {
-                    listener.onSendCodeError();
-                    return;
-                }
+                if (!RestService.handleError(response, listener)) return;
 
                 RequestCodeResponseModel responseModel = response.body().getRequestCode();
                 if (!response.body().isSuccess()) {
-                    listener.onSendCodeError();
+                    listener.onSendCodeError(responseModel.getAttemptsAmount());
                     return;
                 }
 
@@ -86,13 +80,13 @@ public class CompanyAuthorizationQueryService {
             @Override
             public void onFailure(Call<AuthorizationRequestCodeResponseModel> call, Throwable t) {
                 t.printStackTrace();
-                listener.onSendCodeError();
+                listener.onError(RestService.getEmptyError());
             }
         });
     }
 
     public void registerCompanyUser(@NonNull CompanyModel.Builder builder) {
-        CompanyModel register = builder.build();
+        final CompanyModel register = builder.build();
         RequestBody body = RestService.obtainJsonRaw(register.toJson());
 
         Call<AuthorizationCompanyResponseModel> registerCall = RestService.baseFactory()
@@ -105,23 +99,15 @@ public class CompanyAuthorizationQueryService {
         registerCall.enqueue(new Callback<AuthorizationCompanyResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationCompanyResponseModel> call, Response<AuthorizationCompanyResponseModel> response) {
-                Log.d("REQUEST", call.request().url().toString());
-
-                if (response.body().isError()) {
-                    listener.onSendCodeError();
-                    return;
-                }
+                if (!RestService.handleError(response, listener)) return;
 
                 if (response.body().isSuccess()) listener.onAuthorize(response.body().getBusinessUser());
             }
 
             @Override
             public void onFailure(Call<AuthorizationCompanyResponseModel> call, Throwable t) {
-                Log.d("REQUEST", call.request().url().toString());
-
-
                 t.printStackTrace();
-                listener.onSendCodeError();
+                listener.onError(RestService.getEmptyError());
             }
         });
     }

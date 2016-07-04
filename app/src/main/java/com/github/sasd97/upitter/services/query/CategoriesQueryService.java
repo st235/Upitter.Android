@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
 
+import com.github.sasd97.upitter.events.OnErrorQueryListener;
 import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
 import com.github.sasd97.upitter.models.response.categories.CatergoriesResponseModel;
 import com.github.sasd97.upitter.services.RestService;
@@ -17,9 +18,8 @@ import retrofit2.Response;
  */
 public class CategoriesQueryService {
 
-    public interface OnCategoryListener {
+    public interface OnCategoryListener extends OnErrorQueryListener {
         void onGetCategories(List<CategoryResponseModel> categories);
-        void onError();
     }
 
     private OnCategoryListener listener;
@@ -37,18 +37,14 @@ public class CategoriesQueryService {
         getCategories.enqueue(new Callback<CatergoriesResponseModel>() {
             @Override
             public void onResponse(Call<CatergoriesResponseModel> call, Response<CatergoriesResponseModel> response) {
-                if (response.body().isError()) {
-                    listener.onError();
-                    return;
-                }
-
+                if (!RestService.handleError(response, listener)) return;
                 listener.onGetCategories(response.body().getCategories());
             }
 
             @Override
             public void onFailure(Call<CatergoriesResponseModel> call, Throwable t) {
                 t.printStackTrace();
-                listener.onError();
+                listener.onError(RestService.getEmptyError());
             }
         });
     }

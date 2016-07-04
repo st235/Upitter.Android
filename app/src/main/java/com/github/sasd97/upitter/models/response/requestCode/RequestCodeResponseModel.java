@@ -16,6 +16,10 @@ public class RequestCodeResponseModel {
     @Expose
     private boolean mIsAuthorized;
 
+    @SerializedName("attempts")
+    @Expose
+    private int mAttemptsAmount = -1;
+
     @SerializedName("temporaryToken")
     @Expose
     private String mTemporaryToken;
@@ -30,6 +34,10 @@ public class RequestCodeResponseModel {
 
     public String getTemporaryToken() {
         return mTemporaryToken;
+    }
+
+    public int getAttemptsAmount() {
+        return mAttemptsAmount;
     }
 
     public CompanyResponseModel getCompany() {
