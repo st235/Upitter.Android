@@ -100,6 +100,7 @@ public class CompanyAuthorizationQueryService {
             @Override
             public void onResponse(Call<AuthorizationCompanyResponseModel> call, Response<AuthorizationCompanyResponseModel> response) {
                 if (!RestService.handleError(response, listener)) return;
+                Log.d("NEXT", response.body().toString());
 
                 if (response.body().isSuccess()) listener.onAuthorize(response.body().getBusinessUser());
             }
@@ -107,6 +108,7 @@ public class CompanyAuthorizationQueryService {
             @Override
             public void onFailure(Call<AuthorizationCompanyResponseModel> call, Throwable t) {
                 t.printStackTrace();
+                Log.d("ERROR", call.request().url().toString());
                 listener.onError(RestService.getEmptyError());
             }
         });
