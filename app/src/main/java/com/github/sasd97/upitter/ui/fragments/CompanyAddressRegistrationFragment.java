@@ -122,7 +122,7 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
 
     @Override
     public void onError(ErrorModel errorModel) {
-
+        Log.d("ERROR_FALLING", errorModel.toString());
     }
 
     @Override
