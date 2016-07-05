@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="categories_title">
+        <item>News</item>
+        <item>Discount</item>
+        <item>Special</item>
+        <item>Sales</item>
+        <item>Hires</item>
+        <item>Events</item>
+        <item>Services</item>
+    </string-array>
+
+
+    <string-array name="categories_id">
+        <item>news</item>
+        <item>discount</item>
+        <item>special</item>
+        <item>sales</item>
+        <item>hires</item>
+        <item>events</item>
+        <item>services</item>
+    </string-array>
+</resources>

@@ -12,23 +12,45 @@
         android:padding="16dp"
         android:layout_above="@+id/navigation_bottom_publication">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/post_description_create_post_activity"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:maxLength="400"
-            android:hint="@string/whats_up_label_create_post_activity"
-            android:gravity="top"
-            android:textCursorDrawable="@drawable/create_post_cursor_drawable"
-            app:met_hideUnderline="true"
-            app:met_maxCharacters="400"
-            app:met_floatingLabel="normal"
-            app:met_baseColor="@android:color/black"
-            app:met_primaryColor="@color/colorPrimary"
-            />
+            android:orientation="vertical">
 
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/post_title_create_post_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="30"
+                android:hint="@string/whats_up_title_create_post_activity"
+                android:gravity="top"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:textCursorDrawable="@drawable/create_post_cursor_drawable"
+                app:met_hideUnderline="true"
+                app:met_floatingLabel="highlight"
+                app:met_baseColor="@android:color/black"
+                app:met_primaryColor="@color/colorPrimary"
+                />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/post_description_create_post_activity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLength="400"
+                android:hint="@string/whats_up_label_create_post_activity"
+                android:gravity="top"
+                android:textCursorDrawable="@drawable/create_post_cursor_drawable"
+                app:met_hideUnderline="true"
+                app:met_maxCharacters="400"
+                app:met_floatingLabel="normal"
+                app:met_baseColor="@android:color/black"
+                app:met_primaryColor="@color/colorPrimary"
+                />
+
+        </LinearLayout>
         <LinearLayout
-            android:id="@+id/categories_layout_create_post_activity"
+            android:id="@+id/category_layout_create_post_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -36,17 +58,18 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:clickable="true"
+            android:onClick="onCategoriesSelectClick"
             android:background="@drawable/rounded_primary_color_rounded_ripple">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/current_badge_preview_publication"
+                android:id="@+id/category_preview_create_post_activity"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 />
 
             <TextView
-                android:id="@+id/current_badge_title_publication"
+                android:id="@+id/category_text_create_post_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="15sp"
@@ -114,7 +137,7 @@
                     android:background="?android:selectableItemBackground">
 
                     <ImageView
-                        android:id="@+id/anonymous_image_view_publication"
+                        android:id="@+id/address_icon_create_post_activity"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/ic_icon_map"
@@ -122,12 +145,13 @@
                         />
 
                     <TextView
-                        android:id="@+id/anonymous_text_view_publication"
+                        android:id="@+id/address_text_create_post_activity"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="@color/colorShadowDark"
+                        android:textColor="@color/colorPrimary"
                         android:layout_marginBottom="4dp"
                         android:gravity="center"
+                        android:textSize="12sp"
                         android:text="@string/address_label_create_post_activity"
                         />
 
@@ -145,7 +169,7 @@
                     android:background="?android:selectableItemBackground">
 
                     <ImageView
-                        android:id="@+id/quiz_image_view_publication"
+                        android:id="@+id/quiz_icon_create_post_activity"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/ic_icon_quiz"
@@ -153,12 +177,13 @@
                         />
 
                     <TextView
-                        android:id="@+id/quiz_text_view_publication"
+                        android:id="@+id/quiz_text_create_post_activity"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="@color/colorShadowDark"
+                        android:textColor="@color/colorPrimary"
                         android:layout_marginBottom="4dp"
                         android:gravity="center"
+                        android:textSize="12sp"
                         android:text="@string/quiz_label_create_post_activity"
                         />
 
@@ -189,9 +214,10 @@
                         android:id="@+id/photos_text_view_publication"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="@color/colorShadowDark"
+                        android:textColor="@color/colorPrimary"
                         android:layout_marginBottom="4dp"
                         android:gravity="center"
+                        android:textSize="12sp"
                         android:text="@string/photo_label_create_post_activity"
                         />
 

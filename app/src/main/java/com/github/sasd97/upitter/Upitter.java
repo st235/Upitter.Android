@@ -7,6 +7,7 @@ import com.github.sasd97.upitter.holders.UserHolder;
 import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.utils.Assets;
 import com.github.sasd97.upitter.utils.Authorization;
+import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Connectivity;
 import com.github.sasd97.upitter.utils.Keyboard;
 import com.github.sasd97.upitter.utils.Palette;
@@ -60,11 +61,12 @@ public class Upitter extends Application {
 
         Assets.init(this);
         Authorization.init(this);
-        SugarContext.init(this);
+        Categories.init(this);
         Connectivity.init(this);
         Keyboard.init(this);
         Palette.init(this);
         Prefs.init(this);
+        SugarContext.init(this);
         RestService.init();
 
         holder = UserHolder.init();
