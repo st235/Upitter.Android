@@ -95,6 +95,12 @@
     <string name="attempts_of_company_registration_activity">of 5</string>
     <!-- Endregion -->
 
+    <!-- Region Quiz Add -->
+    <string name="title_activity_quiz">Quiz</string>
+    <string name="add_button_text_activity_quiz">Add Variant</string>
+    <string name="hint_input_text_activity_quiz">Quiz Variant</string>
+    <!-- Endregion -->
+
     <!-- Map activity region -->
     <string name="title_map_choose_activity">Map</string>
     <!-- Endregion -->
@@ -131,6 +137,7 @@
     <!-- Create post region -->
     <string name="title_create_post_activity">Create post</string>
     <string name="whats_up_label_create_post_activity">You can publish your services and news here&#8230;</string>
+    <string name="whats_up_title_create_post_activity">Title</string>
     <string name="category_label_create_post_activity">Category:</string>
     <string name="address_label_create_post_activity">Address(es)</string>
     <string name="photo_label_create_post_activity">Photos</string>

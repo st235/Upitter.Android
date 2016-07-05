@@ -38,7 +38,6 @@ public class MapChooseActivity extends BaseActivity implements OnMapReadyCallbac
         setContentView(R.layout.map_choose_activity);
         setToolbar(R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.05f));
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

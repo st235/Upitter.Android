@@ -116,6 +116,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.TapeActivity" />
         </activity>
+        <activity android:name=".ui.results.QuizActivity"
+            android:label="@string/quiz_label_create_post_activity"
+            android:parentActivityName=".ui.TapeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.TapeActivity" />
+        </activity>
+        <activity android:name=".ui.results.PostCategoriesChooseActivity"
+            android:label="@string/quiz_label_create_post_activity"
+            android:parentActivityName=".ui.TapeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.TapeActivity" />
+        </activity>
     </application>
 
 </manifest>

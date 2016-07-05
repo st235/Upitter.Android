@@ -175,7 +175,8 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
     }
 
     private void onCategoryChooseClick() {
-        startActivityForResult(new Intent(getActivity(), CategoriesActivity.class), CATEGORIES_ACTIVITY_REQUEST);
+        Intent intent = new Intent(getActivity(), CategoriesActivity.class);
+        startActivityForResult(intent, CATEGORIES_ACTIVITY_REQUEST);
     }
 
     private void handleAvatarIntent(@NonNull Intent intent) {

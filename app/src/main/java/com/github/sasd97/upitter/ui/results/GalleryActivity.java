@@ -135,7 +135,7 @@ public class GalleryActivity extends BaseActivity
         if (finalPaths.size() == 0) return;
 
         Intent data = new Intent();
-        data.putStringArrayListExtra(PUT_CROPPED_IMAGE, finalPaths);
+        data.putStringArrayListExtra(GALLERY_MULTI_SELECTED_PHOTOS_LIST, finalPaths);
         setResult(RESULT_OK, data);
         finish();
     }
@@ -206,7 +206,7 @@ public class GalleryActivity extends BaseActivity
     }
 
     @Override
-    public void onMultiSelectionCounterClick(int position, ArrayList<ImageSkeleton> images) {
+    public void onMultiSelectionCounterClick(int position, ArrayList<ImageSkeleton> selectedPhotos) {
     }
 
     @Override
