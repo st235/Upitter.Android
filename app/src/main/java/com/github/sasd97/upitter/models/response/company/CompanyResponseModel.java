@@ -28,7 +28,7 @@ public class CompanyResponseModel extends BaseResponseModel {
 
     @SerializedName("activity")
     @Expose
-    private int mActivity;
+    private List<Integer> mActivities;
 
     @SerializedName("site")
     @Expose
@@ -62,8 +62,8 @@ public class CompanyResponseModel extends BaseResponseModel {
         return mIsVerify;
     }
 
-    public int getActivity() {
-        return mActivity;
+    public List<Integer> getActivity() {
+        return mActivities;
     }
 
     public String getSite() {
@@ -88,11 +88,15 @@ public class CompanyResponseModel extends BaseResponseModel {
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "Business\nCustom id: %1$s\nName: %2$s\nIs verify: %3$b\nActivity: %4$d\nSite: %5$s\n",
+        StringBuilder activities = new StringBuilder();
+        for (Integer activity: mActivities)
+            activities.append(activity).append("\n");
+
+        return String.format(Locale.getDefault(), "Business\nCustom id: %1$s\nName: %2$s\nIs verify: %3$b\nActivities: [%4$s]\nSite: %5$s\n",
                 mCustomId,
                 mName,
                 mIsVerify,
-                mActivity,
+                activities.toString(),
                 mSite);
     }
 }

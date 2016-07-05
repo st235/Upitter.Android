@@ -29,6 +29,7 @@ import static com.github.sasd97.upitter.constants.MethodConstants.BASE_SUB_API_U
 import static com.github.sasd97.upitter.constants.MethodConstants.BASE_SUB_ASTRAL_API_URL;
 import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SERVER_API_URL;
 import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SUB_ASTRAL_SERVER_API_URL;
+import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SUB_SERVER_API_URL;
 
 /**
  * Created by Alexander Dadukin on 06.06.2016.
@@ -57,7 +58,7 @@ public final class RestService {
                 .build();
 
         fileServerAPI = new Retrofit.Builder()
-                .baseUrl(FILE_SUB_ASTRAL_SERVER_API_URL)
+                .baseUrl(FILE_SUB_SERVER_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
