@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 
 import com.github.sasd97.upitter.R;
@@ -100,7 +101,10 @@ public class CodeConfirmActivity extends BaseActivity implements
     }
 
     @Override
-    public void onAuthorize(CompanyResponseModel companyResponseModel) {}
+    public void onAuthorize(CompanyResponseModel companyResponseModel) {
+        //  TODO add enter
+        Log.d("ENTER", companyResponseModel.toString());
+    }
 
     @Override
     public void onRegister(String temporaryToken) {
@@ -123,6 +127,7 @@ public class CodeConfirmActivity extends BaseActivity implements
 
     private void setRequestCode(@NonNull String requestCode) {
         requestCodeEditText.setText(requestCode);
+
         queryService.sendRequestCode(
                 currentPhone.getPhoneBody(),
                 currentPhone.getDialCode(),

@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.IntentKeysConstants;
+import com.github.sasd97.upitter.holders.CompanyHolder;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.ErrorModel;
@@ -29,10 +30,11 @@ import com.github.sasd97.upitter.ui.results.MapChooseActivity;
 import java.util.ArrayList;
 
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CHOOSE_ON_MAP_POINT_REQUEST;
-
+import static com.github.sasd97.upitter.Upitter.*;
 /**
  * Created by alexander on 28.06.16.
  */
+
 public class CompanyAddressRegistrationFragment extends BaseFragment
         implements View.OnClickListener,
         GeocoderService.OnAddressListener,
@@ -128,6 +130,16 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
     @Override
     public void onAuthorize(CompanyResponseModel companyResponseModel) {
         Log.d("RESPONSE", companyResponseModel.toString());
+        setHolder(CompanyHolder.getHolder());
+
+        CompanyModel companyModel = new CompanyModel
+                .Builder()
+                .id(companyResponseModel.getId())
+                .accessToken(companyResponseModel.getAccessToken())
+                .name(companyResponseModel.getName())
+                .build();
+
+        getHolder().save(companyModel);
     }
 
     @Override

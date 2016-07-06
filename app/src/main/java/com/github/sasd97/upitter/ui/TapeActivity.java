@@ -48,6 +48,8 @@ public class TapeActivity extends BaseActivity
                 startActivity(new Intent(TapeActivity.this, CreatePostActivity.class));
             }
         });
+
+
     }
 
     @Override

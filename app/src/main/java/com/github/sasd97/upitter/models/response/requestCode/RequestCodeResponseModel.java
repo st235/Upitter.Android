@@ -24,7 +24,7 @@ public class RequestCodeResponseModel {
     @Expose
     private String mTemporaryToken;
 
-    @SerializedName("user")
+    @SerializedName("businessUser")
     @Expose
     private CompanyResponseModel mBusinessUser;
 

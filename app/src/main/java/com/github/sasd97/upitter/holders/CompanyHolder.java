@@ -11,7 +11,7 @@ public class CompanyHolder extends UserHolder<CompanyModel> {
         super();
     }
 
-    private static CompanyHolder getHolder() {
+    public static CompanyHolder getHolder() {
         return new CompanyHolder();
     }
 
@@ -22,7 +22,7 @@ public class CompanyHolder extends UserHolder<CompanyModel> {
 
     @Override
     public void restore() {
-
+        this.userModel = CompanyModel.findById(CompanyModel.class, 0);
     }
 
     @Override
@@ -33,10 +33,12 @@ public class CompanyHolder extends UserHolder<CompanyModel> {
     @Override
     public void save(CompanyModel userModel) {
         super.save(userModel);
+        userModel.save();
     }
 
     @Override
     public void delete() {
         super.delete();
+        this.userModel.delete();
     }
 }
