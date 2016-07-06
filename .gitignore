@@ -3,3 +3,5 @@
 /build
 /captures
 /local.properties
+/.gradle/
+/.idea/
