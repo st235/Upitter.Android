@@ -10,7 +10,7 @@ import com.github.sasd97.upitter.models.skeletons.SearchableSkeleton;
 /**
  * Created by alexander on 05.07.16.
  */
-public class CategoryModel extends SearchableSkeleton {
+public class CategoryModel implements SearchableSkeleton {
 
     private final static String DRAWABLE_PREFIX = "ic_category_";
     private final static String DRAWABLE_ID = "drawable";
@@ -65,7 +65,7 @@ public class CategoryModel extends SearchableSkeleton {
 
     @Override
     public boolean isImage() {
-        return false;
+        return true;
     }
 
     @Override

@@ -126,8 +126,8 @@ public class CreatePostActivity extends BaseActivity
     }
 
     private void setCategory(CategoryModel category) {
-        //Drawable preview = ContextCompat.getDrawable(this, category.getIntImage());
-        //categoryPreviewImageView.setImageDrawable(preview);
+        Drawable preview = ContextCompat.getDrawable(this, category.getIntImage());
+        categoryPreviewImageView.setImageDrawable(preview);
         categoryTextView.setText(category.getTitle());
     }
 

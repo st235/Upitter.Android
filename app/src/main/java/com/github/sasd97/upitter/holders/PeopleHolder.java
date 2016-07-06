@@ -37,7 +37,7 @@ public class PeopleHolder extends UserHolder<PeopleModel> {
     public void save(PeopleModel userModel) {
         super.save(userModel);
         
-        Prefs.put(USER_ID, this.userModel.getId());
+        Prefs.put(USER_ID, this.userModel.getUId());
         Prefs.put(USER_NAME, this.userModel.getName());
         Prefs.put(USER_SURNAME, this.userModel.getSurname());
         Prefs.put(USER_NICKNAME, this.userModel.getNickname());

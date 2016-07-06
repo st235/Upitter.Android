@@ -4,6 +4,7 @@ import com.github.sasd97.upitter.models.skeletons.RequestSkeleton;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.orm.dsl.Table;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,15 @@ import java.util.Locale;
 /**
  * Created by Alexadner Dadukin on 30.06.2016.
  */
+
 public class CompanyModel extends UserModel
         implements RequestSkeleton {
 
     private String mId;
+    private PhoneModel mPhone;
+    private boolean mIsVerify = false;
+    private String mAvatarUrl;
+    private String mAccessToken;
 
     @SerializedName("name")
     @Expose
@@ -28,8 +34,6 @@ public class CompanyModel extends UserModel
     @SerializedName("category")
     @Expose
     private List<Integer> mCategories;
-
-    private PhoneModel mPhone;
 
     @SerializedName("contactPhones")
     @Expose
@@ -47,12 +51,8 @@ public class CompanyModel extends UserModel
     @Expose
     private String mTemporaryToken;
 
-    private boolean mIsVerify = false;
-    private String mAvatarUrl;
-
-    private String mAccessToken;
-
     private CompanyModel(Builder builder) {
+        mId = builder.id;
         mName = builder.name;
         mDescription = builder.description;
         mCategories = builder.categories;
@@ -66,7 +66,7 @@ public class CompanyModel extends UserModel
     }
 
     @Override
-    public String getId() {
+    public String getUId() {
         return mId;
     }
 
@@ -115,12 +115,17 @@ public class CompanyModel extends UserModel
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "User with id %1$s",
-                mId == null ? "Null" : mId);
+        return String.format(Locale.getDefault(), "User #%1$s\nPhone: %2$s\nIs verify: %3$b\nAvatar url: %4$s\nAccess token: %5$s",
+                mId == null ? "Null" : mId,
+                mPhone == null ? "Null" : mPhone.toString(),
+                mIsVerify,
+                mAvatarUrl == null ? "Null" : mAvatarUrl,
+                mAccessToken == null ? "Null" : mAccessToken);
     }
 
     public static class Builder {
 
+        private String id;
         private String name;
         private String description;
         private String avatarUrl;
@@ -131,6 +136,11 @@ public class CompanyModel extends UserModel
         private List<CoordinatesModel> coordinates;
         private String accessToken;
         private String temporaryToken;
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
 
         public Builder name(String name) {
             this.name = name;

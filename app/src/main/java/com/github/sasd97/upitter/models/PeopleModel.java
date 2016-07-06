@@ -30,7 +30,7 @@ public class PeopleModel extends UserModel {
     }
 
     @Override
-    public String getId() {
+    public String getUId() {
         return mId;
     }
 

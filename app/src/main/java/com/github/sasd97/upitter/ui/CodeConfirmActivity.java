@@ -44,12 +44,12 @@ public class CodeConfirmActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.code_confirm_activity);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
+
         WRONG_REQUEST_CODE = getString(R.string.wrong_request_code_confirm_activity);
+        currentPhone = getIntent().getParcelableExtra(RECEIVED_PHONE);
 
         queryService = CompanyAuthorizationQueryService.getService(this);
-
         requestCodeReceiver = RequestCodeReceiver.getReceiver(this);
-        currentPhone = getIntent().getParcelableExtra(RECEIVED_PHONE);
     }
 
     public void onLoginClick(View v) {
@@ -100,9 +100,7 @@ public class CodeConfirmActivity extends BaseActivity implements
     }
 
     @Override
-    public void onAuthorize(CompanyResponseModel companyResponseModel) {
-
-    }
+    public void onAuthorize(CompanyResponseModel companyResponseModel) {}
 
     @Override
     public void onRegister(String temporaryToken) {

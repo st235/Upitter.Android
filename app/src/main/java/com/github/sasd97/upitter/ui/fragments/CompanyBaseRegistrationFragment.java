@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,9 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.GALLERY_
  * Created by Alexadner Dadukin on 24.06.2016.
  */
 
-public class CompanyBaseRegistrationFragment extends BaseFragment implements ImageUploaderView.OnImageUploadListener {
+public class CompanyBaseRegistrationFragment
+        extends BaseFragment
+        implements ImageUploaderView.OnImageUploadListener {
 
     private String EMPTY_ERROR;
 
@@ -46,7 +47,6 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
     private CompanyModel.Builder companyBuilder;
 
     private ArrayList<Integer> categoriesSelected;
-    private ArrayList<String> contactPhones;
 
     private ImageUploaderView avatarImageUploaderView;
     private RelativeLayout categoriesLayout;
@@ -77,10 +77,7 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
         super.onViewCreated(view, savedInstanceState);
 
         EMPTY_ERROR = getString(R.string.empty_field);
-
-        companyBuilder =
-                new CompanyModel
-                        .Builder();
+        companyBuilder = new CompanyModel.Builder();
 
         avatarImageUploaderView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,8 +98,7 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
         });
         setPositionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onAddressChooseClick(true);
+            public void onClick(View view) {onAddressChooseClick(true);
             }
         });
 
@@ -111,9 +107,8 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
         phonesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         phonesRecyclerView.setAdapter(phonesRecyclerAdapter);
 
-        ItemTouchHelper.SimpleCallback
-                simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
+                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
@@ -123,7 +118,7 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 LinearLayout.LayoutParams lp =
                         new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
                 phonesRecyclerAdapter.removePhone(viewHolder.getAdapterPosition());
                 phonesRecyclerView.setLayoutParams(lp);
             }
@@ -135,14 +130,14 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
 
     @Override
     protected void bindViews() {
+        companyDescriptionEditText = findById(R.id.description_edittext_business_registration_base_fragment);
         avatarImageUploaderView = findById(R.id.avatar_url_business_registration_base_fragment);
         categoriesLayout = findById(R.id.categories_choose_business_registration_base_fragment);
-        phonesRecyclerView = findById(R.id.phones_recyclerview_registration_base_fragment);
-        addPhoneLayout = findById(R.id.add_phone_button_registration_base_fragment);
         companyNameEditText = findById(R.id.name_edittext_business_registration_base_fragment);
-        companyDescriptionEditText = findById(R.id.description_edittext_business_registration_base_fragment);
         companySiteEditText = findById(R.id.site_edittext_business_registration_base_fragment);
         setPositionButton = findById(R.id.set_position_business_registration_base_fragment);
+        phonesRecyclerView = findById(R.id.phones_recyclerview_registration_base_fragment);
+        addPhoneLayout = findById(R.id.add_phone_button_registration_base_fragment);
     }
 
     private void setRegistrationListener(OnCompanyRegistrationListener listener) {
@@ -155,6 +150,7 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
         companyBuilder
                         .name(companyNameEditText.getText().toString())
                         .description(companyDescriptionEditText.getText().toString())
+                        .contactPhones(phonesRecyclerAdapter.getPhones())
                         .site(companySiteEditText.getText().toString());
 
         listener.onBaseInfoPrepared(companyBuilder);
@@ -201,19 +197,26 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
             companyNameEditText.setError(EMPTY_ERROR);
             result = false;
         }
+
         if (companyDescriptionEditText.getText().length() == 0) {
             companyDescriptionEditText.setError(EMPTY_ERROR);
-            result =  false;
+            result = false;
         }
-        if (categoriesSelected == null || categoriesSelected.size() == 0) {
-            Snackbar.make(getView(), getString(R.string.not_present_category_company_registration_activity), Snackbar.LENGTH_LONG).show();
-            result =  false;
+
+        if (categoriesSelected == null ||
+                categoriesSelected.size() == 0) {
+            Snackbar
+                    .make(getView(), getString(R.string.not_present_category_company_registration_activity), Snackbar.LENGTH_LONG)
+                    .show();
+            result = false;
         }
 
         if (!result) return false;
         if (!isExtraRequired) return result;
 
-        if (contactPhones == null || contactPhones.size() == 0 || companySiteEditText.getText().length() == 0) {
+        if (phonesRecyclerAdapter.getPhones() == null ||
+                phonesRecyclerAdapter.getPhones().size() == 0 ||
+                    companySiteEditText.getText().length() == 0) {
             Snackbar
                     .make(getView(), getString(R.string.extra_information_was_not_supply_company_registration_activity), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.ignore_extra_company_registration_activity), new View.OnClickListener() {
@@ -223,7 +226,7 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
                         }
                     })
                     .show();
-            result =  false;
+            result = false;
         }
 
         return result;
@@ -233,10 +236,12 @@ public class CompanyBaseRegistrationFragment extends BaseFragment implements Ima
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != BaseActivity.RESULT_OK) return;
+
         if (requestCode == GALLERY_ACTIVITY_REQUEST) {
             handleAvatarIntent(data);
             return;
         }
+
         if (requestCode == CATEGORIES_ACTIVITY_REQUEST) {
             handleCategoriesIntent(data);
             return;

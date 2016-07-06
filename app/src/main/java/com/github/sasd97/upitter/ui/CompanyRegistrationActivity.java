@@ -37,9 +37,12 @@ public class CompanyRegistrationActivity extends BaseActivity
 
     @Override
     public void onBaseInfoPrepared(@NonNull CompanyModel.Builder builder) {
-        builder.temporaryToken(getIntent().getStringExtra(RECEIVED_TEMPORARY_TOKEN));
+        String temporaryToken = getIntent().getStringExtra(RECEIVED_TEMPORARY_TOKEN);
         PhoneModel phoneModel = getIntent().getParcelableExtra(RECEIVED_PHONE);
-        builder.phone(phoneModel);
+
+        builder
+                .temporaryToken(temporaryToken)
+                .phone(phoneModel);
 
         getSupportFragmentManager()
                 .beginTransaction()
