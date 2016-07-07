@@ -111,9 +111,15 @@ public class CodeConfirmActivity extends BaseActivity implements
         CompanyModel companyModel = new CompanyModel
                 .Builder()
                 .id(companyResponseModel.getId())
-                .phone(currentPhone)
-                .accessToken(companyResponseModel.getAccessToken())
                 .name(companyResponseModel.getName())
+                .isVerify(companyResponseModel.isVerify())
+                .description(companyResponseModel.getDescription())
+                .categories(companyResponseModel.getActivity())
+                .phone(currentPhone)
+                .contactPhones(companyResponseModel.getContactPhones())
+                .site(companyResponseModel.getSite())
+                .coordinates(companyResponseModel.getCoordinates())
+                .accessToken(companyResponseModel.getAccessToken())
                 .build();
 
         Log.d("PRESAVE", companyModel.toString());

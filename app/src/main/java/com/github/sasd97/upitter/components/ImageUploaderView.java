@@ -37,6 +37,7 @@ public class ImageUploaderView extends LinearLayout implements
 
     private Context context;
     private FileUploadQueryService service;
+    private OnImageUploadListener listener;
 
     private View rootView;
     private ImageView imagePreviewImageView;
@@ -72,7 +73,11 @@ public class ImageUploaderView extends LinearLayout implements
         successIndicatorImageView = (ImageView) rootView.findViewById(R.id.success_indicator_image_uploader_single_view);
     }
 
-    public void uploadPhoto(@NonNull String photoPath, @NonNull OnImageUploadListener listener) {
+    public void setOnImageUploadListener(@NonNull OnImageUploadListener listener) {
+        this.listener = listener;
+    }
+
+    public void uploadPhoto(@NonNull String photoPath) {
         Glide
                 .with(context)
                 .load(Names.getInstance().getFilePath(photoPath).toString())
@@ -99,6 +104,7 @@ public class ImageUploaderView extends LinearLayout implements
     public void onUpload(String path) {
         circularProgressView.setVisibility(GONE);
         successIndicatorImageView.setVisibility(VISIBLE);
+        if (listener != null) listener.onUpload(path);
     }
 
     @Override

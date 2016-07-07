@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,6 +102,7 @@ public class CompanyBaseRegistrationFragment
             public void onClick(View view) {onAddressChooseClick(true);
             }
         });
+        avatarImageUploaderView.setOnImageUploadListener(this);
 
         phonesRecyclerAdapter = new PhonesRecyclerAdapter();
         phonesRecyclerView.setHasFixedSize(true);
@@ -177,7 +179,7 @@ public class CompanyBaseRegistrationFragment
 
     private void handleAvatarIntent(@NonNull Intent intent) {
         String path = intent.getStringExtra(PUT_CROPPED_IMAGE);
-        avatarImageUploaderView.uploadPhoto(path, this);
+        avatarImageUploaderView.uploadPhoto(path);
     }
 
     private void handleCategoriesIntent(@NonNull Intent intent) {
@@ -187,6 +189,7 @@ public class CompanyBaseRegistrationFragment
 
     @Override
     public void onUpload(String path) {
+        Log.d("AVATAR", path);
         companyBuilder.avatarUrl(path);
     }
 

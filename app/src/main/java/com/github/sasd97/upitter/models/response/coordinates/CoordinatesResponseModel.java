@@ -19,12 +19,20 @@ public class CoordinatesResponseModel extends BaseResponseModel {
     @Expose
     private double mLongitude;
 
+    @SerializedName("address")
+    @Expose
+    private String mAddress;
+
     public double getLatitude() {
         return mLatitude;
     }
 
     public double getLongitude() {
         return mLongitude;
+    }
+
+    public String getAddress() {
+        return mAddress;
     }
 
     @Override

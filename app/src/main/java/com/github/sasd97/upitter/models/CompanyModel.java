@@ -1,11 +1,15 @@
 package com.github.sasd97.upitter.models;
 
 import com.github.sasd97.upitter.models.skeletons.RequestSkeleton;
+import com.github.sasd97.upitter.utils.ListUtils;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
+import com.orm.dsl.Ignore;
 import com.orm.dsl.Table;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -20,7 +24,6 @@ public class CompanyModel extends UserModel
     private String mId;
     private PhoneModel mPhone;
     private boolean mIsVerify = false;
-    private String mAvatarUrl;
     private String mAccessToken;
 
     @SerializedName("name")
@@ -33,11 +36,15 @@ public class CompanyModel extends UserModel
 
     @SerializedName("category")
     @Expose
+    @Ignore
     private List<Integer> mCategories;
+    private String mCategoriesRepresentation;
 
     @SerializedName("contactPhones")
     @Expose
+    @Ignore
     private List<String> mContactPhones;
+    private String mContactPhonesRepresentation;
 
     @SerializedName("site")
     @Expose
@@ -45,7 +52,13 @@ public class CompanyModel extends UserModel
 
     @SerializedName("coordinates")
     @Expose
+    @Ignore
     private List<CoordinatesModel> mCoordinates;
+    private String mCoordinatesRepresentation;
+
+    @SerializedName("logoUrl")
+    @Expose
+    private String mAvatarUrl;
 
     @SerializedName("temporaryToken")
     @Expose
@@ -55,6 +68,7 @@ public class CompanyModel extends UserModel
 
     private CompanyModel(Builder builder) {
         mId = builder.id;
+        mIsVerify = builder.isVerify;
         mName = builder.name;
         mDescription = builder.description;
         mCategories = builder.categories;
@@ -65,6 +79,11 @@ public class CompanyModel extends UserModel
         mAccessToken = builder.accessToken;
         mTemporaryToken = builder.temporaryToken;
         mAvatarUrl = builder.avatarUrl;
+
+        Gson gson = new Gson();
+        mCategoriesRepresentation = gson.toJson(mCategories);
+        mContactPhonesRepresentation = gson.toJson(mContactPhones);
+        mCoordinatesRepresentation = gson.toJson(mCoordinates);
     }
 
     @Override
@@ -110,6 +129,24 @@ public class CompanyModel extends UserModel
         return UserType.Company;
     }
 
+    public List<Integer> getCategories() {
+        if (mCategories != null) return mCategories;
+        if (mCategoriesRepresentation == null) return null;
+        return ListUtils.fromJson(mCategoriesRepresentation);
+    }
+
+    public List<String> getContactPhones() {
+        if (mContactPhones != null) return mContactPhones;
+        if (mContactPhonesRepresentation == null) return null;
+        return ListUtils.fromJson(mContactPhonesRepresentation);
+    }
+
+    public List<CoordinatesModel> getCoordinates() {
+        if (mCoordinates != null) return mCoordinates;
+        if (mCoordinatesRepresentation == null) return null;
+        return ListUtils.fromJson(mCoordinatesRepresentation);
+    }
+
     @Override
     public long save() {
         if (mPhone != null) mPhone.save();
@@ -123,17 +160,35 @@ public class CompanyModel extends UserModel
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "User #%1$s\nType: Company\nPhone: %2$s\nIs verify: %3$b\nAvatar url: %4$s\nAccess token: %5$s",
+
+
+        return String.format(Locale.getDefault(),
+                "%15$s #%1$s\nType: Company\nIs verify: %2$b\nDescription: %3$s\nCategories: {%4$s}\n" +
+                        "Phone: %5$s\nContact phones: {%6$s}\nSite: %7$s\nCoordinates: {%8$s}\n" +
+                        "Access token: %9$s\nTemporary token: %10$s\nAvatar url: %11$s\n" +
+                        "---Representations of base dataTypes---\n" +
+                        "Categories: [%12$s]\nContact Phones: [%13$s]\nCoordinates: [%14$s]",
                 mId == null ? "Null" : mId,
-                mPhone == null ? "Null" : mPhone.toString(),
                 mIsVerify,
+                mDescription == null ? "Null" : mDescription,
+                mCategories == null ? "Null" : ListUtils.toString(mCategories),
+                mPhone == null ? "Null" : mPhone,
+                mContactPhones == null ? "Null" : ListUtils.toString(mContactPhones),
+                mSite == null ? "Null" : mSite,
+                mCoordinates == null ? "Null" : ListUtils.toString(mCoordinates),
+                mAccessToken == null ? "Null" : mAccessToken,
+                mTemporaryToken == null ? "Null" : mTemporaryToken,
                 mAvatarUrl == null ? "Null" : mAvatarUrl,
-                mAccessToken == null ? "Null" : mAccessToken);
+                mCategoriesRepresentation == null ? "Null" : mCategoriesRepresentation,
+                mContactPhonesRepresentation == null ? "Null" : mContactPhonesRepresentation,
+                mCoordinatesRepresentation == null ? "Null" : mCoordinatesRepresentation,
+                mName == null ? "Null" : mName);
     }
 
     public static class Builder {
 
         private String id;
+        private boolean isVerify;
         private String name;
         private String description;
         private String avatarUrl;
@@ -147,6 +202,11 @@ public class CompanyModel extends UserModel
 
         public Builder id(String id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder isVerify(boolean isVerify) {
+            this.isVerify = isVerify;
             return this;
         }
 

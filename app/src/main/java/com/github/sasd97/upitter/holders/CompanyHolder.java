@@ -25,8 +25,7 @@ public class CompanyHolder extends UserHolder<CompanyModel> {
     @Override
     public void restore() {
         this.userModel = CompanyModel.findById(CompanyModel.class, 1);
-        if (this.userModel != null)
-            Log.d("RESTRED", this.userModel.toString());
+        if (this.userModel != null) Log.d("RESTORED", this.userModel.toString());
     }
 
     @Override

@@ -47,24 +47,14 @@ public class LoginActivity extends BaseActivity
         setContentView(R.layout.login_activity);
 
         if (isUserAvailable()) {
-            Log.d("USER", UserHolder.isUserAvailable() + "");
-            Log.d("USER_TYPe", UserHolder.getUserType() + "_TYPE");
             setHolder(CompanyHolder.getHolder());
             getHolder().restore();
-            Log.d("USER", getHolder().get().toString());
 
             Intent intent = new Intent(this, TapeActivity.class);
             startActivity(intent);
             finish();
             return;
         }
-
-        /* TEST REGION */
-        // Intent intent = new Intent(this, CreatePostActivity.class);
-        // intent.putExtra(RECEIVED_TEMPORARY_TOKEN, "234lkkfjlsjfsklr4534dlksfjlkds");
-        // startActivity(intent);
-        // finish();
-        /* TEST REGION */
 
         initColors();
 

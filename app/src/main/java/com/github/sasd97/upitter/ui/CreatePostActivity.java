@@ -51,9 +51,11 @@ public class CreatePostActivity extends BaseActivity
 
     private ImageView addressIconImageView;
     private ImageView quizIconImageView;
+    private ImageView photoIconImageView;
 
     private TextView addressTextView;
     private TextView quizTextView;
+    private TextView photoTextView;
 
     private LinearLayout categoryLinearLayout;
     private ImageView categoryPreviewImageView;
@@ -84,8 +86,10 @@ public class CreatePostActivity extends BaseActivity
         photosRecyclerView = findById(R.id.image_placeholder_recyclerview_publication);
         addressIconImageView = findById(R.id.address_icon_create_post_activity);
         quizIconImageView = findById(R.id.quiz_icon_create_post_activity);
+        photoIconImageView = findById(R.id.photos_image_view_publication);
         addressTextView = findById(R.id.address_text_create_post_activity);
         quizTextView = findById(R.id.quiz_text_create_post_activity);
+        photoTextView = findById(R.id.photos_text_view_publication);
         categoryLinearLayout = findById(R.id.category_layout_create_post_activity);
         categoryPreviewImageView = findById(R.id.category_preview_create_post_activity);
         categoryTextView = findById(R.id.category_text_create_post_activity);
@@ -115,6 +119,7 @@ public class CreatePostActivity extends BaseActivity
     @Override
     public void onEmpty() {
         photoPlaceholderLayout.setVisibility(View.GONE);
+        highlightHandler(photoIconImageView, photoTextView, R.drawable.ic_icon_add_photo, R.color.colorPrimary);
     }
 
     public void highlightHandler(ImageView imageView,
@@ -135,6 +140,7 @@ public class CreatePostActivity extends BaseActivity
         selectedPhotos = data.getStringArrayListExtra(GALLERY_MULTI_SELECTED_PHOTOS_LIST);
         imageHolderRecyclerAdapter.addAll(selectedPhotos);
 
+        highlightHandler(photoIconImageView, photoTextView, R.drawable.ic_icon_add_photo_active, R.color.colorAccent);
         photoPlaceholderLayout.setVisibility(View.VISIBLE);
     }
 

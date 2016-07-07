@@ -53,12 +53,12 @@ public final class RestService {
 
     public static void init() {
         baseAPI = new Retrofit.Builder()
-                .baseUrl(BASE_SUB_API_URL)
+                .baseUrl(BASE_SUB_ASTRAL_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         fileServerAPI = new Retrofit.Builder()
-                .baseUrl(FILE_SUB_SERVER_API_URL)
+                .baseUrl(FILE_SUB_ASTRAL_SERVER_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

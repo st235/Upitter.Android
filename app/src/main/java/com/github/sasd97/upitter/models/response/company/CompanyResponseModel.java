@@ -1,8 +1,10 @@
 package com.github.sasd97.upitter.models.response.company;
 
+import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.response.coordinates.CoordinatesResponseModel;
 import com.github.sasd97.upitter.models.response.phone.PhoneResponseModel;
+import com.github.sasd97.upitter.utils.ListUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,13 +20,17 @@ public class CompanyResponseModel extends BaseResponseModel {
     @Expose
     private String mCustomId;
 
+    @SerializedName("isVerify")
+    @Expose
+    private boolean mIsVerify;
+
     @SerializedName("name")
     @Expose
     private String mName;
 
-    @SerializedName("isVerify")
+    @SerializedName("description")
     @Expose
-    private boolean mIsVerify;
+    private String mDescription;
 
     @SerializedName("activity")
     @Expose
@@ -54,13 +60,15 @@ public class CompanyResponseModel extends BaseResponseModel {
         return mCustomId;
     }
 
+    public boolean isVerify() {
+        return mIsVerify;
+    }
+
     public String getName() {
         return mName;
     }
 
-    public boolean isVerify() {
-        return mIsVerify;
-    }
+    public String getDescription() { return mDescription; }
 
     public List<Integer> getActivity() {
         return mActivities;
@@ -74,8 +82,17 @@ public class CompanyResponseModel extends BaseResponseModel {
         return mContactPhones;
     }
 
-    public List<CoordinatesResponseModel> getCoordinates() {
-        return mCoordinates;
+    public List<CoordinatesModel> getCoordinates() {
+        return ListUtils.mutate(mCoordinates, new ListUtils.OnListMutateListener<CoordinatesResponseModel, CoordinatesModel>() {
+            @Override
+            public CoordinatesModel mutate(CoordinatesResponseModel object) {
+                return new CoordinatesModel.Builder()
+                        .latitude(object.getLatitude())
+                        .longitude(object.getLongitude())
+                        .addressName(object.getAddress())
+                        .build();
+            }
+        });
     }
 
     public PhoneResponseModel getPhone() {

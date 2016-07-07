@@ -139,6 +139,7 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
                 .name(companyResponseModel.getName())
                 .build();
 
+        Log.d("USER", companyModel.toString());
         getHolder().save(companyModel);
         startActivity(new Intent(getContext(), TapeActivity.class));
         getActivity().finish();

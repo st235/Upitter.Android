@@ -25,18 +25,25 @@ public class CoordinatesModel implements RequestSkeleton, Parcelable {
     @Expose
     private double mLongitude;
 
+    @SerializedName("address")
+    @Expose
+    private String mAddressName;
+
     private Address mAddress;
 
     private CoordinatesModel(Builder builder) {
         mLatitude = builder.latitude;
         mLongitude = builder.longitude;
         mAddress = builder.address;
+        mAddressName = builder.addressName;
+        if (mAddress != null) mAddressName = mAddress.getAddressLine(0);
     }
 
     protected CoordinatesModel(Parcel in) {
         mLatitude = in.readDouble();
         mLongitude = in.readDouble();
         mAddress = in.readParcelable(Address.class.getClassLoader());
+        if (mAddress != null) mAddressName = mAddress.getAddressLine(0);
     }
 
     public double getLatitude() {
@@ -87,6 +94,7 @@ public class CoordinatesModel implements RequestSkeleton, Parcelable {
         private double latitude;
         private double longitude;
         private Address address;
+        private String addressName;
 
         public Builder latitude(double latitude) {
             this.latitude = latitude;
@@ -100,6 +108,11 @@ public class CoordinatesModel implements RequestSkeleton, Parcelable {
 
         public Builder address(Address address) {
             this.address = address;
+            return this;
+        }
+
+        public Builder addressName(String addressName) {
+            this.addressName = addressName;
             return this;
         }
 
