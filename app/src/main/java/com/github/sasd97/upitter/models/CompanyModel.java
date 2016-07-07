@@ -51,6 +51,8 @@ public class CompanyModel extends UserModel
     @Expose
     private String mTemporaryToken;
 
+    public CompanyModel() {}
+
     private CompanyModel(Builder builder) {
         mId = builder.id;
         mName = builder.name;
@@ -109,13 +111,19 @@ public class CompanyModel extends UserModel
     }
 
     @Override
+    public long save() {
+        if (mPhone != null) mPhone.save();
+        return super.save();
+    }
+
+    @Override
     public String toJson() {
         return new Gson().toJson(this);
     }
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "User #%1$s\nPhone: %2$s\nIs verify: %3$b\nAvatar url: %4$s\nAccess token: %5$s",
+        return String.format(Locale.getDefault(), "User #%1$s\nType: Company\nPhone: %2$s\nIs verify: %3$b\nAvatar url: %4$s\nAccess token: %5$s",
                 mId == null ? "Null" : mId,
                 mPhone == null ? "Null" : mPhone.toString(),
                 mIsVerify,

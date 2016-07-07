@@ -4,15 +4,19 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.orm.SugarRecord;
+
 import java.util.Locale;
 
 /**
  * Created by alexander on 24.06.16.
  */
-public class PhoneModel implements Parcelable {
+public class PhoneModel extends SugarRecord implements Parcelable {
 
     private String mDialCode;
     private String mPhoneBody;
+
+    public PhoneModel() {}
 
     private PhoneModel(Builder builder) {
         mDialCode = builder.dialCode;

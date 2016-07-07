@@ -27,7 +27,7 @@
             android:value="true" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="com.github.sasd97.loclook.models.database" />
+            android:value="com.github.sasd97.upitter.models" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

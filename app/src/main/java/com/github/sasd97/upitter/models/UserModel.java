@@ -8,8 +8,29 @@ import com.orm.SugarRecord;
 public abstract class UserModel extends SugarRecord {
 
     public enum UserType {
-        People,
-        Company
+        People(0),
+        Company(1);
+
+        private int id;
+
+        UserType(int id) {
+            this.id = id;
+        }
+
+        public int getValue() {
+            return id;
+        }
+
+        public static UserType getTypeByValue(int value) {
+            switch (value) {
+                case 0:
+                    return People;
+                case 1:
+                    return Company;
+                default:
+                    return People;
+            }
+        }
     }
 
     public abstract String getUId();

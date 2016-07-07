@@ -22,6 +22,7 @@ import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.services.GeocoderService;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
+import com.github.sasd97.upitter.ui.TapeActivity;
 import com.github.sasd97.upitter.ui.adapters.AddressRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
@@ -129,7 +130,6 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
 
     @Override
     public void onAuthorize(CompanyResponseModel companyResponseModel) {
-        Log.d("RESPONSE", companyResponseModel.toString());
         setHolder(CompanyHolder.getHolder());
 
         CompanyModel companyModel = new CompanyModel
@@ -140,6 +140,8 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
                 .build();
 
         getHolder().save(companyModel);
+        startActivity(new Intent(getContext(), TapeActivity.class));
+        getActivity().finish();
     }
 
     @Override

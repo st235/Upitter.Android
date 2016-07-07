@@ -8,14 +8,18 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.holders.CompanyHolder;
+import com.github.sasd97.upitter.holders.UserHolder;
 import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Permissions;
 
+import static com.github.sasd97.upitter.Upitter.*;
 import static com.github.sasd97.upitter.holders.PeopleHolder.isUserAvailable;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
 
@@ -43,6 +47,12 @@ public class LoginActivity extends BaseActivity
         setContentView(R.layout.login_activity);
 
         if (isUserAvailable()) {
+            Log.d("USER", UserHolder.isUserAvailable() + "");
+            Log.d("USER_TYPe", UserHolder.getUserType() + "_TYPE");
+            setHolder(CompanyHolder.getHolder());
+            getHolder().restore();
+            Log.d("USER", getHolder().get().toString());
+
             Intent intent = new Intent(this, TapeActivity.class);
             startActivity(intent);
             finish();

@@ -1,5 +1,7 @@
 package com.github.sasd97.upitter.holders;
 
+import android.util.Log;
+
 import com.github.sasd97.upitter.models.CompanyModel;
 
 /**
@@ -22,7 +24,9 @@ public class CompanyHolder extends UserHolder<CompanyModel> {
 
     @Override
     public void restore() {
-        this.userModel = CompanyModel.findById(CompanyModel.class, 0);
+        this.userModel = CompanyModel.findById(CompanyModel.class, 1);
+        if (this.userModel != null)
+            Log.d("RESTRED", this.userModel.toString());
     }
 
     @Override

@@ -10,6 +10,8 @@ import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.receivers.RequestCodeReceiver;
+import com.github.sasd97.upitter.holders.CompanyHolder;
+import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.models.SmsModel;
@@ -24,6 +26,8 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static com.github.sasd97.upitter.Upitter.getHolder;
+import static com.github.sasd97.upitter.Upitter.setHolder;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CODE_RECEIVER_INTENT_NAME;
 
@@ -102,8 +106,21 @@ public class CodeConfirmActivity extends BaseActivity implements
 
     @Override
     public void onAuthorize(CompanyResponseModel companyResponseModel) {
-        //  TODO add enter
-        Log.d("ENTER", companyResponseModel.toString());
+        setHolder(CompanyHolder.getHolder());
+
+        CompanyModel companyModel = new CompanyModel
+                .Builder()
+                .id(companyResponseModel.getId())
+                .phone(currentPhone)
+                .accessToken(companyResponseModel.getAccessToken())
+                .name(companyResponseModel.getName())
+                .build();
+
+        Log.d("PRESAVE", companyModel.toString());
+
+        getHolder().save(companyModel);
+        startActivity(new Intent(this, TapeActivity.class));
+        finish();
     }
 
     @Override

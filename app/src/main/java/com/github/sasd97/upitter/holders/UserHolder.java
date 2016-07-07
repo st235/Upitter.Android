@@ -18,13 +18,16 @@ public abstract class UserHolder <T extends UserModel> {
 
     public static UserHolder init() {
         if (!isUserAvailable()) return null;
-        if (Prefs.get().getString(USER_TYPE, "").equalsIgnoreCase(UserModel.UserType.People.toString()))
-            return PeopleHolder.getHolder();
+        if (Prefs.get().getInt(USER_TYPE, 0) == UserModel.UserType.People.getValue()) return PeopleHolder.getHolder();
         return null;
     }
 
     public static boolean isUserAvailable() {
         return Prefs.get().getBoolean(USER, false);
+    }
+
+    public static int getUserType() {
+        return Prefs.get().getInt(USER_TYPE, 0);
     }
 
     public abstract void set(T userModel);
@@ -35,7 +38,7 @@ public abstract class UserHolder <T extends UserModel> {
         this.userModel = userModel;
 
         Prefs.put(USER, true);
-        Prefs.put(USER_TYPE, this.userModel.getType());
+        Prefs.put(USER_TYPE, this.userModel.getType().getValue());
     }
 
     public void delete() {
