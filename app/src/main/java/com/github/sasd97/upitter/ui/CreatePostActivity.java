@@ -43,7 +43,6 @@ public class CreatePostActivity extends BaseActivity
     private ArrayList<String> selectedQuiz;
     private ArrayList<String> selectedPhotos;
 
-    private LinearLayout photoPlaceholderLayout;
 
     private RecyclerView photosRecyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -82,7 +81,6 @@ public class CreatePostActivity extends BaseActivity
 
     @Override
     protected void bindViews() {
-        photoPlaceholderLayout = findById(R.id.photo_placeholder_publication);
         photosRecyclerView = findById(R.id.image_placeholder_recyclerview_publication);
         addressIconImageView = findById(R.id.address_icon_create_post_activity);
         quizIconImageView = findById(R.id.quiz_icon_create_post_activity);
@@ -118,7 +116,7 @@ public class CreatePostActivity extends BaseActivity
 
     @Override
     public void onEmpty() {
-        photoPlaceholderLayout.setVisibility(View.GONE);
+        photosRecyclerView.setVisibility(View.GONE);
         highlightHandler(photoIconImageView, photoTextView, R.drawable.ic_icon_add_photo, R.color.colorPrimary);
     }
 
@@ -141,7 +139,7 @@ public class CreatePostActivity extends BaseActivity
         imageHolderRecyclerAdapter.addAll(selectedPhotos);
 
         highlightHandler(photoIconImageView, photoTextView, R.drawable.ic_icon_add_photo_active, R.color.colorAccent);
-        photoPlaceholderLayout.setVisibility(View.VISIBLE);
+        photosRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void handleQuiz(Intent data) {

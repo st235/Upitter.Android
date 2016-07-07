@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CHOOSE_ON_MAP_POINT_REQUEST;
 import static com.github.sasd97.upitter.Upitter.*;
+
 /**
  * Created by alexander on 28.06.16.
  */
@@ -100,7 +101,8 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
 
     @Override
     public void onClick(View view) {
-        startActivityForResult(new Intent(getActivity(), MapChooseActivity.class), CHOOSE_ON_MAP_POINT_REQUEST);
+        startActivityForResult(new Intent(getActivity(), MapChooseActivity.class),
+                CHOOSE_ON_MAP_POINT_REQUEST);
     }
 
     @Override
@@ -126,6 +128,7 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
     @Override
     public void onError(ErrorModel errorModel) {
         Log.d("ERROR_FALLING", errorModel.toString());
+
     }
 
     @Override
@@ -139,7 +142,6 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
                 .name(companyResponseModel.getName())
                 .build();
 
-        Log.d("USER", companyModel.toString());
         getHolder().save(companyModel);
         startActivity(new Intent(getContext(), TapeActivity.class));
         getActivity().finish();

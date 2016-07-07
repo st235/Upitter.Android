@@ -3,14 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        android:layout_above="@+id/navigation_bottom_publication">
+        android:layout_above="@+id/navigation_bottom_publication"
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,6 +50,7 @@
                 />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/category_layout_create_post_activity"
             android:layout_width="wrap_content"
@@ -92,22 +94,14 @@
         android:orientation="vertical"
         android:layout_alignParentBottom="true">
 
-        <LinearLayout
-            android:id="@+id/photo_placeholder_publication"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/image_placeholder_recyclerview_publication"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:orientation="horizontal"
             android:padding="4dp"
             android:background="#f2f6f8"
-            android:visibility="gone">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/image_placeholder_recyclerview_publication"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-
-        </LinearLayout>
+            android:visibility="gone"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -130,7 +124,6 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:clickable="true"
-                    android:onClick="onAnonymousClick"
                     app:layout_column="0"
                     app:layout_columnWeight="2"
                     android:gravity="center"
@@ -140,6 +133,7 @@
                         android:id="@+id/address_icon_create_post_activity"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_icon_map"
                         android:scaleType="centerInside"
                         />
@@ -172,6 +166,7 @@
                         android:id="@+id/quiz_icon_create_post_activity"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_icon_quiz"
                         android:scaleType="centerInside"
                         />
@@ -207,6 +202,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/ic_icon_add_photo"
+                        android:contentDescription="@string/app_name"
                         android:scaleType="centerInside"
                         />
 
@@ -234,11 +230,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/send_label_create_post_activity"
-                        android:onClick="onSendClick"
                         android:layout_gravity="center"
                         style="@style/Widget.AppCompat.Button.Colored"
                         />
-
                 </LinearLayout>
             </android.support.v7.widget.GridLayout>
         </LinearLayout>
