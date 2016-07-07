@@ -82,7 +82,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_gravity="center_vertical"
-                tools:text="Badge XXX"
+                tools:text="News"
                 />
         </LinearLayout>
     </RelativeLayout>
@@ -127,6 +127,7 @@
                     app:layout_column="0"
                     app:layout_columnWeight="2"
                     android:gravity="center"
+                    android:onClick="onAddressClick"
                     android:background="?android:selectableItemBackground">
 
                     <ImageView

@@ -3,39 +3,38 @@ package com.github.sasd97.upitter.ui;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.IntentKeysConstants;
 import com.github.sasd97.upitter.constants.RequestCodesConstants;
 import com.github.sasd97.upitter.models.CategoryModel;
-import com.github.sasd97.upitter.models.skeletons.ImageSkeleton;
+import com.github.sasd97.upitter.models.CompanyModel;
+import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.ui.adapters.ImageHolderRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.results.CategoriesActivity;
 import com.github.sasd97.upitter.ui.results.PostCategoriesChooseActivity;
 import com.github.sasd97.upitter.ui.results.QuizActivity;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Gallery;
+import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.GALLERY_MULTI_SELECTED_PHOTOS_LIST;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.QUIZ_MULTI_SELECTION_LIST;
+import static com.github.sasd97.upitter.Upitter.*;
 
 public class CreatePostActivity extends BaseActivity
     implements ImageHolderRecyclerAdapter.OnAmountChangeListener {
@@ -107,6 +106,21 @@ public class CreatePostActivity extends BaseActivity
         Intent quizIntent = new Intent(this, QuizActivity.class);
         if (selectedQuiz != null) quizIntent.putStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST, selectedQuiz);
         startActivityForResult(quizIntent, RequestCodesConstants.CREATE_QUIZ_REQUEST);
+    }
+
+    public void onAddressClick(View v) {
+        CompanyModel companyModel = (CompanyModel) getHolder().get();
+        List<String> result = ListUtils.mutate(companyModel.getCoordinates(), new ListUtils.OnListMutateListener<CoordinatesModel, String>() {
+            @Override
+            public String mutate(CoordinatesModel object) {
+                return object.getAddress().getAddressLine(0);
+            }
+        });
+
+        new MaterialDialog.Builder(this)
+                .title("Alex")
+                .items(result)
+                .show();
     }
 
     public void onCategoriesSelectClick(View v) {
