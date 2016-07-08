@@ -39,6 +39,15 @@ public abstract class BaseResponseModel<T> {
                 .build();
     }
 
+    public ErrorModel getError(String url) {
+        return new ErrorModel
+                .Builder()
+                .url(url)
+                .code(mError.getCode())
+                .message(mError.getMessage())
+                .build();
+    }
+
     public T getResponseModel() {
         return mResponse;
     }

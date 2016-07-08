@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -61,16 +62,14 @@ public class CompanyBaseRegistrationFragment
     private RecyclerView phonesRecyclerView;
     private PhonesRecyclerAdapter phonesRecyclerAdapter;
 
+    public CompanyBaseRegistrationFragment() {
+        super(R.layout.company_registration_base_fragment);
+    }
+
     public static CompanyBaseRegistrationFragment getFragment(OnCompanyRegistrationListener listener) {
         CompanyBaseRegistrationFragment fragment = new CompanyBaseRegistrationFragment();
         fragment.setRegistrationListener(listener);
         return fragment;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.company_registration_base_fragment, container, false);
     }
 
     @Override
@@ -150,10 +149,10 @@ public class CompanyBaseRegistrationFragment
         if (!validateForm(isExtraRequired)) return;
 
         companyBuilder
-                        .name(companyNameEditText.getText().toString())
-                        .description(companyDescriptionEditText.getText().toString())
+                        .name(companyNameEditText.getText().toString().trim())
+                        .description(companyDescriptionEditText.getText().toString().trim())
                         .contactPhones(phonesRecyclerAdapter.getPhones())
-                        .site(companySiteEditText.getText().toString());
+                        .site(companySiteEditText.getText().toString().trim());
 
         listener.onBaseInfoPrepared(companyBuilder);
     }

@@ -113,6 +113,7 @@ public class CodeConfirmActivity extends BaseActivity implements
                 .id(companyResponseModel.getId())
                 .name(companyResponseModel.getName())
                 .isVerify(companyResponseModel.isVerify())
+                .avatarUrl(companyResponseModel.getLogoUrl())
                 .description(companyResponseModel.getDescription())
                 .categories(companyResponseModel.getActivity())
                 .phone(currentPhone)
@@ -125,7 +126,7 @@ public class CodeConfirmActivity extends BaseActivity implements
         Log.d("PRESAVE", companyModel.toString());
 
         getHolder().save(companyModel);
-        startActivity(new Intent(this, TapeActivity.class));
+        startActivity(new Intent(this, CompanyTapeActivity.class));
         finish();
     }
 

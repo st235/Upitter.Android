@@ -3,12 +3,8 @@ package com.github.sasd97.upitter.ui.results;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.OnApplyLongListener;
@@ -19,12 +15,9 @@ import com.github.sasd97.upitter.ui.fragments.CropFragment;
 import com.github.sasd97.upitter.ui.fragments.FilterFragment;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
-
-import static com.github.sasd97.upitter.constants.RequestCodesConstants.*;
 
 import java.util.ArrayList;
 
@@ -60,7 +53,7 @@ public class EditImageActivity extends BaseActivity
                         editImageChooseListener.save(new OnApplyLongListener() {
                             @Override
                             public void onApplied(String path) {
-                                FilterFragment filterFragment = FilterFragment.getInstance(path);
+                                FilterFragment filterFragment = FilterFragment.getFragment(path);
                                 editImageChooseListener = filterFragment;
                                 EditImageActivity.this.getSupportFragmentManager()
                                         .beginTransaction()
@@ -73,7 +66,7 @@ public class EditImageActivity extends BaseActivity
                         editImageChooseListener.save(new OnApplyLongListener() {
                             @Override
                             public void onApplied(String path) {
-                                CropFragment cropFragment = CropFragment.getInstance(path);
+                                CropFragment cropFragment = CropFragment.getFragment(path);
                                 editImageChooseListener = cropFragment;
                                 EditImageActivity.this.getSupportFragmentManager()
                                         .beginTransaction()

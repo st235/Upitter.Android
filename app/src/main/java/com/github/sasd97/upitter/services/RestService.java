@@ -19,6 +19,7 @@ import java.util.Locale;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -53,12 +54,12 @@ public final class RestService {
 
     public static void init() {
         baseAPI = new Retrofit.Builder()
-                .baseUrl(BASE_SUB_API_URL)
+                .baseUrl(BASE_SUB_ASTRAL_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         fileServerAPI = new Retrofit.Builder()
-                .baseUrl(FILE_SUB_SERVER_API_URL)
+                .baseUrl(FILE_SUB_ASTRAL_SERVER_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -103,15 +104,17 @@ public final class RestService {
         return error;
     }
 
-    public static boolean handleError(Response<? extends BaseResponseModel> response, OnErrorQueryListener listener) {
+    public static boolean handleError(@NonNull Call<?> call,
+                                      @NonNull Response<? extends BaseResponseModel> response,
+                                      @NonNull OnErrorQueryListener listener) {
         if (response.isSuccessful()) {
             if (!response.body().isError()) return true;
-            listener.onError(response.body().getError());
+            listener.onError(response.body().getError(call.request().url().toString()));
             return false;
         }
 
         SimpleErrorResponseModel error = parseError(response);
-        listener.onError(error.getError());
+        listener.onError(error.getError(call.request().url().toString()));
         return false;
     }
 

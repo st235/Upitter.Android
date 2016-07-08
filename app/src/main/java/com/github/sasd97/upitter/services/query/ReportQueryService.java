@@ -36,7 +36,7 @@ public class ReportQueryService {
         sendReport.enqueue(new Callback<ReportResponseModel>() {
             @Override
             public void onResponse(Call<ReportResponseModel> call, Response<ReportResponseModel> response) {
-                if (!RestService.handleError(response, listener)) return;
+                if (!RestService.handleError(call, response, listener)) return;
                 listener.onSend();
             }
 

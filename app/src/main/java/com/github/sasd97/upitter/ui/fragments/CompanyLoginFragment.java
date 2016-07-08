@@ -4,6 +4,7 @@ package com.github.sasd97.upitter.ui.fragments;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -58,24 +59,23 @@ public class CompanyLoginFragment extends BaseFragment
 
     private PhoneModel currentPhone;
 
-    public static CompanyLoginFragment getFragment() {
-        return new CompanyLoginFragment();
+    public CompanyLoginFragment() {
+        super(R.layout.company_login_fragment);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        locationService = LocationService.getService(this);
-        queryService = CompanyAuthorizationQueryService.getService(this);
-        return inflater.inflate(R.layout.company_login_fragment, container, false);
+    public static CompanyLoginFragment getFragment() {
+        return new CompanyLoginFragment();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        COUNTRY_NOT_VALID = getString(R.string.nothing_found_country_code_choose);
+
         EMPTY_FIELD = getString(R.string.empty_field);
+        COUNTRY_NOT_VALID = getString(R.string.nothing_found_country_code_choose);
+
+        locationService = LocationService.getService(this);
+        queryService = CompanyAuthorizationQueryService.getService(this);
 
         Countries.obtainCountries(this);
         continueRegistrationButton.setOnClickListener(this);

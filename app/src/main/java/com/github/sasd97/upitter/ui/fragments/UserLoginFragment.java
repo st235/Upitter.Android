@@ -6,10 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.facebook.FacebookCallback;
@@ -23,7 +20,7 @@ import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.response.user.UserResponseModel;
 import com.github.sasd97.upitter.services.query.UserAuthorizationQueryService;
-import com.github.sasd97.upitter.ui.TapeActivity;
+import com.github.sasd97.upitter.ui.CompanyTapeActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.utils.Authorization;
 import com.google.android.gms.auth.api.Auth;
@@ -58,14 +55,12 @@ public class UserLoginFragment extends BaseFragment
     private Button signGoogleButton;
     private Button signTwitterButton;
 
-    public static UserLoginFragment getFragment() {
-        return new UserLoginFragment();
+    public UserLoginFragment() {
+        super(R.layout.user_login_fragment);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.user_login_fragment, container, false);
+    public static UserLoginFragment getFragment() {
+        return new UserLoginFragment();
     }
 
     @Override
@@ -163,7 +158,7 @@ public class UserLoginFragment extends BaseFragment
                 .make(getView(), getString(R.string.authorized_successfully_login_activity), Snackbar.LENGTH_LONG)
                 .show();
 
-        startActivity(new Intent(getActivity(), TapeActivity.class));
+        startActivity(new Intent(getActivity(), CompanyTapeActivity.class));
     }
 
     @Override

@@ -67,7 +67,7 @@
                 android:value=".ui.LoginActivity" />
         </activity>
         <activity
-            android:name=".ui.TapeActivity"
+            android:name=".ui.CompanyTapeActivity"
             android:label="@string/title_activity_tape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -108,30 +108,37 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.CompanyRegistrationActivity" />
         </activity>
-        <activity android:name=".ui.CreatePostActivity"
+        <activity
+            android:name=".ui.CreatePostActivity"
             android:label="@string/title_create_post_activity"
-            android:parentActivityName=".ui.TapeActivity"
+            android:parentActivityName=".ui.CompanyTapeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.TapeActivity" />
+                android:value=".ui.CompanyTapeActivity" />
         </activity>
-        <activity android:name=".ui.results.QuizActivity"
+        <activity
+            android:name=".ui.results.QuizActivity"
             android:label="@string/quiz_label_create_post_activity"
-            android:parentActivityName=".ui.TapeActivity"
+            android:parentActivityName=".ui.CompanyTapeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.TapeActivity" />
+                android:value=".ui.CompanyTapeActivity" />
         </activity>
-        <activity android:name=".ui.results.PostCategoriesChooseActivity"
+        <activity
+            android:name=".ui.results.PostCategoriesChooseActivity"
             android:label="@string/quiz_label_create_post_activity"
-            android:parentActivityName=".ui.TapeActivity"
+            android:parentActivityName=".ui.CompanyTapeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.TapeActivity" />
+                android:value=".ui.CompanyTapeActivity" />
         </activity>
+        <activity
+            android:name=".ui.PeopleTapeActivity"
+            android:label="@string/title_activity_people_tape"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

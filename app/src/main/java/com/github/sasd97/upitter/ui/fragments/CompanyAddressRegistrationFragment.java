@@ -7,9 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -22,7 +20,7 @@ import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.services.GeocoderService;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
-import com.github.sasd97.upitter.ui.TapeActivity;
+import com.github.sasd97.upitter.ui.CompanyTapeActivity;
 import com.github.sasd97.upitter.ui.adapters.AddressRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
@@ -52,16 +50,15 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
     private Button setPositionButton;
     private RelativeLayout addPositionRelativeLayout;
 
+    public CompanyAddressRegistrationFragment() {
+        super(R.layout.company_registration_address_fragment);
+    }
+
     public static CompanyAddressRegistrationFragment getFragment(@NonNull CompanyModel.Builder companyModelBuilder) {
         CompanyAddressRegistrationFragment fragment = new CompanyAddressRegistrationFragment();
         fragment.setCompanyBuilder(companyModelBuilder);
         return fragment;
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.company_registration_address_fragment, container, false);}
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -138,12 +135,19 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
         CompanyModel companyModel = new CompanyModel
                 .Builder()
                 .id(companyResponseModel.getId())
-                .accessToken(companyResponseModel.getAccessToken())
                 .name(companyResponseModel.getName())
+                .isVerify(companyResponseModel.isVerify())
+                .avatarUrl(companyResponseModel.getLogoUrl())
+                .description(companyResponseModel.getDescription())
+                .categories(companyResponseModel.getActivity())
+                .contactPhones(companyResponseModel.getContactPhones())
+                .site(companyResponseModel.getSite())
+                .coordinates(companyResponseModel.getCoordinates())
+                .accessToken(companyResponseModel.getAccessToken())
                 .build();
 
         getHolder().save(companyModel);
-        startActivity(new Intent(getContext(), TapeActivity.class));
+        startActivity(new Intent(getContext(), CompanyTapeActivity.class));
         getActivity().finish();
     }
 

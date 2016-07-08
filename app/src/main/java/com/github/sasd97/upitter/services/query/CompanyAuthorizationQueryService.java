@@ -46,7 +46,7 @@ public class CompanyAuthorizationQueryService {
 
             @Override
             public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
-                if (!RestService.handleError(response, listener)) return;
+                if (!RestService.handleError(call, response, listener)) return;
                 listener.onCodeObtained();
             }
 
@@ -65,7 +65,7 @@ public class CompanyAuthorizationQueryService {
         sendRequest.enqueue(new Callback<AuthorizationRequestCodeResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationRequestCodeResponseModel> call, Response<AuthorizationRequestCodeResponseModel> response) {
-                if (!RestService.handleError(response, listener)) return;
+                if (!RestService.handleError(call, response, listener)) return;
 
                 RequestCodeResponseModel responseModel = response.body().getRequestCode();
                 if (!response.body().isSuccess()) {
@@ -99,7 +99,7 @@ public class CompanyAuthorizationQueryService {
         registerCall.enqueue(new Callback<AuthorizationCompanyResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationCompanyResponseModel> call, Response<AuthorizationCompanyResponseModel> response) {
-                if (!RestService.handleError(response, listener)) return;
+                if (!RestService.handleError(call, response, listener)) return;
                 Log.d("NEXT", response.body().toString());
 
                 if (response.body().isSuccess()) listener.onAuthorize(response.body().getBusinessUser());

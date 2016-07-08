@@ -37,7 +37,7 @@ public class CategoriesQueryService {
         getCategories.enqueue(new Callback<CatergoriesResponseModel>() {
             @Override
             public void onResponse(Call<CatergoriesResponseModel> call, Response<CatergoriesResponseModel> response) {
-                if (!RestService.handleError(response, listener)) return;
+                if (!RestService.handleError(call, response, listener)) return;
                 listener.onGetCategories(response.body().getCategories());
             }
 

@@ -61,7 +61,7 @@ public class UserAuthorizationQueryService {
         notify.enqueue(new Callback<AuthorizationResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationResponseModel> call, Response<AuthorizationResponseModel> response) {
-                if (!RestService.handleError(response, listener)) return;
+                if (!RestService.handleError(call, response, listener)) return;
                 listener.onServerNotify(response.body().getUser());
             }
 

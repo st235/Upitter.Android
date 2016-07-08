@@ -3,6 +3,7 @@ package com.github.sasd97.upitter.models;
 import com.github.sasd97.upitter.models.skeletons.RequestSkeleton;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
@@ -155,7 +156,8 @@ public class CompanyModel extends UserModel
 
     @Override
     public String toJson() {
-        return new Gson().toJson(this);
+        Gson builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        return builder.toJson(this);
     }
 
     @Override

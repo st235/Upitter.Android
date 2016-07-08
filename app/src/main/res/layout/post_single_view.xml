@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:elevation="2dp"
+        app:cardCornerRadius="0dp"
+        app:cardBackgroundColor="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/post_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:id="@+id/user_area_post_single_view"
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rounded_primary_color_rounded_ripple"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:layout_height="50dp"
+                    android:layout_margin="8dp">
+
+                    <ImageView
+                        android:id="@+id/user_icon_post_single_view"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:padding="4dp">
+
+                        <TextView
+                            android:id="@+id/user_name_post_single_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="Upitter User"
+                            />
+
+                        <TextView
+                            android:id="@+id/offset_from_now_post_single_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#9eb8c4"
+                            android:textSize="14sp"
+                            tools:text="5 min. ago"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.Toolbar>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:paddingRight="16dp"
+                android:paddingEnd="16dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/title_post_single_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:textColor="#444444"
+                    android:textSize="18sp"
+                    tools:text=""
+                    />
+
+                <TextView
+                    android:id="@+id/text_post_single_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:textColor="#444444"
+                    android:textSize="18sp"
+                    tools:text=""
+                    />
+
+                <com.github.sasd97.upitter.components.AutofitRecyclerView
+                    android:id="@+id/post_images_post_single_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:visibility="gone"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/quiz_variants_post_single_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:visibility="gone"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/quiz_result_post_single_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:visibility="gone"
+                    />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:id="@+id/badge_post_single_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:clickable="true"
+                        android:background="@drawable/rounded_primary_color_rounded_ripple">
+
+                        <TextView
+                            android:id="@+id/badge_label_post_single_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="#9eb8c4"
+                            tools:text="News"
+                            />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/badge_preview_post_single_view"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/favorite_layout_post_single_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="?android:selectableItemBackground"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/favorites_icon_post_single_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_feed_icon_favorite"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/comments_layout_post_single_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="?android:selectableItemBackground"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/comments_icon_post_single_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_feed_icon_comment"
+                                />
+
+                            <TextView
+                                android:id="@+id/comments_counter_post_single_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginStart="4dp"
+                                android:textColor="#9eb8c4"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                tools:text="15"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/like_layout_post_single_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:background="?android:selectableItemBackground"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/like_icon_post_single_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_feed_icon_like"
+                                />
+
+                            <TextView
+                                android:id="@+id/rating_counter_post_single_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginStart="4dp"
+                                android:textColor="#9eb8c4"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                tools:text="15"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

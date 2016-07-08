@@ -51,7 +51,7 @@ public class FileUploadQueryService {
         uploadImage.enqueue(new Callback<UploadAvatarResponseModel>() {
             @Override
             public void onResponse(Call<UploadAvatarResponseModel> call, Response<UploadAvatarResponseModel> response) {
-                if (!RestService.handleError(response, listener)) return;
+                if (!RestService.handleError(call, response, listener)) return;
                 listener.onUpload(response.body().getImageModel().getPath());
             }
 

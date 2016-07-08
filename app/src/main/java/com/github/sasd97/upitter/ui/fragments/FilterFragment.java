@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,24 +54,30 @@ public class FilterFragment extends BaseFragment
     private GPUImageFilterTools.FilterAdjuster mFilterAdjuster;
     private GPUImageFilterTools.FilterList filters = new GPUImageFilterTools.FilterList();
 
-    private Integer filterPreviews[] = new Integer[] { R.drawable.filter_preview_default, R.drawable.filter_preview_1997, R.drawable.filter_preview_amaro, R.drawable.filter_preview_brannan,
-            R.drawable.filter_preview_earlybird, R.drawable.filter_preview_hefe, R.drawable.filter_preview_hudson, R.drawable.filter_preview_inkwell, R.drawable.filter_preview_lomo, R.drawable.filter_preview_lorkelvin,
-            R.drawable.filter_preview_nashville, R.drawable.filter_preview_rise, R.drawable.filter_preview_sierra, R.drawable.filter_preview_sutro, R.drawable.filter_preview_toaster, R.drawable.filter_preview_valencia,
-            R.drawable.filter_preview_walden, R.drawable.filter_preview_xproll, R.drawable.filter_preview_contrast, R.drawable.filter_preview_brightness, R.drawable.filter_preview_sepia, R.drawable.filter_preview_vignette,
+    private Integer filterPreviews[] = new Integer[] {
+            R.drawable.filter_preview_default, R.drawable.filter_preview_1997,
+            R.drawable.filter_preview_amaro, R.drawable.filter_preview_brannan,
+            R.drawable.filter_preview_earlybird, R.drawable.filter_preview_hefe,
+            R.drawable.filter_preview_hudson, R.drawable.filter_preview_inkwell,
+            R.drawable.filter_preview_lomo, R.drawable.filter_preview_lorkelvin,
+            R.drawable.filter_preview_nashville, R.drawable.filter_preview_rise,
+            R.drawable.filter_preview_sierra, R.drawable.filter_preview_sutro,
+            R.drawable.filter_preview_toaster, R.drawable.filter_preview_valencia,
+            R.drawable.filter_preview_walden, R.drawable.filter_preview_xproll,
+            R.drawable.filter_preview_contrast, R.drawable.filter_preview_brightness,
+            R.drawable.filter_preview_sepia, R.drawable.filter_preview_vignette,
             R.drawable.filter_preview_tonecurve, R.drawable.filter_preview_lookup };
 
-    public static FilterFragment getInstance(String path) {
+    public FilterFragment() {
+        super(R.layout.filter_fragment);
+    }
+
+    public static FilterFragment getFragment(String path) {
         FilterFragment filterFragment = new FilterFragment();
         Bundle bundle = new Bundle();
         bundle.putString(IMAGE_PATH, path);
         filterFragment.setArguments(bundle);
         return filterFragment;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.filter_fragment, container, false);
     }
 
     @Override

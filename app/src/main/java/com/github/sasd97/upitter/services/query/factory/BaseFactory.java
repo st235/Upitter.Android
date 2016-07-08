@@ -5,6 +5,7 @@ import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequ
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.categories.CatergoriesResponseModel;
+import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.models.response.report.ReportResponseModel;
 
 import org.json.JSONObject;
@@ -60,4 +61,9 @@ public interface BaseFactory {
     @GET("categories")
     Call<CatergoriesResponseModel> getCategories(@Query("ln") String language);
 
+    @GET("/posts")
+    Call<PostsResponseModel> obtainPosts(@Query("accessToken") String accessToken,
+                                         @Query("ln") String language,
+                                         @Query("limit") int limit,
+                                         @Query("offset") Integer offset);
 }

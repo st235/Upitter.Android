@@ -143,5 +143,12 @@
     <string name="photo_label_create_post_activity">Photos</string>
     <string name="quiz_label_create_post_activity">Quiz</string>
     <string name="send_label_create_post_activity">Send</string>
+    <string name="title_activity_people_tape">People Tape</string>
+    <!-- Endregion -->
+
+    <!-- Company tape region -->
+    <string name="create_post_company_tape">Create post</string>
+    <string name="user_placeholder_company_tape">Upitter company</string>
+    <string name="category_placeholder_company_tape">Some category</string>
     <!-- Endregion -->
 </resources>

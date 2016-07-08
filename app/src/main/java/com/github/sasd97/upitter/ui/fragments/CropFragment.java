@@ -1,22 +1,12 @@
 package com.github.sasd97.upitter.ui.fragments;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.IdRes;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.OnApplyLongListener;
 import com.github.sasd97.upitter.events.OnEditImageChooseListener;
@@ -37,23 +27,20 @@ public class CropFragment extends BaseFragment implements OnEditImageChooseListe
     private static final String IMAGE_PATH = "IMAGE_PATH";
 
     private boolean isInFreeMode = false;
-    private LinearLayout rotateLinearLayout = null;
-    private LinearLayout freeModeLinearLayout = null;
+    private LinearLayout rotateLinearLayout;
+    private LinearLayout freeModeLinearLayout;
+    CropImageView cropImageView;
 
-    public static CropFragment getInstance(String path) {
+    public CropFragment() {
+        super(R.layout.crop_fragment);
+    }
+
+    public static CropFragment getFragment(String path) {
         CropFragment fragment = new CropFragment();
         Bundle args = new Bundle();
         args.putString(IMAGE_PATH, path);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    CropImageView cropImageView;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.crop_fragment, container, false);
     }
 
     @Override

@@ -8,13 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.holders.CompanyHolder;
+import com.github.sasd97.upitter.holders.PeopleHolder;
 import com.github.sasd97.upitter.holders.UserHolder;
+import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Permissions;
@@ -47,12 +48,7 @@ public class LoginActivity extends BaseActivity
         setContentView(R.layout.login_activity);
 
         if (isUserAvailable()) {
-            setHolder(CompanyHolder.getHolder());
-            getHolder().restore();
-
-            Intent intent = new Intent(this, TapeActivity.class);
-            startActivity(intent);
-            finish();
+            initUser();
             return;
         }
 
@@ -100,7 +96,32 @@ public class LoginActivity extends BaseActivity
         }
     }
 
-    public void drawBackgroundByPosition(int position) {
+    private void initUser() {
+        Class<?> target;
+
+        switch (UserModel.UserType.getTypeByValue(UserHolder.getUserType())) {
+            case People:
+                setHolder(PeopleHolder.getHolder());
+                target = PeopleTapeActivity.class;
+                break;
+            case Company:
+                setHolder(CompanyHolder.getHolder());
+                target = CompanyTapeActivity.class;
+                break;
+            default:
+                setHolder(PeopleHolder.getHolder());
+                target = PeopleTapeActivity.class;
+                break;
+        }
+
+        getHolder().restore();
+
+        Intent intent = new Intent(this, target);
+        startActivity(intent);
+        finish();
+    }
+
+    private void drawBackgroundByPosition(int position) {
         switch (position) {
             case 0:
                 rootView.setBackgroundColor(COLOR_INDIGO);
