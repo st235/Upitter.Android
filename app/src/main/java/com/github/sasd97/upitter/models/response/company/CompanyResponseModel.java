@@ -32,6 +32,10 @@ public class CompanyResponseModel extends BaseResponseModel {
     @Expose
     private String mDescription;
 
+    @SerializedName("logoUrl")
+    @Expose
+    private String mLogoUrl;
+
     @SerializedName("activity")
     @Expose
     private List<Integer> mActivities;
@@ -69,6 +73,10 @@ public class CompanyResponseModel extends BaseResponseModel {
     }
 
     public String getDescription() { return mDescription; }
+
+    public String getLogoUrl() {
+        return mLogoUrl;
+    }
 
     public List<Integer> getActivity() {
         return mActivities;
