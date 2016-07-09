@@ -77,11 +77,6 @@ public class TapeFragment extends BaseFragment
 
     @Override
     public void onLocationFind(Location location) {
-        onLocationChanged(location);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
         queryService.obtainPosts(
                 getHolder().get().getAccessToken(),
                 Locale.getDefault().getLanguage(),
@@ -89,5 +84,9 @@ public class TapeFragment extends BaseFragment
                 0,
                 location.getLatitude(),
                 location.getLongitude());
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
     }
 }

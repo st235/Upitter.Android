@@ -106,7 +106,7 @@
                     tools:text=""
                     />
 
-                <com.github.sasd97.upitter.components.AutofitRecyclerView
+                <com.github.sasd97.upitter.components.AutoFitRecyclerView
                     android:id="@+id/post_images_post_single_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
