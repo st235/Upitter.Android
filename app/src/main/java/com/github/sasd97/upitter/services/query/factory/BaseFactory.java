@@ -5,6 +5,7 @@ import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequ
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.categories.CatergoriesResponseModel;
+import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.models.response.report.ReportResponseModel;
 
@@ -38,11 +39,6 @@ public interface BaseFactory {
     Call<AuthorizationResponseModel> authorizeWithTwitter(@Field("token") String token,
                                                           @Field("secret") String secret);
 
-    @FormUrlEncoded
-    @POST("support/android/{id}")
-    Call<ReportResponseModel> sendCrashReport(@Path("id") String id,
-                                              @Field("log") JSONObject trace);
-
     @POST("authorization/phone/set/{number}/{countryCode}")
     Call<SimpleResponseModel> obtainRequestCode(@Path("number") String number,
                                                 @Path("countryCode") String countryCode);
@@ -58,12 +54,23 @@ public interface BaseFactory {
                                                             @Path("countryCode") String countryCode,
                                                             @Body RequestBody businessUser);
 
-    @GET("categories")
-    Call<CatergoriesResponseModel> getCategories(@Query("ln") String language);
+    @FormUrlEncoded
+    @POST("support/android/{id}")
+    Call<ReportResponseModel> sendCrashReport(@Path("id") String id,
+                                              @Query("ln") String language,
+                                              @Query("accessToken") String accessToken,
+                                              @Field("log") JSONObject trace);
 
-    @GET("/posts")
-    Call<PostsResponseModel> obtainPosts(@Query("accessToken") String accessToken,
-                                         @Query("ln") String language,
+    @GET("categories")
+    Call<CatergoriesResponseModel> getCategories(@Query("ln") String language,
+                                                 @Query("accessToken") String accessToken);
+
+    @GET("posts")
+    Call<PostsResponseModel> obtainPosts(@Query("ln") String language,
+                                         @Query("accessToken") String accessToken,
+                                         @Query("latitude") double latitude,
+                                         @Query("longitude") double longitude,
+                                         @Query("radius") int radius,
                                          @Query("limit") int limit,
                                          @Query("offset") Integer offset);
 }

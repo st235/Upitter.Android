@@ -1,10 +1,10 @@
 package com.github.sasd97.upitter.services.query;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
+import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.RestService;
 
@@ -20,7 +20,7 @@ import retrofit2.Response;
 public class PostQueryService {
 
     public interface OnPostListener extends OnErrorQueryListener {
-        void onPostObtained(List<PostsResponseModel> posts);
+        void onPostObtained(PostsResponseModel posts);
     }
 
     private OnPostListener listener;
@@ -36,16 +36,19 @@ public class PostQueryService {
     public void obtainPosts(@NonNull String accessToken,
                             @NonNull String language,
                             @NonNull Integer limit,
-                            @NonNull Integer offset) {
+                            @NonNull Integer offset,
+                            double latitude,
+                            double longitude) {
         Call<PostsResponseModel> obtainPosts =
                 RestService
                 .baseFactory()
-                .obtainPosts(accessToken, language, limit, offset);
+                .obtainPosts(language, accessToken, latitude, longitude, 1000, limit, offset);
 
         obtainPosts.enqueue(new Callback<PostsResponseModel>() {
             @Override
             public void onResponse(Call<PostsResponseModel> call, Response<PostsResponseModel> response) {
                 if (!RestService.handleError(call, response, listener)) return;
+                Log.d("GET", call.request().url().toString());
                 listener.onPostObtained(response.body().getResponseModel());
             }
 

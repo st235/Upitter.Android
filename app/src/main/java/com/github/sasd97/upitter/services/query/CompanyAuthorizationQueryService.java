@@ -92,16 +92,10 @@ public class CompanyAuthorizationQueryService {
         Call<AuthorizationCompanyResponseModel> registerCall = RestService.baseFactory()
                 .registerCompany(register.getPhone().getPhoneBody(), register.getPhone().getDialCode(), body);
 
-        Log.d("USER", register.toString());
-        Log.d("PHONe", register.getPhone().toString());
-        Log.d("PHONe", register.getTemporaryToken());
-
         registerCall.enqueue(new Callback<AuthorizationCompanyResponseModel>() {
             @Override
             public void onResponse(Call<AuthorizationCompanyResponseModel> call, Response<AuthorizationCompanyResponseModel> response) {
                 if (!RestService.handleError(call, response, listener)) return;
-                Log.d("NEXT", response.body().toString());
-
                 if (response.body().isSuccess()) listener.onAuthorize(response.body().getBusinessUser());
             }
 

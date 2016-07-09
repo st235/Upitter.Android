@@ -8,6 +8,7 @@ import com.github.sasd97.upitter.models.response.categories.CatergoriesResponseM
 import com.github.sasd97.upitter.services.RestService;
 
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +34,10 @@ public class CategoriesQueryService {
     }
 
     public void getCategories(@NonNull String language) {
-        Call<CatergoriesResponseModel> getCategories = RestService.baseFactory().getCategories(language);
+        Call<CatergoriesResponseModel> getCategories = RestService
+                .baseFactory()
+                .getCategories(Locale.getDefault().getLanguage(), language);
+
         getCategories.enqueue(new Callback<CatergoriesResponseModel>() {
             @Override
             public void onResponse(Call<CatergoriesResponseModel> call, Response<CatergoriesResponseModel> response) {

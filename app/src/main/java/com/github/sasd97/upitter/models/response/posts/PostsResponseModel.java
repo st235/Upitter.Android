@@ -1,8 +1,6 @@
 package com.github.sasd97.upitter.models.response.posts;
 
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
-import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
-import com.github.sasd97.upitter.models.response.phone.PhoneResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,61 +8,33 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by alexander on 08.07.16.
+ * Created by Alexadner Dadukin on 09.07.2016.
  */
-public class PostsResponseModel extends BaseResponseModel<List<PostsResponseModel>> {
 
-    @SerializedName("customId")
+public class PostsResponseModel extends BaseResponseModel<PostsResponseModel> {
+
+    @SerializedName("offset")
     @Expose
-    private String mPostId;
+    private int mOffset;
 
-    @SerializedName("author")
+    @SerializedName("posts")
     @Expose
-    private CompanyResponseModel mCompany;
+    private List<PostResponseModel> mPosts;
 
-    @SerializedName("title")
-    @Expose
-    private String mTitle;
-
-    @SerializedName("text")
-    @Expose
-    private String mText;
-
-    @SerializedName("dateOffset")
-    @Expose
-    private String mDateOffset;
-
-    @SerializedName("rating")
-    @Expose
-    private long mRating;
-
-    private String getId() {
-        return mPostId;
+    public int getOffset() {
+        return mOffset;
     }
 
-    private CompanyResponseModel getCompany() {
-        return mCompany;
-    }
-
-    private String getTitle() {
-        return mTitle;
-    }
-
-    private String getText() {
-        return mText;
-    }
-
-    private String getDateOffset() {
-        return mDateOffset;
+    public List<PostResponseModel> getPosts() {
+        return mPosts;
     }
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "Post\n[%1$s\n%2$s]\n" +
-                "Author: %3$s\nLikes(Rating): %4$d",
-                mTitle,
-                mText,
-                mCompany.toString(),
-                mRating);
+        StringBuilder builder = new StringBuilder();
+        for (PostResponseModel post: mPosts) builder.append(post.toString()).append("\n\n");
+        return String.format(Locale.getDefault(), "Offset: %1$d\nPosts: %2$s\n",
+                mOffset,
+                builder.toString());
     }
 }

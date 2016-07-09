@@ -8,6 +8,8 @@ import com.github.sasd97.upitter.services.RestService;
 
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,8 +33,16 @@ public class ReportQueryService {
         return new ReportQueryService(listener);
     }
 
-    public void sendReport(@NonNull String id, @NonNull JSONObject log) {
-        Call<ReportResponseModel> sendReport = RestService.baseFactory().sendCrashReport(id, log);
+    public void sendReport(@NonNull String accessToken,
+                           @NonNull String id,
+                           @NonNull JSONObject log) {
+        Call<ReportResponseModel> sendReport = RestService
+                .baseFactory()
+                .sendCrashReport(id,
+                        Locale.getDefault().getLanguage(),
+                        accessToken,
+                        log);
+
         sendReport.enqueue(new Callback<ReportResponseModel>() {
             @Override
             public void onResponse(Call<ReportResponseModel> call, Response<ReportResponseModel> response) {

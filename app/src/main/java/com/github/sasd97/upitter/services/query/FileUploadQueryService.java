@@ -44,9 +44,9 @@ public class FileUploadQueryService {
         Call<UploadAvatarResponseModel> uploadImage = RestService
                 .fileServerFactory()
                 .uploadImage(RestService.obtainTextMultipart(id),
-                        imageBody,
                         RestService.obtainTextMultipart(type),
-                        RestService.obtainTextMultipart(purpose));
+                        RestService.obtainTextMultipart(purpose),
+                        imageBody);
 
         uploadImage.enqueue(new Callback<UploadAvatarResponseModel>() {
             @Override
