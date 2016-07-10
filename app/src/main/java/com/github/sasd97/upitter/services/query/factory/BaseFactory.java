@@ -65,7 +65,7 @@ public interface BaseFactory {
     Call<CatergoriesResponseModel> getCategories(@Query("ln") String language,
                                                  @Query("accessToken") String accessToken);
 
-    @GET("posts")
+    @GET("post/obtain")
     Call<PostsResponseModel> obtainPosts(@Query("ln") String language,
                                          @Query("accessToken") String accessToken,
                                          @Query("latitude") double latitude,

@@ -48,6 +48,19 @@ public final class Names {
         return file.substring(file.lastIndexOf(SINGE_POINT) + 1);
     }
 
+    public static String getNamePreview(@NonNull String name) {
+        if (name.contains(SPACE)) {
+            String[] split = name.split(SPACE);
+            StringBuilder builder = new StringBuilder();
+            return builder
+                    .append(split[0].substring(0, 1))
+                    .append(split[1].substring(0, 1))
+                    .toString();
+        }
+        if (name.length() > 1) return name.substring(0, 2);
+        return name.substring(0, 1);
+    }
+
     public Names getShortName(@NonNull String firstName, @NonNull String secondName) {
         builder
             .append(firstName.charAt(FIRST_POSITION))

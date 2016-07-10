@@ -40,4 +40,11 @@ public final class Categories {
     public static CategoryModel getDefaultCategory() {
         return categories.get(0);
     }
+
+    public static CategoryModel find(String cid) {
+        for (CategoryModel category: categories)
+            if (category.getId().equalsIgnoreCase(cid))
+                return category;
+        return categories.get(0);
+    }
 }

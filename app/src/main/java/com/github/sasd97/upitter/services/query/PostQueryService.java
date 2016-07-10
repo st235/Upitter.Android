@@ -17,10 +17,12 @@ import retrofit2.Response;
 /**
  * Created by alexander on 08.07.16.
  */
+
 public class PostQueryService {
 
     public interface OnPostListener extends OnErrorQueryListener {
         void onPostObtained(PostsResponseModel posts);
+        void onCreatePost();
     }
 
     private OnPostListener listener;

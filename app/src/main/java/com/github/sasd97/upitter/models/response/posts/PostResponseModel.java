@@ -30,13 +30,21 @@ public class PostResponseModel {
     @Expose
     private String mText;
 
+    @SerializedName("category")
+    @Expose
+    private String mCategoryId;
+
     @SerializedName("dateOffset")
     @Expose
     private String mDateOffset;
 
-    @SerializedName("rating")
+    @SerializedName("likes")
     @Expose
     private long mRating;
+
+    @SerializedName("isLikedByMe")
+    @Expose
+    private boolean mIsLikedByMe;
 
     public String getId() {
         return mPostId;
@@ -54,8 +62,16 @@ public class PostResponseModel {
         return mText;
     }
 
+    public String getCategoryId() {
+        return mCategoryId;
+    }
+
     public String getDateOffset() {
         return mDateOffset;
+    }
+
+    public boolean isLikedByMe() {
+        return mIsLikedByMe;
     }
 
     @Override

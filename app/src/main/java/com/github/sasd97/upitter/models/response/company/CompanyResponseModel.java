@@ -5,6 +5,7 @@ import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.response.coordinates.CoordinatesResponseModel;
 import com.github.sasd97.upitter.models.response.phone.PhoneResponseModel;
 import com.github.sasd97.upitter.utils.ListUtils;
+import com.github.sasd97.upitter.utils.Names;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -70,6 +71,10 @@ public class CompanyResponseModel extends BaseResponseModel {
 
     public String getName() {
         return mName;
+    }
+
+    public String getPreview() {
+        return Names.getNamePreview(mName);
     }
 
     public String getDescription() { return mDescription; }

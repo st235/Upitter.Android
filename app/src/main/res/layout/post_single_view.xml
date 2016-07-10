@@ -149,14 +149,14 @@
                         android:background="@drawable/rounded_primary_color_rounded_ripple">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/badge_preview_post_single_view"
+                            android:id="@+id/category_preview_post_single_view"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center_vertical"
                             />
 
                         <TextView
-                            android:id="@+id/badge_label_post_single_view"
+                            android:id="@+id/category_label_post_single_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
@@ -191,11 +191,22 @@
                             android:background="?android:selectableItemBackground"
                             android:padding="8dp">
 
-                            <ImageView
+                            <!--<ImageView-->
+                                <!--android:id="@+id/favorites_icon_post_single_view"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:src="@drawable/ic_feed_icon_favorite"-->
+                                <!--/>-->
+
+                            <com.sackcentury.shinebuttonlib.ShineButton
                                 android:id="@+id/favorites_icon_post_single_view"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_feed_icon_favorite"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@color/colorPrimary"
+                                app:btn_color="@color/colorPrimary"
+                                app:btn_fill_color="@color/colorAccent"
+                                app:allow_random_color="false"
+                                app:siShape="@drawable/ic_feed_icon_favorite"
                                 />
                         </LinearLayout>
 
@@ -213,8 +224,8 @@
 
                             <ImageView
                                 android:id="@+id/comments_icon_post_single_view"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:src="@drawable/ic_feed_icon_comment"
                                 />
 
@@ -243,13 +254,13 @@
 
                             <ImageView
                                 android:id="@+id/like_icon_post_single_view"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:src="@drawable/ic_feed_icon_like"
                                 />
 
                             <TextView
-                                android:id="@+id/rating_counter_post_single_view"
+                                android:id="@+id/like_counter_post_single_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"

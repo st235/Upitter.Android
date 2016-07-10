@@ -10,14 +10,12 @@ import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.ui.adapters.TapeRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 
-import java.util.List;
 import java.util.Locale;
 
 import static com.github.sasd97.upitter.Upitter.*;
@@ -54,7 +52,7 @@ public class TapeFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         linearLayoutManager = new LinearLayoutManager(getContext());
-        tapeRecyclerAdapter = new TapeRecyclerAdapter();
+        tapeRecyclerAdapter = new TapeRecyclerAdapter(getContext());
         tapeRecyclerView.setLayoutManager(linearLayoutManager);
         tapeRecyclerView.setAdapter(tapeRecyclerAdapter);
 
@@ -68,6 +66,11 @@ public class TapeFragment extends BaseFragment
     public void onPostObtained(PostsResponseModel posts) {
         Log.d("TAPE_FRAGMENT", posts.toString());
         tapeRecyclerAdapter.addAll(posts.getPosts());
+    }
+
+    @Override
+    public void onCreatePost() {
+
     }
 
     @Override
