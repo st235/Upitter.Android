@@ -3,12 +3,14 @@ package com.github.sasd97.upitter.ui.fragments;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.LocationService;
@@ -35,6 +37,8 @@ public class TapeFragment extends BaseFragment
     private TapeRecyclerAdapter tapeRecyclerAdapter;
     private RecyclerView tapeRecyclerView;
 
+    private FloatingActionButton fab;
+
     public TapeFragment() {
         super(R.layout.tape_fragment);
     }
@@ -52,7 +56,7 @@ public class TapeFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         linearLayoutManager = new LinearLayoutManager(getContext());
-        tapeRecyclerAdapter = new TapeRecyclerAdapter(getContext());
+        tapeRecyclerAdapter = new TapeRecyclerAdapter(getContext(), (CompanyModel) getHolder().get());
         tapeRecyclerView.setLayoutManager(linearLayoutManager);
         tapeRecyclerView.setAdapter(tapeRecyclerAdapter);
 

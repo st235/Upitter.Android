@@ -11,6 +11,7 @@
     <color name="colorShadowDark">#87A3B9</color>
     <color name="colorBlack">#000</color>
     <color name="colorGreenMd500">#4CAF50</color>
+    <color name="colorTextField">#9EB8C4</color>
     <!-- Endregion -->
 
     <!-- Login activity region. -->

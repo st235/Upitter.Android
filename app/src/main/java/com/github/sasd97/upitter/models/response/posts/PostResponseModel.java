@@ -12,7 +12,7 @@ import java.util.Locale;
 /**
  * Created by alexander on 08.07.16.
  */
-public class PostResponseModel {
+public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
 
     @SerializedName("customId")
     @Expose
@@ -34,17 +34,21 @@ public class PostResponseModel {
     @Expose
     private String mCategoryId;
 
-    @SerializedName("dateOffset")
+    @SerializedName("fromNow")
     @Expose
-    private String mDateOffset;
+    private String mDateFromNow;
 
-    @SerializedName("likes")
+    @SerializedName("likesAmount")
     @Expose
-    private long mRating;
+    private String mLikesAmount;
+
+    @SerializedName("commentsAmount")
+    @Expose
+    private int mCommentsAmount;
 
     @SerializedName("isLikedByMe")
     @Expose
-    private boolean mIsLikedByMe;
+    private boolean mIsLikedByMe = false;
 
     public String getId() {
         return mPostId;
@@ -66,9 +70,15 @@ public class PostResponseModel {
         return mCategoryId;
     }
 
-    public String getDateOffset() {
-        return mDateOffset;
+    public String getDateFromNow() {
+        return mDateFromNow;
     }
+
+    public String getLikesAmount() {
+        return mLikesAmount;
+    }
+
+    public int getCommentsAmount() { return mCommentsAmount; }
 
     public boolean isLikedByMe() {
         return mIsLikedByMe;
@@ -77,10 +87,10 @@ public class PostResponseModel {
     @Override
     public String toString() {
         return String.format(Locale.getDefault(), "Post\n[%1$s\n%2$s]\n" +
-                "Author: %3$s\nLikes(Rating): %4$d",
+                "Author: %3$s\nLikes(Rating): %4$s",
                 mTitle,
                 mText,
-                mCompany.toString(),
-                mRating);
+                mCompany == null ? "Null" : mCompany.toString(),
+                mLikesAmount);
     }
 }

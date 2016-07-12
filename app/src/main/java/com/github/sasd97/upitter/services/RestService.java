@@ -1,8 +1,8 @@
 package com.github.sasd97.upitter.services;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
-import com.github.sasd97.upitter.Upitter;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
@@ -26,11 +26,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.github.sasd97.upitter.constants.MethodConstants.BASE_API_URL;
-import static com.github.sasd97.upitter.constants.MethodConstants.BASE_SUB_API_URL;
-import static com.github.sasd97.upitter.constants.MethodConstants.BASE_SUB_ASTRAL_API_URL;
 import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SERVER_API_URL;
-import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SUB_ASTRAL_SERVER_API_URL;
-import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SUB_SERVER_API_URL;
+import static com.github.sasd97.upitter.constants.MethodConstants.BASE_PRE_PRODUCTION_API_URL;
+import static com.github.sasd97.upitter.constants.MethodConstants.FILE_PRE_PRODUCTION_SERVER_API_URL;
 
 /**
  * Created by Alexander Dadukin on 06.06.2016.
@@ -54,12 +52,12 @@ public final class RestService {
 
     public static void init() {
         baseAPI = new Retrofit.Builder()
-                .baseUrl(BASE_SUB_API_URL)
+                .baseUrl(BASE_PRE_PRODUCTION_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         fileServerAPI = new Retrofit.Builder()
-                .baseUrl(FILE_SUB_SERVER_API_URL)
+                .baseUrl(FILE_PRE_PRODUCTION_SERVER_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -98,6 +96,7 @@ public final class RestService {
         try {
             error = converter.convert(response.errorBody());
         } catch (IOException e) {
+            e.printStackTrace();
             return new SimpleErrorResponseModel();
         }
 
@@ -118,14 +117,28 @@ public final class RestService {
         return false;
     }
 
+
+    public static void logRequest(@NonNull Call<?> call) {
+        String log = String.format(Locale.getDefault(), "Request\nurl %1$s\nmethod %2$s\n",
+                call.request().url().toString(),
+                call.request().method());
+        Log.d("REST_SERVICE", log);
+    }
+
+    public static void handleThrows(@NonNull Throwable t,
+                                    @NonNull Call<?> call,
+                                    @NonNull OnErrorQueryListener listener) {
+        ErrorModel errorModel = getEmptyError();
+        t.printStackTrace();
+        logRequest(call);
+        Log.d("REST_SERVICE", errorModel.toString());
+        listener.onError(errorModel);
+    }
+
     public static ErrorModel getEmptyError() {
         return new ErrorModel.Builder()
                 .code(500)
                 .message("Unhandled error")
                 .build();
-    }
-
-    public static void logRequest() {
-        //  TODO: make log
     }
 }

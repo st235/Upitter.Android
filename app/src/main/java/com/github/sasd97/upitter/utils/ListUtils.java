@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.utils;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -76,8 +77,7 @@ public final class ListUtils {
         return result;
     }
 
-    public static <T> List<T> fromJson(String representation) {
-        Type type = new TypeToken<List<T>>(){}.getType();
+    public static <T extends List> T fromJson(Type type, String representation) {
         return new Gson().fromJson(representation, type);
     }
 
@@ -85,5 +85,9 @@ public final class ListUtils {
         StringBuilder builder = new StringBuilder();
         for (T item: list) builder.append(item.toString()).append(", ");
         return builder.toString();
+    }
+
+    public static boolean isUndefined(List<?> list) {
+        return list == null || list.size() == 0;
     }
 }

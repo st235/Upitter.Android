@@ -144,6 +144,7 @@
     <string name="quiz_label_create_post_activity">Quiz</string>
     <string name="send_label_create_post_activity">Send</string>
     <string name="title_activity_people_tape">People Tape</string>
+    <string name="choose_address_create_post_activity">Choose address</string>
     <!-- Endregion -->
 
     <!-- Company tape region -->

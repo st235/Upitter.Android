@@ -93,6 +93,7 @@
                     android:layout_marginBottom="4dp"
                     android:textColor="#444444"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     tools:text=""
                     />
 
@@ -150,8 +151,8 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/category_preview_post_single_view"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
                             />
 
@@ -179,36 +180,19 @@
                         android:layout_alignParentEnd="true"
                         android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:id="@+id/favorite_layout_post_single_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:clickable="true"
-                            android:gravity="center"
+                        <com.sackcentury.shinebuttonlib.ShineButton
+                            android:id="@+id/favorites_icon_post_single_view"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginRight="8dp"
                             android:layout_marginEnd="8dp"
-                            android:background="?android:selectableItemBackground"
-                            android:padding="8dp">
-
-                            <!--<ImageView-->
-                                <!--android:id="@+id/favorites_icon_post_single_view"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:src="@drawable/ic_feed_icon_favorite"-->
-                                <!--/>-->
-
-                            <com.sackcentury.shinebuttonlib.ShineButton
-                                android:id="@+id/favorites_icon_post_single_view"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@color/colorPrimary"
-                                app:btn_color="@color/colorPrimary"
-                                app:btn_fill_color="@color/colorAccent"
-                                app:allow_random_color="false"
-                                app:siShape="@drawable/ic_feed_icon_favorite"
-                                />
-                        </LinearLayout>
+                            android:src="@color/colorTextField"
+                            app:btn_color="@color/colorTextField"
+                            app:btn_fill_color="@color/colorAccent"
+                            app:allow_random_color="false"
+                            app:siShape="@drawable/ic_feed_icon_favorite"
+                            />
 
                         <LinearLayout
                             android:id="@+id/comments_layout_post_single_view"
@@ -238,7 +222,7 @@
                                 android:textColor="#9eb8c4"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
-                                tools:text="15"
+                                tools:text="90"
                                 />
                         </LinearLayout>
 
@@ -252,11 +236,15 @@
                             android:background="?android:selectableItemBackground"
                             android:padding="8dp">
 
-                            <ImageView
+                            <com.sackcentury.shinebuttonlib.ShineButton
                                 android:id="@+id/like_icon_post_single_view"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:src="@drawable/ic_feed_icon_like"
+                                android:src="@color/colorTextField"
+                                app:btn_color="@color/colorTextField"
+                                app:btn_fill_color="@color/colorAccent"
+                                app:allow_random_color="false"
+                                app:siShape="@drawable/ic_feed_icon_like"
                                 />
 
                             <TextView
@@ -268,7 +256,7 @@
                                 android:textColor="#9eb8c4"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
-                                tools:text="15"
+                                tools:text="15000"
                                 />
                         </LinearLayout>
                     </LinearLayout>

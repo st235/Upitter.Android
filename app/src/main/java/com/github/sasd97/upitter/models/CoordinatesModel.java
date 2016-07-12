@@ -58,6 +58,10 @@ public class CoordinatesModel implements RequestSkeleton, Parcelable {
         return mAddress;
     }
 
+    public String getAddressName() {
+        return mAddressName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -77,9 +81,10 @@ public class CoordinatesModel implements RequestSkeleton, Parcelable {
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "Coordinate (%1$f, %2$f)",
+        return String.format(Locale.getDefault(), "Coordinate of %3$s (%1$f, %2$f)",
                 mLatitude,
-                mLongitude);
+                mLongitude,
+                mAddressName == null ? "Unknown location" : mAddressName);
     }
 
     public static CoordinatesModel fromLocation(Location location) {

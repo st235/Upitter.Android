@@ -1,11 +1,14 @@
 package com.github.sasd97.upitter.models;
 
+import android.util.Log;
+
 import com.github.sasd97.upitter.models.skeletons.RequestSkeleton;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.internal.Streams;
 import com.google.gson.reflect.TypeToken;
 import com.orm.dsl.Ignore;
 import com.orm.dsl.Table;
@@ -41,7 +44,7 @@ public class CompanyModel extends UserModel
     private List<Integer> mCategories;
     private String mCategoriesRepresentation;
 
-    @SerializedName("contactPhones")
+    @SerializedName("contactsPhones")
     @Expose
     @Ignore
     private List<String> mContactPhones;
@@ -133,19 +136,23 @@ public class CompanyModel extends UserModel
     public List<Integer> getCategories() {
         if (mCategories != null) return mCategories;
         if (mCategoriesRepresentation == null) return null;
-        return ListUtils.fromJson(mCategoriesRepresentation);
+        Type type = new TypeToken<List<Integer>>(){}.getType();
+        return ListUtils.fromJson(type, mCategoriesRepresentation);
     }
 
     public List<String> getContactPhones() {
         if (mContactPhones != null) return mContactPhones;
         if (mContactPhonesRepresentation == null) return null;
-        return ListUtils.fromJson(mContactPhonesRepresentation);
+        Type type = new TypeToken<List<String>>(){}.getType();
+        return ListUtils.fromJson(type, mContactPhonesRepresentation);
     }
 
     public List<CoordinatesModel> getCoordinates() {
         if (mCoordinates != null) return mCoordinates;
         if (mCoordinatesRepresentation == null) return null;
-        return ListUtils.fromJson(mCoordinatesRepresentation);
+        Log.d("REPRESENTATION", mCoordinatesRepresentation);
+        Type type = new TypeToken<List<CoordinatesModel>>(){}.getType();
+        return ListUtils.fromJson(type, mCoordinatesRepresentation);
     }
 
     @Override
@@ -162,8 +169,6 @@ public class CompanyModel extends UserModel
 
     @Override
     public String toString() {
-
-
         return String.format(Locale.getDefault(),
                 "%15$s #%1$s\nType: Company\nIs verify: %2$b\nDescription: %3$s\nCategories: {%4$s}\n" +
                         "Phone: %5$s\nContact phones: {%6$s}\nSite: %7$s\nCoordinates: {%8$s}\n" +

@@ -230,6 +230,7 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="onSendClick"
                         android:text="@string/send_label_create_post_activity"
                         android:layout_gravity="center"
                         style="@style/Widget.AppCompat.Button.Colored"

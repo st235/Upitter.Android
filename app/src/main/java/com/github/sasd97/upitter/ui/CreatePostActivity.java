@@ -2,10 +2,12 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +20,10 @@ import com.github.sasd97.upitter.constants.RequestCodesConstants;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
+import com.github.sasd97.upitter.models.ErrorModel;
+import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
+import com.github.sasd97.upitter.services.LocationService;
+import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.ui.adapters.ImageHolderRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.results.PostCategoriesChooseActivity;
@@ -25,23 +31,29 @@ import com.github.sasd97.upitter.ui.results.QuizActivity;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.ListUtils;
+import com.github.sasd97.upitter.utils.PostBuilder;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.GALLERY_MULTI_SELECTED_PHOTOS_LIST;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.QUIZ_MULTI_SELECTION_LIST;
 import static com.github.sasd97.upitter.Upitter.*;
 
 public class CreatePostActivity extends BaseActivity
-    implements ImageHolderRecyclerAdapter.OnAmountChangeListener {
+    implements ImageHolderRecyclerAdapter.OnAmountChangeListener,
+        MaterialDialog.ListCallbackSingleChoice,
+        PostQueryService.OnPostListener,
+        PostBuilder.OnPostBuilderListener {
 
-    private ArrayList<String> selectedQuiz;
-    private ArrayList<String> selectedPhotos;
-
+    private CompanyModel company;
+    private PostQueryService queryService;
+    private PostBuilder postBuilder;
 
     private RecyclerView photosRecyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -55,20 +67,25 @@ public class CreatePostActivity extends BaseActivity
     private TextView quizTextView;
     private TextView photoTextView;
 
-    private LinearLayout categoryLinearLayout;
+    private MaterialEditText postTitleEditText;
+    private MaterialEditText postTextEditText;
+
     private ImageView categoryPreviewImageView;
     private TextView categoryTextView;
 
-    public CreatePostActivity() {
-    }
+    private int whichCoordinatesSelected = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_post_activity);
-        setToolbar(R.id.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar(R.id.toolbar, true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
+
+        company = (CompanyModel) getHolder().get();
+        queryService = PostQueryService.getService(this);
+        postBuilder = PostBuilder.getBuilder(this, queryService);
+
         setCategory(Categories.getDefaultCategory());
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -87,9 +104,10 @@ public class CreatePostActivity extends BaseActivity
         addressTextView = findById(R.id.address_text_create_post_activity);
         quizTextView = findById(R.id.quiz_text_create_post_activity);
         photoTextView = findById(R.id.photos_text_view_publication);
-        categoryLinearLayout = findById(R.id.category_layout_create_post_activity);
         categoryPreviewImageView = findById(R.id.category_preview_create_post_activity);
         categoryTextView = findById(R.id.category_text_create_post_activity);
+        postTitleEditText = findById(R.id.post_title_create_post_activity);
+        postTextEditText = findById(R.id.post_description_create_post_activity);
     }
 
     public void onPhotosClick(View v) {
@@ -104,22 +122,24 @@ public class CreatePostActivity extends BaseActivity
 
     public void onQuizClick(View v) {
         Intent quizIntent = new Intent(this, QuizActivity.class);
-        if (selectedQuiz != null) quizIntent.putStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST, selectedQuiz);
+        if (postBuilder.getQuiz() != null)
+            quizIntent.putStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST, postBuilder.getQuiz());
         startActivityForResult(quizIntent, RequestCodesConstants.CREATE_QUIZ_REQUEST);
     }
 
     public void onAddressClick(View v) {
-        CompanyModel companyModel = (CompanyModel) getHolder().get();
-        List<String> result = ListUtils.mutate(companyModel.getCoordinates(), new ListUtils.OnListMutateListener<CoordinatesModel, String>() {
+        final List<String> addresses = ListUtils.mutate(company.getCoordinates(), new ListUtils.OnListMutateListener<CoordinatesModel, String>() {
             @Override
             public String mutate(CoordinatesModel object) {
-                return object.getAddress().getAddressLine(0);
+                return object.getAddressName();
             }
         });
 
         new MaterialDialog.Builder(this)
-                .title("Alex")
-                .items(result)
+                .title(R.string.choose_address_create_post_activity)
+                .iconRes(R.drawable.ic_icon_map)
+                .items(addresses)
+                .itemsCallbackSingleChoice(whichCoordinatesSelected, this)
                 .show();
     }
 
@@ -128,16 +148,43 @@ public class CreatePostActivity extends BaseActivity
                 RequestCodesConstants.CATEGORIES_ACTIVITY_REQUEST);
     }
 
+    public void onSendClick(View v) {
+        postBuilder
+                .title(postTitleEditText.getText().toString().trim())
+                .text(postTextEditText.getText().toString().trim())
+                .build(company.getAccessToken());
+    }
+
     @Override
     public void onEmpty() {
         photosRecyclerView.setVisibility(View.GONE);
         highlightHandler(photoIconImageView, photoTextView, R.drawable.ic_icon_add_photo, R.color.colorPrimary);
     }
 
-    public void highlightHandler(ImageView imageView,
-                                 TextView textView,
-                                 int drawable,
-                                 int color) {
+    @Override
+    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+        postBuilder.coordinates(company.getCoordinates().get(which));
+        whichCoordinatesSelected = which;
+        highlightHandler(addressIconImageView, addressTextView, R.drawable.ic_icon_map_active, R.color.colorAccent);
+        return false;
+    }
+
+    @Override
+    public void onPostObtained(PostsResponseModel posts) {
+
+    }
+
+    @Override
+    public void onCreatePost() {
+        finish();
+    }
+
+    @Override
+    public void onError(ErrorModel error) {
+        Log.d("ERROR", error.toString());
+    }
+
+    public void highlightHandler(ImageView imageView, TextView textView, int drawable, int color) {
         imageView.setImageDrawable(ContextCompat.getDrawable(this, drawable));
         textView.setTextColor(ContextCompat.getColor(this, color));
     }
@@ -146,10 +193,27 @@ public class CreatePostActivity extends BaseActivity
         Drawable preview = ContextCompat.getDrawable(this, category.getIntImage());
         categoryPreviewImageView.setImageDrawable(preview);
         categoryTextView.setText(category.getTitle());
+        postBuilder.category(category);
+    }
+
+    @Override
+    public void onBuild() {
+
+    }
+
+    @Override
+    public void onPublicationError() {
+
+    }
+
+    @Override
+    public void onPrepareError() {
+
     }
 
     private void handleImages(Intent data) {
-        selectedPhotos = data.getStringArrayListExtra(GALLERY_MULTI_SELECTED_PHOTOS_LIST);
+        ArrayList<String> selectedPhotos = data.getStringArrayListExtra(GALLERY_MULTI_SELECTED_PHOTOS_LIST);
+        postBuilder.rawPhotos(selectedPhotos);
         imageHolderRecyclerAdapter.addAll(selectedPhotos);
 
         highlightHandler(photoIconImageView, photoTextView, R.drawable.ic_icon_add_photo_active, R.color.colorAccent);
@@ -157,13 +221,12 @@ public class CreatePostActivity extends BaseActivity
     }
 
     private void handleQuiz(Intent data) {
-        selectedQuiz = data.getStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST);
+        postBuilder.quiz(data.getStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST));
         highlightHandler(quizIconImageView, quizTextView, R.drawable.ic_icon_quiz_active, R.color.colorAccent);
     }
 
     private void handleCategories(Intent data) {
-        CategoryModel categoryModel = data.getParcelableExtra(IntentKeysConstants.CATEGORIES_ATTACH);
-        setCategory(categoryModel);
+        setCategory((CategoryModel) data.getParcelableExtra(IntentKeysConstants.CATEGORIES_ATTACH));
     }
 
     @Override

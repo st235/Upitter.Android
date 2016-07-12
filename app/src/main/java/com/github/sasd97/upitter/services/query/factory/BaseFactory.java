@@ -11,6 +11,8 @@ import com.github.sasd97.upitter.models.response.report.ReportResponseModel;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -65,6 +67,50 @@ public interface BaseFactory {
     Call<CatergoriesResponseModel> getCategories(@Query("ln") String language,
                                                  @Query("accessToken") String accessToken);
 
+    @FormUrlEncoded
+    @POST("post/create")
+    Call<PostResponseModel> createPost(@Query("ln") String language,
+                                              @Query("accessToken") String accessToken,
+                                              @Field("title") String title,
+                                              @Field("text") String text,
+                                              @Field("latitude") double latitude,
+                                              @Field("longitude") double longitude,
+                                              @Field("category") String postCategory);
+
+    @FormUrlEncoded
+    @POST("post/create")
+    Call<PostResponseModel> createPostWithQuiz(@Query("ln") String language,
+                                               @Query("accessToken") String accessToken,
+                                               @Field("title") String title,
+                                               @Field("text") String text,
+                                               @Field("latitude") double latitude,
+                                               @Field("longitude") double longitude,
+                                               @Field("category") String postCategory,
+                                               @Field("variants") List<String> variants);
+
+    @FormUrlEncoded
+    @POST("post/create")
+    Call<PostResponseModel> createPostWithImages(@Query("ln") String language,
+                                                 @Query("accessToken") String accessToken,
+                                                 @Field("title") String title,
+                                                 @Field("text") String text,
+                                                 @Field("latitude") double latitude,
+                                                 @Field("longitude") double longitude,
+                                                 @Field("category") String postCategory,
+                                                 @Field("images") List<String> images);
+
+    @FormUrlEncoded
+    @POST("post/create")
+    Call<PostResponseModel> createPostComplex(@Query("ln") String language,
+                                              @Query("accessToken") String accessToken,
+                                              @Field("title") String title,
+                                              @Field("text") String text,
+                                              @Field("latitude") double latitude,
+                                              @Field("longitude") double longitude,
+                                              @Field("category") String postCategory,
+                                              @Field("images") List<String> variants,
+                                              @Field("variants") List<String> avatars);
+
     @GET("post/obtain")
     Call<PostsResponseModel> obtainPosts(@Query("ln") String language,
                                          @Query("accessToken") String accessToken,
@@ -73,4 +119,14 @@ public interface BaseFactory {
                                          @Query("radius") int radius,
                                          @Query("limit") int limit,
                                          @Query("offset") Integer offset);
+
+    @GET("post/like/{postId}")
+    Call<PostResponseModel> likePost(@Path("postId") String postId,
+                                     @Query("ln") String language,
+                                     @Query("accessToken") String accessToken);
+
+    @GET("post/favorite/{postId}")
+    Call<PostResponseModel> addPostToFavorite(@Path("postId") String postId,
+                                              @Query("ln") String language,
+                                              @Query("accessToken") String accessToken);
 }
