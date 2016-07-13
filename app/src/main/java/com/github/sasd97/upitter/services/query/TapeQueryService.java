@@ -24,6 +24,8 @@ public class TapeQueryService {
         void onAddFavorites(PostResponseModel post);
         void onRemoveFromFavorites(PostResponseModel post);
 
+        void onVote(PostResponseModel post);
+
         @Override
         void onError(ErrorModel error);
     }
@@ -75,6 +77,29 @@ public class TapeQueryService {
                 RestService.logRequest(call);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onAddFavorites(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<PostResponseModel> call, Throwable t) {
+                RestService.handleThrows(t, call, listener);
+            }
+        });
+    }
+
+    public void vote(@NonNull String language,
+                     @NonNull String accessToken,
+                     @NonNull String postId,
+                     int voteVariant) {
+        final Call<PostResponseModel> favorite = RestService
+                .baseFactory()
+                .voteInPost(postId, voteVariant, language, accessToken);
+
+        favorite.enqueue(new Callback<PostResponseModel>() {
+            @Override
+            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+                RestService.logRequest(call);
+                if (!RestService.handleError(call, response, listener)) return;
+                listener.onVote(response.body().getResponseModel());
             }
 
             @Override

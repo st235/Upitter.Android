@@ -129,4 +129,10 @@ public interface BaseFactory {
     Call<PostResponseModel> addPostToFavorite(@Path("postId") String postId,
                                               @Query("ln") String language,
                                               @Query("accessToken") String accessToken);
+
+    @GET("/post/vote/{postId}/{voteVariant}")
+    Call<PostResponseModel> voteInPost(@Path("postId") String postId,
+                                       @Path("voteVariant") int voteVariant,
+                                       @Query("ln") String language,
+                                       @Query("accessToken") String accessToken);
 }

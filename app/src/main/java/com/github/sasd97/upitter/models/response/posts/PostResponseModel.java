@@ -3,6 +3,7 @@ package com.github.sasd97.upitter.models.response.posts;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.phone.PhoneResponseModel;
+import com.github.sasd97.upitter.models.response.quiz.QuizResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -34,6 +35,10 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
     @Expose
     private String mCategoryId;
 
+    @SerializedName("variants")
+    @Expose
+    private List<QuizResponseModel> mQuiz;
+
     @SerializedName("fromNow")
     @Expose
     private String mDateFromNow;
@@ -42,6 +47,10 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
     @Expose
     private String mLikesAmount;
 
+    @SerializedName("votersAmount")
+    @Expose
+    private int mVotersAmount;
+
     @SerializedName("commentsAmount")
     @Expose
     private int mCommentsAmount;
@@ -49,6 +58,10 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
     @SerializedName("isLikedByMe")
     @Expose
     private boolean mIsLikedByMe = false;
+
+    @SerializedName("isVotedByMe")
+    @Expose
+    private boolean mIsVotedByMe = false;
 
     public String getId() {
         return mPostId;
@@ -78,10 +91,20 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
         return mLikesAmount;
     }
 
+    public List<QuizResponseModel> getQuiz() {
+        return mQuiz;
+    }
+
     public int getCommentsAmount() { return mCommentsAmount; }
+
+    public int getVotersAmount() { return mVotersAmount; }
 
     public boolean isLikedByMe() {
         return mIsLikedByMe;
+    }
+
+    public boolean isVotedByMe() {
+        return mIsVotedByMe;
     }
 
     @Override

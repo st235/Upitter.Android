@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:layout_marginBottom="4dp">
+
+    <RelativeLayout
+        android:id="@+id/result_quiz_result_single_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress_quiz_result_single_view"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/horizontal_progress_bar"
+            />
+
+        <TextView
+            android:id="@+id/result_text_quiz_result_single_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:textColor="#444444"
+            android:gravity="center"
+            android:textSize="15sp"
+            tools:text="Quiz variant"
+            />
+
+        <TextView
+            android:id="@+id/result_text_percentage_result_single_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="#444444"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="15 voices"
+            />
+    </RelativeLayout>
+</LinearLayout>

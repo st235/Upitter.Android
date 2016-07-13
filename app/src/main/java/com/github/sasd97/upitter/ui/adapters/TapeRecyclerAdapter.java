@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.ui.adapters;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
+import com.github.sasd97.upitter.models.response.quiz.QuizResponseModel;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
@@ -48,7 +50,8 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
     }
 
     public class TapeViewHolder extends RecyclerView.ViewHolder
-        implements TapeQueryService.OnTapeQueryListener {
+        implements TapeQueryService.OnTapeQueryListener,
+        TapeQuizRecyclerAdapter.OnItemClickListener {
 
         private TextView userNameTextView;
         private TextView postTitleTextView;
@@ -70,6 +73,11 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
 
         private View.OnClickListener likeClick;
         private View.OnClickListener favoriteClick;
+
+        private RecyclerView quizVariantsRecyclerView;
+        private RecyclerView quizResultHorizontalChart;
+
+        private TapeQuizRecyclerAdapter quizRecyclerAdapter;
 
         private TapeQueryService queryService;
 
@@ -100,6 +108,13 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
             likeShineButton.setEnabled(false);
             likeLinearLayout.setOnClickListener(likeClick);
             favoriteShineButton.setOnClickListener(favoriteClick);
+
+            quizRecyclerAdapter = new TapeQuizRecyclerAdapter(this);
+
+            quizResultHorizontalChart.setLayoutManager(new LinearLayoutManager(context));
+            quizVariantsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+            quizVariantsRecyclerView.setAdapter(quizRecyclerAdapter);
         }
 
         private void bind() {
@@ -120,6 +135,9 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
 
             likeLinearLayout = (LinearLayout) itemView.findViewById(R.id.like_layout_post_single_view);
             commentLinearLayout = (LinearLayout) itemView.findViewById(R.id.comments_layout_post_single_view);
+
+            quizVariantsRecyclerView = (RecyclerView) itemView.findViewById(R.id.quiz_variants_post_single_view);
+            quizResultHorizontalChart = (RecyclerView) itemView.findViewById(R.id.quiz_result_post_single_view);
         }
 
         @Override
@@ -148,6 +166,18 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         }
 
         @Override
+        public void onVote(PostResponseModel post) {
+            quizResultHorizontalChart.setVisibility(View.VISIBLE);
+            quizVariantsRecyclerView.setVisibility(View.GONE);
+            posts.set(getAdapterPosition(), post);
+
+            quizResultHorizontalChart.setAdapter(new TapeQuizResultRecyclerAdapter(post.getQuiz(),
+                    context.getString(R.string.voice_postfix),
+                    posts.get(getAdapterPosition()).getVotersAmount()));
+            quizResultHorizontalChart.setHasFixedSize(true);
+        }
+
+        @Override
         public void onRemoveFromFavorites(PostResponseModel post) {
 
         }
@@ -155,6 +185,14 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         @Override
         public void onError(ErrorModel error) {
             Log.d("TAPE_RECYCLER_ADAPTER", error.toString());
+        }
+
+        @Override
+        public void onItemClick(int position) {
+            queryService.vote(Locale.getDefault().getLanguage(),
+                    company.getAccessToken(),
+                    posts.get(getAdapterPosition()).getId(),
+                    position);
         }
     }
 
@@ -213,6 +251,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         obtainSubBar(holder.likeShineButton, holder.likeAmountTextView,
                 holder.commentImageView, holder.commentsAmountTextView,
                 holder.favoriteShineButton, post);
+        obtainQuiz(holder, post);
 
         holder.offsetFromNow.setText(post.getDateFromNow());
         holder.postTitleTextView.setText(post.getTitle());
@@ -250,5 +289,29 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         }
 
         commentsTextHolder.setText(String.valueOf(post.getCommentsAmount()));
+    }
+
+    private void obtainQuiz(TapeViewHolder holder, PostResponseModel post) {
+        if (post.getQuiz() == null || post.getQuiz().size() == 0) {
+            holder.quizResultHorizontalChart.setVisibility(View.GONE);
+            holder.quizVariantsRecyclerView.setVisibility(View.GONE);
+            return;
+        }
+
+        Log.d("ISVOTEDBYME", String.valueOf(post.isVotedByMe()));
+
+        if (post.isVotedByMe()) {
+            holder.quizResultHorizontalChart.setVisibility(View.VISIBLE);
+            holder.quizVariantsRecyclerView.setVisibility(View.GONE);
+            holder.quizResultHorizontalChart.setAdapter(new TapeQuizResultRecyclerAdapter(post.getQuiz(),
+                    context.getString(R.string.voice_postfix),
+                    post.getVotersAmount()));
+            holder.quizResultHorizontalChart.setHasFixedSize(true);
+            return;
+        }
+
+        holder.quizResultHorizontalChart.setVisibility(View.GONE);
+        holder.quizVariantsRecyclerView.setVisibility(View.VISIBLE);
+        holder.quizRecyclerAdapter.addAll(post.getQuiz());
     }
 }

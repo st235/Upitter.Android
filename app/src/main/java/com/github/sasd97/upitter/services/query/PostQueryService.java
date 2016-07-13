@@ -44,7 +44,7 @@ public class PostQueryService {
         Call<PostsResponseModel> obtainPosts =
                 RestService
                 .baseFactory()
-                .obtainPosts(language, accessToken, latitude, longitude, 1000, limit, offset);
+                .obtainPosts(language, accessToken, latitude, longitude, 100000, limit, offset);
 
         obtainPosts.enqueue(new Callback<PostsResponseModel>() {
             @Override
