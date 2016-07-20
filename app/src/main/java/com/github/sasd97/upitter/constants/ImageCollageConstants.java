@@ -20,7 +20,7 @@ public interface ImageCollageConstants {
 
         private int start, end;
 
-        private Collage() {}
+        Collage() {}
 
         Collage(int middle) {
             this.start = middle;

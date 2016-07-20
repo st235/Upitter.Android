@@ -26,7 +26,6 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
     private static final int LEFT_POSITION = 0;
     private static final int TOP_POSITION = 0;
 
-
     private static final String TAG = "Collage Layout Manager";
 
     private Collage type;
@@ -63,7 +62,13 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
                 toTwiceCollage(recycler);
                 break;
             case VERTICAL_GRID_COLLAGE:
-
+                toVerticalGridCollage(recycler);
+                break;
+            case TWO_LAYER_COLLAGE:
+                toTwoLayerCollage(recycler, 3);
+                break;
+            case UNKNOWN_COLLAGE:
+                break;
         }
     }
 
@@ -122,13 +127,49 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
     private void toVerticalGridCollage(RecyclerView.Recycler recycler) {
         final int itemCount = getItemCount();
+        final int horizontalSectionCount = itemCount - 1;
+
         final double firstViewPercentage = 0.6;
 
-        View firstView = recycler.getViewForPosition(FIRST_VIEW);
-        placeView(firstView, 0, 0, getHeight(), (int) (getWidth() * firstViewPercentage));
+        int averageX = getHeight() / horizontalSectionCount;
+        int horizontalOffset = (int) (getWidth() * firstViewPercentage);
+        int verticalOffset = 0;
 
-        for (int i = OFFSET_VIEW_POSITION; i < getItemCount(); i++) {
+        ImageView firstView = (ImageView) recycler.getViewForPosition(FIRST_VIEW);
+        firstView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        placeView(firstView, 0, 0, getHeight(), horizontalOffset);
 
+        for (int i = OFFSET_VIEW_POSITION; i < itemCount; i++) {
+            ImageView imageView = (ImageView) recycler.getViewForPosition(i);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            placeView(imageView, verticalOffset, horizontalOffset + margin, verticalOffset + averageX, getWidth());
+            verticalOffset += averageX + margin;
+        }
+    }
+
+    private void toTwoLayerCollage(RecyclerView.Recycler recycler, int firstLayerAmount) {
+        final int itemCount = getItemCount();
+        final double firstLayerPercentage = 0.7;
+        final int averageFirstLayerX = getWidth() / firstLayerAmount;
+        final int averageSecondLayerX = getWidth() / (itemCount - firstLayerAmount);
+        int counter = 0;
+
+        int offsetX = 0;
+        int firstLayerHeight = (int) (getHeight() * firstLayerPercentage);
+        for (; counter < firstLayerAmount; counter++) {
+            ImageView imageView = (ImageView) recycler.getViewForPosition(counter);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            placeView(imageView, 0, offsetX, firstLayerHeight, offsetX + averageFirstLayerX);
+            offsetX += averageFirstLayerX + margin;
+        }
+
+
+        offsetX = 0;
+        for (; counter < itemCount; counter++) {
+            ImageView imageView = (ImageView) recycler.getViewForPosition(counter);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            placeView(imageView, firstLayerHeight + margin, offsetX, getHeight(), offsetX + averageSecondLayerX);
+            offsetX += averageSecondLayerX + margin;
         }
     }
 

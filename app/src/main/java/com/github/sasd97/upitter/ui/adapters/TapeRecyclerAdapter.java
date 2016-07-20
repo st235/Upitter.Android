@@ -230,9 +230,8 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
             public void onError() {
 
             }
-        }, "http://all4desktop.com/data_images/original/4238212-pictures.jpg",
-                "http://all4desktop.com/data_images/original/4238212-pictures.jpg",
-                "http://all4desktop.com/data_images/original/4238212-pictures.jpg");
+        }, "http://all4desktop.com/data_images/original/4238212-pictures.jpg");
+        // **************************************************************************************************************
     }
 
     @Override
