@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,12 +16,13 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.components.CollageLayoutManager;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
-import com.github.sasd97.upitter.models.response.quiz.QuizResponseModel;
+import com.github.sasd97.upitter.runners.DownloadImageRunner;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
@@ -37,6 +39,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by alexander on 08.07.16.
  */
 public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapter.TapeViewHolder> {
+
+    private static final String TAG = "TAPE RECYCLER ADAPTER";
 
     private Context context;
 
@@ -76,6 +80,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
 
         private RecyclerView quizVariantsRecyclerView;
         private RecyclerView quizResultHorizontalChart;
+        private RecyclerView imagesRecyclerView;
 
         private TapeQuizRecyclerAdapter quizRecyclerAdapter;
 
@@ -138,6 +143,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
 
             quizVariantsRecyclerView = (RecyclerView) itemView.findViewById(R.id.quiz_variants_post_single_view);
             quizResultHorizontalChart = (RecyclerView) itemView.findViewById(R.id.quiz_result_post_single_view);
+            imagesRecyclerView = (RecyclerView) itemView.findViewById(R.id.post_images_post_single_view);
         }
 
         @Override
@@ -204,12 +210,29 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(TapeViewHolder holder, int position) {
+    public void onBindViewHolder(final TapeViewHolder holder, int position) {
         PostResponseModel post = posts.get(position);
         CompanyResponseModel author = post.getCompany();
 
         obtainPostAuthor(holder, author);
         obtainPost(holder, post);
+
+        // **************************************************************************************************************
+        DownloadImageRunner.upload(context, new DownloadImageRunner.OnDownloadListener() {
+            @Override
+            public void onDownloaded(List<Bitmap> bitmaps) {
+                holder.imagesRecyclerView.setVisibility(View.VISIBLE);
+                holder.imagesRecyclerView.setLayoutManager(new CollageLayoutManager(bitmaps));
+                holder.imagesRecyclerView.setAdapter(new CollageAdapter(bitmaps));
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        }, "http://all4desktop.com/data_images/original/4238212-pictures.jpg",
+                "http://all4desktop.com/data_images/original/4238212-pictures.jpg",
+                "http://all4desktop.com/data_images/original/4238212-pictures.jpg");
     }
 
     @Override
@@ -297,8 +320,6 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
             holder.quizVariantsRecyclerView.setVisibility(View.GONE);
             return;
         }
-
-        Log.d("ISVOTEDBYME", String.valueOf(post.isVotedByMe()));
 
         if (post.isVotedByMe()) {
             holder.quizResultHorizontalChart.setVisibility(View.VISIBLE);

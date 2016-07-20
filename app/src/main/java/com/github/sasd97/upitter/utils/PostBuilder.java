@@ -162,7 +162,7 @@ public class PostBuilder implements OnQueueListener {
     private void preparePhotos(ArrayList<String> photos) {
         ImagesUploadQueue
                 .executeQueue(this,
-                        ListUtils.obtainArray(String.class, photos));
+                        ListUtils.toArray(String.class, photos));
     }
 
     private Type identityType() {

@@ -49,8 +49,8 @@ public class PostQueryService {
         obtainPosts.enqueue(new Callback<PostsResponseModel>() {
             @Override
             public void onResponse(Call<PostsResponseModel> call, Response<PostsResponseModel> response) {
+                RestService.logRequest(call);
                 if (!RestService.handleError(call, response, listener)) return;
-                Log.d("GET", call.request().url().toString());
                 listener.onPostObtained(response.body().getResponseModel());
             }
 
@@ -77,6 +77,7 @@ public class PostQueryService {
         createPost.enqueue(new Callback<PostResponseModel>() {
             @Override
             public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+                RestService.logRequest(call);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onCreatePost();
             }
@@ -105,6 +106,7 @@ public class PostQueryService {
         createPost.enqueue(new Callback<PostResponseModel>() {
             @Override
             public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+                RestService.logRequest(call);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onCreatePost();
             }
@@ -133,6 +135,7 @@ public class PostQueryService {
         createPost.enqueue(new Callback<PostResponseModel>() {
             @Override
             public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+                RestService.logRequest(call);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onCreatePost();
             }
@@ -162,6 +165,7 @@ public class PostQueryService {
         createPost.enqueue(new Callback<PostResponseModel>() {
             @Override
             public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+                RestService.logRequest(call);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onCreatePost();
             }

@@ -25,6 +25,8 @@ import java.util.Locale;
  */
 public class LocationService implements LocationListener {
 
+    private final static String TAG = "Location Service";
+
     public interface OnLocationListener {
         void onLocationFind(Location location);
         void onLocationChanged(Location location);
@@ -68,26 +70,30 @@ public class LocationService implements LocationListener {
         locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DISTANCE, this);
 
         currentLocation = locationManager.getLastKnownLocation(provider);
-        if (currentLocation != null) listener.onLocationFind(currentLocation);
+        if (currentLocation != null) {
+            Log.d(TAG, "location initialized");
+            listener.onLocationFind(currentLocation);
+        }
     }
 
     @Override
     public void onLocationChanged(Location location) {
+        Log.d(TAG, "location changed");
         listener.onLocationChanged(location);
     }
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
-
+        Log.d(TAG, String.format("Current provider change state. Description: %1$s, flag: %2$d", s, i));
     }
 
     @Override
     public void onProviderEnabled(String s) {
-
+        Log.d(TAG, String.format("Current provider enabled. Description: %1$s", s));
     }
 
     @Override
     public void onProviderDisabled(String s) {
-
+        Log.d(TAG, String.format("Current provider disabled. Description: %1$s", s));
     }
 }

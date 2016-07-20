@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -23,6 +24,7 @@ import com.github.sasd97.upitter.utils.Permissions;
 import static com.github.sasd97.upitter.Upitter.*;
 import static com.github.sasd97.upitter.holders.PeopleHolder.isUserAvailable;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
+import static com.github.sasd97.upitter.constants.PermissionsConstants.REQUEST_COMPLEX;
 
 public class LoginActivity extends BaseActivity
         implements ViewPager.OnPageChangeListener {
@@ -60,7 +62,11 @@ public class LoginActivity extends BaseActivity
         viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
 
-        Permissions.getPermissionToReceiveSMS(this);
+        Permissions.getPermission(this,
+                REQUEST_COMPLEX,
+                Manifest.permission.RECEIVE_SMS,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
     }
 
     @Override
@@ -164,12 +170,12 @@ public class LoginActivity extends BaseActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode != Permissions.REQUEST_RECEIVE_SMS){
+        if(requestCode != REQUEST_COMPLEX){
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             return;
         }
 
-        if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (Permissions.checkGrantState(permissions, grantResults)) {
             Toast.makeText(this, getString(R.string.permission_granted), Toast.LENGTH_SHORT).show();
             return;
         }

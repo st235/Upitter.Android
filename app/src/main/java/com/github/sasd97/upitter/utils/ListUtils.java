@@ -30,7 +30,7 @@ public final class ListUtils {
 
     private ListUtils() {}
 
-    public static <T> T[] obtainArray(Class<T> type, @NonNull List<T> list) {
+    public static <T> T[] toArray(Class<T> type, @NonNull List<T> list) {
         T[] result = (T[]) Array.newInstance(type, list.size());
         result = list.toArray(result);
         return result;

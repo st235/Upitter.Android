@@ -30,6 +30,8 @@ public class TapeFragment extends BaseFragment
         implements PostQueryService.OnPostListener,
         LocationService.OnLocationListener {
 
+    private static final String TAG = "TAPE FRAGMENT";
+
     private PostQueryService queryService;
     private LocationService locationService;
 
@@ -79,11 +81,13 @@ public class TapeFragment extends BaseFragment
 
     @Override
     public void onError(ErrorModel error) {
-        Log.d("TAPE_FRAGMENT", error.toString());
+        Log.d(TAG, error.toString());
     }
 
     @Override
     public void onLocationFind(Location location) {
+        Log.d(TAG, "On location find");
+
         queryService.obtainPosts(
                 getHolder().get().getAccessToken(),
                 Locale.getDefault().getLanguage(),

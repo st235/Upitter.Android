@@ -9,7 +9,7 @@
         android:id="@+id/swipe_layout_tape"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e5eef2"
+        android:background="#DEE2EB"
         android:visibility="visible">
 
         <android.support.v7.widget.RecyclerView

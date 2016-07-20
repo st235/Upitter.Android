@@ -36,6 +36,8 @@ import static com.github.sasd97.upitter.constants.MethodConstants.FILE_PRE_PRODU
 
 public final class RestService {
 
+    private static final String TAG = "HTTP REQUEST";
+
     private static final String IMAGE_MEDIATYPE = "image/*";
     private static final String TEXT_MEDIATYPE = "text/plain";
     private static final String JSON_MEDIATYPE = "application/json";
@@ -122,7 +124,7 @@ public final class RestService {
         String log = String.format(Locale.getDefault(), "Request\nurl %1$s\nmethod %2$s\n",
                 call.request().url().toString(),
                 call.request().method());
-        Log.d("REST_SERVICE", log);
+        Log.d(TAG, log);
     }
 
     public static void handleThrows(@NonNull Throwable t,
