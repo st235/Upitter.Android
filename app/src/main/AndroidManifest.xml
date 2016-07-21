@@ -110,6 +110,10 @@
                 android:value=".ui.CompanyRegistrationActivity" />
         </activity>
         <activity
+            android:name=".ui.schemas.ShowOnMapActivity"
+            android:label="@string/title_activity_people_tape"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".ui.CreatePostActivity"
             android:label="@string/title_create_post_activity"
             android:parentActivityName=".ui.CompanyTapeActivity"
@@ -139,7 +143,7 @@
         <activity
             android:name=".ui.PeopleTapeActivity"
             android:label="@string/title_activity_people_tape"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

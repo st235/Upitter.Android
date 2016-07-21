@@ -23,6 +23,6 @@ public final class Palette {
     }
 
     public static int getAvatarPalette() {
-        return ContextCompat.getColor(context, R.color.colorShadowDark);
+        return ContextCompat.getColor(context, R.color.colorPrimary);
     }
 }

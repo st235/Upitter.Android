@@ -15,7 +15,9 @@ public interface ImageCollageConstants {
         SIMPLE_COLLAGE(0, 1),
         TWICE_COLLAGE(2),
         VERTICAL_GRID_COLLAGE(3, 4),
-        TWO_LAYER_COLLAGE(5, 10),
+        TWO_LAYER_COLLAGE_SMALL(5, 6),
+        TWO_LAYER_COLLAGE_MEDIUM(7, 8),
+        TWO_LAYER_COLLAGE_HIGH(9, 10),
         UNKNOWN_COLLAGE;
 
         private int start, end;
@@ -40,7 +42,9 @@ public interface ImageCollageConstants {
             if (SIMPLE_COLLAGE.in(value)) return SIMPLE_COLLAGE;
             if (TWICE_COLLAGE.in(value)) return TWICE_COLLAGE;
             if (VERTICAL_GRID_COLLAGE.in(value)) return VERTICAL_GRID_COLLAGE;
-            if (TWO_LAYER_COLLAGE.in(value)) return TWO_LAYER_COLLAGE;
+            if (TWO_LAYER_COLLAGE_SMALL.in(value)) return TWO_LAYER_COLLAGE_SMALL;
+            if (TWO_LAYER_COLLAGE_MEDIUM.in(value)) return TWO_LAYER_COLLAGE_MEDIUM;
+            if (TWO_LAYER_COLLAGE_HIGH.in(value)) return TWO_LAYER_COLLAGE_HIGH;
             return UNKNOWN_COLLAGE;
         }
     }

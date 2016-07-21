@@ -1,7 +1,9 @@
 package com.github.sasd97.upitter.models.response.posts;
 
+import com.github.sasd97.upitter.models.AuthorOnMapModel;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
+import com.github.sasd97.upitter.models.response.coordinates.CoordinatesResponseModel;
 import com.github.sasd97.upitter.models.response.phone.PhoneResponseModel;
 import com.github.sasd97.upitter.models.response.quiz.QuizResponseModel;
 import com.google.gson.annotations.Expose;
@@ -63,6 +65,10 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
     @Expose
     private boolean mIsVotedByMe = false;
 
+    @SerializedName("coordinates")
+    @Expose
+    private CoordinatesResponseModel mCoordinates;
+
     public String getId() {
         return mPostId;
     }
@@ -99,12 +105,27 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
 
     public int getVotersAmount() { return mVotersAmount; }
 
+    public CoordinatesResponseModel getCoordinates() {
+        return mCoordinates;
+    }
+
     public boolean isLikedByMe() {
         return mIsLikedByMe;
     }
 
     public boolean isVotedByMe() {
         return mIsVotedByMe;
+    }
+
+
+    public AuthorOnMapModel toAuthorOnMapModel() {
+        return new AuthorOnMapModel
+                .Builder()
+                .authorName(mCompany.getName())
+                .authorAvatarUrl(mCompany.getLogoUrl())
+                .latitude(mCoordinates.getLatitude())
+                .longitude(mCoordinates.getLongitude())
+                .build();
     }
 
     @Override

@@ -156,4 +156,12 @@
     <string name="user_placeholder_company_tape">Upitter company</string>
     <string name="category_placeholder_company_tape">Some category</string>
     <!-- Endregion -->
+
+    <!-- Company tape region -->
+    <string name="show_on_map_tape_single_view">Show on map</string>
+    <string name="edit_post_tape_single_view">Edit post</string>
+    <string name="share_tape_single_view">Share</string>
+    <string name="complain_tape_single_view">Complain</string>
+    <string name="delete_post_tape_single_view">Delete post</string>
+    <!-- Endregion -->
 </resources>

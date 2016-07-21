@@ -64,8 +64,14 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
             case VERTICAL_GRID_COLLAGE:
                 toVerticalGridCollage(recycler);
                 break;
-            case TWO_LAYER_COLLAGE:
-                toTwoLayerCollage(recycler, 3);
+            case TWO_LAYER_COLLAGE_SMALL:
+                toTwoLayerCollage(recycler, 1, 0.7);
+                break;
+            case TWO_LAYER_COLLAGE_MEDIUM:
+                toTwoLayerCollage(recycler, 2, 0.75);
+                break;
+            case TWO_LAYER_COLLAGE_HIGH:
+                toTwoLayerCollage(recycler, 3, 0.8);
                 break;
             case UNKNOWN_COLLAGE:
                 break;
@@ -147,9 +153,8 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
-    private void toTwoLayerCollage(RecyclerView.Recycler recycler, int firstLayerAmount) {
+    private void toTwoLayerCollage(RecyclerView.Recycler recycler, int firstLayerAmount, double firstLayerPercentage) {
         final int itemCount = getItemCount();
-        final double firstLayerPercentage = 0.7;
         final int averageFirstLayerX = getWidth() / firstLayerAmount;
         final int averageSecondLayerX = getWidth() / (itemCount - firstLayerAmount);
         int counter = 0;

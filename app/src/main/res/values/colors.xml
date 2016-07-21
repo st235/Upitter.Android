@@ -42,4 +42,9 @@
     <color name="colorNavigationDrawerAccent">#303F4F</color>
     <color name="colorNavigationDrawerLight">#4C5968</color>
     <!-- Endregion -->
+
+    <!-- Tape region -->
+    <color name="colorCounter">#6C8BB6</color>
+    <color name="colorIcons">#88AACC</color>
+    <!-- Endregion -->
 </resources>

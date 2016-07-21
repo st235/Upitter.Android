@@ -1,12 +1,15 @@
 package com.github.sasd97.upitter.ui.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +27,7 @@ import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.runners.DownloadImageRunner;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
+import com.github.sasd97.upitter.ui.schemas.ShowOnMapActivity;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Palette;
@@ -34,10 +38,14 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATES_ATTACH;
 
 /**
  * Created by alexander on 08.07.16.
  */
+
 public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapter.TapeViewHolder> {
 
     private static final String TAG = "TAPE RECYCLER ADAPTER";
@@ -55,7 +63,10 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
 
     public class TapeViewHolder extends RecyclerView.ViewHolder
         implements TapeQueryService.OnTapeQueryListener,
-        TapeQuizRecyclerAdapter.OnItemClickListener {
+        TapeQuizRecyclerAdapter.OnItemClickListener,
+        Toolbar.OnMenuItemClickListener {
+
+        private Toolbar postToolbar;
 
         private TextView userNameTextView;
         private TextView postTitleTextView;
@@ -65,7 +76,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         private TextView commentsAmountTextView;
         private TextView offsetFromNow;
 
-        private CircleImageView userAvatarImageView;
+        private ImageView userAvatarImageView;
         private CircleImageView categoryImageView;
         private ImageView commentImageView;
 
@@ -91,6 +102,37 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
 
             queryService = TapeQueryService.getService(this);
             bind();
+            setup();
+        }
+
+        private void bind() {
+            postToolbar = (Toolbar) itemView.findViewById(R.id.post_toolbar);
+
+            userNameTextView = (TextView) itemView.findViewById(R.id.user_name_post_single_view);
+            postTitleTextView = (TextView) itemView.findViewById(R.id.title_post_single_view);
+            postDescriptionTextView = (TextView) itemView.findViewById(R.id.text_post_single_view);
+            categoryNameTextView = (TextView) itemView.findViewById(R.id.category_label_post_single_view);
+            likeAmountTextView = (TextView) itemView.findViewById(R.id.like_counter_post_single_view);
+            commentsAmountTextView = (TextView) itemView.findViewById(R.id.comments_counter_post_single_view);
+            offsetFromNow = (TextView) itemView.findViewById(R.id.offset_from_now_post_single_view);
+
+            userAvatarImageView = (ImageView) itemView.findViewById(R.id.user_icon_post_single_view);
+            categoryImageView = (CircleImageView) itemView.findViewById(R.id.category_preview_post_single_view);
+            commentImageView = (ImageView) itemView.findViewById(R.id.comments_icon_post_single_view);
+
+            likeShineButton = (ShineButton) itemView.findViewById(R.id.like_icon_post_single_view);
+            favoriteShineButton = (ShineButton) itemView.findViewById(R.id.favorites_icon_post_single_view);
+
+            likeLinearLayout = (LinearLayout) itemView.findViewById(R.id.like_layout_post_single_view);
+            commentLinearLayout = (LinearLayout) itemView.findViewById(R.id.comments_layout_post_single_view);
+
+            quizVariantsRecyclerView = (RecyclerView) itemView.findViewById(R.id.quiz_variants_post_single_view);
+            quizResultHorizontalChart = (RecyclerView) itemView.findViewById(R.id.quiz_result_post_single_view);
+            imagesRecyclerView = (RecyclerView) itemView.findViewById(R.id.post_images_post_single_view);
+        }
+
+        private void setup() {
+            postToolbar.setOnMenuItemClickListener(this);
 
             likeClick = new View.OnClickListener() {
                 @Override
@@ -122,28 +164,19 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
             quizVariantsRecyclerView.setAdapter(quizRecyclerAdapter);
         }
 
-        private void bind() {
-            userNameTextView = (TextView) itemView.findViewById(R.id.user_name_post_single_view);
-            postTitleTextView = (TextView) itemView.findViewById(R.id.title_post_single_view);
-            postDescriptionTextView = (TextView) itemView.findViewById(R.id.text_post_single_view);
-            categoryNameTextView = (TextView) itemView.findViewById(R.id.category_label_post_single_view);
-            likeAmountTextView = (TextView) itemView.findViewById(R.id.like_counter_post_single_view);
-            commentsAmountTextView = (TextView) itemView.findViewById(R.id.comments_counter_post_single_view);
-            offsetFromNow = (TextView) itemView.findViewById(R.id.offset_from_now_post_single_view);
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            PostResponseModel post = posts.get(getAdapterPosition());
 
-            userAvatarImageView = (CircleImageView) itemView.findViewById(R.id.user_icon_post_single_view);
-            categoryImageView = (CircleImageView) itemView.findViewById(R.id.category_preview_post_single_view);
-            commentImageView = (ImageView) itemView.findViewById(R.id.comments_icon_post_single_view);
+            switch (item.getItemId()) {
+                case R.id.action_show_on_map:
+                    Intent intent = new Intent(context, ShowOnMapActivity.class);
+                    intent.putExtra(COORDINATES_ATTACH, post.toAuthorOnMapModel());
+                    context.startActivity(intent);
+                    break;
+            }
 
-            likeShineButton = (ShineButton) itemView.findViewById(R.id.like_icon_post_single_view);
-            favoriteShineButton = (ShineButton) itemView.findViewById(R.id.favorites_icon_post_single_view);
-
-            likeLinearLayout = (LinearLayout) itemView.findViewById(R.id.like_layout_post_single_view);
-            commentLinearLayout = (LinearLayout) itemView.findViewById(R.id.comments_layout_post_single_view);
-
-            quizVariantsRecyclerView = (RecyclerView) itemView.findViewById(R.id.quiz_variants_post_single_view);
-            quizResultHorizontalChart = (RecyclerView) itemView.findViewById(R.id.quiz_result_post_single_view);
-            imagesRecyclerView = (RecyclerView) itemView.findViewById(R.id.post_images_post_single_view);
+            return false;
         }
 
         @Override
@@ -230,7 +263,16 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
             public void onError() {
 
             }
-        }, "http://all4desktop.com/data_images/original/4238212-pictures.jpg");
+        }, "https://unsplash.it/1920/1280/?random",
+                "https://unsplash.it/800/1000/?random",
+                "https://unsplash.it/256/300/?random",
+                "https://unsplash.it/147/250/?random",
+                "https://unsplash.it/580/580/?random"/*,
+                "https://unsplash.it/800/1290/?random",
+                "https://unsplash.it/430/700/?random",
+                "https://unsplash.it/895/900/?random",
+                "https://unsplash.it/123/128/?random",
+                "https://unsplash.it/2000/2000/?random"*/);
         // **************************************************************************************************************
     }
 
@@ -249,15 +291,15 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         holder.userNameTextView.setText(author.getName());
     }
 
-    private void obtainAvatar(CircleImageView holder, CompanyResponseModel author) {
+    private void obtainAvatar(ImageView holder, CompanyResponseModel author) {
         if (author.getLogoUrl() == null) {
             TextDrawable textDrawable = TextDrawable
                     .builder()
                     .beginConfig()
-                    .width(Dimens.dpToPx(50))
-                    .height(Dimens.dpToPx(50))
+                    .width(Dimens.dpToPx(28))
+                    .height(Dimens.dpToPx(28))
                     .endConfig()
-                    .buildRound(author.getPreview(), Palette.getAvatarPalette());
+                    .buildRoundRect(author.getPreview(), Palette.getAvatarPalette(), Dimens.dpToPx(5));
             holder.setImageDrawable(textDrawable);
             return;
         }
@@ -265,10 +307,14 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         Glide
                 .with(context)
                 .load(author.getLogoUrl())
+                .bitmapTransform(new RoundedCornersTransformation(context, Dimens.dpToPx(4), 0))
+
                 .into(holder);
     }
 
     private void obtainPost(TapeViewHolder holder, PostResponseModel post) {
+        obtainToolbar(holder.postToolbar, post.getCompany());
+
         obtainCategory(holder.categoryImageView, holder.categoryNameTextView, post.getCategoryId());
         obtainSubBar(holder.likeShineButton, holder.likeAmountTextView,
                 holder.commentImageView, holder.commentsAmountTextView,
@@ -278,6 +324,17 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         holder.offsetFromNow.setText(post.getDateFromNow());
         holder.postTitleTextView.setText(post.getTitle());
         holder.postDescriptionTextView.setText(post.getText());
+    }
+
+    private void obtainToolbar(Toolbar toolbar, CompanyResponseModel author) {
+        toolbar.getMenu().clear();
+
+        if (company.getUId().equalsIgnoreCase(author.getId())) {
+            toolbar.inflateMenu(R.menu.post_owner_single_view_menu);
+            return;
+        }
+
+        toolbar.inflateMenu(R.menu.post_user_single_view_menu);
     }
 
     private void obtainCategory(CircleImageView imageHolder, TextView textHolder, String cid) {
@@ -296,7 +353,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         }
         else {
             likesImageHolder.setImageResource(R.drawable.ic_feed_icon_like);
-            likesTextHolder.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            likesTextHolder.setTextColor(ContextCompat.getColor(context, R.color.colorCounter));
         }
 
         likesTextHolder.setText(post.getLikesAmount());
@@ -307,7 +364,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         }
         else {
             commentsImageHolder.setImageResource(R.drawable.ic_feed_icon_comment);
-            commentsTextHolder.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            commentsTextHolder.setTextColor(ContextCompat.getColor(context, R.color.colorCounter));
         }
 
         commentsTextHolder.setText(String.valueOf(post.getCommentsAmount()));

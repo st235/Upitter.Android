@@ -24,4 +24,8 @@
     <dimen name="nav_header_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <!-- Endregion -->
+
+    <!-- Post dimens region -->
+    <dimen name="post_dimen">16dp</dimen>
+    <!-- Endregion -->
 </resources>

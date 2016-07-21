@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.models.response.coordinates;
 
+import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -33,6 +34,15 @@ public class CoordinatesResponseModel extends BaseResponseModel {
 
     public String getAddress() {
         return mAddress;
+    }
+
+    public CoordinatesModel toCoordinatesModel() {
+        return new CoordinatesModel
+                .Builder()
+                .latitude(mLatitude)
+                .longitude(mLongitude)
+                .addressName(mAddress)
+                .build();
     }
 
     @Override
