@@ -51,6 +51,13 @@ public final class ListUtils {
         return result;
     }
 
+    public static <T, M> M[] toArray(@NonNull Class<M> type, @NonNull List<T> list, @NonNull OnListMutateListener<T, M> listener) {
+        M[] result = (M[]) Array.newInstance(type, list.size());
+        for (int i = 0; i < list.size(); i++)
+            result[i] = listener.mutate(list.get(i));
+        return result;
+    }
+
     public static <T> T select(@NonNull List<T> list, @NonNull OnListInteractionListener<T> listener) {
         if (list == null) return null;
 

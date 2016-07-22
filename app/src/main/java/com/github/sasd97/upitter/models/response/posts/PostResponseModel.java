@@ -4,6 +4,7 @@ import com.github.sasd97.upitter.models.AuthorOnMapModel;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.coordinates.CoordinatesResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.models.response.phone.PhoneResponseModel;
 import com.github.sasd97.upitter.models.response.quiz.QuizResponseModel;
 import com.google.gson.annotations.Expose;
@@ -41,6 +42,10 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
     @Expose
     private List<QuizResponseModel> mQuiz;
 
+    @SerializedName("media")
+    @Expose
+    private List<MediaResponseModel> mMedia;
+
     @SerializedName("fromNow")
     @Expose
     private String mDateFromNow;
@@ -56,6 +61,10 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
     @SerializedName("commentsAmount")
     @Expose
     private int mCommentsAmount;
+
+    @SerializedName("watchesAmount")
+    @Expose
+    private int mWatchesAmount;
 
     @SerializedName("isLikedByMe")
     @Expose
@@ -101,9 +110,13 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
         return mQuiz;
     }
 
+    public List<MediaResponseModel> getMedia() { return mMedia; }
+
     public int getCommentsAmount() { return mCommentsAmount; }
 
     public int getVotersAmount() { return mVotersAmount; }
+
+    public int getWatchesAmount() { return mWatchesAmount; }
 
     public CoordinatesResponseModel getCoordinates() {
         return mCoordinates;
@@ -116,7 +129,6 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
     public boolean isVotedByMe() {
         return mIsVotedByMe;
     }
-
 
     public AuthorOnMapModel toAuthorOnMapModel() {
         return new AuthorOnMapModel

@@ -47,12 +47,15 @@ public class ImagesUploadQueue extends AsyncTask<String, Integer, ArrayList<Stri
                             RestService.obtainTextMultipart("image"),
                             RestService.obtainTextMultipart("photo"),
                             RestService.obtainImageMultipart(new File(path)));
+            RestService.logRequest(call);
 
             try {
                 UploadAvatarResponseModel model = call.execute().body();
-                result.add(model.getImageModel().getPath());
+                result.add(model.getImageModel().getPath()); // TODO: fix null ptr exc
             } catch (IOException io) {
                 io.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 

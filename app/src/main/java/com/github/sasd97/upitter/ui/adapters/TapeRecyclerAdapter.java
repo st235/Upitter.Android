@@ -24,12 +24,14 @@ import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.runners.DownloadImageRunner;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
 import com.github.sasd97.upitter.ui.schemas.ShowOnMapActivity;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
+import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Palette;
 import com.sackcentury.shinebuttonlib.ShineButton;
 
@@ -75,6 +77,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         private TextView likeAmountTextView;
         private TextView commentsAmountTextView;
         private TextView offsetFromNow;
+        private TextView watchesAmountTextView;
 
         private ImageView userAvatarImageView;
         private CircleImageView categoryImageView;
@@ -115,6 +118,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
             likeAmountTextView = (TextView) itemView.findViewById(R.id.like_counter_post_single_view);
             commentsAmountTextView = (TextView) itemView.findViewById(R.id.comments_counter_post_single_view);
             offsetFromNow = (TextView) itemView.findViewById(R.id.offset_from_now_post_single_view);
+            watchesAmountTextView = (TextView) itemView.findViewById(R.id.watch_counter_post_single_view);
 
             userAvatarImageView = (ImageView) itemView.findViewById(R.id.user_icon_post_single_view);
             categoryImageView = (CircleImageView) itemView.findViewById(R.id.category_preview_post_single_view);
@@ -249,31 +253,6 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
 
         obtainPostAuthor(holder, author);
         obtainPost(holder, post);
-
-        // **************************************************************************************************************
-        DownloadImageRunner.upload(context, new DownloadImageRunner.OnDownloadListener() {
-            @Override
-            public void onDownloaded(List<Bitmap> bitmaps) {
-                holder.imagesRecyclerView.setVisibility(View.VISIBLE);
-                holder.imagesRecyclerView.setLayoutManager(new CollageLayoutManager(bitmaps));
-                holder.imagesRecyclerView.setAdapter(new CollageAdapter(bitmaps));
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        }, "https://unsplash.it/1920/1280/?random",
-                "https://unsplash.it/800/1000/?random",
-                "https://unsplash.it/256/300/?random",
-                "https://unsplash.it/147/250/?random",
-                "https://unsplash.it/580/580/?random"/*,
-                "https://unsplash.it/800/1290/?random",
-                "https://unsplash.it/430/700/?random",
-                "https://unsplash.it/895/900/?random",
-                "https://unsplash.it/123/128/?random",
-                "https://unsplash.it/2000/2000/?random"*/);
-        // **************************************************************************************************************
     }
 
     @Override
@@ -320,10 +299,12 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
                 holder.commentImageView, holder.commentsAmountTextView,
                 holder.favoriteShineButton, post);
         obtainQuiz(holder, post);
+        obtainCollage(holder, post);
 
         holder.offsetFromNow.setText(post.getDateFromNow());
         holder.postTitleTextView.setText(post.getTitle());
         holder.postDescriptionTextView.setText(post.getText());
+        holder.watchesAmountTextView.setText(String.valueOf(post.getWatchesAmount()));
     }
 
     private void obtainToolbar(Toolbar toolbar, CompanyResponseModel author) {
@@ -390,5 +371,33 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         holder.quizResultHorizontalChart.setVisibility(View.GONE);
         holder.quizVariantsRecyclerView.setVisibility(View.VISIBLE);
         holder.quizRecyclerAdapter.addAll(post.getQuiz());
+    }
+
+    private void obtainCollage(final TapeViewHolder holder, PostResponseModel post) {
+        if (post.getMedia() == null || post.getMedia().size() == 0) {
+            holder.imagesRecyclerView.setVisibility(View.GONE);
+            return;
+        }
+
+        // **************************************************************************************************************
+        DownloadImageRunner.upload(context, new DownloadImageRunner.OnDownloadListener() {
+            @Override
+            public void onDownloaded(List<Bitmap> bitmaps) {
+                holder.imagesRecyclerView.setVisibility(View.VISIBLE);
+                holder.imagesRecyclerView.setLayoutManager(new CollageLayoutManager(bitmaps));
+                holder.imagesRecyclerView.setAdapter(new CollageAdapter(bitmaps));
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        }, ListUtils.toArray(String.class, post.getMedia(), new ListUtils.OnListMutateListener<MediaResponseModel, String>() {
+            @Override
+            public String mutate(MediaResponseModel object) {
+                return object.getUrl();
+            }
+        }));
+        // **************************************************************************************************************
     }
 }
