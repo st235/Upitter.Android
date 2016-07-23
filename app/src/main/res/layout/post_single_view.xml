@@ -99,7 +99,7 @@
                                 android:textSize="13sp"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginStart="4dp"
-                                tools:text="280"
+                                android:text="@string/watch_count_tape_single_view"
                                 />
                         </LinearLayout>
                     </LinearLayout>
@@ -122,7 +122,7 @@
                     android:textSize="22sp"
                     android:layout_marginLeft="@dimen/post_dimen"
                     android:layout_marginRight="@dimen/post_dimen"
-                    tools:text="The post title on some large-large-large-large post!"
+                    tools:text="Title"
                     />
 
                 <TextView
@@ -135,9 +135,7 @@
                     android:lineSpacingExtra="1dp"
                     android:layout_marginLeft="@dimen/post_dimen"
                     android:layout_marginRight="@dimen/post_dimen"
-                    tools:text="Его популяризации в новое время послужили публикация листов Letraset
-                     с образцами Lorem Ipsum в 60-х годах и,
-                      в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum."
+                    tools:text="Description"
                     />
 
                 <android.support.v7.widget.RecyclerView

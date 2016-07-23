@@ -39,8 +39,6 @@ public class TapeFragment extends BaseFragment
     private TapeRecyclerAdapter tapeRecyclerAdapter;
     private RecyclerView tapeRecyclerView;
 
-    private FloatingActionButton fab;
-
     public TapeFragment() {
         super(R.layout.tape_fragment);
     }

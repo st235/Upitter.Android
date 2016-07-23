@@ -2,7 +2,9 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,6 +24,7 @@ import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.fragments.TapeFragment;
 import com.github.sasd97.upitter.utils.Dimens;
+import com.github.sasd97.upitter.utils.Names;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -41,6 +44,9 @@ public class CompanyTapeActivity extends BaseActivity
     private TextView titleTextView;
     private TextView categoryTextView;
     //  Endregion
+
+    private FloatingActionButton fab;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +76,35 @@ public class CompanyTapeActivity extends BaseActivity
                 .beginTransaction()
                 .add(R.id.fragment_container, TapeFragment.getFragment())
                 .commit();
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy > 0 && fab.isShown()) {
+                    fab.hide();
+                    return;
+                }
+
+                if (dy < 0 && !fab.isShown()) {
+                    fab.show();
+                }
+            }
+        });
     }
 
     @Override
     protected void bindViews() {
         drawer = findById(R.id.drawer_layout);
         navigationView = findById(R.id.nav_view);
+        fab = findById(R.id.fab);
+        recyclerView = findById(R.id.recycler_view_tape_fragment);
     }
 
     private void obtainNavigationHeader(View header) {
@@ -93,11 +122,14 @@ public class CompanyTapeActivity extends BaseActivity
 
     private void obtainCompanyLogo(ImageView holder, String logoUrl) {
         if (logoUrl == null) {
+            String preview = Names.getNamePreview(company.getName());
+
             TextDrawable textDrawable = TextDrawable
                                             .builder()
-                                            .buildRoundRect(company.getName().substring(0, 1),
+                                            .buildRoundRect(preview,
                                                     ContextCompat.getColor(this, R.color.colorShadowDark),
                                                     Dimens.dpToPx(4));
+
             holder.setImageDrawable(textDrawable);
             return;
         }
@@ -141,8 +173,20 @@ public class CompanyTapeActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        switch (id) {
+            case R.id.nav_logout:
+                deleteSession();
+                break;
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void deleteSession() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        getHolder().delete();
+        startActivity(intent);
     }
 }

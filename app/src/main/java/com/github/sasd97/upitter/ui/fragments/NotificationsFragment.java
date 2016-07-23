@@ -10,9 +10,9 @@ import com.github.sasd97.upitter.ui.base.BaseFragment;
 /**
  * Created by alexander on 08.07.16.
  */
-public class NotificationFragment extends BaseFragment {
+public class NotificationsFragment extends BaseFragment {
 
-    public NotificationFragment() {
+    public NotificationsFragment() {
         super(R.layout.notifications_fragment);
     }
 

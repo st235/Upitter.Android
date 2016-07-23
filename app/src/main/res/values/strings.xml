@@ -149,7 +149,7 @@
 
     <!-- Tape region -->
     <string name="voice_postfix">vote(-s)</string>
-    <!-- Subregion -->
+    <!-- Endregion -->
 
     <!-- Company tape region -->
     <string name="create_post_company_tape">Create post</string>
@@ -163,5 +163,15 @@
     <string name="share_tape_single_view">Share</string>
     <string name="complain_tape_single_view">Complain</string>
     <string name="delete_post_tape_single_view">Delete post</string>
+    <string name="watch_count_tape_single_view">0</string>
+    <!-- Endregion -->
+
+    <!-- Navigation drawer region -->
+    <string name="about_app_navigation_drawer">About app</string>
+    <string name="favorites_navigation_drawer">Favorites</string>
+    <string name="logout_navigation_drawer">Logout</string>
+    <string name="notifications_navigation_drawer">Notifications</string>
+    <string name="settings_navigation_drawer">My account</string>
+    <string name="tape_navigation_drawer">Tape</string>
     <!-- Endregion -->
 </resources>
