@@ -4,20 +4,27 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.events.behaviors.OnEndlessRecyclerViewScrollListener;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
+import com.github.sasd97.upitter.models.UserModel;
+import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
+import com.github.sasd97.upitter.services.query.RefreshQueryService;
 import com.github.sasd97.upitter.ui.adapters.TapeRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
+import com.github.sasd97.upitter.utils.Palette;
 
+import java.util.List;
 import java.util.Locale;
 
 import static com.github.sasd97.upitter.Upitter.*;
@@ -28,16 +35,25 @@ import static com.github.sasd97.upitter.Upitter.*;
 
 public class TapeFragment extends BaseFragment
         implements PostQueryService.OnPostListener,
-        LocationService.OnLocationListener {
+        RefreshQueryService.OnRefreshListener,
+        LocationService.OnLocationListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "TAPE FRAGMENT";
 
-    private PostQueryService queryService;
+    private UserModel userModel;
+    private Location location;
+
+    private FloatingActionButton fab;
+
+    private PostQueryService postQueryService;
+    private RefreshQueryService refreshQueryService;
     private LocationService locationService;
 
+    private RecyclerView tapeRecyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayoutManager linearLayoutManager;
     private TapeRecyclerAdapter tapeRecyclerAdapter;
-    private RecyclerView tapeRecyclerView;
 
     public TapeFragment() {
         super(R.layout.tape_fragment);
@@ -49,53 +65,125 @@ public class TapeFragment extends BaseFragment
 
     @Override
     protected void bindViews() {
+        fab = findById(R.id.fab);
         tapeRecyclerView = findById(R.id.recycler_view_tape_fragment);
+        swipeRefreshLayout = findById(R.id.swipe_layout_tape);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        userModel = getHolder().get();
+
         linearLayoutManager = new LinearLayoutManager(getContext());
         tapeRecyclerAdapter = new TapeRecyclerAdapter(getContext(), (CompanyModel) getHolder().get());
         tapeRecyclerView.setLayoutManager(linearLayoutManager);
         tapeRecyclerView.setAdapter(tapeRecyclerAdapter);
 
-        queryService = PostQueryService.getService(this);
+        postQueryService = PostQueryService.getService(this);
+        refreshQueryService = RefreshQueryService.getService(this);
         locationService = LocationService.getService(this);
         locationService.init(getContext());
-    }
 
+        tapeRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy > 0 && fab.isShown()) {
+                    fab.hide();
+                    return;
+                }
+
+                if (dy < 0 && !fab.isShown()) {
+                    fab.show();
+                }
+            }
+        });
+        tapeRecyclerView.addOnScrollListener(new OnEndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                if (tapeRecyclerAdapter.getItemCount() <= 20) return;
+
+                refreshQueryService.loadOld(
+                        userModel.getAccessToken(),
+                        tapeRecyclerAdapter.getLastPostId(),
+                        100000,
+                        location.getLatitude(),
+                        location.getLongitude());
+            }
+        });
+
+        swipeRefreshLayout.setColorSchemeColors(Palette.getSwipeRefreshPalette());
+        swipeRefreshLayout.setOnRefreshListener(this);
+    }
 
     @Override
     public void onPostObtained(PostsResponseModel posts) {
-        Log.d("TAPE_FRAGMENT", posts.toString());
         tapeRecyclerAdapter.addAll(posts.getPosts());
     }
 
     @Override
-    public void onCreatePost() {
-
-    }
+    public void onCreatePost() {}
 
     @Override
     public void onError(ErrorModel error) {
         Log.d(TAG, error.toString());
+        if (swipeRefreshLayout.isShown())
+            swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onLocationFind(Location location) {
-        Log.d(TAG, "On location find");
+        this.location = location;
 
-        queryService.obtainPosts(
+        postQueryService.obtainPosts(
                 getHolder().get().getAccessToken(),
                 Locale.getDefault().getLanguage(),
-                20,
-                0,
+                100000,
                 location.getLatitude(),
                 location.getLongitude());
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(Location location) {}
+
+    @Override
+    public void onRefresh() {
+        refreshQueryService.loadNew(
+                userModel.getAccessToken(),
+                100000,
+                location.getLatitude(),
+                location.getLongitude(),
+                tapeRecyclerAdapter.getFirstPostId());
+    }
+
+    @Override
+    public void onLoadNew(PostsResponseModel posts) {
+        if (swipeRefreshLayout.isShown())
+            swipeRefreshLayout.setRefreshing(false);
+        tapeRecyclerAdapter.addAhead(posts.getPosts());
+    }
+
+    @Override
+    public void onLoadOld(PostsResponseModel posts) {
+        tapeRecyclerAdapter.addBehind(posts.getPosts());
+    }
+
+    @Override
+    public void onEmpty() {
+        Log.d(TAG, "EMPTY");
+        if (swipeRefreshLayout.isShown())
+            swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

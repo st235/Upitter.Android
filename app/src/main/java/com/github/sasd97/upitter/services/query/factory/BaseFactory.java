@@ -116,9 +116,23 @@ public interface BaseFactory {
                                          @Query("accessToken") String accessToken,
                                          @Query("latitude") double latitude,
                                          @Query("longitude") double longitude,
+                                         @Query("radius") int radius);
+
+    @GET("post/obtainNew")
+    Call<PostsResponseModel> obtainNewPosts(@Query("ln") String language,
+                                         @Query("accessToken") String accessToken,
+                                         @Query("latitude") double latitude,
+                                         @Query("longitude") double longitude,
                                          @Query("radius") int radius,
-                                         @Query("limit") int limit,
-                                         @Query("offset") Integer offset);
+                                         @Query("postId") String postId);
+
+    @GET("post/obtainOld")
+    Call<PostsResponseModel> obtainOldPosts(@Query("ln") String language,
+                                            @Query("accessToken") String accessToken,
+                                            @Query("latitude") double latitude,
+                                            @Query("longitude") double longitude,
+                                            @Query("radius") int radius,
+                                            @Query("postId") String postId);
 
     @GET("post/like/{postId}")
     Call<PostResponseModel> likePost(@Path("postId") String postId,

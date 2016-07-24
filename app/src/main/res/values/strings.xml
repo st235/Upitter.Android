@@ -170,6 +170,7 @@
     <string name="about_app_navigation_drawer">About app</string>
     <string name="favorites_navigation_drawer">Favorites</string>
     <string name="logout_navigation_drawer">Logout</string>
+    <string name="extra_navigation_drawer">Extra</string>
     <string name="notifications_navigation_drawer">Notifications</string>
     <string name="settings_navigation_drawer">My account</string>
     <string name="tape_navigation_drawer">Tape</string>

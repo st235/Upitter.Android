@@ -37,14 +37,17 @@ public class PostQueryService {
 
     public void obtainPosts(@NonNull String accessToken,
                             @NonNull String language,
-                            @NonNull Integer limit,
-                            @NonNull Integer offset,
+                            @NonNull Integer radius,
                             double latitude,
                             double longitude) {
         Call<PostsResponseModel> obtainPosts =
                 RestService
                 .baseFactory()
-                .obtainPosts(language, accessToken, latitude, longitude, 100000, limit, offset);
+                .obtainPosts(language,
+                        accessToken,
+                        latitude,
+                        longitude,
+                        radius);
 
         obtainPosts.enqueue(new Callback<PostsResponseModel>() {
             @Override
@@ -153,8 +156,8 @@ public class PostQueryService {
                            @NonNull String title,
                            @NonNull String text,
                            @NonNull String category,
-                           @NonNull List<String> variants,
                            @NonNull List<String> photos,
+                           @NonNull List<String> variants,
                            double latitude,
                            double longitude) {
 

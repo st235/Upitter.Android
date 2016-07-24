@@ -51,6 +51,7 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATE
 public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapter.TapeViewHolder> {
 
     private static final String TAG = "TAPE RECYCLER ADAPTER";
+    private static final int FIRST_POSITION = 0;
 
     private Context context;
 
@@ -96,8 +97,6 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         private RecyclerView quizResultHorizontalChart;
         private RecyclerView imagesRecyclerView;
 
-        private TapeQuizRecyclerAdapter quizRecyclerAdapter;
-
         private TapeQueryService queryService;
 
         public TapeViewHolder(View itemView) {
@@ -141,6 +140,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
             likeClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    likeShineButton.setChecked(true);
                     queryService.like(Locale.getDefault().getLanguage(),
                             company.getAccessToken(),
                             posts.get(getAdapterPosition()).getId());
@@ -156,16 +156,12 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
                 }
             };
 
-            likeShineButton.setEnabled(false);
+            likeShineButton.setOnClickListener(likeClick);
             likeLinearLayout.setOnClickListener(likeClick);
             favoriteShineButton.setOnClickListener(favoriteClick);
 
-            quizRecyclerAdapter = new TapeQuizRecyclerAdapter(this);
-
             quizResultHorizontalChart.setLayoutManager(new LinearLayoutManager(context));
             quizVariantsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-            quizVariantsRecyclerView.setAdapter(quizRecyclerAdapter);
         }
 
         @Override
@@ -370,7 +366,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
 
         holder.quizResultHorizontalChart.setVisibility(View.GONE);
         holder.quizVariantsRecyclerView.setVisibility(View.VISIBLE);
-        holder.quizRecyclerAdapter.addAll(post.getQuiz());
+        holder.quizVariantsRecyclerView.setAdapter(new TapeQuizRecyclerAdapter(post.getQuiz(), holder));
     }
 
     private void obtainCollage(final TapeViewHolder holder, PostResponseModel post) {
@@ -399,5 +395,23 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
             }
         }));
         // **************************************************************************************************************
+    }
+
+    public String getFirstPostId() {
+        return posts.get(FIRST_POSITION).getId();
+    }
+
+    public String getLastPostId() {
+        return posts.get(getItemCount() - 1).getId();
+    }
+
+    public void addAhead(List<PostResponseModel> newPosts) {
+        posts.addAll(FIRST_POSITION, newPosts);
+        notifyItemInserted(newPosts.size() - 1);
+    }
+
+    public void addBehind(List<PostResponseModel> newPosts) {
+        posts.addAll(newPosts);
+        notifyItemInserted(posts.size());
     }
 }

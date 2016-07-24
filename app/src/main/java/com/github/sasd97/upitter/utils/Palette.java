@@ -25,4 +25,12 @@ public final class Palette {
     public static int getAvatarPalette() {
         return ContextCompat.getColor(context, R.color.colorPrimary);
     }
+
+    public static int[] getSwipeRefreshPalette() {
+        return new int[] {
+                ContextCompat.getColor(context, R.color.colorPrimary),
+                ContextCompat.getColor(context, R.color.colorPrimaryDark),
+                ContextCompat.getColor(context, R.color.colorAccent)
+        };
+    }
 }

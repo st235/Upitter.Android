@@ -1,13 +1,23 @@
 package com.github.sasd97.upitter.holders;
 
 import android.util.Log;
-
 import com.github.sasd97.upitter.models.CompanyModel;
+import com.github.sasd97.upitter.utils.Prefs;
+
+import java.util.List;
 
 /**
  * Created by alexander on 06.07.16.
  */
+
 public class CompanyHolder extends UserHolder<CompanyModel> {
+
+    private static final String TAG = "Company Holder";
+    private static final int FIRST_POSITION = 0;
+
+    private static final String USER_CUSTOM_ID = "USER_CUSTOM_ID";
+    private static final String USER_CUSTOM_ID_DEFAULT = "0";
+    private static final int USER_POSITION = 2;
 
     private CompanyHolder() {
         super();
@@ -24,8 +34,12 @@ public class CompanyHolder extends UserHolder<CompanyModel> {
 
     @Override
     public void restore() {
-        this.userModel = CompanyModel.findById(CompanyModel.class, 1);
-        if (this.userModel != null) Log.d("RESTORED_COMPANY", this.userModel.toString());
+        String id = Prefs.get().getString(USER_CUSTOM_ID, USER_CUSTOM_ID_DEFAULT);
+        List<CompanyModel> queryList = CompanyModel.find(CompanyModel.class, "m_id = ?", id);
+
+        if (queryList != null && queryList.size() != 0) this.userModel = queryList.get(0);
+        if (this.userModel != null) Log.d(TAG, this.userModel.toString());
+        else Log.d(TAG, "User is null");
     }
 
     @Override
@@ -36,12 +50,19 @@ public class CompanyHolder extends UserHolder<CompanyModel> {
     @Override
     public void save(CompanyModel userModel) {
         super.save(userModel);
-        userModel.save();
+        Prefs.put(USER_CUSTOM_ID, userModel.getUId());
+
+        List<CompanyModel> queryList = CompanyModel.find(CompanyModel.class, "m_id = ?", userModel.getUId());
+        if (queryList == null || queryList.size() == 0) {
+            userModel.save();
+            return;
+        }
+
+        update(queryList.get(FIRST_POSITION), userModel);
     }
 
-    @Override
-    public void delete() {
-        super.delete();
-        this.userModel.delete();
+    public void update(CompanyModel fromDB, CompanyModel fromServer) {
+        fromServer.setId(fromDB.getId());
+        fromServer.save();
     }
 }

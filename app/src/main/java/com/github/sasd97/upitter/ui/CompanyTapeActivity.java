@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -45,9 +46,6 @@ public class CompanyTapeActivity extends BaseActivity
     private TextView categoryTextView;
     //  Endregion
 
-    private FloatingActionButton fab;
-    private RecyclerView recyclerView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,35 +74,12 @@ public class CompanyTapeActivity extends BaseActivity
                 .beginTransaction()
                 .add(R.id.fragment_container, TapeFragment.getFragment())
                 .commit();
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0 && fab.isShown()) {
-                    fab.hide();
-                    return;
-                }
-
-                if (dy < 0 && !fab.isShown()) {
-                    fab.show();
-                }
-            }
-        });
     }
 
     @Override
     protected void bindViews() {
         drawer = findById(R.id.drawer_layout);
         navigationView = findById(R.id.nav_view);
-        fab = findById(R.id.fab);
-        recyclerView = findById(R.id.recycler_view_tape_fragment);
     }
 
     private void obtainNavigationHeader(View header) {
@@ -188,5 +163,6 @@ public class CompanyTapeActivity extends BaseActivity
         Intent intent = new Intent(this, LoginActivity.class);
         getHolder().delete();
         startActivity(intent);
+        finish();
     }
 }

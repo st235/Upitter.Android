@@ -13,17 +13,10 @@ import java.util.Locale;
 
 public class PostsResponseModel extends BaseResponseModel<PostsResponseModel> {
 
-    @SerializedName("offset")
-    @Expose
-    private int mOffset;
-
     @SerializedName("posts")
     @Expose
     private List<PostResponseModel> mPosts;
 
-    public int getOffset() {
-        return mOffset;
-    }
 
     public List<PostResponseModel> getPosts() {
         return mPosts;
@@ -33,8 +26,6 @@ public class PostsResponseModel extends BaseResponseModel<PostsResponseModel> {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (PostResponseModel post: mPosts) builder.append(post.toString()).append("\n\n");
-        return String.format(Locale.getDefault(), "Offset: %1$d\nPosts: %2$s\n",
-                mOffset,
-                builder.toString());
+        return String.format(Locale.getDefault(), "Posts: %1$s\n", builder.toString());
     }
 }

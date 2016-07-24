@@ -12,6 +12,7 @@ import com.google.gson.internal.Streams;
 import com.google.gson.reflect.TypeToken;
 import com.orm.dsl.Ignore;
 import com.orm.dsl.Table;
+import com.orm.dsl.Unique;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -25,9 +26,13 @@ import java.util.Locale;
 public class CompanyModel extends UserModel
         implements RequestSkeleton {
 
+    @Unique
     private String mId;
+
     private PhoneModel mPhone;
+
     private boolean mIsVerify = false;
+
     private String mAccessToken;
 
     @SerializedName("name")

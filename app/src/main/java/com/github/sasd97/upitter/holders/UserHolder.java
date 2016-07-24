@@ -1,5 +1,7 @@
 package com.github.sasd97.upitter.holders;
 
+import android.util.Log;
+
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.utils.Prefs;
 
@@ -9,6 +11,8 @@ import com.github.sasd97.upitter.utils.Prefs;
 
 public abstract class UserHolder <T extends UserModel> {
 
+    private static final String TAG = "User Holder";
+
     private static final String USER = "USER_AVAILABLE";
     private static final String USER_TYPE = "USER_TYPE";
 
@@ -17,6 +21,9 @@ public abstract class UserHolder <T extends UserModel> {
     protected UserHolder() {}
 
     public static UserHolder init() {
+        Log.d(TAG, String.valueOf(isUserAvailable()));
+        Log.d(TAG, String.valueOf(Prefs.get().getInt(USER_TYPE, 0)));
+
         if (!isUserAvailable()) return null;
         if (Prefs.get().getInt(USER_TYPE, 0) == UserModel.UserType.People.getValue()) return PeopleHolder.getHolder();
         return null;

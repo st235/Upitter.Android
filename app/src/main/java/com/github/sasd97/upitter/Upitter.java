@@ -19,6 +19,8 @@ import org.acra.ReportField;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
+import java.util.Locale;
+
 /**
  * Created by Alexander Dadukin on 06.06.2016.
  */
@@ -46,6 +48,8 @@ import org.acra.annotation.ReportsCrashes;
         resNotifTickerText = R.string.crash_ticker_message
 )
 public class Upitter extends Application {
+
+    private static String LANGUAGE;
 
     private static UserHolder holder;
 
@@ -84,5 +88,10 @@ public class Upitter extends Application {
 
     public static UserHolder getHolder() {
         return holder;
+    }
+
+    public static String language() {
+        if (LANGUAGE == null) LANGUAGE = Locale.getDefault().getLanguage();
+        return LANGUAGE;
     }
 }

@@ -3,45 +3,48 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import"
+            android:id="@+id/nav_tape"
+            android:icon="@drawable/ic_list_white_24dp"
+            android:title="@string/tape_navigation_drawer"
             />
 
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery"
+            android:id="@+id/nav_favorites"
+            android:icon="@drawable/ic_star_white_24dp"
+            android:title="@string/favorites_navigation_drawer"
             />
 
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow"
-            />
-
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools"
+            android:icon="@drawable/ic_notifications_active_white_24dp"
+            android:title="@string/notifications_navigation_drawer"
             />
     </group>
 
     <item
-        android:title="Communicate">
+        android:title="@string/extra_navigation_drawer">
 
         <menu>
-            <item
-                android:id="@+id/nav_app"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share"
-                />
+            <group android:checkableBehavior="single">
 
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/logout_navigation_drawer"
-                />
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_settings_white_24dp"
+                    android:title="@string/settings_navigation_drawer"
+                    />
+
+                <item
+                    android:id="@+id/nav_app"
+                    android:icon="@drawable/ic_info_outline_white_24dp"
+                    android:title="@string/about_app_navigation_drawer"
+                    />
+
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/ic_exit_to_app_white_24dp"
+                    android:title="@string/logout_navigation_drawer"
+                    />
+            </group>
         </menu>
     </item>
 

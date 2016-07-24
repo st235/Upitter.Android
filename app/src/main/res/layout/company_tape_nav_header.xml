@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/logo_company_tape"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
             />
 
         <LinearLayout
@@ -36,7 +36,7 @@
                 android:id="@+id/title_company_tape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@android:color/white"
                 android:text="@string/user_placeholder_company_tape"
                 tools:text="Adidas"
