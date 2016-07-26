@@ -88,4 +88,10 @@
         <item name="android:textSize">14sp</item>
     </style>
     <!-- Endregion -->
+
+    <!-- Toolbar region -->
+    <style name="Upitter.Toolbar.SubBar" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:textColorSecondary">@color/colorTextField</item>
+    </style>
 </resources>

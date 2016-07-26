@@ -26,7 +26,8 @@
                 android:id="@+id/post_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:theme="@style/Upitter.Toolbar.SubBar">
 
                 <LinearLayout
                     android:id="@+id/user_area_post_single_view"

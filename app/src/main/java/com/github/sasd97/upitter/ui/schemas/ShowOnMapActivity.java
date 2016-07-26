@@ -2,15 +2,20 @@ package com.github.sasd97.upitter.ui.schemas;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Location;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.AuthorOnMapModel;
-import com.github.sasd97.upitter.models.CoordinatesModel;
-import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.utils.Dimens;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,13 +28,14 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATE
  * Created by alexander on 21.07.16.
  */
 public class ShowOnMapActivity extends BaseActivity
-        implements OnMapReadyCallback,
-        LocationService.OnLocationListener {
+        implements OnMapReadyCallback {
+
+    private static final String TAG = "Show on map";
 
     private GoogleMap googleMap;
     private AuthorOnMapModel coordinatesToShow;
 
-    private LocationService locationService = LocationService.getService(this);
+    private RelativeLayout rootLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +45,25 @@ public class ShowOnMapActivity extends BaseActivity
 
         coordinatesToShow = getIntent().getParcelableExtra(COORDINATES_ATTACH);
 
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle(coordinatesToShow.getAuthorName());
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        setupViews();
     }
 
     @Override
     protected void bindViews() {
+        rootLayout = findById(R.id.root_layout);
+    }
+
+    private void setupViews() {
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        locationService.init(this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -61,16 +74,6 @@ public class ShowOnMapActivity extends BaseActivity
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         moveToPoint(googleMap, new LatLng(coordinatesToShow.getLatitude(), coordinatesToShow.getLongitude()));
-    }
-
-    @Override
-    public void onLocationFind(Location location) {
-        moveToPoint(googleMap, new LatLng(location.getLatitude(), location.getLongitude()));
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        moveToPoint(googleMap, new LatLng(location.getLatitude(), location.getLongitude()));
     }
 
     private void moveToPoint(GoogleMap googleMap, LatLng points) {

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
@@ -112,7 +113,7 @@ public class CompanyTapeActivity extends BaseActivity
         Glide
                 .with(this)
                 .load(logoUrl)
-                .bitmapTransform(new RoundedCornersTransformation(this, Dimens.dpToPx(4), 0))
+                .bitmapTransform(new CenterCrop(this), new RoundedCornersTransformation(this, Dimens.dpToPx(4), 0))
                 .into(holder);
     }
 

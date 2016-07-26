@@ -10,13 +10,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.IntentKeysConstants;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.SlidrUtils;
+import com.github.sasd97.upitter.utils.ViewUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -25,10 +29,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
-public class MapChooseActivity extends BaseActivity implements OnMapReadyCallback, LocationService.OnLocationListener {
+public class MapChooseActivity extends BaseActivity implements
+        OnMapReadyCallback,
+        LocationService.OnLocationListener {
 
     private GoogleMap googleMap;
     private FloatingActionButton confirmFab;
+
+    private RelativeLayout rootView;
 
     private LocationService locationService = LocationService.getService(this);
 
@@ -48,11 +56,26 @@ public class MapChooseActivity extends BaseActivity implements OnMapReadyCallbac
                 onResultClick();
             }
         });
+
+        setupViews();
     }
 
     @Override
     protected void bindViews() {
         confirmFab = findById(R.id.fab);
+        rootView = findById(R.id.root_layout);
+    }
+
+    private void setupViews() {
+        ImageView marker = new ImageView(this);
+        marker.setImageResource(R.drawable.ic_upitter_marker);
+        marker.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+        rootView.addView(marker);
+        marker.setLayoutParams(ViewUtils.layToCenter(rootView,
+                marker,
+                Dimens.dpToPx(70),
+                Dimens.dpToPx(100)));
     }
 
     @Override

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.components.CollageLayoutManager;
 import com.github.sasd97.upitter.models.CategoryModel;
@@ -282,8 +283,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         Glide
                 .with(context)
                 .load(author.getLogoUrl())
-                .bitmapTransform(new RoundedCornersTransformation(context, Dimens.dpToPx(4), 0))
-
+                .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, Dimens.dpToPx(4), 0))
                 .into(holder);
     }
 

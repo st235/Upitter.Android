@@ -3,6 +3,8 @@ package com.github.sasd97.upitter.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Locale;
+
 /**
  * Created by alexander on 21.07.16.
  */
@@ -38,6 +40,15 @@ public class AuthorOnMapModel implements Parcelable {
 
     public boolean isAvatar() {
         return mAuthorAvatarUrl != null;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.getDefault(), "%1$s (%2$s)\n(%3$f;%4$f)\n",
+                mAuthorName,
+                mAuthorAvatarUrl,
+                mLatitude,
+                mLongitude);
     }
 
     public static class Builder {
@@ -76,7 +87,7 @@ public class AuthorOnMapModel implements Parcelable {
         mAuthorName = in.readString();
         mAuthorAvatarUrl = in.readString();
         mLatitude = in.readDouble();
-        mLongitude = in.readFloat();
+        mLongitude = in.readDouble();
     }
 
     @Override

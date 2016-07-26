@@ -1,5 +1,7 @@
 package com.github.sasd97.upitter.models.response.posts;
 
+import android.util.Log;
+
 import com.github.sasd97.upitter.models.AuthorOnMapModel;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
@@ -143,10 +145,12 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
     @Override
     public String toString() {
         return String.format(Locale.getDefault(), "Post\n[%1$s\n%2$s]\n" +
-                "Author: %3$s\nLikes(Rating): %4$s",
+                "Author: %3$s\nLikes(Rating): %4$s\nCoordinates: (%5$f, %6$f)",
                 mTitle,
                 mText,
                 mCompany == null ? "Null" : mCompany.toString(),
-                mLikesAmount);
+                mLikesAmount,
+                mCoordinates.getLatitude(),
+                mCoordinates.getLongitude());
     }
 }
