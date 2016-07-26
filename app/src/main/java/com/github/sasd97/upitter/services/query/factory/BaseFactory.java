@@ -109,7 +109,7 @@ public interface BaseFactory {
                                               @Field("longitude") double longitude,
                                               @Field("category") String postCategory,
                                               @Field("images") List<String> variants,
-                                              @Field("variants") List<String> avatars);
+                                              @Field("variants") List<String> avatars); //TODO: change to images
 
     @GET("post/obtain")
     Call<PostsResponseModel> obtainPosts(@Query("ln") String language,
