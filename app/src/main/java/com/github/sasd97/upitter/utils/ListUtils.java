@@ -87,6 +87,10 @@ public final class ListUtils {
     public static <T extends List> T fromJson(Type type, String representation) {
         return new Gson().fromJson(representation, type);
     }
+//
+//    public static <T> JSONArray toJsonArray(List<T> t) {
+//
+//    }
 
     public static <T> String toString(List<T> list) {
         StringBuilder builder = new StringBuilder();

@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.utils.CollageUtils;
 
 import java.util.List;
@@ -20,9 +23,11 @@ import java.util.List;
 
 public class CollageAdapter extends RecyclerView.Adapter<CollageAdapter.CollageViewHolder> {
 
-    private List<Bitmap> images;
+    private Context context;
+    private List<MediaResponseModel> images;
 
-    public CollageAdapter(List<Bitmap> images) {
+    public CollageAdapter(Context context, List<MediaResponseModel> images) {
+        this.context = context;
         this.images = images;
     }
 
@@ -46,12 +51,17 @@ public class CollageAdapter extends RecyclerView.Adapter<CollageAdapter.CollageV
 
     @Override
     public void onBindViewHolder(CollageViewHolder holder, int position) {
-        Bitmap bitmap = images.get(position);
-        holder.rootImage.setImageBitmap(images.get(position));
+        MediaResponseModel media = images.get(position);
+
+        Glide
+                .with(context)
+                .load(media.getUrl())
+                .centerCrop()
+                .into(holder.rootImage);
 
         Log.d("IMAGE_SPEC", String.format("Aspect: %1$f, Type: %2$d",
-                CollageUtils.calculateAspectRatio(bitmap.getHeight(), bitmap.getWidth()),
-                CollageUtils.calculateImageType(bitmap.getHeight(), bitmap.getWidth())));
+                CollageUtils.calculateAspectRatio(media.getExtra().getHeight(), media.getExtra().getWidth()),
+                CollageUtils.calculateImageType(media.getExtra().getHeight(), media.getExtra().getWidth())));
     }
 
     @Override

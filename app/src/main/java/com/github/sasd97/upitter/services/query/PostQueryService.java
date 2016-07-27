@@ -4,12 +4,20 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
+import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.RestService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,104 +74,12 @@ public class PostQueryService {
     }
 
     public void createPost(@NonNull String accessToken,
-                                @NonNull String language,
-                                @NonNull String title,
-                                @NonNull String text,
-                                @NonNull String category,
-                                double latitude,
-                                double longitude) {
-
-        Call<PostResponseModel> createPost = RestService
-                .baseFactory()
-                .createPost(language, accessToken, title, text, latitude, longitude, category);
-
-        createPost.enqueue(new Callback<PostResponseModel>() {
-            @Override
-            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
-                RestService.logRequest(call);
-                if (!RestService.handleError(call, response, listener)) return;
-                listener.onCreatePost();
-            }
-
-            @Override
-            public void onFailure(Call<PostResponseModel> call, Throwable t) {
-                t.printStackTrace();
-                listener.onError(RestService.getEmptyError());
-            }
-        });
-    }
-
-    public void createPostWithQuiz(@NonNull String accessToken,
                            @NonNull String language,
-                           @NonNull String title,
-                           @NonNull String text,
-                           @NonNull String category,
-                           @NonNull List<String> variants,
-                           double latitude,
-                           double longitude) {
+                           @NonNull RequestBody body) {
 
         Call<PostResponseModel> createPost = RestService
                 .baseFactory()
-                .createPostWithQuiz(language, accessToken, title, text, latitude, longitude, category, variants);
-
-        createPost.enqueue(new Callback<PostResponseModel>() {
-            @Override
-            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
-                RestService.logRequest(call);
-                if (!RestService.handleError(call, response, listener)) return;
-                listener.onCreatePost();
-            }
-
-            @Override
-            public void onFailure(Call<PostResponseModel> call, Throwable t) {
-                t.printStackTrace();
-                listener.onError(RestService.getEmptyError());
-            }
-        });
-    }
-
-    public void createPostWithImages(@NonNull String accessToken,
-                                   @NonNull String language,
-                                   @NonNull String title,
-                                   @NonNull String text,
-                                   @NonNull String category,
-                                   @NonNull List<String> images,
-                                   double latitude,
-                                   double longitude) {
-
-        Call<PostResponseModel> createPost = RestService
-                .baseFactory()
-                .createPostWithImages(language, accessToken, title, text, latitude, longitude, category, images);
-
-        createPost.enqueue(new Callback<PostResponseModel>() {
-            @Override
-            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
-                RestService.logRequest(call);
-                if (!RestService.handleError(call, response, listener)) return;
-                listener.onCreatePost();
-            }
-
-            @Override
-            public void onFailure(Call<PostResponseModel> call, Throwable t) {
-                t.printStackTrace();
-                listener.onError(RestService.getEmptyError());
-            }
-        });
-    }
-
-    public void createPostComplex(@NonNull String accessToken,
-                           @NonNull String language,
-                           @NonNull String title,
-                           @NonNull String text,
-                           @NonNull String category,
-                           @NonNull List<String> photos,
-                           @NonNull List<String> variants,
-                           double latitude,
-                           double longitude) {
-
-        Call<PostResponseModel> createPost = RestService
-                .baseFactory()
-                .createPostComplex(language, accessToken, title, text, latitude, longitude, category, variants, photos);
+                .createPost(language, accessToken, body);
 
         createPost.enqueue(new Callback<PostResponseModel>() {
             @Override

@@ -3,8 +3,8 @@ package com.github.sasd97.upitter.events;
 /**
  * Created by alexander on 12.07.16.
  */
-public interface OnQueueListener {
+public interface OnQueueListener<T> {
 
-    <T> void onQueueCompete(T list);
+    void onQueueCompete(T list);
     void onQueueError();
 }

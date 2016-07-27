@@ -5,35 +5,65 @@ import android.util.Log;
 import com.github.sasd97.upitter.events.OnQueueListener;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
+import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.services.ImagesUploadQueue;
+import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by alexander on 12.07.16.
  */
 
-public class PostBuilder implements OnQueueListener {
+public class PostBuilder implements OnQueueListener<List<ImageResponseModel>> {
+
+    private static final String TAG = "Post builder";
 
     enum Type { SIMPLE_POST, POST_WITH_QUIZ, POST_WITH_IMAGES, COMPLEX_POST }
 
     public interface OnPostBuilderListener {
-        void onBuild();
+        void onBuild(); //  FIXME: add onPrepare method to lock ui before post
         void onPublicationError();
         void onPrepareError();
     }
 
     private Type postType;
 
+    @SerializedName("title")
+    @Expose
     private String title;
+
+    @SerializedName("text")
+    @Expose
     private String text;
-    private CategoryModel category;
-    private CoordinatesModel coordinates;
+
+    @SerializedName("category")
+    @Expose
+    private String category;
+
+    @SerializedName("latitude")
+    @Expose
+    private Double latitude;
+
+    @SerializedName("longitude")
+    @Expose
+    private Double longitude;
+
+    @SerializedName("variants")
+    @Expose
     private ArrayList<String> quiz;
+
+    @SerializedName("images")
+    @Expose
+    private List<ImageResponseModel> photos;
     private ArrayList<String> rawPhotos;
-    private ArrayList<String> photos;
 
     private String accessToken;
 
@@ -60,12 +90,13 @@ public class PostBuilder implements OnQueueListener {
     }
 
     public PostBuilder category(CategoryModel category) {
-        this.category = category;
+        this.category = category.getId();
         return this;
     }
 
     public PostBuilder coordinates(CoordinatesModel coordinates) {
-        this.coordinates = coordinates;
+        this.latitude = coordinates.getLatitude();
+        this.longitude = coordinates.getLongitude();
         return this;
     }
 
@@ -90,7 +121,7 @@ public class PostBuilder implements OnQueueListener {
         }
         this.accessToken = accessToken;
 
-        Log.d("POST_TYPE", identityType().toString());
+        Log.d(TAG, identityType().toString());
 
         switch (identityType()) {
             case SIMPLE_POST:
@@ -109,54 +140,12 @@ public class PostBuilder implements OnQueueListener {
     }
 
     private void complete() {
+        Log.d(TAG, toJson());
         final String language = Locale.getDefault().getLanguage();
-
-        switch (identityType()) {
-            case SIMPLE_POST:
-                        queryService
-                        .createPost(accessToken,
-                                    language,
-                                    title,
-                                    text,
-                                    category.getId(),
-                                    coordinates.getLatitude(),
-                                    coordinates.getLongitude());
-                break;
-            case POST_WITH_QUIZ:
-                queryService
-                        .createPostWithQuiz(accessToken,
-                                language,
-                                title,
-                                text,
-                                category.getId(),
-                                quiz,
-                                coordinates.getLatitude(),
-                                coordinates.getLongitude());
-                break;
-            case POST_WITH_IMAGES:
-                queryService
-                        .createPostWithImages(accessToken,
-                                language,
-                                title,
-                                text,
-                                category.getId(),
-                                photos,
-                                coordinates.getLatitude(),
-                                coordinates.getLongitude());
-                break;
-            case COMPLEX_POST:
-                queryService
-                        .createPostComplex(accessToken,
-                                language,
-                                title,
-                                text,
-                                category.getId(),
-                                quiz,
-                                photos,
-                                coordinates.getLatitude(),
-                                coordinates.getLongitude());
-                break;
-        }
+        queryService
+                .createPost(accessToken,
+                        language,
+                        RestService.obtainJsonRaw(toJson()));
     }
 
     private void preparePhotos(ArrayList<String> photos) {
@@ -185,19 +174,25 @@ public class PostBuilder implements OnQueueListener {
 
     private boolean validateForms() {
         boolean result = true;
-        if (coordinates == null) result = false;
+        if (latitude == null || longitude == null) result = false;
         if (category == null) result = false;
         return result;
     }
 
     @Override
-    public <T> void onQueueCompete(T list) {
-        photos = (ArrayList<String>) list;
+    public void onQueueCompete(List<ImageResponseModel> photos) {
+        this.photos = photos;
         complete();
     }
 
     @Override
     public void onQueueError() {
         listener.onPrepareError();
+    }
+
+
+    private String toJson() {
+        Gson builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        return builder.toJson(this);
     }
 }

@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.utils.CollageUtils;
 import com.github.sasd97.upitter.utils.Dimens;
 
@@ -29,11 +31,11 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
     private static final String TAG = "Collage Layout Manager";
 
     private Collage type;
-    private List<Bitmap> images;
+    private List<MediaResponseModel> images;
 
     private int margin;
 
-    public CollageLayoutManager(List<Bitmap> images) {
+    public CollageLayoutManager(List<MediaResponseModel> images) {
         this.images = images;
         this.margin = Dimens.dpToPx(1);
     }
@@ -190,20 +192,20 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
     private boolean isAllWide() {
         boolean wide = true;
-        for (Bitmap image: images) wide &= (
-                CollageUtils.calculateImageType(image.getHeight(), image.getWidth()) == WIDE_PICTURE);
+        for (MediaResponseModel image: images) wide &= (
+                CollageUtils.calculateImageType(image.getExtra().getHeight(), image.getExtra().getWidth()) == WIDE_PICTURE);
         return wide;
     }
 
     private int countSummaryX() {
         int result = 0;
-        for (Bitmap image: images) result += image.getHeight();
+        for (MediaResponseModel image: images) result += image.getExtra().getHeight();
         return result;
     }
 
     private int countSummaryY() {
         int result = 0;
-        for (Bitmap image: images) result += image.getWidth();
+        for (MediaResponseModel image: images) result += image.getExtra().getWidth();
         return result;
     }
 
@@ -214,9 +216,9 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
     private int countMaxX() {
         int max = 0;
-        for (Bitmap image: images)
-            if (image.getHeight() > max)
-                max = image.getHeight();
+        for (MediaResponseModel image: images)
+            if (image.getExtra().getHeight() > max)
+                max = image.getExtra().getHeight();
         return max;
     }
 }

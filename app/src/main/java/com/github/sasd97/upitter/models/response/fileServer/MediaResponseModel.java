@@ -9,11 +9,22 @@ import com.google.gson.annotations.SerializedName;
  */
 public class MediaResponseModel extends BaseResponseModel<MediaResponseModel> {
 
+    @SerializedName("kind")
+    private String mKind;
+
     @SerializedName("url")
     @Expose
     private String mUrl;
 
+    @SerializedName("extra")
+    @Expose
+    private ExtraResponseModel mExtra;
+
     public String getUrl() {
         return mUrl;
+    }
+
+    public ExtraResponseModel getExtra() {
+        return mExtra;
     }
 }

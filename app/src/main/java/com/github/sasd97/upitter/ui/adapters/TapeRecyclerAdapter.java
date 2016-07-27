@@ -2,7 +2,6 @@ package com.github.sasd97.upitter.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +26,6 @@ import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
-import com.github.sasd97.upitter.runners.DownloadImageRunner;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
 import com.github.sasd97.upitter.ui.schemas.ShowOnMapActivity;
 import com.github.sasd97.upitter.utils.Categories;
@@ -375,26 +373,12 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
             return;
         }
 
-        // **************************************************************************************************************
-        DownloadImageRunner.upload(context, new DownloadImageRunner.OnDownloadListener() {
-            @Override
-            public void onDownloaded(List<Bitmap> bitmaps) {
-                holder.imagesRecyclerView.setVisibility(View.VISIBLE);
-                holder.imagesRecyclerView.setLayoutManager(new CollageLayoutManager(bitmaps));
-                holder.imagesRecyclerView.setAdapter(new CollageAdapter(bitmaps));
-            }
+        CollageLayoutManager collageLayoutManager = new CollageLayoutManager(post.getMedia());
+        CollageAdapter adapter = new CollageAdapter(context, post.getMedia());
 
-            @Override
-            public void onError() {
-
-            }
-        }, ListUtils.toArray(String.class, post.getMedia(), new ListUtils.OnListMutateListener<MediaResponseModel, String>() {
-            @Override
-            public String mutate(MediaResponseModel object) {
-                return object.getUrl();
-            }
-        }));
-        // **************************************************************************************************************
+        holder.imagesRecyclerView.setVisibility(View.VISIBLE);
+        holder.imagesRecyclerView.setLayoutManager(collageLayoutManager);
+        holder.imagesRecyclerView.setAdapter(adapter);
     }
 
     public String getFirstPostId() {

@@ -5,10 +5,12 @@ import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequ
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.categories.CatergoriesResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.models.response.report.ReportResponseModel;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -67,49 +70,10 @@ public interface BaseFactory {
     Call<CatergoriesResponseModel> getCategories(@Query("ln") String language,
                                                  @Query("accessToken") String accessToken);
 
-    @FormUrlEncoded
     @POST("post/create")
     Call<PostResponseModel> createPost(@Query("ln") String language,
                                               @Query("accessToken") String accessToken,
-                                              @Field("title") String title,
-                                              @Field("text") String text,
-                                              @Field("latitude") double latitude,
-                                              @Field("longitude") double longitude,
-                                              @Field("category") String postCategory);
-
-    @FormUrlEncoded
-    @POST("post/create")
-    Call<PostResponseModel> createPostWithQuiz(@Query("ln") String language,
-                                               @Query("accessToken") String accessToken,
-                                               @Field("title") String title,
-                                               @Field("text") String text,
-                                               @Field("latitude") double latitude,
-                                               @Field("longitude") double longitude,
-                                               @Field("category") String postCategory,
-                                               @Field("variants") List<String> variants);
-
-    @FormUrlEncoded
-    @POST("post/create")
-    Call<PostResponseModel> createPostWithImages(@Query("ln") String language,
-                                                 @Query("accessToken") String accessToken,
-                                                 @Field("title") String title,
-                                                 @Field("text") String text,
-                                                 @Field("latitude") double latitude,
-                                                 @Field("longitude") double longitude,
-                                                 @Field("category") String postCategory,
-                                                 @Field("images") List<String> images);
-
-    @FormUrlEncoded
-    @POST("post/create")
-    Call<PostResponseModel> createPostComplex(@Query("ln") String language,
-                                              @Query("accessToken") String accessToken,
-                                              @Field("title") String title,
-                                              @Field("text") String text,
-                                              @Field("latitude") double latitude,
-                                              @Field("longitude") double longitude,
-                                              @Field("category") String postCategory,
-                                              @Field("images") List<String> variants,
-                                              @Field("variants") List<String> avatars); //TODO: change to images
+                                              @Body RequestBody post);
 
     @GET("post/obtain")
     Call<PostsResponseModel> obtainPosts(@Query("ln") String language,
