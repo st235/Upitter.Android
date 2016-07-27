@@ -7,15 +7,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.github.sasd97.upitter.ui.fragments.GalleryAlbumPlaceholderFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Alexadner Dadukin on 26.06.2016.
  */
 public class GalleryAlbumPagerAdapter extends FragmentPagerAdapter {
 
-    private ArrayList<String> data;
+    private List<String> data;
 
-    public GalleryAlbumPagerAdapter(FragmentManager fm, ArrayList<String> data) {
+    public GalleryAlbumPagerAdapter(FragmentManager fm, List<String> data) {
         super(fm);
         this.data = data;
     }

@@ -1,7 +1,6 @@
 package com.github.sasd97.upitter.ui.schemas;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.view.ViewPager;
@@ -10,16 +9,18 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.constants.GalleryConstants;
 import com.github.sasd97.upitter.ui.adapters.GalleryAlbumPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.results.EditImageActivity;
+import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class GalleryAlbumPreviewActivity extends BaseActivity {
@@ -29,8 +30,11 @@ public class GalleryAlbumPreviewActivity extends BaseActivity {
 
     private int albumSize = 0;
 
-    private ArrayList<String> imagePaths;
+    private List<String> imagePaths;
     private int currentGalleryPosition;
+    private int currentMode;
+
+    private GalleryConstants.AlbumMode mode;
 
     private ViewPager mViewPager;
     private GalleryAlbumPagerAdapter mSectionsPagerAdapter;
@@ -50,6 +54,15 @@ public class GalleryAlbumPreviewActivity extends BaseActivity {
 
         imagePaths = getIntent().getStringArrayListExtra(LIST_ATTACH);
         currentGalleryPosition = getIntent().getIntExtra(POSITION_ATTACH, 0);
+        currentMode = getIntent().getIntExtra(MODE_ATTACH, 0);
+
+        mode = GalleryConstants.AlbumMode.obtainMode(currentMode);
+        imagePaths = ListUtils.each(imagePaths, new ListUtils.OnListModifyListener<String>() {
+            @Override
+            public String modify(String object) {
+                return mode.obtainPath(object);
+            }
+        });
 
         albumSize = imagePaths.size();
 

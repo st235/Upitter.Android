@@ -28,6 +28,10 @@ public final class ListUtils {
         M mutate(T object);
     }
 
+    public interface OnListModifyListener<T> {
+        T modify(T object);
+    }
+
     private ListUtils() {}
 
     public static <T> T[] toArray(Class<T> type, @NonNull List<T> list) {
@@ -58,6 +62,12 @@ public final class ListUtils {
         return result;
     }
 
+    public static <T> List<T> each(@NonNull List<T> list, @NonNull OnListModifyListener<T> listener) {
+        List<T> result = new ArrayList<>(list.size());
+        for (T obj: list) result.add(listener.modify(obj));
+        return result;
+    }
+
     public static <T> T select(@NonNull List<T> list, @NonNull OnListInteractionListener<T> listener) {
         if (list == null) return null;
 
@@ -84,13 +94,16 @@ public final class ListUtils {
         return result;
     }
 
+    public static <T, M> ArrayList<M> mutateConcrete(@NonNull List<T> list, @NonNull OnListMutateListener<T, M> listener) {
+        ArrayList<M> result = new ArrayList<>();
+        for (T item: list)
+            result.add(listener.mutate(item));
+        return result;
+    }
+
     public static <T extends List> T fromJson(Type type, String representation) {
         return new Gson().fromJson(representation, type);
     }
-//
-//    public static <T> JSONArray toJsonArray(List<T> t) {
-//
-//    }
 
     public static <T> String toString(List<T> list) {
         StringBuilder builder = new StringBuilder();

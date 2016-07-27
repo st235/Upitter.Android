@@ -27,6 +27,7 @@ import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
+import com.github.sasd97.upitter.ui.schemas.GalleryAlbumPreviewActivity;
 import com.github.sasd97.upitter.ui.schemas.ShowOnMapActivity;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
@@ -42,6 +43,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATES_ATTACH;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.LIST_ATTACH;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.MODE_ATTACH;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.POSITION_ATTACH;
 
 /**
  * Created by alexander on 08.07.16.
@@ -64,9 +68,11 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
     }
 
     public class TapeViewHolder extends RecyclerView.ViewHolder
-        implements TapeQueryService.OnTapeQueryListener,
-        TapeQuizRecyclerAdapter.OnItemClickListener,
-        Toolbar.OnMenuItemClickListener {
+        implements
+            TapeQueryService.OnTapeQueryListener,
+            TapeQuizRecyclerAdapter.OnItemClickListener,
+            CollageAdapter.OnImageClickListener,
+            Toolbar.OnMenuItemClickListener {
 
         private Toolbar postToolbar;
 
@@ -226,6 +232,21 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         }
 
         @Override
+        public void onImageClick(int position) {
+            PostResponseModel postResponseModel = posts.get(getAdapterPosition());
+            Intent intent = new Intent(context, GalleryAlbumPreviewActivity.class);
+            intent.putStringArrayListExtra(LIST_ATTACH, ListUtils.mutateConcrete(postResponseModel.getMedia(), new ListUtils.OnListMutateListener<MediaResponseModel, String>() {
+                @Override
+                public String mutate(MediaResponseModel object) {
+                    return object.getUrl();
+                }
+            }));
+            intent.putExtra(POSITION_ATTACH, position);
+            intent.putExtra(MODE_ATTACH, 1);
+            context.startActivity(intent);
+        }
+
+        @Override
         public void onItemClick(int position) {
             queryService.vote(Locale.getDefault().getLanguage(),
                     company.getAccessToken(),
@@ -375,6 +396,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
 
         CollageLayoutManager collageLayoutManager = new CollageLayoutManager(post.getMedia());
         CollageAdapter adapter = new CollageAdapter(context, post.getMedia());
+        adapter.setOnItemClickListener(holder);
 
         holder.imagesRecyclerView.setVisibility(View.VISIBLE);
         holder.imagesRecyclerView.setLayoutManager(collageLayoutManager);

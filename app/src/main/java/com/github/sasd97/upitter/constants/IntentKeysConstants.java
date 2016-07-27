@@ -24,6 +24,7 @@ public interface IntentKeysConstants {
     String PATH_ATTACH = "PATH_ATTACH";
     String POSITION_ATTACH = "POSITION_ATTACH";
     String LIST_ATTACH = "LIST_ATTACH";
+    String MODE_ATTACH = "MODE_ATTACH";
 
     int FIRST_POSITION = 0;
     String PUT_CROPPED_IMAGE = "IMAGE_CROPPED";

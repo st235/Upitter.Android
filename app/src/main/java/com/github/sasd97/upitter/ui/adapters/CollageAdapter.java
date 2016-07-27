@@ -1,7 +1,6 @@
 package com.github.sasd97.upitter.ui.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.utils.CollageUtils;
 
@@ -26,12 +24,23 @@ public class CollageAdapter extends RecyclerView.Adapter<CollageAdapter.CollageV
     private Context context;
     private List<MediaResponseModel> images;
 
+    private OnImageClickListener listener;
+
+    public interface OnImageClickListener {
+        void onImageClick(int position);
+    }
+
     public CollageAdapter(Context context, List<MediaResponseModel> images) {
         this.context = context;
         this.images = images;
     }
 
-    public class CollageViewHolder extends RecyclerView.ViewHolder {
+    public void setOnItemClickListener(OnImageClickListener listener) {
+        this.listener = listener;
+    }
+
+    public class CollageViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
 
         private ImageView rootImage;
 
@@ -39,6 +48,13 @@ public class CollageAdapter extends RecyclerView.Adapter<CollageAdapter.CollageV
             super(itemView);
 
             rootImage = (ImageView) itemView;
+            rootImage.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (listener != null)
+                listener.onImageClick(getAdapterPosition());
         }
     }
 

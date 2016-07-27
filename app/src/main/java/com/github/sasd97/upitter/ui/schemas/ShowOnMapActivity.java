@@ -2,25 +2,33 @@ package com.github.sasd97.upitter.ui.schemas;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.AuthorOnMapModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Dimens;
+import com.github.sasd97.upitter.utils.ViewUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATES_ATTACH;
 
@@ -49,8 +57,6 @@ public class ShowOnMapActivity extends BaseActivity
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        setupViews();
     }
 
     @Override
@@ -58,7 +64,17 @@ public class ShowOnMapActivity extends BaseActivity
         rootLayout = findById(R.id.root_layout);
     }
 
-    private void setupViews() {
+    private void setupViews(GoogleMap googleMap, LatLng position) {
+        ImageView imageView = new ImageView(this);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(Dimens.dpToPx(100), Dimens.dpToPx(100)));
+        imageView.setImageResource(R.drawable.ic_marker_ava);
+
+//        googleMap.addMarker(new MarkerOptions()
+//                .position(position)
+//                .flat(true)
+//                .title("Hello world")
+//                .icon(BitmapDescriptorFactory.));
     }
 
     @Override
@@ -73,7 +89,9 @@ public class ShowOnMapActivity extends BaseActivity
         googleMap.getUiSettings().setCompassEnabled(false);
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
 
-        moveToPoint(googleMap, new LatLng(coordinatesToShow.getLatitude(), coordinatesToShow.getLongitude()));
+        LatLng position = new LatLng(coordinatesToShow.getLatitude(), coordinatesToShow.getLongitude());
+        setupViews(googleMap, position);
+        moveToPoint(googleMap, position);
     }
 
     private void moveToPoint(GoogleMap googleMap, LatLng points) {

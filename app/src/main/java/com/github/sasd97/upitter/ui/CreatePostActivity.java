@@ -111,7 +111,7 @@ public class CreatePostActivity extends BaseActivity
                 .Builder()
                 .from(this)
                 .multiSelectionMode(true)
-                .selectionMaxCounter(5)
+                .selectionMaxCounter(10)
                 .build();
         startActivityForResult(gallery, RequestCodesConstants.GALLERY_ACTIVITY_REQUEST);
     }
