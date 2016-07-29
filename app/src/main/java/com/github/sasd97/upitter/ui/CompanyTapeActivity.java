@@ -139,12 +139,16 @@ public class CompanyTapeActivity extends BaseActivity
         return true;
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         switch (id) {
+            case R.id.nav_settings:
+                startActivity(new Intent(this, CompanySettingsActivity.class));
+                break;
             case R.id.nav_logout:
                 deleteSession();
                 break;

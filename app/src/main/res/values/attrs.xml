@@ -8,4 +8,9 @@
         <attr name="minColumnsWidth" format="dimension" />
         <attr name="maxColumnsWidth" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="ProfileBehavior">
+        <attr name="finalPadding" format="dimension" />
+        <attr name="finalSize" format="dimension" />
+    </declare-styleable>
 </resources>

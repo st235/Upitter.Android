@@ -148,6 +148,10 @@
             android:name=".ui.ChooseLocationActivity"
             android:label="@string/title_choose_location_activity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ui.CompanySettingsActivity"
+            android:label="@string/title_activity_company_settings"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
