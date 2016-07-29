@@ -80,7 +80,8 @@ public interface BaseFactory {
                                          @Query("accessToken") String accessToken,
                                          @Query("latitude") double latitude,
                                          @Query("longitude") double longitude,
-                                         @Query("radius") int radius);
+                                         @Query("radius") int radius,
+                                         @Query("activity[]") List<Integer> categories);
 
     @GET("post/obtainNew")
     Call<PostsResponseModel> obtainNewPosts(@Query("ln") String language,
@@ -88,7 +89,8 @@ public interface BaseFactory {
                                          @Query("latitude") double latitude,
                                          @Query("longitude") double longitude,
                                          @Query("radius") int radius,
-                                         @Query("postId") String postId);
+                                         @Query("postId") String postId,
+                                         @Query("activity[]") List<Integer> categories);
 
     @GET("post/obtainOld")
     Call<PostsResponseModel> obtainOldPosts(@Query("ln") String language,
@@ -96,7 +98,8 @@ public interface BaseFactory {
                                             @Query("latitude") double latitude,
                                             @Query("longitude") double longitude,
                                             @Query("radius") int radius,
-                                            @Query("postId") String postId);
+                                            @Query("postId") String postId,
+                                            @Query("activity[]") List<Integer> categories);
 
     @GET("post/like/{postId}")
     Call<PostResponseModel> likePost(@Path("postId") String postId,

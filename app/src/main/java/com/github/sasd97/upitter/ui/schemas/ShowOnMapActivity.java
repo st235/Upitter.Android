@@ -5,23 +5,29 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.AuthorOnMapModel;
+import com.github.sasd97.upitter.runners.MapExecutor;
+import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Dimens;
-import com.github.sasd97.upitter.utils.ViewUtils;
+import com.github.sasd97.upitter.utils.Maps;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,20 +36,30 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATES_ATTACH;
 
 /**
  * Created by alexander on 21.07.16.
  */
 public class ShowOnMapActivity extends BaseActivity
-        implements OnMapReadyCallback {
+        implements OnMapReadyCallback,
+        LocationService.OnLocationListener,
+        MapExecutor.OnMapExecutionListener,
+        View.OnClickListener {
 
     private static final String TAG = "Show on map";
+    private String MAPS_API;
 
     private GoogleMap googleMap;
-    private AuthorOnMapModel coordinatesToShow;
+    private AuthorOnMapModel authorToShow;
 
     private RelativeLayout rootLayout;
+    private FloatingActionButton fab;
+
+    private Location currentLocation;
+    private LocationService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,30 +67,80 @@ public class ShowOnMapActivity extends BaseActivity
         setContentView(R.layout.map_choose_activity);
         setToolbar(R.id.toolbar, true);
 
-        coordinatesToShow = getIntent().getParcelableExtra(COORDINATES_ATTACH);
+        service = LocationService.getService(this);
+        service.init(this);
 
-        if (getSupportActionBar() != null) getSupportActionBar().setTitle(coordinatesToShow.getAuthorName());
+        MAPS_API = getString(R.string.google_maps_api_key);
+
+        authorToShow = getIntent().getParcelableExtra(COORDINATES_ATTACH);
+
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle(authorToShow.getAuthorName());
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        fab.setOnClickListener(this);
     }
 
     @Override
     protected void bindViews() {
         rootLayout = findById(R.id.root_layout);
+        fab = findById(R.id.fab);
     }
 
-    private void setupViews(GoogleMap googleMap, LatLng position) {
-        ImageView imageView = new ImageView(this);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        imageView.setLayoutParams(new ViewGroup.LayoutParams(Dimens.dpToPx(100), Dimens.dpToPx(100)));
-        imageView.setImageResource(R.drawable.ic_marker_ava);
+    @Override
+    public void onClick(View v) {
+        Log.d(TAG, "CLICKED");
 
-//        googleMap.addMarker(new MarkerOptions()
-//                .position(position)
-//                .flat(true)
-//                .title("Hello world")
-//                .icon(BitmapDescriptorFactory.));
+        String url = Maps.obtainPathUrl(
+                currentLocation.getLatitude(),
+                currentLocation.getLongitude(),
+                authorToShow.getLatitude(),
+                authorToShow.getLongitude());
+
+        MapExecutor.execute(url, this);
+    }
+
+    private void setupViews(final GoogleMap googleMap, final LatLng position) {
+        final Bitmap.Config config = Bitmap.Config.ARGB_8888;
+        final int topOffset = Dimens.dpToPx(5);
+        final int offset = Dimens.dpToPx(12);
+        final int bottomOffset = Dimens.dpToPx(15);
+        final int side = Dimens.dpToPx(100);
+        final int scaleSide = Math.min(side - 2 * offset, side - bottomOffset - offset);
+
+        final Bitmap marker = Bitmap.createBitmap(side, side, config);
+        final Canvas canvas = new Canvas(marker);
+
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_marker_ava);
+        drawable.setBounds(0, 0, side, side);
+        drawable.draw(canvas);
+
+        if (authorToShow.isAvatar())
+        Glide
+                .with(this)
+                .load(authorToShow.getAuthorAvatarUrl())
+                .asBitmap()
+                .transform(new CenterCrop(this), new RoundedCornersTransformation(this, Dimens.dpToPx(4), 0))
+                .into(new SimpleTarget<Bitmap>(scaleSide, scaleSide) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        int extraOffset = offset + (scaleSide - resource.getWidth()) / 2;
+
+                        canvas.drawBitmap(resource,
+                                null,
+                                new Rect(extraOffset, topOffset, side - extraOffset, side - topOffset - bottomOffset),
+                                null);
+                        setMarker(googleMap, position, marker);
+                    }
+                });
+    }
+
+    private void setMarker(GoogleMap googleMap, LatLng position, Bitmap marker) {
+        googleMap.addMarker(new MarkerOptions()
+                .position(position)
+                .flat(true)
+                .icon(BitmapDescriptorFactory.fromBitmap(marker)));
     }
 
     @Override
@@ -89,12 +155,28 @@ public class ShowOnMapActivity extends BaseActivity
         googleMap.getUiSettings().setCompassEnabled(false);
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
 
-        LatLng position = new LatLng(coordinatesToShow.getLatitude(), coordinatesToShow.getLongitude());
+        LatLng position = new LatLng(authorToShow.getLatitude(), authorToShow.getLongitude());
         setupViews(googleMap, position);
         moveToPoint(googleMap, position);
     }
 
     private void moveToPoint(GoogleMap googleMap, LatLng points) {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(points, 15));
+    }
+
+    @Override
+    public void onLocationFind(Location location) {
+        fab.setVisibility(View.VISIBLE);
+        this.currentLocation = location;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        this.currentLocation = location;
+    }
+
+    @Override
+    public void onBuildPath(String response) {
+        Maps.drawPath(this.googleMap, response);
     }
 }

@@ -40,7 +40,8 @@ public class RefreshQueryService {
                         int radius,
                         double latitude,
                         double longitude,
-                        @NonNull String postId) {
+                        @NonNull String postId,
+                        @NonNull List<Integer> categories) {
         Call<PostsResponseModel> loadNew = RestService
                 .baseFactory()
                 .obtainNewPosts(language(),
@@ -48,7 +49,8 @@ public class RefreshQueryService {
                                 latitude,
                                 longitude,
                                 radius,
-                                postId);
+                                postId,
+                                categories);
 
         loadNew.enqueue(new Callback<PostsResponseModel>(listener) {
             @Override
@@ -68,7 +70,8 @@ public class RefreshQueryService {
                         @NonNull String postId,
                         int radius,
                         double latitude,
-                        double longitude) {
+                        double longitude,
+                        @NonNull List<Integer> categories) {
         Call<PostsResponseModel> loadOld = RestService
                 .baseFactory()
                 .obtainOldPosts(language(),
@@ -76,7 +79,8 @@ public class RefreshQueryService {
                         latitude,
                         longitude,
                         radius,
-                        postId);
+                        postId,
+                        categories);
 
         loadOld.enqueue(new Callback<PostsResponseModel>(listener) {
             @Override

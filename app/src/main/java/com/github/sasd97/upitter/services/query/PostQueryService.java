@@ -47,7 +47,8 @@ public class PostQueryService {
                             @NonNull String language,
                             @NonNull Integer radius,
                             double latitude,
-                            double longitude) {
+                            double longitude,
+                            @NonNull List<Integer> categories) {
         Call<PostsResponseModel> obtainPosts =
                 RestService
                 .baseFactory()
@@ -55,7 +56,8 @@ public class PostQueryService {
                         accessToken,
                         latitude,
                         longitude,
-                        radius);
+                        radius,
+                        categories);
 
         obtainPosts.enqueue(new Callback<PostsResponseModel>() {
             @Override

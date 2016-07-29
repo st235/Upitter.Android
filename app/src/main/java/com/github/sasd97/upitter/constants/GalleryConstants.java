@@ -1,12 +1,13 @@
 package com.github.sasd97.upitter.constants;
 
-import com.github.sasd97.upitter.utils.Names;
+import android.util.Log;
 
-import static com.github.sasd97.upitter.constants.IntentKeysConstants.PATH_ATTACH;
+import com.github.sasd97.upitter.utils.Names;
 
 /**
  * Created by alexander on 27.07.16.
  */
+
 public interface GalleryConstants {
 
     enum AlbumMode {
@@ -14,6 +15,8 @@ public interface GalleryConstants {
         FILE_MODE {
             @Override
             public String obtainPath(String prePath) {
+                Log.d("PATH", prePath);
+                if (prePath.contains("file://")) return prePath;
                 return Names
                         .getInstance()
                         .getFilePath(prePath)

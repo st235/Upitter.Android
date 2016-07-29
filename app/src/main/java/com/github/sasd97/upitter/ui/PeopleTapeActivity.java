@@ -8,13 +8,12 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.ui.fragments.TapeFragment;
 
 public class PeopleTapeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +41,11 @@ public class PeopleTapeActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container, TapeFragment.getFragment())
+                .commit();
     }
 
     @Override

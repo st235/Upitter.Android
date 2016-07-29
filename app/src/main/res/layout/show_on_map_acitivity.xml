@@ -33,16 +33,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MapsActivity"
-            android:name="com.google.android.gms.maps.SupportMapFragment" />
-    </RelativeLayout>
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_done_white_24dp"
-        android:visibility="gone"
-        />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:onClick="onPathBuildClick"
+            android:src="@drawable/ic_done_white_24dp"
+            android:visibility="visible"
+            />
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

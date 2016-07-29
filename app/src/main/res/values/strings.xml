@@ -175,4 +175,12 @@
     <string name="settings_navigation_drawer">My account</string>
     <string name="tape_navigation_drawer">Tape</string>
     <!-- Endregion -->
+
+    <!-- Choose location region -->
+    <string name="title_choose_location_activity">Choose location</string>
+    <!-- Endregion -->
+
+    <!-- Choose category region -->
+    <string name="choose_category">Choose category</string>
+    <!-- Endregion -->
 </resources>

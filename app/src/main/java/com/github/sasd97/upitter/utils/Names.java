@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.utils;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ public final class Names {
     private static final String SPACE = " ";
     private static final String SLASH = "/";
     private static final String START = "*";
+    private static final String FILE = "file://";
 
     private static final String SINGE_POINT = ".";
 
@@ -46,6 +48,10 @@ public final class Names {
 
     public static String getFileExtension(@NonNull String file) {
         return file.substring(file.lastIndexOf(SINGE_POINT) + 1);
+    }
+
+    public static String getFileName(@NonNull String path) {
+        return new StringBuilder(FILE).append(path).toString();
     }
 
     public static String getNamePreview(@NonNull String name) {

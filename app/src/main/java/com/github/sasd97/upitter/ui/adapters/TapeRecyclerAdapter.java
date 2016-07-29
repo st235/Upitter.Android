@@ -420,4 +420,9 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         posts.addAll(newPosts);
         notifyItemInserted(posts.size());
     }
+
+    public void refresh() {
+        notifyItemRangeRemoved(0, getItemCount());
+        posts.clear();
+    }
 }
