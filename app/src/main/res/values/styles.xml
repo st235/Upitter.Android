@@ -94,11 +94,4 @@
         <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="android:textColorSecondary">@color/colorTextField</item>
     </style>
-
-    <style name="UpitterEditTextWhite">
-        <item name="android:textColorHint">@android:color/white</item>
-        <item name="colorAccent">@android:color/white</item>
-        <item name="colorControlNormal">@android:color/white</item>
-        <item name="colorControlActivated">@android:color/white</item>
-    </style>
 </resources>

@@ -15,8 +15,6 @@ public interface GalleryConstants {
         FILE_MODE {
             @Override
             public String obtainPath(String prePath) {
-                Log.d("PATH", prePath);
-                if (prePath.contains("file://")) return prePath;
                 return Names
                         .getInstance()
                         .getFilePath(prePath)

@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -24,6 +25,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class GalleryAlbumPreviewActivity extends BaseActivity {
+
+    private static final String TAG = "Gallery Album Preview";
 
     private String OF_PREFIX;
     private String TITLE_SCHEMA = "%1$d %2$s %3$d";
@@ -57,17 +60,9 @@ public class GalleryAlbumPreviewActivity extends BaseActivity {
         currentMode = getIntent().getIntExtra(MODE_ATTACH, 0);
 
         mode = GalleryConstants.AlbumMode.obtainMode(currentMode);
-        imagePaths = ListUtils.each(imagePaths, new ListUtils.OnListModifyListener<String>() {
-            @Override
-            public String modify(String object) {
-                return mode.obtainPath(object);
-            }
-        });
-
         albumSize = imagePaths.size();
 
         mSectionsPagerAdapter = new GalleryAlbumPagerAdapter(getSupportFragmentManager(), imagePaths);
-        mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(currentGalleryPosition);
 
@@ -92,10 +87,12 @@ public class GalleryAlbumPreviewActivity extends BaseActivity {
 
     @Override
     protected void bindViews() {
-
+        mViewPager = findById(R.id.container);
     }
 
     public void onApplyClick(View v) {
+        Log.d(TAG, imagePaths.get(mViewPager.getCurrentItem()));
+
         Intent result = new Intent();
         result.putExtra(PUT_CROPPED_IMAGE, imagePaths.get(mViewPager.getCurrentItem()));
         setResult(RESULT_OK, result);

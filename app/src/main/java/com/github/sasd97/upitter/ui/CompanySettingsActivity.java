@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +26,7 @@ import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -49,7 +49,7 @@ public class CompanySettingsActivity extends BaseActivity
     private AppBarLayout appBarLayout;
     private TextView profileToolbarNameTextView;
     private ImageView profileAvatarImageView;
-    private EditText profileNameEditText;
+    private MaterialEditText profileNameEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

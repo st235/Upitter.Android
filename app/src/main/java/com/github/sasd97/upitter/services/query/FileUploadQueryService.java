@@ -39,9 +39,6 @@ public class FileUploadQueryService {
                             @NonNull String path,
                             @NonNull String type,
                             @NonNull String purpose) {
-        Log.d("THS", path);
-        Log.d("THS", "------------------------");
-        if (path.contains("file://")) path = path.replace("file://", "");
         HashMap<String, RequestBody> imageBody = RestService.obtainImageMultipart(new File(path));
 
         Call<UploadAvatarResponseModel> uploadImage = RestService

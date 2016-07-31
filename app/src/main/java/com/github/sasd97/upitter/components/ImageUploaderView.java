@@ -22,6 +22,8 @@ import com.github.sasd97.upitter.services.query.FileUploadQueryService;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
 
+import java.io.File;
+
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
@@ -30,6 +32,8 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ImageUploaderView extends LinearLayout implements
         FileUploadQueryService.OnFileUploadListener {
+
+    private static final String TAG = "Image Uploader View";
 
     public interface OnImageUploadListener {
         void onUpload(String path);
@@ -44,6 +48,7 @@ public class ImageUploaderView extends LinearLayout implements
     private TextView helpTextView;
     private CircularProgressView circularProgressView;
     private ImageView successIndicatorImageView;
+    private ImageView errorIndicatorImageView;
 
     public ImageUploaderView(Context context) {
         super(context);
@@ -71,6 +76,7 @@ public class ImageUploaderView extends LinearLayout implements
         helpTextView = (TextView) rootView.findViewById(R.id.text_view_image_uploader_single_view);
         circularProgressView = (CircularProgressView) rootView.findViewById(R.id.progress_view_image_uploader_single_view);
         successIndicatorImageView = (ImageView) rootView.findViewById(R.id.success_indicator_image_uploader_single_view);
+        errorIndicatorImageView = (ImageView) rootView.findViewById(R.id.error_indicator_image_uploader_single_view);
     }
 
     public void setOnImageUploadListener(@NonNull OnImageUploadListener listener) {
@@ -78,25 +84,19 @@ public class ImageUploaderView extends LinearLayout implements
     }
 
     public void uploadPhoto(@NonNull String photoPath) {
+        Log.d(TAG, photoPath);
+        hideIndicators();
+        File imageFile = new File(photoPath);
+
         Glide
                 .with(context)
-                .load(Names.getInstance().getFilePath(photoPath).toString())
-                .listener(new RequestListener<String, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        return false;
-                    }
-                })
-                .bitmapTransform(new CenterCrop(getContext()), new RoundedCornersTransformation(getContext(), Dimens.dpToPx(4), 0))
+                .load(imageFile)
+                .bitmapTransform(new CenterCrop(getContext()), new RoundedCornersTransformation(getContext(), Dimens.drr(), Dimens.ABSOLUTE_ZERO))
                 .into(imagePreviewImageView);
 
         helpTextView.setVisibility(GONE);
         circularProgressView.setVisibility(VISIBLE);
+        Log.d(TAG, photoPath);
         service.uploadImage("1", photoPath, "image", "photo");
     }
 
@@ -110,5 +110,12 @@ public class ImageUploaderView extends LinearLayout implements
     @Override
     public void onError(ErrorModel errorModel) {
         Log.d("PATH", errorModel.toString());
+        circularProgressView.setVisibility(GONE);
+        errorIndicatorImageView.setVisibility(VISIBLE);
+    }
+
+    private void hideIndicators() {
+        successIndicatorImageView.setVisibility(GONE);
+        errorIndicatorImageView.setVisibility(GONE);
     }
 }

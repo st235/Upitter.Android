@@ -12,6 +12,9 @@ import android.view.WindowManager;
 
 public final class Dimens {
 
+    public static final int ABSOLUTE_ZERO = 0;
+    private static final int DEFAULT_ROUND_RADIUS = 4;
+
     private Dimens() {}
 
     public static int dpToPx(int dp) {
@@ -20,6 +23,10 @@ public final class Dimens {
 
     public static int pxToDp(int px) {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public static int drr() {
+        return dpToPx(DEFAULT_ROUND_RADIUS);
     }
 
     public static Point getDisplay(Context context) {

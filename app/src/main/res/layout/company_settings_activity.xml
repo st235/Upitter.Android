@@ -38,25 +38,23 @@
                     android:layout_gravity="bottom"
                     />
 
-                <android.support.design.widget.TextInputLayout
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/profile_name_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:maxLength="25"
+                    android:inputType="text"
+                    android:gravity="start"
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/profile_name_settings"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="25sp"
-                        android:maxLength="25"
-                        android:inputType="text"
-                        android:gravity="left"
-                        style="@style/UpitterEditTextWhite"
-                        />
-
-                </android.support.design.widget.TextInputLayout>
+                    android:hint="@string/company_name_company_settings"
+                    app:met_floatingLabel="highlight"
+                    app:met_baseColor="@android:color/white"
+                    app:met_primaryColor="@android:color/white"
+                    app:met_errorColor="@color/colorAccent"
+                    />
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar

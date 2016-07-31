@@ -7,6 +7,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
+import com.github.sasd97.upitter.utils.Names;
 
 import uk.co.senab.photoview.PhotoView;
 
@@ -42,8 +43,10 @@ public class GalleryAlbumPlaceholderFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        String path = getArguments().getString(PATH_ATTACH);
+
         Glide.with(getActivity())
-                .load(getArguments().getString(PATH_ATTACH))
+                .load(Names.getFileName(path))
                 .fitCenter()
                 .into(detailView);
     }

@@ -33,7 +33,6 @@ import com.r0adkll.slidr.model.SlidrPosition;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 
@@ -43,8 +42,10 @@ public class GalleryActivity extends BaseActivity
         OnSearchListener,
         OnGalleryInteractionListener {
 
-    private final int DEFAULT_MULTI_SELECT_MAX_AMOUNT = 3;
-    private final boolean IS_GALLERY_IN_MULTI_SELECTION_MODE = false;
+    private static final String TAG = "Gallery Activity";
+
+    private final static int DEFAULT_MULTI_SELECT_MAX_AMOUNT = 3;
+    private final static boolean IS_GALLERY_IN_MULTI_SELECTION_MODE = false;
 
     private int multiSelectMaxAmount;
     private boolean isMultiSelectionMode = false;
@@ -179,7 +180,7 @@ public class GalleryActivity extends BaseActivity
     @Override
     public void onSearchError() {
         // TODO Search error ???
-        Log.d("ERROR", "Error happenes");
+        Log.d(TAG, "Error happenes");
     }
 
     @Override
@@ -192,6 +193,8 @@ public class GalleryActivity extends BaseActivity
 
     @Override
     public void onThumbnailClick(int position, ImageSkeleton path) {
+        Log.d(TAG, path.getPath());
+
         Intent intent = new Intent(this, GalleryAlbumPreviewActivity.class);
         intent.putExtra(PATH_ATTACH, path.getPath());
         intent.putExtra(POSITION_ATTACH, position);

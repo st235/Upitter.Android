@@ -24,4 +24,9 @@ public interface FileServerFactory {
                                                 @Part("type") RequestBody type,
                                                 @Part("purpose") RequestBody purpose,
                                                 @PartMap() HashMap<String, RequestBody> body);
+
+    @Multipart
+    @POST("reload/avatar")
+    Call<UploadAvatarResponseModel> reloadAvatar(@Part("id") RequestBody id,
+                                                @PartMap() HashMap<String, RequestBody> body);
 }

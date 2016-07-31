@@ -183,6 +183,11 @@
     <!-- Choose category region -->
     <string name="choose_category">Choose category</string>
     <string name="title_activity_company_settings">Settings</string>
+    <!-- Endregion -->
+
+    <!-- Company settings region -->
+    <string name="company_name_company_settings">Company name</string>
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
