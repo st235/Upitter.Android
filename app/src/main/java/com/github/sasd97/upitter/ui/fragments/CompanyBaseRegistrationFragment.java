@@ -173,6 +173,10 @@ public class CompanyBaseRegistrationFragment
 
     private void onCategoryChooseClick() {
         Intent intent = new Intent(getActivity(), CategoriesActivity.class);
+
+        if (categoriesSelected != null && categoriesSelected.size() != 0)
+            intent.putIntegerArrayListExtra(CATEGORIES_ATTACH, categoriesSelected);
+
         startActivityForResult(intent, CATEGORIES_ACTIVITY_REQUEST);
     }
 

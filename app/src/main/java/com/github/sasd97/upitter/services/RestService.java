@@ -115,7 +115,9 @@ public final class RestService {
         }
 
         SimpleErrorResponseModel error = parseError(response);
-        listener.onError(error.getError(call.request().url().toString()));
+
+        if (error.getError() == null) listener.onError(getEmptyError());
+        else listener.onError(error.getError(call.request().url().toString()));
         return false;
     }
 
@@ -133,7 +135,7 @@ public final class RestService {
         ErrorModel errorModel = getEmptyError();
         t.printStackTrace();
         logRequest(call);
-        Log.d("REST_SERVICE", errorModel.toString());
+        Log.d(TAG, errorModel.toString());
         listener.onError(errorModel);
     }
 

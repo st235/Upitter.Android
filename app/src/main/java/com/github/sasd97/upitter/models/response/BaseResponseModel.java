@@ -32,6 +32,8 @@ public abstract class BaseResponseModel<T> {
     }
 
     public ErrorModel getError() {
+        if (mError == null) return null;
+
         return new ErrorModel
                 .Builder()
                 .code(mError.getCode())
@@ -40,6 +42,8 @@ public abstract class BaseResponseModel<T> {
     }
 
     public ErrorModel getError(String url) {
+        if (mError == null) return null;
+
         return new ErrorModel
                 .Builder()
                 .url(url)
