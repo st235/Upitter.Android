@@ -8,6 +8,7 @@ import retrofit2.Response;
 /**
  * Created by Alexadner Dadukin on 24.07.2016.
  */
+
 public abstract class Callback<T> implements retrofit2.Callback<T> {
 
     private OnErrorQueryListener listener;

@@ -151,6 +151,10 @@
         <activity
             android:name=".ui.CompanySettingsActivity"
             android:label="@string/title_activity_company_settings"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.schemas.ShowCompanyLocationsActivity"
+            android:label="@string/title_activity_show_company_locations"
             android:theme="@style/AppTheme"></activity>
     </application>
 

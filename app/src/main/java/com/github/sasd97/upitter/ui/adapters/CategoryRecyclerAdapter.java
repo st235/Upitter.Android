@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
+import com.github.sasd97.upitter.utils.ListUtils;
+import com.github.sasd97.upitter.utils.Palette;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,18 +73,22 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
         CategoryResponseModel category = categories.get(position);
+        final String preview = getCategoryPreview(category.getTitle());
 
         TextDrawable circlePreview = TextDrawable
                 .builder()
                 .beginConfig()
                     .textColor(R.color.colorPrimary)
                 .endConfig()
-                .buildRound(category.getTitle().substring(0, 1), ContextCompat.getColor(context, R.color.colorLightBabyBlue));
+                .buildRound(preview, Palette.obtainColor(R.color.colorLightBabyBlue));
 
-        if (category.getSelectedSubcategories() == null || category.getSelectedSubcategories().length == 0)
-            holder.categoryTitleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
+        if (category.getSelectedSubcategories() == null
+                || category.getSelectedSubcategories().length == 0
+                || category.getSelectedSubcategoriesIds() == null
+                || category.getSelectedSubcategoriesIds().length == 0)
+            holder.categoryTitleTextView.setTextColor(Palette.obtainColor(R.color.colorBlack));
         else
-            holder.categoryTitleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+            holder.categoryTitleTextView.setTextColor(Palette.obtainColor(R.color.colorAccent));
 
         holder.categoryTitleTextView.setText(category.getTitle());
         holder.categoryPreviewImageView.setImageDrawable(circlePreview);
@@ -107,5 +114,20 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         }
 
         return result;
+    }
+
+    public void each(@NonNull ListUtils.OnIteratorListener<CategoryResponseModel> listener) {
+        final List<CategoryResponseModel> parents = ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryResponseModel>() {
+            @Override
+            public boolean isFit(CategoryResponseModel other) {
+                return other.isParent();
+            }
+        });
+
+        ListUtils.each(parents, listener);
+    }
+
+    private String getCategoryPreview(@NonNull String title) {
+        return title.substring(0, 1);
     }
 }

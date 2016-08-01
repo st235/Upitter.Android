@@ -29,7 +29,7 @@ public class CategoryResponseModel extends BaseResponseModel {
     private String mAvatarUrl;
 
     private Integer[] mSubcategoriesSelected;
-    private int[] mSubcategoriesSelectedIds;
+    private Integer[] mSubcategoriesSelectedIds;
 
     public int getId() {
         return mId;
@@ -43,13 +43,25 @@ public class CategoryResponseModel extends BaseResponseModel {
         return mParentId;
     }
 
+    public void setSubcategoriesId(Integer[] subcategories, List<CategoryResponseModel> children) {
+        mSubcategoriesSelectedIds = subcategories;
+        final int size = children.size();
+        int counter = 0;
+
+        mSubcategoriesSelected = new Integer[subcategories.length];
+        for (int i = 0; i < size; i++) {
+            mSubcategoriesSelected[counter] = i;
+            counter++;
+        }
+    }
+
     public void setSubcategoriesSelected(Integer[] subcategories, List<CategoryResponseModel> list) {
         mSubcategoriesSelected = subcategories;
 
         int length = subcategories.length;
-        mSubcategoriesSelectedIds = new int[length];
+        mSubcategoriesSelectedIds = new Integer[length];
         for (int i = 0; i < length; i++) {
-            int subId = list.get(subcategories[i]).getId();
+            final int subId = list.get(subcategories[i]).getId();
             mSubcategoriesSelectedIds[i] = subId;
         }
     }
@@ -58,12 +70,16 @@ public class CategoryResponseModel extends BaseResponseModel {
         return mSubcategoriesSelected;
     }
 
-    public int[] getSelectedSubcategoriesIds() {
+    public Integer[] getSelectedSubcategoriesIds() {
         return mSubcategoriesSelectedIds;
     }
 
     public String getLogoUrl() {
         return mAvatarUrl;
+    }
+
+    public boolean isParent() {
+        return mId % 100 == 0;
     }
 
     public String getDebugInfo() {

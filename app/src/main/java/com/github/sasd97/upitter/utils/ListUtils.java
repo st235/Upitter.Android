@@ -32,6 +32,10 @@ public final class ListUtils {
         T modify(T object);
     }
 
+    public interface OnIteratorListener<T> {
+        void iterate(T object, List<T> all);
+    }
+
     private ListUtils() {}
 
     public static <T> T[] toArray(Class<T> type, @NonNull List<T> list) {
@@ -62,10 +66,9 @@ public final class ListUtils {
         return result;
     }
 
-    public static <T> List<T> each(@NonNull List<T> list, @NonNull OnListModifyListener<T> listener) {
-        List<T> result = new ArrayList<>(list.size());
-        for (T obj: list) result.add(listener.modify(obj));
-        return result;
+    public static <T> void each(@NonNull List<T> list, @NonNull OnIteratorListener<T> listener) {
+        for (T obj: list)
+            listener.iterate(obj, list);
     }
 
     public static <T> T select(@NonNull List<T> list, @NonNull OnListInteractionListener<T> listener) {

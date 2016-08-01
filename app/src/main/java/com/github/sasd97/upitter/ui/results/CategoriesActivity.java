@@ -12,6 +12,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
 import com.github.sasd97.upitter.services.query.CategoriesQueryService;
@@ -38,6 +39,7 @@ public class CategoriesActivity extends BaseActivity
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private CategoriesQueryService queryService;
 
+    private List<Integer> selectedCategories;
     private List<CategoryResponseModel> categories;
 
     @Override
@@ -47,6 +49,9 @@ public class CategoriesActivity extends BaseActivity
         setToolbar(R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
+
+        if (getIntent().hasExtra(CATEGORIES_ATTACH))
+            selectedCategories = getIntent().getIntegerArrayListExtra(CATEGORIES_ATTACH);
 
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, new ArrayList<CategoryResponseModel>());
         categoryRecyclerAdapter.setOnItemClickListener(this);
@@ -84,12 +89,37 @@ public class CategoriesActivity extends BaseActivity
     @Override
     public void onGetCategories(List<CategoryResponseModel> categories) {
         this.categories = categories;
+
         categoryRecyclerAdapter.addAll(ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryResponseModel>() {
             @Override
             public boolean isFit(CategoryResponseModel other) {
                 return other.getId() % 100 == 0;
             }
         }));
+
+        if (selectedCategories == null || selectedCategories.size() == 0) return;
+        categoryRecyclerAdapter.each(new ListUtils.OnIteratorListener<CategoryResponseModel>() {
+            @Override
+            public void iterate(CategoryResponseModel object, List<CategoryResponseModel> all) {
+                preSelectCategories(object, selectedCategories);
+            }
+        });
+    }
+
+    private void preSelectCategories(final CategoryResponseModel parentModel, List<Integer> selected) {
+        if (!parentModel.isParent()) return;
+
+        List<CategoryResponseModel> children = getChildren(parentModel);
+
+        List<Integer> childrenSelected = ListUtils.filter(selected, new ListUtils.OnListInteractionListener<Integer>() {
+            @Override
+            public boolean isFit(Integer other) {
+                return other / parentModel.getId() == 1;
+            }
+        });
+
+        Integer[] array = ListUtils.toArray(Integer.class, childrenSelected);
+        parentModel.setSubcategoriesId(array, children);
     }
 
     public void onConfirmSelection(View view) {
@@ -101,12 +131,7 @@ public class CategoriesActivity extends BaseActivity
 
     @Override
     public void onClick(final CategoryResponseModel category, final int position) {
-        final List<CategoryResponseModel> subCategories = ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryResponseModel>() {
-            @Override
-            public boolean isFit(CategoryResponseModel other) {
-                return other.getParentId() == category.getId();
-            }
-        });
+        final List<CategoryResponseModel> subCategories = getChildren(category);
 
         new MaterialDialog.Builder(this)
                 .title(category.getTitle())
@@ -132,5 +157,14 @@ public class CategoriesActivity extends BaseActivity
     @Override
     public void onError(ErrorModel errorModel) {
 
+    }
+
+    private List<CategoryResponseModel> getChildren(final CategoryResponseModel category) {
+        return ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryResponseModel>() {
+            @Override
+            public boolean isFit(CategoryResponseModel other) {
+                return other.getParentId() == category.getId();
+            }
+        });
     }
 }
