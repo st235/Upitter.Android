@@ -1,5 +1,8 @@
 package com.github.sasd97.upitter.models.response.categories;
 
+import android.util.Log;
+
+import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -50,15 +53,19 @@ public class CategoryResponseModel extends BaseResponseModel {
 
         mSubcategoriesSelected = new Integer[subcategories.length];
         for (int i = 0; i < size; i++) {
-            mSubcategoriesSelected[counter] = i;
-            counter++;
+            for (Integer subcategory : subcategories) {
+                if (children.get(i).getId() == subcategory) {
+                    mSubcategoriesSelected[counter] = i;
+                    counter++;
+                }
+            }
         }
     }
 
     public void setSubcategoriesSelected(Integer[] subcategories, List<CategoryResponseModel> list) {
         mSubcategoriesSelected = subcategories;
+        final int length = subcategories.length;
 
-        int length = subcategories.length;
         mSubcategoriesSelectedIds = new Integer[length];
         for (int i = 0; i < length; i++) {
             final int subId = list.get(subcategories[i]).getId();
@@ -80,6 +87,11 @@ public class CategoryResponseModel extends BaseResponseModel {
 
     public boolean isParent() {
         return mId % 100 == 0;
+    }
+
+    public boolean in(int id) {
+        if (!isParent()) return false;
+        return id > mId && id < (mId + 100);
     }
 
     public String getDebugInfo() {

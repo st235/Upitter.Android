@@ -9,9 +9,44 @@
     tools:context="com.github.sasd97.upitter.ui.CompanySettingsActivity"
     tools:showIn="@layout/company_settings_activity">
 
-    <com.rengwuxian.materialedittext.MaterialEditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:orientation="vertical"
+        android:paddingTop="@dimen/activity_long_margin"
+        android:paddingLeft="@dimen/activity_extra_margin"
+        android:paddingRight="@dimen/activity_extra_margin">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_black_24dp"
+                android:scaleType="centerInside"
+                android:layout_margin="32dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                tools:text="Alexander"
+                />
+        </LinearLayout>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

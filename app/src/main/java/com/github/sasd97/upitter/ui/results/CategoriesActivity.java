@@ -53,6 +53,9 @@ public class CategoriesActivity extends BaseActivity
         if (getIntent().hasExtra(CATEGORIES_ATTACH))
             selectedCategories = getIntent().getIntegerArrayListExtra(CATEGORIES_ATTACH);
 
+        if (selectedCategories != null)
+            for (Integer inte: selectedCategories) Log.d("XYN", String.valueOf(inte));
+
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, new ArrayList<CategoryResponseModel>());
         categoryRecyclerAdapter.setOnItemClickListener(this);
 
@@ -114,10 +117,11 @@ public class CategoriesActivity extends BaseActivity
         List<Integer> childrenSelected = ListUtils.filter(selected, new ListUtils.OnListInteractionListener<Integer>() {
             @Override
             public boolean isFit(Integer other) {
-                return other / parentModel.getId() == 1;
+                return parentModel.in(other);
             }
         });
 
+        if (childrenSelected.size() == 0) return;
         Integer[] array = ListUtils.toArray(Integer.class, childrenSelected);
         parentModel.setSubcategoriesId(array, children);
     }
