@@ -51,7 +51,7 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.AuthorizationActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,11 +61,11 @@
         </activity>
         <activity
             android:name=".ui.results.CountryCodeChooseActivity"
-            android:parentActivityName=".ui.LoginActivity"
+            android:parentActivityName=".ui.AuthorizationActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.LoginActivity" />
+                android:value=".ui.AuthorizationActivity" />
         </activity>
         <activity
             android:name=".ui.CompanyFeedActivity"

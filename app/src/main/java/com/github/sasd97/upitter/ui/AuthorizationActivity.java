@@ -20,12 +20,14 @@ import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Permissions;
 
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.Upitter.*;
 import static com.github.sasd97.upitter.holders.PeopleHolder.isUserAvailable;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
 import static com.github.sasd97.upitter.constants.PermissionsConstants.REQUEST_COMPLEX;
 
-public class LoginActivity extends BaseActivity
+public class AuthorizationActivity extends BaseActivity
         implements ViewPager.OnPageChangeListener {
 
     private final int COLOR_AMOUNT = 3;
@@ -38,16 +40,20 @@ public class LoginActivity extends BaseActivity
     private final float[] toColor = new float[COLOR_AMOUNT];
     private final float[] hsvColor = new float[COLOR_AMOUNT];
 
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-    private View rootView;
+    @BindView(R.id.viewpager_login_activity) ViewPager viewPager;
+    @BindView(R.id.tab_layout_login_activity) TabLayout tabLayout;
+    @BindView(R.id.root_view_login_activity) View rootView;
+
     private LoginPagerAdapter loginPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.activity_authorization);
+    }
 
+    @Override
+    protected void setupViews() {
         if (isUserAvailable()) {
             initUser();
             return;
@@ -66,13 +72,6 @@ public class LoginActivity extends BaseActivity
                 Manifest.permission.RECEIVE_SMS,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
-    }
-
-    @Override
-    protected void setupViews() {
-        tabLayout = findById(R.id.tab_layout_login_activity);
-        viewPager = findById(R.id.viewpager_login_activity);
-        rootView = findById(R.id.root_view_login_activity);
     }
 
     @Override

@@ -146,7 +146,7 @@ public class CompanyFeedActivity extends BaseActivity
     }
 
     private void deleteSession() {
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, AuthorizationActivity.class);
         getHolder().delete();
         startActivity(intent);
         finish();
