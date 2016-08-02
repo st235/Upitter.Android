@@ -2,9 +2,7 @@ package com.github.sasd97.upitter.ui.fragments;
 
 import android.content.Intent;
 import android.location.Location;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +11,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.behaviors.OnEndlessRecyclerViewScrollListener;
@@ -33,6 +30,8 @@ import com.github.sasd97.upitter.utils.Palette;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.Upitter.*;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.CATEGORIES_ATTACH;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CATEGORIES_ACTIVITY_REQUEST;
@@ -41,7 +40,7 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.CATEGORI
  * Created by alexander on 08.07.16.
  */
 
-public class TapeFragment extends BaseFragment
+public class BaseFeedFragment extends BaseFragment
         implements PostQueryService.OnPostListener,
         RefreshQueryService.OnRefreshListener,
         LocationService.OnLocationListener,
@@ -52,49 +51,37 @@ public class TapeFragment extends BaseFragment
     private UserModel userModel;
     private Location location;
 
-    private FloatingActionButton fab;
+    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.swipe_layout_tape) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recycler_view_tape_fragment) RecyclerView tapeRecyclerView;
 
     private PostQueryService postQueryService;
     private RefreshQueryService refreshQueryService;
-    private LocationService locationService;
-
-    private RecyclerView tapeRecyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private LinearLayoutManager linearLayoutManager;
     private TapeRecyclerAdapter tapeRecyclerAdapter;
-
     private ArrayList<Integer> categoriesSelected;
 
-    public TapeFragment() {
-        super(R.layout.tape_fragment);
+    public BaseFeedFragment() {
+        super(R.layout.fragment_base_feed);
     }
 
-    public static TapeFragment getFragment() {
-        return new TapeFragment();
+    public static BaseFeedFragment getFragment() {
+        return new BaseFeedFragment();
     }
 
     @Override
     protected void setupViews() {
-        fab = findById(R.id.fab);
-        tapeRecyclerView = findById(R.id.recycler_view_tape_fragment);
-        swipeRefreshLayout = findById(R.id.swipe_layout_tape);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
         userModel = getHolder().get();
         categoriesSelected = new ArrayList<>();
 
-        linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         tapeRecyclerAdapter = new TapeRecyclerAdapter(getContext(), (CompanyModel) getHolder().get());
         tapeRecyclerView.setLayoutManager(linearLayoutManager);
         tapeRecyclerView.setAdapter(tapeRecyclerAdapter);
 
         postQueryService = PostQueryService.getService(this);
         refreshQueryService = RefreshQueryService.getService(this);
-        locationService = LocationService.getService(this);
+        LocationService locationService = LocationService.getService(this);
         locationService.init(getContext());
 
         tapeRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

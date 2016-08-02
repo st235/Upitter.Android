@@ -10,7 +10,7 @@ import com.github.sasd97.upitter.ui.base.BaseFragment;
 public class CompanyLocationsListSelectionFragment extends BaseFragment {
 
     public CompanyLocationsListSelectionFragment() {
-        super(R.layout.tape_fragment);
+        super(R.layout.fragment_base_feed);
     }
 
     @Override

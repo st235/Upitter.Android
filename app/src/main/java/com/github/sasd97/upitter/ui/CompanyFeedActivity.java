@@ -20,7 +20,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.fragments.TapeFragment;
+import com.github.sasd97.upitter.ui.fragments.BaseFeedFragment;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
 
@@ -71,7 +71,7 @@ public class CompanyFeedActivity extends BaseActivity
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container, TapeFragment.getFragment())
+                .add(R.id.fragment_container, BaseFeedFragment.getFragment())
                 .commit();
     }
 

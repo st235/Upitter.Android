@@ -1,7 +1,6 @@
 package com.github.sasd97.upitter.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -13,7 +12,7 @@ import android.view.MenuItem;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.fragments.TapeFragment;
+import com.github.sasd97.upitter.ui.fragments.BaseFeedFragment;
 
 import butterknife.OnClick;
 
@@ -42,7 +41,7 @@ public class PeopleFeedActivity extends BaseActivity
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container, TapeFragment.getFragment())
+                .add(R.id.fragment_container, BaseFeedFragment.getFragment())
                 .commit();
     }
 
