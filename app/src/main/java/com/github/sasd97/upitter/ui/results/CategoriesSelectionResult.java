@@ -12,7 +12,6 @@ import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
 import com.github.sasd97.upitter.services.query.CategoriesQueryService;
@@ -27,27 +26,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 
-public class CategoriesActivity extends BaseActivity
+public class CategoriesSelectionResult extends BaseActivity
         implements CategoriesQueryService.OnCategoryListener,
         CategoryRecyclerAdapter.OnItemClickListener {
 
-    private FloatingActionButton fab;
-
-    private RecyclerView categoryRecyclerView;
-    private CategoryRecyclerAdapter categoryRecyclerAdapter;
-    private CategoriesQueryService queryService;
+    @BindView(R.id.fab_categories_activity) FloatingActionButton fab;
+    @BindView(R.id.recycler_view_categories_activity) RecyclerView categoryRecyclerView;
 
     private List<Integer> selectedCategories;
     private List<CategoryResponseModel> categories;
+    private CategoryRecyclerAdapter categoryRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.categories_activity);
-        setToolbar(R.id.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_categories_selection);
+    }
+
+    @Override
+    protected void setupViews() {
+        setToolbar(R.id.toolbar, true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
 
         if (getIntent().hasExtra(CATEGORIES_ATTACH))
@@ -79,14 +81,8 @@ public class CategoriesActivity extends BaseActivity
             }
         });
 
-        queryService = CategoriesQueryService.getService(this);
+        CategoriesQueryService queryService = CategoriesQueryService.getService(this);
         queryService.getCategories(Locale.getDefault().getLanguage());
-    }
-
-    @Override
-    protected void setupViews() {
-        categoryRecyclerView = findById(R.id.recycler_view_categories_activity);
-        fab = findById(R.id.fab_categories_activity);
     }
 
     @Override

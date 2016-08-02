@@ -2,7 +2,6 @@ package com.github.sasd97.upitter.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -10,9 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,7 +21,7 @@ import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.ui.adapters.PhonesRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
-import com.github.sasd97.upitter.ui.results.CategoriesActivity;
+import com.github.sasd97.upitter.ui.results.CategoriesSelectionResult;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -172,7 +169,7 @@ public class CompanyBaseRegistrationFragment
     }
 
     private void onCategoryChooseClick() {
-        Intent intent = new Intent(getActivity(), CategoriesActivity.class);
+        Intent intent = new Intent(getActivity(), CategoriesSelectionResult.class);
 
         if (categoriesSelected != null && categoriesSelected.size() != 0)
             intent.putIntegerArrayListExtra(CATEGORIES_ATTACH, categoriesSelected);

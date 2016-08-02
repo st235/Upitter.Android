@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorEndBackground"
     android:fitsSystemWindows="true"
-    tools:context="com.github.sasd97.upitter.ui.results.CategoriesActivity">
+    tools:context=".ui.results.CategoriesSelectionResult">
 
 
     <android.support.design.widget.AppBarLayout

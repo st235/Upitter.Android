@@ -20,7 +20,6 @@ import com.github.sasd97.upitter.events.behaviors.OnEndlessRecyclerViewScrollLis
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
-import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
@@ -28,11 +27,10 @@ import com.github.sasd97.upitter.services.query.RefreshQueryService;
 import com.github.sasd97.upitter.ui.adapters.TapeRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
-import com.github.sasd97.upitter.ui.results.CategoriesActivity;
+import com.github.sasd97.upitter.ui.results.CategoriesSelectionResult;
 import com.github.sasd97.upitter.utils.Palette;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import static com.github.sasd97.upitter.Upitter.*;
@@ -214,7 +212,7 @@ public class TapeFragment extends BaseFragment
         int id = item.getItemId();
 
         if (id == R.id.action_choose_category) {
-            Intent intent = new Intent(getContext(), CategoriesActivity.class);
+            Intent intent = new Intent(getContext(), CategoriesSelectionResult.class);
             startActivityForResult(intent, CATEGORIES_ACTIVITY_REQUEST);
             return true;
         }

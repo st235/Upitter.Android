@@ -92,7 +92,7 @@
             android:label="@string/title_gallery_album_preview_activity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.results.CategoriesActivity"
+            android:name=".ui.results.CategoriesSelectionResult"
             android:label="@string/title_categories_activity"
             android:parentActivityName=".ui.CompanyRegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar">
