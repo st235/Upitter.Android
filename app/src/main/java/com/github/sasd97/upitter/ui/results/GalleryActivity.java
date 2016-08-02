@@ -23,7 +23,7 @@ import com.github.sasd97.upitter.models.skeletons.ImageSkeleton;
 import com.github.sasd97.upitter.ui.adapters.GalleryRecyclerAdapter;
 import com.github.sasd97.upitter.ui.adapters.GallerySpinnerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.schemas.GalleryAlbumPreviewActivity;
+import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.Search;
 import com.github.sasd97.upitter.utils.SlidrUtils;
@@ -195,7 +195,7 @@ public class GalleryActivity extends BaseActivity
     public void onThumbnailClick(int position, ImageSkeleton path) {
         Log.d(TAG, path.getPath());
 
-        Intent intent = new Intent(this, GalleryAlbumPreviewActivity.class);
+        Intent intent = new Intent(this, AlbumPreviewGallerySchema.class);
         intent.putExtra(PATH_ATTACH, path.getPath());
         intent.putExtra(POSITION_ATTACH, position);
         intent.putStringArrayListExtra(LIST_ATTACH, galleryRecyclerAdapter.getFilterPathList());

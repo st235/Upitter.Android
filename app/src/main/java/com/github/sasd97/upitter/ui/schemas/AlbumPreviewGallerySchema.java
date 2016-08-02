@@ -14,7 +14,6 @@ import com.github.sasd97.upitter.constants.GalleryConstants;
 import com.github.sasd97.upitter.ui.adapters.GalleryAlbumPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.results.EditImageActivity;
-import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
@@ -24,11 +23,14 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 import java.util.List;
 import java.util.Locale;
 
-public class GalleryAlbumPreviewActivity extends BaseActivity {
+import butterknife.BindString;
+import butterknife.BindView;
+
+public class AlbumPreviewGallerySchema extends BaseActivity {
 
     private static final String TAG = "Gallery Album Preview";
 
-    private String OF_PREFIX;
+    @BindString(R.string.image_of_gallery_album_preview_activity) String OF_PREFIX;
     private String TITLE_SCHEMA = "%1$d %2$s %3$d";
 
     private int albumSize = 0;
@@ -38,22 +40,20 @@ public class GalleryAlbumPreviewActivity extends BaseActivity {
     private int currentMode;
 
     private GalleryConstants.AlbumMode mode;
-
-    private ViewPager mViewPager;
     private GalleryAlbumPagerAdapter mSectionsPagerAdapter;
+
+    @BindView(R.id.container) ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gallery_album_preview_activity);
+        setContentView(R.layout.activity_album_preview_gallery);
+    }
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+    @Override
+    protected void setupViews() {
+        setToolbar(R.id.toolbar, true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.VERTICAL, 0.1f));
-
-        OF_PREFIX = getString(R.string.image_of_gallery_album_preview_activity);
 
         imagePaths = getIntent().getStringArrayListExtra(LIST_ATTACH);
         currentGalleryPosition = getIntent().getIntExtra(POSITION_ATTACH, 0);
@@ -69,7 +69,7 @@ public class GalleryAlbumPreviewActivity extends BaseActivity {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                toolbar.setTitle(String.format(Locale.getDefault(), TITLE_SCHEMA,
+                getToolbar().setTitle(String.format(Locale.getDefault(), TITLE_SCHEMA,
                         (position + 1), OF_PREFIX, albumSize));
             }
 
@@ -85,11 +85,6 @@ public class GalleryAlbumPreviewActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void setupViews() {
-        mViewPager = findById(R.id.container);
-    }
-
     public void onApplyClick(View v) {
         Log.d(TAG, imagePaths.get(mViewPager.getCurrentItem()));
 
@@ -100,7 +95,7 @@ public class GalleryAlbumPreviewActivity extends BaseActivity {
     }
 
     public void onEditClick(View v) {
-        Intent intent = new Intent(GalleryAlbumPreviewActivity.this, EditImageActivity.class);
+        Intent intent = new Intent(AlbumPreviewGallerySchema.this, EditImageActivity.class);
         intent.putExtra(PATH_ATTACH, imagePaths.get(mViewPager.getCurrentItem()));
         startActivityForResult(intent, 12);
     }

@@ -27,7 +27,7 @@ import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
-import com.github.sasd97.upitter.ui.schemas.GalleryAlbumPreviewActivity;
+import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.ui.schemas.ShowOnMapActivity;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
@@ -234,7 +234,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         @Override
         public void onImageClick(int position) {
             PostResponseModel postResponseModel = posts.get(getAdapterPosition());
-            Intent intent = new Intent(context, GalleryAlbumPreviewActivity.class);
+            Intent intent = new Intent(context, AlbumPreviewGallerySchema.class);
             intent.putStringArrayListExtra(LIST_ATTACH, ListUtils.mutateConcrete(postResponseModel.getMedia(), new ListUtils.OnListMutateListener<MediaResponseModel, String>() {
                 @Override
                 public String mutate(MediaResponseModel object) {
