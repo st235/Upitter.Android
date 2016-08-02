@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.ui.adapters.QuizRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.QuizVariantRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
@@ -25,7 +25,7 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.QUIZ_MULTI
  */
 
 public class QuizCreationResult extends BaseActivity
-        implements QuizRecyclerAdapter.OnQuizChangeListener {
+        implements QuizVariantRecycler.OnQuizChangeListener {
 
     private final int QUIZ_MAX_AMOUNT = 6;
 
@@ -33,7 +33,7 @@ public class QuizCreationResult extends BaseActivity
     @BindView(R.id.quiz_add_button) Button addButton;
     @BindView(R.id.quiz_recycler_view) RecyclerView recyclerView;
 
-    private QuizRecyclerAdapter adapter;
+    private QuizVariantRecycler adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +49,11 @@ public class QuizCreationResult extends BaseActivity
         LinearLayoutManager manager = new LinearLayoutManager(this);
 
         if (getIntent().hasExtra(QUIZ_MULTI_SELECTION_LIST))
-            adapter = new QuizRecyclerAdapter(getResources(),
+            adapter = new QuizVariantRecycler(getResources(),
                     getIntent().getStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST),
                     this);
         else
-            adapter = new QuizRecyclerAdapter(getResources(),
+            adapter = new QuizVariantRecycler(getResources(),
                     this);
 
         recyclerView.setItemAnimator(new SlideInLeftAnimator());

@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.ui.adapters;
+package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +27,9 @@ import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
-import com.github.sasd97.upitter.ui.adapters.recyclers.ImageCollageRecycler;
+import com.github.sasd97.upitter.ui.adapters.TapeQuizRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.TapeQuizResultRecyclerAdapter;
+import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.ui.schemas.MapPreviewSchema;
 import com.github.sasd97.upitter.utils.Categories;
@@ -40,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -52,7 +55,7 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.POSITION_A
  * Created by alexander on 08.07.16.
  */
 
-public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapter.TapeViewHolder> {
+public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.TapeViewHolder> {
 
     private static final String TAG = "TAPE RECYCLER ADAPTER";
     private static final int FIRST_POSITION = 0;
@@ -62,85 +65,54 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
     private CompanyModel company;
     private List<PostResponseModel> posts;
 
-    public TapeRecyclerAdapter(Context context, CompanyModel company) {
+    public FeedPostRecycler(Context context, CompanyModel company) {
         posts = new ArrayList<>();
         this.context = context;
         this.company = company;
     }
 
-    public class TapeViewHolder extends RecyclerView.ViewHolder
-        implements
-            TapeQueryService.OnTapeQueryListener,
+    public class TapeViewHolder extends BaseViewHolder
+        implements TapeQueryService.OnTapeQueryListener,
             TapeQuizRecyclerAdapter.OnItemClickListener,
             ImageCollageRecycler.OnImageClickListener,
             Toolbar.OnMenuItemClickListener {
 
-        private Toolbar postToolbar;
+        @BindView(R.id.post_toolbar) Toolbar postToolbar;
 
-        private TextView userNameTextView;
-        private TextView postTitleTextView;
-        private TextView postDescriptionTextView;
-        private TextView categoryNameTextView;
-        private TextView likeAmountTextView;
-        private TextView commentsAmountTextView;
-        private TextView offsetFromNow;
-        private TextView watchesAmountTextView;
+        @BindView(R.id.user_name_post_single_view) TextView userNameTextView;
+        @BindView(R.id.title_post_single_view) TextView postTitleTextView;
+        @BindView(R.id.text_post_single_view) TextView postDescriptionTextView;
+        @BindView(R.id.category_label_post_single_view) TextView categoryNameTextView;
+        @BindView(R.id.like_counter_post_single_view) TextView likeAmountTextView;
+        @BindView(R.id.comments_counter_post_single_view) TextView commentsAmountTextView;
+        @BindView(R.id.offset_from_now_post_single_view) TextView offsetFromNow;
+        @BindView(R.id.watch_counter_post_single_view) TextView watchesAmountTextView;
 
-        private ImageView userAvatarImageView;
-        private CircleImageView categoryImageView;
-        private ImageView commentImageView;
+        @BindView(R.id.user_icon_post_single_view) ImageView userAvatarImageView;
+        @BindView(R.id.category_preview_post_single_view) CircleImageView categoryImageView;
+        @BindView(R.id.comments_icon_post_single_view) ImageView commentImageView;
 
-        private ShineButton likeShineButton;
-        private ShineButton favoriteShineButton;
+        @BindView(R.id.like_icon_post_single_view) ShineButton likeShineButton;
+        @BindView(R.id.favorites_icon_post_single_view) ShineButton favoriteShineButton;
 
-        private LinearLayout likeLinearLayout;
-        private LinearLayout commentLinearLayout;
+        @BindView(R.id.like_layout_post_single_view) LinearLayout likeLinearLayout;
+        @BindView(R.id.comments_layout_post_single_view) LinearLayout commentLinearLayout;
 
+        @BindView(R.id.quiz_variants_post_single_view) RecyclerView quizVariantsRecyclerView;
+        @BindView(R.id.quiz_result_post_single_view) RecyclerView quizResultHorizontalChart;
+        @BindView(R.id.post_images_post_single_view) RecyclerView imagesRecyclerView;
+
+        private TapeQueryService queryService;
         private View.OnClickListener likeClick;
         private View.OnClickListener favoriteClick;
 
-        private RecyclerView quizVariantsRecyclerView;
-        private RecyclerView quizResultHorizontalChart;
-        private RecyclerView imagesRecyclerView;
-
-        private TapeQueryService queryService;
-
         public TapeViewHolder(View itemView) {
             super(itemView);
+        }
 
+        @Override
+        protected void setupViews() {
             queryService = TapeQueryService.getService(this);
-            bind();
-            setup();
-        }
-
-        private void bind() {
-            postToolbar = (Toolbar) itemView.findViewById(R.id.post_toolbar);
-
-            userNameTextView = (TextView) itemView.findViewById(R.id.user_name_post_single_view);
-            postTitleTextView = (TextView) itemView.findViewById(R.id.title_post_single_view);
-            postDescriptionTextView = (TextView) itemView.findViewById(R.id.text_post_single_view);
-            categoryNameTextView = (TextView) itemView.findViewById(R.id.category_label_post_single_view);
-            likeAmountTextView = (TextView) itemView.findViewById(R.id.like_counter_post_single_view);
-            commentsAmountTextView = (TextView) itemView.findViewById(R.id.comments_counter_post_single_view);
-            offsetFromNow = (TextView) itemView.findViewById(R.id.offset_from_now_post_single_view);
-            watchesAmountTextView = (TextView) itemView.findViewById(R.id.watch_counter_post_single_view);
-
-            userAvatarImageView = (ImageView) itemView.findViewById(R.id.user_icon_post_single_view);
-            categoryImageView = (CircleImageView) itemView.findViewById(R.id.category_preview_post_single_view);
-            commentImageView = (ImageView) itemView.findViewById(R.id.comments_icon_post_single_view);
-
-            likeShineButton = (ShineButton) itemView.findViewById(R.id.like_icon_post_single_view);
-            favoriteShineButton = (ShineButton) itemView.findViewById(R.id.favorites_icon_post_single_view);
-
-            likeLinearLayout = (LinearLayout) itemView.findViewById(R.id.like_layout_post_single_view);
-            commentLinearLayout = (LinearLayout) itemView.findViewById(R.id.comments_layout_post_single_view);
-
-            quizVariantsRecyclerView = (RecyclerView) itemView.findViewById(R.id.quiz_variants_post_single_view);
-            quizResultHorizontalChart = (RecyclerView) itemView.findViewById(R.id.quiz_result_post_single_view);
-            imagesRecyclerView = (RecyclerView) itemView.findViewById(R.id.post_images_post_single_view);
-        }
-
-        private void setup() {
             postToolbar.setOnMenuItemClickListener(this);
 
             likeClick = new View.OnClickListener() {
@@ -259,7 +231,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
     @Override
     public TapeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View v = LayoutInflater.from(context).inflate(R.layout.post_single_view, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.row_feed_post, parent, false);
         return new TapeViewHolder(v);
     }
 

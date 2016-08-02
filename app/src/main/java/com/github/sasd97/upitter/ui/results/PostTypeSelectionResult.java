@@ -13,7 +13,7 @@ import android.view.View;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.IntentKeysConstants;
 import com.github.sasd97.upitter.models.CategoryModel;
-import com.github.sasd97.upitter.ui.adapters.SearchableRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.SearchableRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.SlidrUtils;

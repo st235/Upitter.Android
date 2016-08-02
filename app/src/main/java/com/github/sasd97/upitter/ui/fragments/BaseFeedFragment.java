@@ -21,7 +21,7 @@ import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.services.query.RefreshQueryService;
-import com.github.sasd97.upitter.ui.adapters.TapeRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.FeedPostRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.results.CategoriesSelectionResult;
@@ -57,7 +57,7 @@ public class BaseFeedFragment extends BaseFragment
 
     private PostQueryService postQueryService;
     private RefreshQueryService refreshQueryService;
-    private TapeRecyclerAdapter tapeRecyclerAdapter;
+    private FeedPostRecycler feedPostRecycler;
     private ArrayList<Integer> categoriesSelected;
 
     public BaseFeedFragment() {
@@ -75,9 +75,9 @@ public class BaseFeedFragment extends BaseFragment
         categoriesSelected = new ArrayList<>();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        tapeRecyclerAdapter = new TapeRecyclerAdapter(getContext(), (CompanyModel) getHolder().get());
+        feedPostRecycler = new FeedPostRecycler(getContext(), (CompanyModel) getHolder().get());
         tapeRecyclerView.setLayoutManager(linearLayoutManager);
-        tapeRecyclerView.setAdapter(tapeRecyclerAdapter);
+        tapeRecyclerView.setAdapter(feedPostRecycler);
 
         postQueryService = PostQueryService.getService(this);
         refreshQueryService = RefreshQueryService.getService(this);
@@ -107,11 +107,11 @@ public class BaseFeedFragment extends BaseFragment
         tapeRecyclerView.addOnScrollListener(new OnEndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                if (tapeRecyclerAdapter.getItemCount() <= 20) return;
+                if (feedPostRecycler.getItemCount() <= 20) return;
 
                 refreshQueryService.loadOld(
                         userModel.getAccessToken(),
-                        tapeRecyclerAdapter.getLastPostId(),
+                        feedPostRecycler.getLastPostId(),
                         100000,
                         location.getLatitude(),
                         location.getLongitude(),
@@ -125,7 +125,7 @@ public class BaseFeedFragment extends BaseFragment
 
     @Override
     public void onPostObtained(PostsResponseModel posts) {
-        tapeRecyclerAdapter.addAll(posts.getPosts());
+        feedPostRecycler.addAll(posts.getPosts());
     }
 
     @Override
@@ -161,7 +161,7 @@ public class BaseFeedFragment extends BaseFragment
                 100000,
                 location.getLatitude(),
                 location.getLongitude(),
-                tapeRecyclerAdapter.getFirstPostId(),
+                feedPostRecycler.getFirstPostId(),
                 categoriesSelected);
     }
 
@@ -169,12 +169,12 @@ public class BaseFeedFragment extends BaseFragment
     public void onLoadNew(PostsResponseModel posts) {
         if (swipeRefreshLayout.isShown())
             swipeRefreshLayout.setRefreshing(false);
-        tapeRecyclerAdapter.addAhead(posts.getPosts());
+        feedPostRecycler.addAhead(posts.getPosts());
     }
 
     @Override
     public void onLoadOld(PostsResponseModel posts) {
-        tapeRecyclerAdapter.addBehind(posts.getPosts());
+        feedPostRecycler.addBehind(posts.getPosts());
     }
 
     @Override
@@ -210,7 +210,7 @@ public class BaseFeedFragment extends BaseFragment
     private void handleCategoriesIntent(@NonNull Intent intent) {
         Log.d(TAG, "Query");
         categoriesSelected = intent.getIntegerArrayListExtra(CATEGORIES_ATTACH);
-        tapeRecyclerAdapter.refresh();
+        feedPostRecycler.refresh();
         postQueryService.obtainPosts(
                 getHolder().get().getAccessToken(),
                 Locale.getDefault().getLanguage(),
