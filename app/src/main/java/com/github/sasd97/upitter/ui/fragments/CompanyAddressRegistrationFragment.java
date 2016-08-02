@@ -24,7 +24,7 @@ import com.github.sasd97.upitter.ui.CompanyFeedActivity;
 import com.github.sasd97.upitter.ui.adapters.AddressRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
-import com.github.sasd97.upitter.ui.results.MapChooseActivity;
+import com.github.sasd97.upitter.ui.results.CompanyCoordinatesSelectionResult;
 
 import java.util.ArrayList;
 
@@ -98,7 +98,7 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
 
     @Override
     public void onClick(View view) {
-        startActivityForResult(new Intent(getActivity(), MapChooseActivity.class),
+        startActivityForResult(new Intent(getActivity(), CompanyCoordinatesSelectionResult.class),
                 CHOOSE_ON_MAP_POINT_REQUEST);
     }
 

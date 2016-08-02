@@ -24,44 +24,39 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-public class MapChooseActivity extends BaseActivity implements
+import butterknife.BindView;
+
+public class CompanyCoordinatesSelectionResult extends BaseActivity implements
         OnMapReadyCallback,
         LocationService.OnLocationListener {
 
     private GoogleMap googleMap;
-    private FloatingActionButton confirmFab;
-
-    private RelativeLayout rootView;
-
     private LocationService locationService = LocationService.getService(this);
+
+    @BindView(R.id.fab) FloatingActionButton confirmFab;
+    @BindView(R.id.root_layout) RelativeLayout rootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.map_choose_activity);
-        setToolbar(R.id.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_company_coordinates_selection);
+    }
 
+    @Override
+    protected void setupViews() {
+        setToolbar(R.id.toolbar, true);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
         confirmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onResultClick();
             }
         });
-
-        setupView();
+        obtainMarker();
     }
 
-    @Override
-    protected void setupViews() {
-        confirmFab = findById(R.id.fab);
-        rootView = findById(R.id.root_layout);
-    }
-
-    private void setupView() {
+    private void obtainMarker() {
         ImageView marker = new ImageView(this);
         marker.setImageResource(R.drawable.ic_upitter_marker);
         marker.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -69,7 +64,7 @@ public class MapChooseActivity extends BaseActivity implements
         rootView.addView(marker);
         marker.setLayoutParams(ViewUtils.layToCenter(rootView,
                 marker,
-                Dimens.dpToPx(70),
+                Dimens.dpToPx(65),
                 Dimens.dpToPx(100)));
     }
 

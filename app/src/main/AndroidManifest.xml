@@ -101,7 +101,7 @@
                 android:value=".ui.CompanyRegistrationActivity" />
         </activity>
         <activity
-            android:name=".ui.results.MapChooseActivity"
+            android:name=".ui.results.CompanyCoordinatesSelectionResult"
             android:label="@string/title_map_choose_activity"
             android:parentActivityName=".ui.CompanyRegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar">
