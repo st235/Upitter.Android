@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -54,9 +53,6 @@ public class CategoriesSelectionResult extends BaseActivity
 
         if (getIntent().hasExtra(CATEGORIES_ATTACH))
             selectedCategories = getIntent().getIntegerArrayListExtra(CATEGORIES_ATTACH);
-
-        if (selectedCategories != null)
-            for (Integer inte: selectedCategories) Log.d("XYN", String.valueOf(inte));
 
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, new ArrayList<CategoryResponseModel>());
         categoryRecyclerAdapter.setOnItemClickListener(this);

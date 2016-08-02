@@ -12,7 +12,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.GalleryConstants;
 import com.github.sasd97.upitter.ui.adapters.GalleryAlbumPagerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.results.EditImageActivity;
+import com.github.sasd97.upitter.ui.results.ImageEditingResult;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
@@ -94,7 +94,7 @@ public class AlbumPreviewGallerySchema extends BaseActivity {
     }
 
     public void onEditClick(View v) {
-        Intent intent = new Intent(AlbumPreviewGallerySchema.this, EditImageActivity.class);
+        Intent intent = new Intent(AlbumPreviewGallerySchema.this, ImageEditingResult.class);
         intent.putExtra(PATH_ATTACH, imagePaths.get(mViewPager.getCurrentItem()));
         startActivityForResult(intent, 12);
     }

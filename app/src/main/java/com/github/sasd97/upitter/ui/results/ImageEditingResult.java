@@ -21,23 +21,21 @@ import com.roughike.bottombar.OnMenuTabClickListener;
 
 import java.util.ArrayList;
 
-public class EditImageActivity extends BaseActivity
+public class ImageEditingResult extends BaseActivity
         implements OnSaveListener, OnEditImageChooseListener {
 
     private static final String PUT_IMAGE_PATH = "IMAGE_PATH";
     private static final String PUT_CROPPED_IMAGE = "IMAGE_CROPPED";
 
     private String originalPath;
-    private OnEditImageChooseListener editImageChooseListener = null;
+    private OnEditImageChooseListener editImageChooseListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.image_cropper_activity);
+        setContentView(R.layout.activity_image_editing);
 
-        setToolbar(R.id.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        setToolbar(R.id.toolbar, true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.VERTICAL, 0.1f));
 
         originalPath = getIntent().getStringExtra("PATH_ATTACH");
@@ -55,7 +53,7 @@ public class EditImageActivity extends BaseActivity
                             public void onApplied(String path) {
                                 FilterFragment filterFragment = FilterFragment.getFragment(path);
                                 editImageChooseListener = filterFragment;
-                                EditImageActivity.this.getSupportFragmentManager()
+                                ImageEditingResult.this.getSupportFragmentManager()
                                         .beginTransaction()
                                         .replace(R.id.fragment_container, filterFragment)
                                         .commit();
@@ -68,7 +66,7 @@ public class EditImageActivity extends BaseActivity
                             public void onApplied(String path) {
                                 CropFragment cropFragment = CropFragment.getFragment(path);
                                 editImageChooseListener = cropFragment;
-                                EditImageActivity.this.getSupportFragmentManager()
+                                ImageEditingResult.this.getSupportFragmentManager()
                                         .beginTransaction()
                                         .replace(R.id.fragment_container, cropFragment)
                                         .commit();
