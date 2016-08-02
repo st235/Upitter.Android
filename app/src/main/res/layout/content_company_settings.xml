@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.github.sasd97.upitter.ui.CompanySettingsActivity"
-    tools:showIn="@layout/company_settings_activity">
+    tools:showIn="@layout/activity_company_settings">
 
     <LinearLayout
         android:layout_width="match_parent"

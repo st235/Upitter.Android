@@ -2,33 +2,19 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.RequestCodesConstants;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.services.query.FileUploadQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Gallery;
-import com.github.sasd97.upitter.utils.Keyboard;
-import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
-import com.rengwuxian.materialedittext.MaterialEditText;
-
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.PUT_CROPPED_IMAGE;
@@ -44,16 +30,15 @@ public class CompanySettingsActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.company_settings_activity);
+        setContentView(R.layout.activity_company_settings);
         setToolbar(R.id.toolbar, true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.1f));
-        this.service = FileUploadQueryService.getService(this);
-
-        companyModel = (CompanyModel)  getHolder().get();
     }
 
     @Override
     protected void setupViews() {
+        companyModel = (CompanyModel) getHolder().get();
+        service = FileUploadQueryService.getService(this);
     }
 
     public void onPhotosClick(View v) {
