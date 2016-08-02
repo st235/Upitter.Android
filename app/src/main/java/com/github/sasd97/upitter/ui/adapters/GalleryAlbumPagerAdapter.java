@@ -4,9 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.github.sasd97.upitter.ui.fragments.GalleryAlbumPlaceholderFragment;
+import com.github.sasd97.upitter.ui.schemas.AlbumImagePlaceholderSchema;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +22,7 @@ public class GalleryAlbumPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return GalleryAlbumPlaceholderFragment.getFragment(position, data.get(position));
+        return AlbumImagePlaceholderSchema.getFragment(position, data.get(position));
     }
 
     @Override

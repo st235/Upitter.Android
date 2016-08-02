@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.ui.fragments;
+package com.github.sasd97.upitter.ui.schemas;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.utils.Names;
 
+import butterknife.BindView;
 import uk.co.senab.photoview.PhotoView;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.PATH_ATTACH;
@@ -18,16 +19,16 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.POSITION_A
  * Created by Alexadner Dadukin on 26.06.2016.
  */
 
-public class GalleryAlbumPlaceholderFragment extends BaseFragment {
+public class AlbumImagePlaceholderSchema extends BaseFragment {
 
-    private PhotoView detailView = null;
+    @BindView(R.id.detail_image) PhotoView detailView;
 
-    public GalleryAlbumPlaceholderFragment() {
-        super(R.layout.gallery_album_preview_fragment);
+    public AlbumImagePlaceholderSchema() {
+        super(R.layout.fragment_album_image_placeholder);
     }
 
-    public static GalleryAlbumPlaceholderFragment getFragment(int position, String imagePath) {
-        GalleryAlbumPlaceholderFragment fragment = new GalleryAlbumPlaceholderFragment();
+    public static AlbumImagePlaceholderSchema getFragment(int position, String imagePath) {
+        AlbumImagePlaceholderSchema fragment = new AlbumImagePlaceholderSchema();
         Bundle args = new Bundle();
         args.putInt(POSITION_ATTACH, position);
         args.putString(PATH_ATTACH, imagePath);
@@ -36,13 +37,12 @@ public class GalleryAlbumPlaceholderFragment extends BaseFragment {
     }
 
     @Override
-    protected void setupViews() {
-        detailView = findById(R.id.detail_image);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void setupViews() {
         String path = getArguments().getString(PATH_ATTACH);
 
         Glide.with(getActivity())
@@ -50,4 +50,5 @@ public class GalleryAlbumPlaceholderFragment extends BaseFragment {
                 .fitCenter()
                 .into(detailView);
     }
+
 }
