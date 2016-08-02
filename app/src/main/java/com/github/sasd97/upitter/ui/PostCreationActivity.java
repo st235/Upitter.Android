@@ -23,7 +23,7 @@ import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.ui.adapters.ImageHolderRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.results.PostCategoriesChooseActivity;
+import com.github.sasd97.upitter.ui.results.PostTypeSelectionResult;
 import com.github.sasd97.upitter.ui.results.QuizActivity;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Gallery;
@@ -129,7 +129,7 @@ public class PostCreationActivity extends BaseActivity
     }
 
     public void onCategoriesSelectClick(View v) {
-        startActivityForResult(new Intent(this, PostCategoriesChooseActivity.class),
+        startActivityForResult(new Intent(this, PostTypeSelectionResult.class),
                 RequestCodesConstants.CATEGORIES_ACTIVITY_REQUEST);
     }
 

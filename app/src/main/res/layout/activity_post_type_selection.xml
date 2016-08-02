@@ -23,6 +23,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/category_choose_content" />
+    <include layout="@layout/content_post_type_selection" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -23,29 +23,33 @@ import com.r0adkll.slidr.model.SlidrPosition;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by alexander on 05.07.16.
  */
-public class PostCategoriesChooseActivity extends BaseActivity
+
+public class PostTypeSelectionResult extends BaseActivity
         implements SearchableRecyclerAdapter.OnItemSelectedListener<CategoryModel>,
         View.OnClickListener {
 
-    public static final String BADGE_RESULT = "SEARCH_RESULT";
-
-    private RecyclerView recyclerView;
     private SearchableRecyclerAdapter adapter;
     private List<CategoryModel> data = new ArrayList<>();
+    @BindView(R.id.location_recycler_view) RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.category_choose_activity);
+        setContentView(R.layout.activity_post_type_selection);
+    }
+
+    @Override
+    protected void setupViews() {
         setToolbar(R.id.toolbar, true);
 
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.2f));
 
         data = Categories.getCategories();
-        recyclerView = (RecyclerView) findViewById(R.id.location_recycler_view);
 
         adapter = new SearchableRecyclerAdapter(false, false, this, data);
         adapter.setOnItemSelectedListener(this);
@@ -54,11 +58,6 @@ public class PostCategoriesChooseActivity extends BaseActivity
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    protected void setupViews() {
-
     }
 
     @Override

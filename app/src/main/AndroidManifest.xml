@@ -132,7 +132,7 @@
                 android:value=".ui.CompanyFeedActivity" />
         </activity>
         <activity
-            android:name=".ui.results.PostCategoriesChooseActivity"
+            android:name=".ui.results.PostTypeSelectionResult"
             android:label="@string/quiz_label_create_post_activity"
             android:parentActivityName=".ui.CompanyFeedActivity"
             android:theme="@style/AppTheme.NoActionBar">
