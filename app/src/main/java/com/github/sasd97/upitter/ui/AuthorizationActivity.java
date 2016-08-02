@@ -162,7 +162,7 @@ public class AuthorizationActivity extends BaseActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TWITTER_SIGN_IN_REQUEST)
             loginPagerAdapter
-                .getUserLoginFragment()
+                .getUserAuthorizationFragment()
                 .onActivityResult(requestCode, resultCode, data);
     }
 

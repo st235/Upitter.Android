@@ -19,24 +19,27 @@ import com.isseiaoki.simplecropview.CropImageView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 /**
  * Created by Alexander Dadukin on 10.05.2016.
  */
-public class CropFragment extends BaseFragment implements OnEditImageChooseListener {
+public class GalleryImageCropFragment extends BaseFragment implements OnEditImageChooseListener {
 
     private static final String IMAGE_PATH = "IMAGE_PATH";
 
     private boolean isInFreeMode = false;
-    private LinearLayout rotateLinearLayout;
-    private LinearLayout freeModeLinearLayout;
-    CropImageView cropImageView;
 
-    public CropFragment() {
+    @BindView(R.id.image_cropper) CropImageView cropImageView;
+    @BindView(R.id.rotate_view_crop_fragment) LinearLayout rotateLinearLayout;
+    @BindView(R.id.free_mode_view_crop_fragment) LinearLayout freeModeLinearLayout;
+
+    public GalleryImageCropFragment() {
         super(R.layout.crop_fragment);
     }
 
-    public static CropFragment getFragment(String path) {
-        CropFragment fragment = new CropFragment();
+    public static GalleryImageCropFragment getFragment(String path) {
+        GalleryImageCropFragment fragment = new GalleryImageCropFragment();
         Bundle args = new Bundle();
         args.putString(IMAGE_PATH, path);
         fragment.setArguments(args);
@@ -44,13 +47,8 @@ public class CropFragment extends BaseFragment implements OnEditImageChooseListe
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void setupViews() {
         final String path = getArguments().getString(IMAGE_PATH);
-
-        cropImageView = (CropImageView) findViewById(R.id.image_cropper);
-        rotateLinearLayout = (LinearLayout) findViewById(R.id.rotate_view_crop_fragment);
-        freeModeLinearLayout = (LinearLayout) findViewById(R.id.free_mode_view_crop_fragment);
 
         Glide
                 .with(this)
@@ -78,11 +76,6 @@ public class CropFragment extends BaseFragment implements OnEditImageChooseListe
                 cropImageView.setCropMode(cropMode);
             }
         });
-    }
-
-    @Override
-    protected void setupViews() {
-
     }
 
     @Override

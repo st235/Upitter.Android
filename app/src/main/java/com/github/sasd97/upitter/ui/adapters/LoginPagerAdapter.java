@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.fragments.CompanyAuthorizationFragment;
-import com.github.sasd97.upitter.ui.fragments.UserLoginFragment;
+import com.github.sasd97.upitter.ui.fragments.UserAuthorizationFragment;
 
 /**
  * Created by Alexander Dadukin on 06.06.2016.
@@ -18,14 +18,14 @@ public class LoginPagerAdapter extends FragmentPagerAdapter {
     private final int PAGES_AMOUNT = 2;
 
     private Context context;
-    private UserLoginFragment userLoginFragment;
+    private UserAuthorizationFragment userAuthorizationFragment;
     private CompanyAuthorizationFragment companyAuthorizationFragment;
 
     public LoginPagerAdapter(Context context, FragmentManager fragmentManager) {
         super(fragmentManager);
 
         this.context = context;
-        userLoginFragment = UserLoginFragment.getFragment();
+        userAuthorizationFragment = UserAuthorizationFragment.getFragment();
         companyAuthorizationFragment = CompanyAuthorizationFragment.getFragment();
     }
 
@@ -33,11 +33,11 @@ public class LoginPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return userLoginFragment;
+                return userAuthorizationFragment;
             case 1:
                 return companyAuthorizationFragment;
             default:
-                return userLoginFragment;
+                return userAuthorizationFragment;
         }
     }
 
@@ -58,7 +58,7 @@ public class LoginPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
-    public UserLoginFragment getUserLoginFragment() {
-        return userLoginFragment;
+    public UserAuthorizationFragment getUserAuthorizationFragment() {
+        return userAuthorizationFragment;
     }
 }

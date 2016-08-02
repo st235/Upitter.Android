@@ -1,9 +1,7 @@
 package com.github.sasd97.upitter.ui.fragments;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -45,7 +43,7 @@ import static com.github.sasd97.upitter.Upitter.*;
  * Created by Alexander Dadukin on 06.06.2016.
  */
 
-public class UserLoginFragment extends BaseFragment
+public class UserAuthorizationFragment extends BaseFragment
         implements GoogleApiClient.OnConnectionFailedListener,
         FacebookCallback<LoginResult>,
         UserAuthorizationQueryService.OnSocialAuthorizationListener {
@@ -57,18 +55,16 @@ public class UserLoginFragment extends BaseFragment
     @BindView(R.id.google_plus_button_user_login_fragment) Button signGoogleButton;
     @BindView(R.id.twitter_button_user_login_fragment) Button signTwitterButton;
 
-    public UserLoginFragment() {
-        super(R.layout.user_login_fragment);
+    public UserAuthorizationFragment() {
+        super(R.layout.fragment_user_authorization);
     }
 
-    public static UserLoginFragment getFragment() {
-        return new UserLoginFragment();
+    public static UserAuthorizationFragment getFragment() {
+        return new UserAuthorizationFragment();
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    protected void setupViews() {
         final String[] facebookScope = getResources().getStringArray(R.array.facebook_app_scope);
         googleClient = Authorization.google(getContext(), getActivity(), this);
         LoginManager.getInstance().registerCallback(Authorization.facebook(), this);
@@ -94,7 +90,7 @@ public class UserLoginFragment extends BaseFragment
         signFacebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(UserLoginFragment.this, Arrays.asList(facebookScope));
+                LoginManager.getInstance().logInWithReadPermissions(UserAuthorizationFragment.this, Arrays.asList(facebookScope));
             }
         });
 
@@ -106,9 +102,6 @@ public class UserLoginFragment extends BaseFragment
             }
         });
     }
-
-    @Override
-    protected void setupViews() {}
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
