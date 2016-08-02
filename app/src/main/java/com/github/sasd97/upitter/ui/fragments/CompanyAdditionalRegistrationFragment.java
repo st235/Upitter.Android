@@ -35,7 +35,7 @@ import static com.github.sasd97.upitter.Upitter.*;
  * Created by alexander on 28.06.16.
  */
 
-public class CompanyAddressRegistrationFragment extends BaseFragment
+public class CompanyAdditionalRegistrationFragment extends BaseFragment
         implements View.OnClickListener,
         GeocoderService.OnAddressListener,
         CompanyAuthorizationQueryService.OnCompanyAuthorizationListener {
@@ -50,12 +50,12 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
     private Button setPositionButton;
     private RelativeLayout addPositionRelativeLayout;
 
-    public CompanyAddressRegistrationFragment() {
-        super(R.layout.company_registration_address_fragment);
+    public CompanyAdditionalRegistrationFragment() {
+        super(R.layout.fragment_company_additional_registration);
     }
 
-    public static CompanyAddressRegistrationFragment getFragment(@NonNull CompanyModel.Builder companyModelBuilder) {
-        CompanyAddressRegistrationFragment fragment = new CompanyAddressRegistrationFragment();
+    public static CompanyAdditionalRegistrationFragment getFragment(@NonNull CompanyModel.Builder companyModelBuilder) {
+        CompanyAdditionalRegistrationFragment fragment = new CompanyAdditionalRegistrationFragment();
         fragment.setCompanyBuilder(companyModelBuilder);
         return fragment;
     }

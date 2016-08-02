@@ -8,7 +8,7 @@ import com.github.sasd97.upitter.events.OnCompanyRegistrationListener;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.fragments.CompanyAddressRegistrationFragment;
+import com.github.sasd97.upitter.ui.fragments.CompanyAdditionalRegistrationFragment;
 import com.github.sasd97.upitter.ui.fragments.CompanyBaseRegistrationFragment;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
@@ -46,7 +46,7 @@ public class CompanyRegistrationActivity extends BaseActivity
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_holder_business_registration_activity, CompanyAddressRegistrationFragment.getFragment(builder))
+                .replace(R.id.fragment_holder_business_registration_activity, CompanyAdditionalRegistrationFragment.getFragment(builder))
                 .addToBackStack(null)
                 .commit();
     }
