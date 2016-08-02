@@ -16,7 +16,7 @@ import com.github.sasd97.upitter.holders.CompanyHolder;
 import com.github.sasd97.upitter.holders.PeopleHolder;
 import com.github.sasd97.upitter.holders.UserHolder;
 import com.github.sasd97.upitter.models.UserModel;
-import com.github.sasd97.upitter.ui.adapters.LoginPagerAdapter;
+import com.github.sasd97.upitter.ui.adapters.pagers.AuthorizationPager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Permissions;
 
@@ -44,7 +44,7 @@ public class AuthorizationActivity extends BaseActivity
     @BindView(R.id.tab_layout_login_activity) TabLayout tabLayout;
     @BindView(R.id.root_view_login_activity) View rootView;
 
-    private LoginPagerAdapter loginPagerAdapter;
+    private AuthorizationPager authorizationPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +61,9 @@ public class AuthorizationActivity extends BaseActivity
 
         initColors();
 
-        loginPagerAdapter = new LoginPagerAdapter(this, getSupportFragmentManager());
+        authorizationPager = new AuthorizationPager(this, getSupportFragmentManager());
 
-        viewPager.setAdapter(loginPagerAdapter);
+        viewPager.setAdapter(authorizationPager);
         viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -161,7 +161,7 @@ public class AuthorizationActivity extends BaseActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TWITTER_SIGN_IN_REQUEST)
-            loginPagerAdapter
+            authorizationPager
                 .getUserAuthorizationFragment()
                 .onActivityResult(requestCode, resultCode, data);
     }

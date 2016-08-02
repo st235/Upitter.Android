@@ -35,7 +35,7 @@ public class GalleryImageCropFragment extends BaseFragment implements OnEditImag
     @BindView(R.id.free_mode_view_crop_fragment) LinearLayout freeModeLinearLayout;
 
     public GalleryImageCropFragment() {
-        super(R.layout.crop_fragment);
+        super(R.layout.fragment_gallery_image_crop);
     }
 
     public static GalleryImageCropFragment getFragment(String path) {

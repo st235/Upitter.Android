@@ -89,7 +89,7 @@ public class CountryCodeListRecycler
 
     @Override
     public CountryCodeChooseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_country_code_selection, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_country_code_list, parent, false);
         CountryCodeChooseViewHolder holder = new CountryCodeChooseViewHolder(v);
         holder.setOnItemClickListener(listener);
         return holder;

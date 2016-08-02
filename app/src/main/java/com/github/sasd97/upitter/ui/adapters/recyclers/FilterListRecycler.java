@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.ui.adapters;
+package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
@@ -11,14 +11,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
 
 /**
  * Created by Alex on 31.01.2016.
  */
 
-public class FilterChooseRecyclerAdapter extends RecyclerView.Adapter<FilterChooseRecyclerAdapter.FilterChooseViewHolder> {
+public class FilterListRecycler extends RecyclerView.Adapter<FilterListRecycler.FilterChooseViewHolder> {
 
     public interface OnFilterChooseListener {
         void onChoose(int position);
@@ -29,7 +32,7 @@ public class FilterChooseRecyclerAdapter extends RecyclerView.Adapter<FilterChoo
     private ArrayList<Integer> previewsList;
     private static OnFilterChooseListener onFilterChooseListener;
 
-    public FilterChooseRecyclerAdapter(Context context, ArrayList<String> filterList, ArrayList<Integer> previewsList) {
+    public FilterListRecycler(Context context, ArrayList<String> filterList, ArrayList<Integer> previewsList) {
         this.context = context;
         this.filterList = filterList;
         this.previewsList = previewsList;
@@ -43,18 +46,19 @@ public class FilterChooseRecyclerAdapter extends RecyclerView.Adapter<FilterChoo
         onFilterChooseListener = listener;
     }
 
-    public static class FilterChooseViewHolder extends RecyclerView.ViewHolder
+    public static class FilterChooseViewHolder extends BaseViewHolder
                                                 implements View.OnClickListener {
 
-        private ImageView filterPreview;
-        private TextView filterTitle;
+        @BindView(R.id.filter_title) TextView filterTitle;
+        @BindView(R.id.filter_preview) ImageView filterPreview;
 
         public FilterChooseViewHolder(View itemView) {
             super(itemView);
+        }
 
+        @Override
+        protected void setupViews() {
             itemView.setOnClickListener(this);
-            filterPreview = (ImageView) itemView.findViewById(R.id.filter_preview);
-            filterTitle = (TextView) itemView.findViewById(R.id.filter_title);
         }
 
         @Override
@@ -66,7 +70,7 @@ public class FilterChooseRecyclerAdapter extends RecyclerView.Adapter<FilterChoo
 
     @Override
     public FilterChooseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.filter_image_single_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_filter_list, parent, false);
         return new FilterChooseViewHolder(v);
     }
 

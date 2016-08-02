@@ -1,9 +1,8 @@
-package com.github.sasd97.upitter.ui.adapters;
+package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +16,20 @@ import com.github.sasd97.upitter.components.NumerableCheckView;
 import com.github.sasd97.upitter.events.OnGalleryInteractionListener;
 import com.github.sasd97.upitter.models.skeletons.ImageSkeleton;
 import com.github.sasd97.upitter.ui.adapters.filters.GalleryImageFilter;
+import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.mutators.PhotoMutator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by Alex on 31.01.2016.
  */
 
-public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecyclerAdapter.ImageChooserViewHolder>
+public class GalleryImageGridRecycler extends RecyclerView.Adapter<GalleryImageGridRecycler.ImageChooserViewHolder>
                                         implements Filterable {
 
     private Context context;
@@ -42,10 +44,10 @@ public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecycler
 
     private OnGalleryInteractionListener galleryInteractionListener;
 
-    public GalleryRecyclerAdapter(boolean isMultiSelectionMode,
-                                  int maxSelectItemsAmount,
-                                  @NonNull Context context,
-                                  @NonNull ArrayList<ImageSkeleton> imagesPaths) {
+    public GalleryImageGridRecycler(boolean isMultiSelectionMode,
+                                    int maxSelectItemsAmount,
+                                    @NonNull Context context,
+                                    @NonNull ArrayList<ImageSkeleton> imagesPaths) {
         this.context = context;
 
         this.isMultiSelectionMode = isMultiSelectionMode;
@@ -61,19 +63,19 @@ public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecycler
         galleryInteractionListener = listener;
     }
 
-    public class ImageChooserViewHolder extends RecyclerView.ViewHolder
+    public class ImageChooserViewHolder extends BaseViewHolder
                                                 implements View.OnClickListener {
 
-        private ImageView imagePreview;
-        private NumerableCheckView multiSelectCounterCheckView;
+        @BindView(R.id.image_preview_gallery_thumbnail_single_view) ImageView imagePreview;
+        @BindView(R.id.multi_select_checkbox_gallery_thumbnail_single_view) NumerableCheckView multiSelectCounterCheckView;
 
         public ImageChooserViewHolder(View itemView) {
             super(itemView);
+        }
 
+        @Override
+        protected void setupViews() {
             itemView.setOnClickListener(this);
-
-            imagePreview = (ImageView) itemView.findViewById(R.id.image_preview_gallery_thumbnail_single_view);
-            multiSelectCounterCheckView = (NumerableCheckView) itemView.findViewById(R.id.multi_select_checkbox_gallery_thumbnail_single_view);
 
             if (!isMultiSelectionMode) {
                 multiSelectCounterCheckView.setVisibility(View.GONE);
@@ -134,7 +136,7 @@ public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecycler
 
     @Override
     public ImageChooserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_thumbnail_single_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_gallery_image_grid, parent, false);
         return new ImageChooserViewHolder(v);
     }
 

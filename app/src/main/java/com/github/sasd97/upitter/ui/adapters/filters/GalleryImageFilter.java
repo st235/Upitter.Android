@@ -3,7 +3,7 @@ package com.github.sasd97.upitter.ui.adapters.filters;
 import android.widget.Filter;
 
 import com.github.sasd97.upitter.models.skeletons.ImageSkeleton;
-import com.github.sasd97.upitter.ui.adapters.GalleryRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.GalleryImageGridRecycler;
 import com.github.sasd97.upitter.utils.Names;
 
 import java.util.ArrayList;
@@ -14,15 +14,15 @@ import java.util.ArrayList;
 
 public class GalleryImageFilter extends Filter {
 
-    private GalleryRecyclerAdapter galleryRecyclerAdapter;
+    private GalleryImageGridRecycler galleryImageGridRecycler;
 
     private ArrayList<ImageSkeleton> originalList;
     private ArrayList<ImageSkeleton> filteredList = new ArrayList<>();
 
-    public GalleryImageFilter(GalleryRecyclerAdapter adapter, ArrayList<ImageSkeleton> list) {
+    public GalleryImageFilter(GalleryImageGridRecycler adapter, ArrayList<ImageSkeleton> list) {
         super();
 
-        galleryRecyclerAdapter = adapter;
+        galleryImageGridRecycler = adapter;
         originalList = list;
     }
 
@@ -43,6 +43,6 @@ public class GalleryImageFilter extends Filter {
 
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
-        galleryRecyclerAdapter.filter((ArrayList<ImageSkeleton>) results.values);
+        galleryImageGridRecycler.filter((ArrayList<ImageSkeleton>) results.values);
     }
 }

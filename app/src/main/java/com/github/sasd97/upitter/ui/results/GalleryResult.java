@@ -20,8 +20,8 @@ import com.github.sasd97.upitter.events.OnGalleryInteractionListener;
 import com.github.sasd97.upitter.events.OnSearchListener;
 import com.github.sasd97.upitter.models.FolderModel;
 import com.github.sasd97.upitter.models.skeletons.ImageSkeleton;
-import com.github.sasd97.upitter.ui.adapters.GalleryRecyclerAdapter;
-import com.github.sasd97.upitter.ui.adapters.GallerySpinnerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.GalleryImageGridRecycler;
+import com.github.sasd97.upitter.ui.adapters.spinner.GalleryAlbumPreviewSpinner;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.utils.Gallery;
@@ -52,8 +52,8 @@ public class GalleryResult extends BaseActivity
     private int multiSelectMaxAmount;
     private boolean isMultiSelectionMode = false;
 
-    private GallerySpinnerAdapter gallerySpinnerAdapter;
-    private GalleryRecyclerAdapter galleryRecyclerAdapter;
+    private GalleryAlbumPreviewSpinner galleryAlbumPreviewSpinner;
+    private GalleryImageGridRecycler galleryImageGridRecycler;
 
     @BindView(R.id.spinner_nav_gallery_activity) Spinner spinner;
     @BindView(R.id.fab_gallery_activity) FloatingActionButton applyFab;
@@ -77,12 +77,12 @@ public class GalleryResult extends BaseActivity
 
         spinner.setOnItemSelectedListener(this);
 
-        galleryRecyclerAdapter = new GalleryRecyclerAdapter(isMultiSelectionMode, multiSelectMaxAmount,
+        galleryImageGridRecycler = new GalleryImageGridRecycler(isMultiSelectionMode, multiSelectMaxAmount,
                 this, new ArrayList<ImageSkeleton>());
 
         imageGridRecyclerView.setHasFixedSize(true);
-        galleryRecyclerAdapter.setOnImageChooserListener(this);
-        imageGridRecyclerView.setAdapter(galleryRecyclerAdapter);
+        galleryImageGridRecycler.setOnImageChooserListener(this);
+        imageGridRecyclerView.setAdapter(galleryImageGridRecycler);
 
         applyFab.setOnClickListener(this);
 
@@ -121,7 +121,7 @@ public class GalleryResult extends BaseActivity
     @Override
     public void onClick(View view) {
         ArrayList<String> finalPaths = new ArrayList<>();
-        for (ImageSkeleton photo: galleryRecyclerAdapter.getFilterImageList())
+        for (ImageSkeleton photo: galleryImageGridRecycler.getFilterImageList())
             if (photo.isChecked()) finalPaths.add(photo.getPath());
 
         if (finalPaths.size() == 0) return;
@@ -134,10 +134,10 @@ public class GalleryResult extends BaseActivity
 
     @Override
     public void onSearched(ArrayList<String> paths) {
-        spinner.setAdapter(gallerySpinnerAdapter);
+        spinner.setAdapter(galleryAlbumPreviewSpinner);
         spinner.setVisibility(View.VISIBLE);
 
-        galleryRecyclerAdapter.addAll(PhotoMutator.mutate(paths));
+        galleryImageGridRecycler.addAll(PhotoMutator.mutate(paths));
         imageGridRecyclerView.setVisibility(View.VISIBLE);
         progressRelativeLayout.setVisibility(View.GONE);
     }
@@ -145,7 +145,7 @@ public class GalleryResult extends BaseActivity
     @Override
     public void onFoldersParsed(ArrayList<FolderModel> folders) {
         folders.add(FIRST_POSITION, Gallery.createAllFolder(this, folders));
-        gallerySpinnerAdapter = new GallerySpinnerAdapter(this, R.layout.gallery_spinner_single_view, folders);
+        galleryAlbumPreviewSpinner = new GalleryAlbumPreviewSpinner(this, R.layout.row_gallery_album_preview, folders);
     }
 
     @Override
@@ -176,7 +176,7 @@ public class GalleryResult extends BaseActivity
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-       galleryRecyclerAdapter.getFilter().filter(gallerySpinnerAdapter.getAlbum(position).getPath());
+       galleryImageGridRecycler.getFilter().filter(galleryAlbumPreviewSpinner.getAlbum(position).getPath());
     }
 
     @Override
@@ -189,7 +189,7 @@ public class GalleryResult extends BaseActivity
         Intent intent = new Intent(this, AlbumPreviewGallerySchema.class);
         intent.putExtra(PATH_ATTACH, path.getPath());
         intent.putExtra(POSITION_ATTACH, position);
-        intent.putStringArrayListExtra(LIST_ATTACH, galleryRecyclerAdapter.getFilterPathList());
+        intent.putStringArrayListExtra(LIST_ATTACH, galleryImageGridRecycler.getFilterPathList());
 
         if (!isMultiSelectionMode) {
             startActivityForResult(intent, 123);

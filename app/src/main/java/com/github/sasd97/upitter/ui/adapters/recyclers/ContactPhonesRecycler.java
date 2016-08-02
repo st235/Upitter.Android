@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.ui.adapters;
+package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,32 +9,37 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
 
 /**
  * Created by alexander on 28.06.16.
  */
 
-public class PhonesRecyclerAdapter extends RecyclerView.Adapter<PhonesRecyclerAdapter.PhonesViewHolder> {
+public class ContactPhonesRecycler extends RecyclerView.Adapter<ContactPhonesRecycler.PhonesViewHolder> {
 
     private final String EMPTY_PHONE_HOLDER = "";
     private ArrayList<String> phones;
 
-    public PhonesRecyclerAdapter() {
+    public ContactPhonesRecycler() {
         phones = new ArrayList<>();
         phones.add(EMPTY_PHONE_HOLDER);
     }
 
-    public class PhonesViewHolder extends RecyclerView.ViewHolder implements TextWatcher {
+    public class PhonesViewHolder extends BaseViewHolder implements TextWatcher {
 
-        private MaterialEditText phoneEditText;
+        @BindView(R.id.edittext_phone_single_view) MaterialEditText phoneEditText;
 
         public PhonesViewHolder(View itemView) {
             super(itemView);
+        }
 
-            phoneEditText = (MaterialEditText) itemView.findViewById(R.id.edittext_phone_single_view);
+        @Override
+        protected void setupViews() {
             phoneEditText.addTextChangedListener(this);
         }
 
@@ -57,7 +62,7 @@ public class PhonesRecyclerAdapter extends RecyclerView.Adapter<PhonesRecyclerAd
     @Override
     public PhonesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View v = LayoutInflater.from(context).inflate(R.layout.phone_single_view, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.row_contact_phones, parent, false);
         return new PhonesViewHolder(v);
     }
 

@@ -18,7 +18,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.components.ImageUploaderView;
 import com.github.sasd97.upitter.events.OnCompanyRegistrationListener;
 import com.github.sasd97.upitter.models.CompanyModel;
-import com.github.sasd97.upitter.ui.adapters.PhonesRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.ContactPhonesRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.results.CategoriesSelectionResult;
@@ -48,7 +48,7 @@ public class CompanyBaseRegistrationFragment
     private CompanyModel.Builder companyBuilder;
     private ArrayList<Integer> categoriesSelected;
     private OnCompanyRegistrationListener listener;
-    private PhonesRecyclerAdapter phonesRecyclerAdapter;
+    private ContactPhonesRecycler contactPhonesRecycler;
 
     @BindView(R.id.add_phone_button_registration_base_fragment) RelativeLayout addPhoneLayout;
     @BindView(R.id.set_position_business_registration_base_fragment) Button setPositionButton;
@@ -102,10 +102,10 @@ public class CompanyBaseRegistrationFragment
         });
         avatarImageUploaderView.setOnImageUploadListener(this);
 
-        phonesRecyclerAdapter = new PhonesRecyclerAdapter();
+        contactPhonesRecycler = new ContactPhonesRecycler();
         phonesRecyclerView.setHasFixedSize(true);
         phonesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        phonesRecyclerView.setAdapter(phonesRecyclerAdapter);
+        phonesRecyclerView.setAdapter(contactPhonesRecycler);
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -119,7 +119,7 @@ public class CompanyBaseRegistrationFragment
                         LinearLayout.LayoutParams lp =
                                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                                         LinearLayout.LayoutParams.WRAP_CONTENT);
-                        phonesRecyclerAdapter.removePhone(viewHolder.getAdapterPosition());
+                        contactPhonesRecycler.removePhone(viewHolder.getAdapterPosition());
                         phonesRecyclerView.setLayoutParams(lp);
                     }
                 };
@@ -138,7 +138,7 @@ public class CompanyBaseRegistrationFragment
         companyBuilder
                         .name(companyNameEditText.getText().toString().trim())
                         .description(companyDescriptionEditText.getText().toString().trim())
-                        .contactPhones(phonesRecyclerAdapter.getPhones())
+                        .contactPhones(contactPhonesRecycler.getPhones())
                         .site(companySiteEditText.getText().toString().trim());
 
         listener.onBaseInfoPrepared(companyBuilder);
@@ -147,7 +147,7 @@ public class CompanyBaseRegistrationFragment
     private void onAddPhoneClick() {
         LinearLayout.LayoutParams lp =
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        phonesRecyclerAdapter.addPhone();
+        contactPhonesRecycler.addPhone();
         phonesRecyclerView.setLayoutParams(lp);
     }
 
@@ -207,8 +207,8 @@ public class CompanyBaseRegistrationFragment
         if (!result) return false;
         if (!isExtraRequired) return result;
 
-        if (phonesRecyclerAdapter.getPhones() == null ||
-                phonesRecyclerAdapter.getPhones().size() == 0 ||
+        if (contactPhonesRecycler.getPhones() == null ||
+                contactPhonesRecycler.getPhones().size() == 0 ||
                     companySiteEditText.getText().length() == 0) {
             Snackbar
                     .make(getView(), getString(R.string.extra_information_was_not_supply_company_registration_activity), Snackbar.LENGTH_LONG)

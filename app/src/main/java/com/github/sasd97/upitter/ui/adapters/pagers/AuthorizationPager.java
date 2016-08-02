@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.ui.adapters;
+package com.github.sasd97.upitter.ui.adapters.pagers;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -13,7 +13,7 @@ import com.github.sasd97.upitter.ui.fragments.UserAuthorizationFragment;
  * Created by Alexander Dadukin on 06.06.2016.
  */
 
-public class LoginPagerAdapter extends FragmentPagerAdapter {
+public class AuthorizationPager extends FragmentPagerAdapter {
 
     private final int PAGES_AMOUNT = 2;
 
@@ -21,7 +21,7 @@ public class LoginPagerAdapter extends FragmentPagerAdapter {
     private UserAuthorizationFragment userAuthorizationFragment;
     private CompanyAuthorizationFragment companyAuthorizationFragment;
 
-    public LoginPagerAdapter(Context context, FragmentManager fragmentManager) {
+    public AuthorizationPager(Context context, FragmentManager fragmentManager) {
         super(fragmentManager);
 
         this.context = context;

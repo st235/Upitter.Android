@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -15,7 +14,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.OnApplyLongListener;
 import com.github.sasd97.upitter.events.OnEditImageChooseListener;
-import com.github.sasd97.upitter.ui.adapters.FilterChooseRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.FilterListRecycler;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.filters.GPUImageFilterTools;
@@ -36,7 +35,7 @@ import jp.co.cyberagent.android.gpuimage.GPUImageView;
  */
 
 public class GalleryImageFilterFragment extends BaseFragment
-        implements FilterChooseRecyclerAdapter.OnFilterChooseListener,
+        implements FilterListRecycler.OnFilterChooseListener,
         OnEditImageChooseListener {
 
     private static final String IMAGE_PATH = "IMAGE_PATH";
@@ -99,7 +98,7 @@ public class GalleryImageFilterFragment extends BaseFragment
                 });
 
         ArrayList<Integer> arrayList = new ArrayList<Integer>(Arrays.asList(filterPreviews));
-        FilterChooseRecyclerAdapter filterChooseRecyclerAdapter = new FilterChooseRecyclerAdapter(
+        FilterListRecycler filterListRecycler = new FilterListRecycler(
                 getActivity(),
                 new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.filter_list))),
                 arrayList
@@ -108,11 +107,11 @@ public class GalleryImageFilterFragment extends BaseFragment
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        filterChooseRecyclerAdapter.setListener(this);
+        filterListRecycler.setListener(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(filterChooseRecyclerAdapter);
+        recyclerView.setAdapter(filterListRecycler);
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_INSIDE);
         initData();
     }

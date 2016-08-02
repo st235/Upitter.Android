@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.ui.adapters;
+package com.github.sasd97.upitter.ui.adapters.pagers;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * Created by Alexadner Dadukin on 26.06.2016.
  */
-public class GalleryAlbumPagerAdapter extends FragmentPagerAdapter {
+public class GalleryAlbumPager extends FragmentPagerAdapter {
 
     private List<String> data;
 
-    public GalleryAlbumPagerAdapter(FragmentManager fm, List<String> data) {
+    public GalleryAlbumPager(FragmentManager fm, List<String> data) {
         super(fm);
         this.data = data;
     }

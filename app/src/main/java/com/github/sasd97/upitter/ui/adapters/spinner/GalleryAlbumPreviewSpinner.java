@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.ui.adapters;
+package com.github.sasd97.upitter.ui.adapters.spinner;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.FolderModel;
-import com.github.sasd97.upitter.utils.Dimens;
 
 import java.util.ArrayList;
 
@@ -20,18 +19,18 @@ import java.util.ArrayList;
  * Created by Alex on 03.02.2016.
  */
 
-public class GallerySpinnerAdapter extends ArrayAdapter {
+public class GalleryAlbumPreviewSpinner extends ArrayAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
 
     private ArrayList<FolderModel> folders;
 
-    public GallerySpinnerAdapter(Context context, int resource) {
+    public GalleryAlbumPreviewSpinner(Context context, int resource) {
         super(context, resource);
     }
 
-    public GallerySpinnerAdapter(Context context, int resources, ArrayList<FolderModel> folders) {
+    public GalleryAlbumPreviewSpinner(Context context, int resources, ArrayList<FolderModel> folders) {
         super(context, resources, folders);
 
         this.context = context;
@@ -42,7 +41,7 @@ public class GallerySpinnerAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) convertView = layoutInflater.inflate(R.layout.gallery_spinner_single_view, parent, false);
+        if (convertView == null) convertView = layoutInflater.inflate(R.layout.row_gallery_album_preview, parent, false);
 
         FolderModel folderModel = folders.get(position);
 
@@ -65,7 +64,7 @@ public class GallerySpinnerAdapter extends ArrayAdapter {
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) convertView = layoutInflater.inflate(R.layout.gallery_spinner_single_view, parent, false);
+        if (convertView == null) convertView = layoutInflater.inflate(R.layout.row_gallery_album_preview, parent, false);
 
         FolderModel folderModel = folders.get(position);
 

@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.GalleryConstants;
-import com.github.sasd97.upitter.ui.adapters.GalleryAlbumPagerAdapter;
+import com.github.sasd97.upitter.ui.adapters.pagers.GalleryAlbumPager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.results.ImageEditingResult;
 import com.github.sasd97.upitter.utils.SlidrUtils;
@@ -39,7 +39,7 @@ public class AlbumPreviewGallerySchema extends BaseActivity {
     private int currentMode;
 
     private GalleryConstants.AlbumMode mode;
-    private GalleryAlbumPagerAdapter mSectionsPagerAdapter;
+    private GalleryAlbumPager mSectionsPagerAdapter;
 
     @BindView(R.id.container) ViewPager mViewPager;
 
@@ -61,7 +61,7 @@ public class AlbumPreviewGallerySchema extends BaseActivity {
         mode = GalleryConstants.AlbumMode.obtainMode(currentMode);
         albumSize = imagePaths.size();
 
-        mSectionsPagerAdapter = new GalleryAlbumPagerAdapter(getSupportFragmentManager(), imagePaths);
+        mSectionsPagerAdapter = new GalleryAlbumPager(getSupportFragmentManager(), imagePaths);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(currentGalleryPosition);
 
