@@ -31,7 +31,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/gallery_content" />
+    <include layout="@layout/content_gallery" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_gallery_activity"

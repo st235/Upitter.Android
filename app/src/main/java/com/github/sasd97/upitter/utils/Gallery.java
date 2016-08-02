@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.FolderModel;
-import com.github.sasd97.upitter.ui.results.GalleryActivity;
+import com.github.sasd97.upitter.ui.results.GalleryResult;
 
 import java.util.ArrayList;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
@@ -42,7 +42,7 @@ public class Gallery {
     public static class Builder {
 
         private Context from = null;
-        private Class<?> to = GalleryActivity.class;
+        private Class<?> to = GalleryResult.class;
         private boolean multiSelectionMode = false;
         private int selectionMaxCounter = 1;
 

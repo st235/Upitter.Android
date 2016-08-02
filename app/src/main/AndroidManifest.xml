@@ -80,7 +80,7 @@
             android:label="@string/title_activity_bussines_registration"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.results.GalleryActivity"
+            android:name=".ui.results.GalleryResult"
             android:label="@string/title_gallery_activity"
             android:theme="@style/AppTheme" />
         <activity

@@ -34,9 +34,11 @@ import com.r0adkll.slidr.model.SlidrPosition;
 import java.io.File;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 
-public class GalleryActivity extends BaseActivity
+public class GalleryResult extends BaseActivity
         implements View.OnClickListener,
         AdapterView.OnItemSelectedListener,
         OnSearchListener,
@@ -50,27 +52,24 @@ public class GalleryActivity extends BaseActivity
     private int multiSelectMaxAmount;
     private boolean isMultiSelectionMode = false;
 
-    private Spinner spinner;
     private GallerySpinnerAdapter gallerySpinnerAdapter;
-
-    private FloatingActionButton applyFab;
-    private AutoFitRecyclerView imageGridRecyclerView;
     private GalleryRecyclerAdapter galleryRecyclerAdapter;
 
-    private RelativeLayout progressRelativeLayout;
+    @BindView(R.id.spinner_nav_gallery_activity) Spinner spinner;
+    @BindView(R.id.fab_gallery_activity) FloatingActionButton applyFab;
+    @BindView(R.id.images_grid_gallery_activity) AutoFitRecyclerView imageGridRecyclerView;
+    @BindView(R.id.images_loading_view_gallery_activity) RelativeLayout progressRelativeLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_gallery);
+    }
 
-        setContentView(R.layout.gallery_activity);
-        setToolbar(R.id.toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-
+    @Override
+    protected void setupViews() {
+        setToolbar(R.id.toolbar, true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
 
         initConfiguration(getIntent());
@@ -88,14 +87,6 @@ public class GalleryActivity extends BaseActivity
         applyFab.setOnClickListener(this);
 
         Search.search(this);
-    }
-
-    @Override
-    protected void setupViews() {
-        progressRelativeLayout = findById(R.id.images_loading_view_gallery_activity);
-        imageGridRecyclerView = findById(R.id.images_grid_gallery_activity);
-        spinner = findById(R.id.spinner_nav_gallery_activity);
-        applyFab = findById(R.id.fab_gallery_activity);
     }
 
     private void initConfiguration(Intent config) {
