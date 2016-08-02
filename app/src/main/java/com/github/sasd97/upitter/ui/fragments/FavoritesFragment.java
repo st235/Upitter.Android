@@ -13,16 +13,16 @@ import com.github.sasd97.upitter.ui.base.BaseFragment;
 public class FavoritesFragment extends BaseFragment {
 
     public FavoritesFragment() {
-        super(R.layout.favorites_fragment);
-    }
-
-    @Override
-    protected void setupViews() {
-
+        super(R.layout.fragment_favorites);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    protected void setupViews() {
+
     }
 }
