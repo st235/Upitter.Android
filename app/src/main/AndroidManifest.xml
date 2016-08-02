@@ -141,7 +141,7 @@
                 android:value=".ui.CompanyFeedActivity" />
         </activity>
         <activity
-            android:name=".ui.PeopleTapeActivity"
+            android:name=".ui.PeopleFeedActivity"
             android:label="@string/title_activity_people_tape"
             android:theme="@style/AppTheme" />
         <activity

@@ -106,7 +106,7 @@ public class AuthorizationActivity extends BaseActivity
         switch (UserModel.UserType.getTypeByValue(UserHolder.getUserType())) {
             case People:
                 setHolder(PeopleHolder.getHolder());
-                target = PeopleTapeActivity.class;
+                target = PeopleFeedActivity.class;
                 break;
             case Company:
                 setHolder(CompanyHolder.getHolder());
@@ -114,7 +114,7 @@ public class AuthorizationActivity extends BaseActivity
                 break;
             default:
                 setHolder(PeopleHolder.getHolder());
-                target = PeopleTapeActivity.class;
+                target = PeopleFeedActivity.class;
                 break;
         }
 

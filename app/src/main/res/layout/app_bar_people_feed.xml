@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.github.sasd97.upitter.ui.PeopleTapeActivity">
+    tools:context=".ui.PeopleFeedActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/people_tape_content" />
+    <include layout="@layout/content_people_feed" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

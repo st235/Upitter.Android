@@ -15,23 +15,21 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.fragments.TapeFragment;
 
-public class PeopleTapeActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import butterknife.OnClick;
+
+public class PeopleFeedActivity extends BaseActivity
+        implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.people_tape_activity);
-        setToolbar(R.id.toolbar, true);
+        setContentView(R.layout.activity_people_feed);
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    @Override
+    protected void setupViews() {
+        setToolbar(R.id.toolbar, true);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -49,8 +47,10 @@ public class PeopleTapeActivity extends BaseActivity
     }
 
     @Override
-    protected void setupViews() {
-
+    @OnClick(R.id.fab)
+    public void onClick(View view) {
+        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 
     @Override
