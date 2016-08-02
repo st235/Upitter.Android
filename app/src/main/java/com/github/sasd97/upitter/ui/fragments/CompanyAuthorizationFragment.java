@@ -32,9 +32,12 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import butterknife.BindString;
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.RECEIVED_PHONE;
 
-public class CompanyLoginFragment extends BaseFragment
+public class CompanyAuthorizationFragment extends BaseFragment
         implements View.OnClickListener,
         Countries.OnLoadListener,
         DialCodeWatcher.OnCountryReadyListener,
@@ -42,35 +45,35 @@ public class CompanyLoginFragment extends BaseFragment
         GeocoderService.OnAddressListener,
         CompanyAuthorizationQueryService.OnCompanyAuthorizationListener {
 
-    private boolean notACountryCode = false;
-    private String COUNTRY_NOT_VALID;
-    private String EMPTY_FIELD;
+    @BindString(R.string.empty_field) private String EMPTY_FIELD;
+    @BindString(R.string.nothing_found_country_code_choose) private String COUNTRY_NOT_VALID;
 
+    private boolean notACountryCode = false;
     private LocationService locationService;
     private CompanyAuthorizationQueryService queryService;
 
-    private TextView countryDisplayTextView;
-    private Button continueRegistrationButton;
-    private MaterialEditText countryDialCodeEditText;
-    private MaterialEditText countryBodyCodeEditText;
+    @BindView(R.id.country_display_company_login_fragment) TextView countryDisplayTextView;
+    @BindView(R.id.continue_registration_button_company_login_fragment) Button continueRegistrationButton;
+    @BindView(R.id.country_dial_code_company_login_fragment) MaterialEditText countryDialCodeEditText;
+    @BindView(R.id.country_body_company_login_fragment) MaterialEditText countryBodyCodeEditText;
 
     private PhoneModel currentPhone;
 
-    public CompanyLoginFragment() {
-        super(R.layout.company_login_fragment);
+    public CompanyAuthorizationFragment() {
+        super(R.layout.fragment_company_authorization);
     }
 
-    public static CompanyLoginFragment getFragment() {
-        return new CompanyLoginFragment();
+    public static CompanyAuthorizationFragment getFragment() {
+        return new CompanyAuthorizationFragment();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
 
-        EMPTY_FIELD = getString(R.string.empty_field);
-        COUNTRY_NOT_VALID = getString(R.string.nothing_found_country_code_choose);
-
+    @Override
+    protected void setupViews() {
         locationService = LocationService.getService(this);
         queryService = CompanyAuthorizationQueryService.getService(this);
 
@@ -80,14 +83,6 @@ public class CompanyLoginFragment extends BaseFragment
         prepareCountryDisplay(countryDisplayTextView);
 
         countryDialCodeEditText.addTextChangedListener(new DialCodeWatcher(countryDialCodeEditText, this));
-    }
-
-    @Override
-    protected void setupViews() {
-        continueRegistrationButton = findById(R.id.continue_registration_button_company_login_fragment);
-        countryDisplayTextView = findById(R.id.country_display_company_login_fragment);
-        countryDialCodeEditText = findById(R.id.country_dial_code_company_login_fragment);
-        countryBodyCodeEditText = findById(R.id.country_body_company_login_fragment);
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.ui.fragments.CompanyLoginFragment;
+import com.github.sasd97.upitter.ui.fragments.CompanyAuthorizationFragment;
 import com.github.sasd97.upitter.ui.fragments.UserLoginFragment;
 
 /**
@@ -19,14 +19,14 @@ public class LoginPagerAdapter extends FragmentPagerAdapter {
 
     private Context context;
     private UserLoginFragment userLoginFragment;
-    private CompanyLoginFragment companyLoginFragment;
+    private CompanyAuthorizationFragment companyAuthorizationFragment;
 
     public LoginPagerAdapter(Context context, FragmentManager fragmentManager) {
         super(fragmentManager);
 
         this.context = context;
         userLoginFragment = UserLoginFragment.getFragment();
-        companyLoginFragment = CompanyLoginFragment.getFragment();
+        companyAuthorizationFragment = CompanyAuthorizationFragment.getFragment();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class LoginPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return userLoginFragment;
             case 1:
-                return companyLoginFragment;
+                return companyAuthorizationFragment;
             default:
                 return userLoginFragment;
         }
