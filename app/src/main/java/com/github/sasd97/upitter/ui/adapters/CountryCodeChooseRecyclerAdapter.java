@@ -88,7 +88,7 @@ public class CountryCodeChooseRecyclerAdapter
 
     @Override
     public CountryCodeChooseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_code_single_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_country_code_selection, parent, false);
         CountryCodeChooseViewHolder holder = new CountryCodeChooseViewHolder(v);
         holder.setOnItemClickListener(listener);
         return holder;
@@ -122,7 +122,7 @@ public class CountryCodeChooseRecyclerAdapter
 
     @Override
     public CountryHeaderViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_code_header, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_country_code_selection, parent, false);
         return new CountryHeaderViewHolder(v);
     }
 

@@ -22,7 +22,7 @@ import com.github.sasd97.upitter.services.GeocoderService;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.CodeVerificationActivity;
-import com.github.sasd97.upitter.ui.results.CountryCodeChooseActivity;
+import com.github.sasd97.upitter.ui.results.CountryCodeSelectionResult;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.utils.Countries;
 import com.github.sasd97.upitter.utils.ListUtils;
@@ -213,7 +213,7 @@ public class CompanyLoginFragment extends BaseFragment
         display.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getActivity(), CountryCodeChooseActivity.class),
+                startActivityForResult(new Intent(getActivity(), CountryCodeSelectionResult.class),
                         RequestCodesConstants.COUNTRY_CHOOSE_LIST_REQUEST);
             }
         });

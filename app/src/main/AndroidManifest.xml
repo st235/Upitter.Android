@@ -60,7 +60,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.results.CountryCodeChooseActivity"
+            android:name=".ui.results.CountryCodeSelectionResult"
             android:parentActivityName=".ui.AuthorizationActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
