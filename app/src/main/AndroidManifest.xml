@@ -156,7 +156,7 @@
             android:name=".ui.schemas.CompanyLocationPreviewSchema"
             android:label="@string/title_activity_show_company_locations"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.results.SocialIconsActivity"></activity>
+        <activity android:name=".ui.results.SocialIconInstallationResult"></activity>
     </application>
 
 </manifest>
