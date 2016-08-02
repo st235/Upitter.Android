@@ -4,13 +4,10 @@ package com.github.sasd97.upitter.ui.fragments;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,7 +21,7 @@ import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.services.GeocoderService;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
-import com.github.sasd97.upitter.ui.CodeConfirmActivity;
+import com.github.sasd97.upitter.ui.CodeVerificationActivity;
 import com.github.sasd97.upitter.ui.results.CountryCodeChooseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.utils.Countries;
@@ -169,7 +166,7 @@ public class CompanyLoginFragment extends BaseFragment
 
     @Override
     public void onCodeObtained() {
-        Intent intent = new Intent(getActivity(), CodeConfirmActivity.class);
+        Intent intent = new Intent(getActivity(), CodeVerificationActivity.class);
         intent.putExtra(RECEIVED_PHONE, currentPhone);
         startActivity(intent);
     }

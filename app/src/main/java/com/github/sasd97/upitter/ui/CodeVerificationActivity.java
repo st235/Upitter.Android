@@ -26,45 +26,44 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import butterknife.BindString;
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.Upitter.setHolder;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CODE_RECEIVER_INTENT_NAME;
 
-public class CodeConfirmActivity extends BaseActivity implements
+public class CodeVerificationActivity extends BaseActivity implements
         RequestCodeReceiver.OnRequestCodeReceiveListener,
         CompanyAuthorizationQueryService.OnCompanyAuthorizationListener {
 
-    private String WRONG_REQUEST_CODE;
     private final String UPITTER_SMS_HEADER = "999999";
 
-    private RequestCodeReceiver requestCodeReceiver;
-    private MaterialEditText requestCodeEditText;
-
     private PhoneModel currentPhone;
+    private RequestCodeReceiver requestCodeReceiver;
     private CompanyAuthorizationQueryService queryService;
+
+    @BindString(R.string.wrong_request_code_confirm_activity) String WRONG_REQUEST_CODE;
+    @BindView(R.id.request_code_label_code_confirm_activity) MaterialEditText requestCodeEdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.code_confirm_activity);
+        setContentView(R.layout.activity_code_verification);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
+    }
 
-        WRONG_REQUEST_CODE = getString(R.string.wrong_request_code_confirm_activity);
+    @Override
+    protected void setupViews() {
         currentPhone = getIntent().getParcelableExtra(RECEIVED_PHONE);
-
         queryService = CompanyAuthorizationQueryService.getService(this);
         requestCodeReceiver = RequestCodeReceiver.getReceiver(this);
     }
 
     public void onLoginClick(View v) {
         if (!validateForms()) return;
-        setRequestCode(requestCodeEditText.getText().toString());
-    }
-
-    @Override
-    protected void setupViews() {
-        requestCodeEditText = findById(R.id.request_code_label_code_confirm_activity);
+        setRequestCode(requestCodeEdt.getText().toString());
     }
 
     @Override
@@ -150,7 +149,7 @@ public class CodeConfirmActivity extends BaseActivity implements
     }
 
     private void setRequestCode(@NonNull String requestCode) {
-        requestCodeEditText.setText(requestCode);
+        requestCodeEdt.setText(requestCode);
 
         queryService.sendRequestCode(
                 currentPhone.getPhoneBody(),
@@ -159,8 +158,8 @@ public class CodeConfirmActivity extends BaseActivity implements
     }
 
     private boolean validateForms() {
-        if (requestCodeEditText.getText().length() == 0) {
-            requestCodeEditText.setError(WRONG_REQUEST_CODE);
+        if (requestCodeEdt.getText().length() == 0) {
+            requestCodeEdt.setError(WRONG_REQUEST_CODE);
             return false;
         }
 

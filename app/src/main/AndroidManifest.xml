@@ -72,7 +72,7 @@
             android:label="@string/title_activity_tape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.CodeConfirmActivity"
+            android:name=".ui.CodeVerificationActivity"
             android:label="@string/title_activity_code_confirm_activity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
