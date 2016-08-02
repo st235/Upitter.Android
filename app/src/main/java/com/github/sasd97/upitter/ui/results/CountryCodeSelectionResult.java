@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.CountryModel;
-import com.github.sasd97.upitter.ui.adapters.CountryCodeChooseRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.CountryCodeListRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Countries;
 import com.github.sasd97.upitter.utils.SlidrUtils;
@@ -23,7 +23,7 @@ import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 
 public class CountryCodeSelectionResult extends BaseActivity
-        implements CountryCodeChooseRecyclerAdapter.OnItemClickListener {
+        implements CountryCodeListRecycler.OnItemClickListener {
 
     @BindView(R.id.still_progress_country_code_choose_activity) LinearLayout progressLinearLayout;
     @BindView(R.id.recycler_view_country_code_choose_activity) FastScrollRecyclerView countryRecyclerView;
@@ -39,7 +39,7 @@ public class CountryCodeSelectionResult extends BaseActivity
         setToolbar(R.id.toolbar, true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
 
-        CountryCodeChooseRecyclerAdapter adapter = new CountryCodeChooseRecyclerAdapter(CountryCodeSelectionResult.this, new ArrayList<CountryModel>());
+        CountryCodeListRecycler adapter = new CountryCodeListRecycler(CountryCodeSelectionResult.this, new ArrayList<CountryModel>());
         StickyHeaderDecoration decor = new StickyHeaderDecoration(adapter);
         countryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         countryRecyclerView.setAdapter(adapter);

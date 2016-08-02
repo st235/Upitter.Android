@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.ui.adapters;
+package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,20 +11,22 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.CountryModel;
+import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.utils.Palette;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
 
 /**
  * Created by Alex on 09.06.2016.
  */
-public class CountryCodeChooseRecyclerAdapter
-        extends RecyclerView.Adapter<CountryCodeChooseRecyclerAdapter.CountryCodeChooseViewHolder>  implements
-        StickyHeaderAdapter<CountryCodeChooseRecyclerAdapter.CountryHeaderViewHolder>,
+public class CountryCodeListRecycler
+        extends RecyclerView.Adapter<CountryCodeListRecycler.CountryCodeChooseViewHolder>  implements
+        StickyHeaderAdapter<CountryCodeListRecycler.CountryHeaderViewHolder>,
         FastScrollRecyclerView.SectionedAdapter {
 
     public interface OnItemClickListener {
@@ -37,30 +39,29 @@ public class CountryCodeChooseRecyclerAdapter
     private OnItemClickListener listener;
     private ArrayList<CountryModel> countryList;
 
-    public CountryCodeChooseRecyclerAdapter(@NonNull OnItemClickListener listener,
-                                            @NonNull ArrayList<CountryModel> countryList) {
+    public CountryCodeListRecycler(@NonNull OnItemClickListener listener,
+                                   @NonNull ArrayList<CountryModel> countryList) {
         this.listener = listener;
         this.countryList = countryList;
     }
 
-    public class CountryCodeChooseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class CountryCodeChooseViewHolder extends BaseViewHolder
+            implements View.OnClickListener {
 
         private OnItemClickListener listener;
 
-        private ImageView countryPreviewImageView;
-        private TextView countryNativeTextView;
-        private TextView countryOfficialTextView;
-        private TextView countryPrefixTextView;
+        @BindView(R.id.country_preview_country_code_single_view) ImageView countryPreviewImageView;
+        @BindView(R.id.country_native_country_code_single_view) TextView countryNativeTextView;
+        @BindView(R.id.country_official_country_code_single_view) TextView countryOfficialTextView;
+        @BindView(R.id.code_country_code_single_view) TextView countryPrefixTextView;
 
         public CountryCodeChooseViewHolder(View itemView) {
             super(itemView);
+        }
 
+        @Override
+        protected void setupViews() {
             itemView.setOnClickListener(this);
-
-            countryPreviewImageView = (ImageView) itemView.findViewById(R.id.country_preview_country_code_single_view);
-            countryNativeTextView = (TextView) itemView.findViewById(R.id.country_native_country_code_single_view);
-            countryOfficialTextView = (TextView) itemView.findViewById(R.id.country_official_country_code_single_view);
-            countryPrefixTextView = (TextView) itemView.findViewById(R.id.code_country_code_single_view);
         }
 
         public void setOnItemClickListener(OnItemClickListener listener) {

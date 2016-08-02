@@ -21,7 +21,7 @@ import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.services.GeocoderService;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.CompanyFeedActivity;
-import com.github.sasd97.upitter.ui.adapters.AddressRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.CompanyAddressListRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.results.CompanyCoordinatesSelectionResult;
@@ -44,7 +44,7 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
 
     private CompanyModel.Builder companyModelBuilder;
     private CompanyAuthorizationQueryService queryService;
-    private AddressRecyclerAdapter addressRecyclerAdapter;
+    private CompanyAddressListRecycler companyAddressListRecycler;
 
     @BindView(R.id.set_position_business_registration_base_fragment) Button setPositionButton;
     @BindView(R.id.recycler_view_company_registration_address_fragment) RecyclerView addressRecyclerView;
@@ -70,9 +70,9 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
         queryService = CompanyAuthorizationQueryService.getService(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        addressRecyclerAdapter = new AddressRecyclerAdapter(new ArrayList<CoordinatesModel>());
+        companyAddressListRecycler = new CompanyAddressListRecycler(new ArrayList<CoordinatesModel>());
         addressRecyclerView.setLayoutManager(linearLayoutManager);
-        addressRecyclerView.setAdapter(addressRecyclerAdapter);
+        addressRecyclerView.setAdapter(companyAddressListRecycler);
 
         setPositionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +85,7 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
     }
 
     public void onFinishRegistration() {
-        companyModelBuilder.coordinates(addressRecyclerAdapter.getCoordinates());
+        companyModelBuilder.coordinates(companyAddressListRecycler.getCoordinates());
         queryService.registerCompanyUser(companyModelBuilder);
     }
 
@@ -101,7 +101,7 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
 
     @Override
     public void onAddressReady(CoordinatesModel address) {
-        addressRecyclerAdapter.addItem(address);
+        companyAddressListRecycler.addItem(address);
     }
 
     @Override

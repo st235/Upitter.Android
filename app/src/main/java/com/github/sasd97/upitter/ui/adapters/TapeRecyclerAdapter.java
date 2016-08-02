@@ -27,6 +27,7 @@ import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
+import com.github.sasd97.upitter.ui.adapters.recyclers.ImageCollageRecycler;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.ui.schemas.MapPreviewSchema;
 import com.github.sasd97.upitter.utils.Categories;
@@ -71,7 +72,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         implements
             TapeQueryService.OnTapeQueryListener,
             TapeQuizRecyclerAdapter.OnItemClickListener,
-            CollageAdapter.OnImageClickListener,
+            ImageCollageRecycler.OnImageClickListener,
             Toolbar.OnMenuItemClickListener {
 
         private Toolbar postToolbar;
@@ -395,7 +396,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
         }
 
         CollageLayoutManager collageLayoutManager = new CollageLayoutManager(post.getMedia());
-        CollageAdapter adapter = new CollageAdapter(context, post.getMedia());
+        ImageCollageRecycler adapter = new ImageCollageRecycler(context, post.getMedia());
         adapter.setOnItemClickListener(holder);
 
         holder.imagesRecyclerView.setVisibility(View.VISIBLE);

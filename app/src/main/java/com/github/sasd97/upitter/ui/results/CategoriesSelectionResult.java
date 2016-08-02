@@ -14,7 +14,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
 import com.github.sasd97.upitter.services.query.CategoriesQueryService;
-import com.github.sasd97.upitter.ui.adapters.CategoryRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.CategoriesListRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.SlidrUtils;
@@ -31,14 +31,14 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 
 public class CategoriesSelectionResult extends BaseActivity
         implements CategoriesQueryService.OnCategoryListener,
-        CategoryRecyclerAdapter.OnItemClickListener {
+        CategoriesListRecycler.OnItemClickListener {
 
     @BindView(R.id.fab_categories_activity) FloatingActionButton fab;
     @BindView(R.id.recycler_view_categories_activity) RecyclerView categoryRecyclerView;
 
     private List<Integer> selectedCategories;
     private List<CategoryResponseModel> categories;
-    private CategoryRecyclerAdapter categoryRecyclerAdapter;
+    private CategoriesListRecycler categoriesListRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +54,12 @@ public class CategoriesSelectionResult extends BaseActivity
         if (getIntent().hasExtra(CATEGORIES_ATTACH))
             selectedCategories = getIntent().getIntegerArrayListExtra(CATEGORIES_ATTACH);
 
-        categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, new ArrayList<CategoryResponseModel>());
-        categoryRecyclerAdapter.setOnItemClickListener(this);
+        categoriesListRecycler = new CategoriesListRecycler(this, new ArrayList<CategoryResponseModel>());
+        categoriesListRecycler.setOnItemClickListener(this);
 
         categoryRecyclerView.setHasFixedSize(true);
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
+        categoryRecyclerView.setAdapter(categoriesListRecycler);
         categoryRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx,int dy){
@@ -85,7 +85,7 @@ public class CategoriesSelectionResult extends BaseActivity
     public void onGetCategories(List<CategoryResponseModel> categories) {
         this.categories = categories;
 
-        categoryRecyclerAdapter.addAll(ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryResponseModel>() {
+        categoriesListRecycler.addAll(ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryResponseModel>() {
             @Override
             public boolean isFit(CategoryResponseModel other) {
                 return other.getId() % 100 == 0;
@@ -93,7 +93,7 @@ public class CategoriesSelectionResult extends BaseActivity
         }));
 
         if (selectedCategories == null || selectedCategories.size() == 0) return;
-        categoryRecyclerAdapter.each(new ListUtils.OnIteratorListener<CategoryResponseModel>() {
+        categoriesListRecycler.each(new ListUtils.OnIteratorListener<CategoryResponseModel>() {
             @Override
             public void iterate(CategoryResponseModel object, List<CategoryResponseModel> all) {
                 preSelectCategories(object, selectedCategories);
@@ -120,7 +120,7 @@ public class CategoriesSelectionResult extends BaseActivity
 
     public void onConfirmSelection(View view) {
         Intent resultIntent = new Intent();
-        resultIntent.putIntegerArrayListExtra(CATEGORIES_ATTACH, categoryRecyclerAdapter.getSelected());
+        resultIntent.putIntegerArrayListExtra(CATEGORIES_ATTACH, categoriesListRecycler.getSelected());
         setResult(RESULT_OK, resultIntent);
         finish();
     }
@@ -143,7 +143,7 @@ public class CategoriesSelectionResult extends BaseActivity
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        categoryRecyclerAdapter.notifyItemChanged(position);
+                        categoriesListRecycler.notifyItemChanged(position);
                     }
                 })
                 .positiveText(R.string.category_select_categories_activity)

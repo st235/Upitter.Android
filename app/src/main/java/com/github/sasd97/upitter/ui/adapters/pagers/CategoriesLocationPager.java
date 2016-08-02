@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.ui.adapters;
+package com.github.sasd97.upitter.ui.adapters.pagers;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
  * Created by alexander on 01.08.16.
  */
 
-public class CategoryLocationAdapter extends FragmentPagerAdapter {
+public class CategoriesLocationPager extends FragmentPagerAdapter {
 
-    public CategoryLocationAdapter(FragmentManager fm) {
+    public CategoriesLocationPager(FragmentManager fm) {
         super(fm);
     }
 
@@ -18,7 +18,6 @@ public class CategoryLocationAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         return null;
     }
-
 
     @Override
     public int getCount() {
