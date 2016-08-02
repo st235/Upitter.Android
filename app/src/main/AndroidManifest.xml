@@ -153,7 +153,7 @@
             android:label="@string/title_activity_company_settings"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.schemas.ShowCompanyLocationsActivity"
+            android:name=".ui.schemas.CompanyLocationPreviewSchema"
             android:label="@string/title_activity_show_company_locations"
             android:theme="@style/AppTheme" />
         <activity android:name=".ui.results.SocialIconsActivity"></activity>
