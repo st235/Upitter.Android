@@ -38,10 +38,6 @@ public class CompanySettingsActivity extends BaseActivity
 
     private final static String TAG = "Company Settings";
 
-    private final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
-    private final int ALPHA_ANIMATIONS_DURATION = 200;
-    private boolean mIsTheTitleVisible = false;
-
     private CompanyModel companyModel;
     private FileUploadQueryService service;
 

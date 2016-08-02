@@ -25,15 +25,15 @@ public class CompanyRegistrationActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_registration);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
+    }
 
+    @Override
+    protected void setupViews() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_holder_business_registration_activity, CompanyBaseRegistrationFragment.getFragment(this))
                 .commit();
     }
-
-    @Override
-    protected void setupViews() {}
 
     @Override
     public void onBaseInfoPrepared(@NonNull CompanyModel.Builder builder) {
