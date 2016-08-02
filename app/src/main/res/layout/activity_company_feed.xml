@@ -11,7 +11,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/company_tape_app_bar"
+        layout="@layout/app_bar_company_feed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
@@ -23,7 +23,7 @@
         android:layout_gravity="start"
         android:background="@color/colorNavigationDrawerBackground"
         app:menu="@menu/tape_activity_drawer"
-        app:headerLayout="@layout/company_tape_nav_header"
+        app:headerLayout="@layout/nav_header_company_feed"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
         />

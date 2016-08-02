@@ -37,6 +37,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         return (T) findViewById(resourceId);
     }
 
+    protected <T extends View> T findById(View view, @IdRes int resourceId) {
+        return (T) view.findViewById(resourceId);
+    }
+
     protected abstract void setupViews();
 
     protected void setToolbar(@IdRes int toolbarId) {

@@ -125,7 +125,7 @@ public class CodeVerificationActivity extends BaseActivity implements
         Log.d("PRESAVE", companyModel.toString());
 
         getHolder().save(companyModel);
-        startActivity(new Intent(this, CompanyTapeActivity.class));
+        startActivity(new Intent(this, CompanyFeedActivity.class));
         finish();
     }
 

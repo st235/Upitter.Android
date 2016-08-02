@@ -2,7 +2,6 @@ package com.github.sasd97.upitter.ui;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -112,7 +111,7 @@ public class LoginActivity extends BaseActivity
                 break;
             case Company:
                 setHolder(CompanyHolder.getHolder());
-                target = CompanyTapeActivity.class;
+                target = CompanyFeedActivity.class;
                 break;
             default:
                 setHolder(PeopleHolder.getHolder());

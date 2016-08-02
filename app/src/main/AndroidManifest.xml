@@ -68,7 +68,7 @@
                 android:value=".ui.LoginActivity" />
         </activity>
         <activity
-            android:name=".ui.CompanyTapeActivity"
+            android:name=".ui.CompanyFeedActivity"
             android:label="@string/title_activity_tape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -116,29 +116,29 @@
         <activity
             android:name=".ui.CreatePostActivity"
             android:label="@string/title_create_post_activity"
-            android:parentActivityName=".ui.CompanyTapeActivity"
+            android:parentActivityName=".ui.CompanyFeedActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.CompanyTapeActivity" />
+                android:value=".ui.CompanyFeedActivity" />
         </activity>
         <activity
             android:name=".ui.results.QuizActivity"
             android:label="@string/quiz_label_create_post_activity"
-            android:parentActivityName=".ui.CompanyTapeActivity"
+            android:parentActivityName=".ui.CompanyFeedActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.CompanyTapeActivity" />
+                android:value=".ui.CompanyFeedActivity" />
         </activity>
         <activity
             android:name=".ui.results.PostCategoriesChooseActivity"
             android:label="@string/quiz_label_create_post_activity"
-            android:parentActivityName=".ui.CompanyTapeActivity"
+            android:parentActivityName=".ui.CompanyFeedActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.CompanyTapeActivity" />
+                android:value=".ui.CompanyFeedActivity" />
         </activity>
         <activity
             android:name=".ui.PeopleTapeActivity"

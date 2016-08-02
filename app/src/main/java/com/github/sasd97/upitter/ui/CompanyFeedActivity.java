@@ -2,12 +2,7 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,39 +21,36 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.fragments.TapeFragment;
-import com.github.sasd97.upitter.ui.results.CategoriesActivity;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
 
-import java.util.ArrayList;
-
+import butterknife.BindView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.Upitter.*;
-import static com.github.sasd97.upitter.constants.IntentKeysConstants.CATEGORIES_ATTACH;
-import static com.github.sasd97.upitter.constants.RequestCodesConstants.CATEGORIES_ACTIVITY_REQUEST;
 
-public class CompanyTapeActivity extends BaseActivity
+public class CompanyFeedActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private DrawerLayout drawer;
-    private NavigationView navigationView;
 
     private CompanyModel company;
 
-    //  Navbar region
+    @BindView(R.id.drawer_layout) private DrawerLayout drawer;
+    @BindView(R.id.nav_view) private NavigationView navigationView;
+
     private RelativeLayout createPostView;
     private ImageView logoImageView;
     private TextView titleTextView;
     private TextView categoryTextView;
-    //  Endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.company_tape_activity);
+        setContentView(R.layout.activity_company_feed);
         setToolbar(R.id.toolbar);
+    }
 
+    @Override
+    protected void setupViews() {
         company = (CompanyModel) getHolder().get();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -73,7 +65,7 @@ public class CompanyTapeActivity extends BaseActivity
         createPostView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CompanyTapeActivity.this, CreatePostActivity.class));
+                startActivity(new Intent(CompanyFeedActivity.this, CreatePostActivity.class));
             }
         });
 
@@ -83,17 +75,11 @@ public class CompanyTapeActivity extends BaseActivity
                 .commit();
     }
 
-    @Override
-    protected void setupViews() {
-        drawer = findById(R.id.drawer_layout);
-        navigationView = findById(R.id.nav_view);
-    }
-
     private void obtainNavigationHeader(View header) {
-        createPostView = (RelativeLayout) header.findViewById(R.id.create_post_tape_company_nav_header);
-        logoImageView = (ImageView) header.findViewById(R.id.logo_company_tape);
-        titleTextView = (TextView) header.findViewById(R.id.title_company_tape);
-        categoryTextView = (TextView) header.findViewById(R.id.category_title_category_single_view);
+        createPostView = findById(header, R.id.create_post_tape_company_nav_header);
+        logoImageView = findById(header, R.id.logo_company_tape);
+        titleTextView = findById(header, R.id.title_company_tape);
+        categoryTextView = findById(header, R.id.category_title_category_single_view);
     }
 
     private void obtainCompanyHeader() {
