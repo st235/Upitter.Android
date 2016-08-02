@@ -28,6 +28,8 @@ import com.github.sasd97.upitter.ui.results.CompanyCoordinatesSelectionResult;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CHOOSE_ON_MAP_POINT_REQUEST;
 import static com.github.sasd97.upitter.Upitter.*;
 
@@ -42,13 +44,11 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
 
     private CompanyModel.Builder companyModelBuilder;
     private CompanyAuthorizationQueryService queryService;
-
-    private RecyclerView addressRecyclerView;
     private AddressRecyclerAdapter addressRecyclerAdapter;
-    private LinearLayoutManager linearLayoutManager;
 
-    private Button setPositionButton;
-    private RelativeLayout addPositionRelativeLayout;
+    @BindView(R.id.set_position_business_registration_base_fragment) Button setPositionButton;
+    @BindView(R.id.recycler_view_company_registration_address_fragment) RecyclerView addressRecyclerView;
+    @BindView(R.id.add_position_company_registration_address_fragment) RelativeLayout addPositionRelativeLayout;
 
     public CompanyAdditionalRegistrationFragment() {
         super(R.layout.fragment_company_additional_registration);
@@ -63,9 +63,13 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    protected void setupViews() {
         queryService = CompanyAuthorizationQueryService.getService(this);
 
-        linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         addressRecyclerAdapter = new AddressRecyclerAdapter(new ArrayList<CoordinatesModel>());
         addressRecyclerView.setLayoutManager(linearLayoutManager);
         addressRecyclerView.setAdapter(addressRecyclerAdapter);
@@ -78,13 +82,6 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
         });
 
         addPositionRelativeLayout.setOnClickListener(this);
-    }
-
-    @Override
-    protected void setupViews() {
-        addressRecyclerView = findById(R.id.recycler_view_company_registration_address_fragment);
-        addPositionRelativeLayout = findById(R.id.add_position_company_registration_address_fragment);
-        setPositionButton = findById(R.id.set_position_business_registration_base_fragment);
     }
 
     public void onFinishRegistration() {

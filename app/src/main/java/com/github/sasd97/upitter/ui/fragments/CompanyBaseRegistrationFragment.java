@@ -27,6 +27,9 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
 
+import butterknife.BindString;
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.CATEGORIES_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.PUT_CROPPED_IMAGE;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CATEGORIES_ACTIVITY_REQUEST;
@@ -40,27 +43,24 @@ public class CompanyBaseRegistrationFragment
         extends BaseFragment
         implements ImageUploaderView.OnImageUploadListener {
 
-    private String EMPTY_ERROR;
+    @BindString(R.string.empty_field) String EMPTY_ERROR;
 
-    private OnCompanyRegistrationListener listener;
     private CompanyModel.Builder companyBuilder;
-
     private ArrayList<Integer> categoriesSelected;
-
-    private ImageUploaderView avatarImageUploaderView;
-    private RelativeLayout categoriesLayout;
-    private Button setPositionButton;
-
-    private MaterialEditText companyNameEditText;
-    private MaterialEditText companyDescriptionEditText;
-    private MaterialEditText companySiteEditText;
-
-    private RelativeLayout addPhoneLayout;
-    private RecyclerView phonesRecyclerView;
+    private OnCompanyRegistrationListener listener;
     private PhonesRecyclerAdapter phonesRecyclerAdapter;
 
+    @BindView(R.id.add_phone_button_registration_base_fragment) RelativeLayout addPhoneLayout;
+    @BindView(R.id.set_position_business_registration_base_fragment) Button setPositionButton;
+    @BindView(R.id.phones_recyclerview_registration_base_fragment) RecyclerView phonesRecyclerView;
+    @BindView(R.id.categories_choose_business_registration_base_fragment) RelativeLayout categoriesLayout;
+    @BindView(R.id.name_edittext_business_registration_base_fragment) MaterialEditText companyNameEditText;
+    @BindView(R.id.site_edittext_business_registration_base_fragment) MaterialEditText companySiteEditText;
+    @BindView(R.id.avatar_url_business_registration_base_fragment) ImageUploaderView avatarImageUploaderView;
+    @BindView(R.id.description_edittext_business_registration_base_fragment) MaterialEditText companyDescriptionEditText;
+
     public CompanyBaseRegistrationFragment() {
-        super(R.layout.company_registration_base_fragment);
+        super(R.layout.fragment_company_base_registration);
     }
 
     public static CompanyBaseRegistrationFragment getFragment(OnCompanyRegistrationListener listener) {
@@ -72,8 +72,10 @@ public class CompanyBaseRegistrationFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
 
-        EMPTY_ERROR = getString(R.string.empty_field);
+    @Override
+    protected void setupViews() {
         companyBuilder = new CompanyModel.Builder();
 
         avatarImageUploaderView.setOnClickListener(new View.OnClickListener() {
@@ -107,35 +109,23 @@ public class CompanyBaseRegistrationFragment
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        return false;
+                    }
 
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                LinearLayout.LayoutParams lp =
-                        new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT);
-                phonesRecyclerAdapter.removePhone(viewHolder.getAdapterPosition());
-                phonesRecyclerView.setLayoutParams(lp);
-            }
-        };
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                        LinearLayout.LayoutParams lp =
+                                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                        phonesRecyclerAdapter.removePhone(viewHolder.getAdapterPosition());
+                        phonesRecyclerView.setLayoutParams(lp);
+                    }
+                };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(phonesRecyclerView);
-    }
-
-    @Override
-    protected void setupViews() {
-        companyDescriptionEditText = findById(R.id.description_edittext_business_registration_base_fragment);
-        avatarImageUploaderView = findById(R.id.avatar_url_business_registration_base_fragment);
-        categoriesLayout = findById(R.id.categories_choose_business_registration_base_fragment);
-        companyNameEditText = findById(R.id.name_edittext_business_registration_base_fragment);
-        companySiteEditText = findById(R.id.site_edittext_business_registration_base_fragment);
-        setPositionButton = findById(R.id.set_position_business_registration_base_fragment);
-        phonesRecyclerView = findById(R.id.phones_recyclerview_registration_base_fragment);
-        addPhoneLayout = findById(R.id.add_phone_button_registration_base_fragment);
     }
 
     private void setRegistrationListener(OnCompanyRegistrationListener listener) {
