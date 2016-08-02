@@ -35,7 +35,7 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rootView = view;
-        bindViews();
+        setupViews();
     }
 
     protected View findViewById(@IdRes int resourceId) {
@@ -46,5 +46,5 @@ public abstract class BaseFragment extends Fragment {
         return (T) rootView.findViewById(resourceId);
     }
 
-    protected abstract void bindViews();
+    protected abstract void setupViews();
 }

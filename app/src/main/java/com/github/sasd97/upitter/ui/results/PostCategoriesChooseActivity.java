@@ -57,7 +57,7 @@ public class PostCategoriesChooseActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
 
     }
 

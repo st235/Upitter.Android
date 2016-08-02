@@ -81,7 +81,7 @@ public class CompanyAddressRegistrationFragment extends BaseFragment
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         addressRecyclerView = findById(R.id.recycler_view_company_registration_address_fragment);
         addPositionRelativeLayout = findById(R.id.add_position_company_registration_address_fragment);
         setPositionButton = findById(R.id.set_position_business_registration_base_fragment);

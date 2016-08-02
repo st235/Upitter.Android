@@ -68,7 +68,7 @@ public class QuizActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         recyclerView = findById(R.id.quiz_recycler_view);
         addButton = findById(R.id.quiz_add_button);
         fab = findById(R.id.fab);

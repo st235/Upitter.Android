@@ -86,7 +86,7 @@ public class CompanyLoginFragment extends BaseFragment
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         continueRegistrationButton = findById(R.id.continue_registration_button_company_login_fragment);
         countryDisplayTextView = findById(R.id.country_display_company_login_fragment);
         countryDialCodeEditText = findById(R.id.country_dial_code_company_login_fragment);

@@ -84,7 +84,7 @@ public class CategoriesActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         categoryRecyclerView = findById(R.id.recycler_view_categories_activity);
         fab = findById(R.id.fab_categories_activity);
     }

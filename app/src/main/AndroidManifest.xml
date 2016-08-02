@@ -145,7 +145,7 @@
             android:label="@string/title_activity_people_tape"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.ChooseLocationActivity"
+            android:name=".ui.LocationSelectionActivity"
             android:label="@string/title_choose_location_activity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity

@@ -92,7 +92,7 @@ public class CreatePostActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         photosRecyclerView = findById(R.id.image_placeholder_recyclerview_publication);
         addressIconImageView = findById(R.id.address_icon_create_post_activity);
         quizIconImageView = findById(R.id.quiz_icon_create_post_activity);

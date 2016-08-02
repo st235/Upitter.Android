@@ -57,7 +57,7 @@ public class CountryCodeChooseActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         toolbar = findById(R.id.toolbar);
         countryRecyclerView = findById(R.id.recycler_view_country_code_choose_activity);
         progressLinearLayout = findById(R.id.still_progress_country_code_choose_activity);

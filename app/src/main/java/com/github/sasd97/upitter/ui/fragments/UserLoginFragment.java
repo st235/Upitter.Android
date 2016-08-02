@@ -108,7 +108,7 @@ public class UserLoginFragment extends BaseFragment
     }
 
     @Override
-    protected void bindViews() {}
+    protected void setupViews() {}
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

@@ -33,7 +33,7 @@ public class CompanyRegistrationActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {}
+    protected void setupViews() {}
 
     @Override
     public void onBaseInfoPrepared(@NonNull CompanyModel.Builder builder) {

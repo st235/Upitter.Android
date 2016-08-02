@@ -63,7 +63,7 @@ public class CodeConfirmActivity extends BaseActivity implements
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         requestCodeEditText = findById(R.id.request_code_label_code_confirm_activity);
     }
 

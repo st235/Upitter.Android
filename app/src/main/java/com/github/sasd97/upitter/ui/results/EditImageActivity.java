@@ -86,7 +86,7 @@ public class EditImageActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
 
     }
 

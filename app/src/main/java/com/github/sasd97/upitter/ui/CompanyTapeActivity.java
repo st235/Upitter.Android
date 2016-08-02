@@ -84,7 +84,7 @@ public class CompanyTapeActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         drawer = findById(R.id.drawer_layout);
         navigationView = findById(R.id.nav_view);
     }

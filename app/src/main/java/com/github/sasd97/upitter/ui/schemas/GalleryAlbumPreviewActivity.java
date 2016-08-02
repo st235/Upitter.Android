@@ -86,7 +86,7 @@ public class GalleryAlbumPreviewActivity extends BaseActivity {
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         mViewPager = findById(R.id.container);
     }
 

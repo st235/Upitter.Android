@@ -83,7 +83,7 @@ public class ShowOnMapActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         rootLayout = findById(R.id.root_layout);
         fab = findById(R.id.fab);
     }

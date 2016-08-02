@@ -3,12 +3,10 @@ package com.github.sasd97.upitter.ui.results;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -19,15 +17,12 @@ import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Dimens;
-import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.github.sasd97.upitter.utils.ViewUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrPosition;
 
 public class MapChooseActivity extends BaseActivity implements
         OnMapReadyCallback,
@@ -57,16 +52,16 @@ public class MapChooseActivity extends BaseActivity implements
             }
         });
 
-        setupViews();
+        setupView();
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         confirmFab = findById(R.id.fab);
         rootView = findById(R.id.root_layout);
     }
 
-    private void setupViews() {
+    private void setupView() {
         ImageView marker = new ImageView(this);
         marker.setImageResource(R.drawable.ic_upitter_marker);
         marker.setScaleType(ImageView.ScaleType.CENTER_INSIDE);

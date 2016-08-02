@@ -130,7 +130,7 @@ public class CompanyBaseRegistrationFragment
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         companyDescriptionEditText = findById(R.id.description_edittext_business_registration_base_fragment);
         avatarImageUploaderView = findById(R.id.avatar_url_business_registration_base_fragment);
         categoriesLayout = findById(R.id.categories_choose_business_registration_base_fragment);

@@ -18,7 +18,7 @@ public class LocationsListFragment extends BaseFragment {
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
 
     }
 

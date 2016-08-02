@@ -70,7 +70,7 @@ public class LoginActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         tabLayout = findById(R.id.tab_layout_login_activity);
         viewPager = findById(R.id.viewpager_login_activity);
         rootView = findById(R.id.root_view_login_activity);

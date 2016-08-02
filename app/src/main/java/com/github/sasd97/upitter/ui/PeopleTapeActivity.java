@@ -49,7 +49,7 @@ public class PeopleTapeActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
 
     }
 

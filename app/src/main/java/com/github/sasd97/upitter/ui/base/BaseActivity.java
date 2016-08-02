@@ -30,14 +30,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
-        bindViews();
+        setupViews();
     }
 
     protected <T extends View> T findById(@IdRes int resourceId) {
         return (T) findViewById(resourceId);
     }
 
-    protected abstract void bindViews();
+    protected abstract void setupViews();
 
     protected void setToolbar(@IdRes int toolbarId) {
         toolbar = findById(toolbarId);
@@ -63,7 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        bindViews();
+        setupViews();
     }
 
     @Override

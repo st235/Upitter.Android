@@ -81,7 +81,7 @@ public class CropFragment extends BaseFragment implements OnEditImageChooseListe
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
 
     }
 

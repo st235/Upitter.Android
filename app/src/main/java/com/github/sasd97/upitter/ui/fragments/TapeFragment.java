@@ -76,7 +76,7 @@ public class TapeFragment extends BaseFragment
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         fab = findById(R.id.fab);
         tapeRecyclerView = findById(R.id.recycler_view_tape_fragment);
         swipeRefreshLayout = findById(R.id.swipe_layout_tape);

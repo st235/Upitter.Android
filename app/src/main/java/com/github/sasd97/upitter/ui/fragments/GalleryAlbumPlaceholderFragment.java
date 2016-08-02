@@ -36,7 +36,7 @@ public class GalleryAlbumPlaceholderFragment extends BaseFragment {
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         detailView = findById(R.id.detail_image);
     }
 

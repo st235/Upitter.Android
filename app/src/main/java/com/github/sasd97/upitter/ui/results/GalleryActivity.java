@@ -91,7 +91,7 @@ public class GalleryActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
         progressRelativeLayout = findById(R.id.images_loading_view_gallery_activity);
         imageGridRecyclerView = findById(R.id.images_grid_gallery_activity);
         spinner = findById(R.id.spinner_nav_gallery_activity);

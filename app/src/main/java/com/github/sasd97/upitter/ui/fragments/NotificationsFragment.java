@@ -17,7 +17,7 @@ public class NotificationsFragment extends BaseFragment {
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
 
     }
 

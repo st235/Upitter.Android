@@ -57,7 +57,7 @@ public class CompanySettingsActivity extends BaseActivity
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
     }
 
     public void onPhotosClick(View v) {

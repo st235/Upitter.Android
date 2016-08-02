@@ -124,7 +124,7 @@ public class FilterFragment extends BaseFragment
     }
 
     @Override
-    protected void bindViews() {
+    protected void setupViews() {
 
     }
 
