@@ -34,6 +34,8 @@ import com.twitter.sdk.android.core.TwitterSession;
 
 import java.util.Arrays;
 
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.GOOGLE_SIGN_IN_REQUEST;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
 import static com.github.sasd97.upitter.Upitter.*;
@@ -51,9 +53,9 @@ public class UserLoginFragment extends BaseFragment
     private GoogleApiClient googleClient;
     private UserAuthorizationQueryService service = UserAuthorizationQueryService.getService(this);
 
-    private Button signFacebookButton;
-    private Button signGoogleButton;
-    private Button signTwitterButton;
+    @BindView(R.id.facebook_button_user_login_fragment) Button signFacebookButton;
+    @BindView(R.id.google_plus_button_user_login_fragment) Button signGoogleButton;
+    @BindView(R.id.twitter_button_user_login_fragment) Button signTwitterButton;
 
     public UserLoginFragment() {
         super(R.layout.user_login_fragment);
@@ -106,11 +108,7 @@ public class UserLoginFragment extends BaseFragment
     }
 
     @Override
-    protected void bindViews() {
-        signGoogleButton = findById(R.id.google_plus_button_user_login_fragment);
-        signFacebookButton = findById(R.id.facebook_button_user_login_fragment);
-        signTwitterButton = findById(R.id.twitter_button_user_login_fragment);
-    }
+    protected void bindViews() {}
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

@@ -53,11 +53,11 @@ public class ProfileBehavior extends CoordinatorLayout.Behavior<ImageView> {
     public boolean layoutDependsOn(CoordinatorLayout parent, ImageView child, View dependency) {
         if (dependency instanceof AppBarLayout) {
 
-            if (startPointView == null)
-                startPointView = dependency.findViewById(R.id.appbar_image_holder_settings);
-
-            if (endPointView == null)
-                endPointView = dependency.findViewById(R.id.toolbar_image_holder_settings);
+//            if (startPointView == null)
+//                startPointView = dependency.findViewById(R.id.appbar_image_holder_settings);
+//
+//            if (endPointView == null)
+//                endPointView = dependency.findViewById(R.id.toolbar_image_holder_settings);
 
             return true;
         }

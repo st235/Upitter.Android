@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by Alexander Dadukin on 06.06.2016.
  */
@@ -27,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
+        ButterKnife.bind(this);
         bindViews();
     }
 
