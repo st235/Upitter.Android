@@ -12,7 +12,7 @@ import com.github.sasd97.upitter.events.OnEditImageChooseListener;
 import com.github.sasd97.upitter.events.OnSaveListener;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.fragments.CropFragment;
-import com.github.sasd97.upitter.ui.fragments.FilterFragment;
+import com.github.sasd97.upitter.ui.fragments.GalleryImageFilterFragment;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
@@ -51,11 +51,11 @@ public class ImageEditingResult extends BaseActivity
                         editImageChooseListener.save(new OnApplyLongListener() {
                             @Override
                             public void onApplied(String path) {
-                                FilterFragment filterFragment = FilterFragment.getFragment(path);
-                                editImageChooseListener = filterFragment;
+                                GalleryImageFilterFragment galleryImageFilterFragment = GalleryImageFilterFragment.getFragment(path);
+                                editImageChooseListener = galleryImageFilterFragment;
                                 ImageEditingResult.this.getSupportFragmentManager()
                                         .beginTransaction()
-                                        .replace(R.id.fragment_container, filterFragment)
+                                        .replace(R.id.fragment_container, galleryImageFilterFragment)
                                         .commit();
                             }
                         });

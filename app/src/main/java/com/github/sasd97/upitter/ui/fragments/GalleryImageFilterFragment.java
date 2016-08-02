@@ -4,21 +4,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BaseTarget;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.OnApplyLongListener;
 import com.github.sasd97.upitter.events.OnEditImageChooseListener;
@@ -33,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import butterknife.BindView;
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
@@ -41,14 +35,11 @@ import jp.co.cyberagent.android.gpuimage.GPUImageView;
  * Created by Alex on 10.05.2016.
  */
 
-public class FilterFragment extends BaseFragment
+public class GalleryImageFilterFragment extends BaseFragment
         implements FilterChooseRecyclerAdapter.OnFilterChooseListener,
         OnEditImageChooseListener {
 
     private static final String IMAGE_PATH = "IMAGE_PATH";
-
-    private GPUImageView gpuImageView = null;
-    private RecyclerView recyclerView = null;
 
     private GPUImageFilter mFilter;
     private GPUImageFilterTools.FilterAdjuster mFilterAdjuster;
@@ -68,33 +59,36 @@ public class FilterFragment extends BaseFragment
             R.drawable.filter_preview_sepia, R.drawable.filter_preview_vignette,
             R.drawable.filter_preview_tonecurve, R.drawable.filter_preview_lookup };
 
-    public FilterFragment() {
-        super(R.layout.filter_fragment);
+    @BindView(R.id.image_filters) GPUImageView gpuImageView;
+    @BindView(R.id.filters_recycler_view) RecyclerView recyclerView;
+
+    public GalleryImageFilterFragment() {
+        super(R.layout.fragment_gallery_image_filter);
     }
 
-    public static FilterFragment getFragment(String path) {
-        FilterFragment filterFragment = new FilterFragment();
+    public static GalleryImageFilterFragment getFragment(String path) {
+        GalleryImageFilterFragment galleryImageFilterFragment = new GalleryImageFilterFragment();
         Bundle bundle = new Bundle();
         bundle.putString(IMAGE_PATH, path);
-        filterFragment.setArguments(bundle);
-        return filterFragment;
+        galleryImageFilterFragment.setArguments(bundle);
+        return galleryImageFilterFragment;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final String path = getArguments().getString(IMAGE_PATH);
+    }
 
-        gpuImageView = (GPUImageView) findViewById(R.id.image_filters);
-        recyclerView = (RecyclerView) findViewById(R.id.filters_recycler_view);
-        Log.d("HERE_!", path);
+    @Override
+    protected void setupViews() {
+        final String path = getArguments().getString(IMAGE_PATH);
 
         Glide
                 .with(this)
                 .load(Names
-                    .getInstance()
-                    .getFilePath(path)
-                    .toString())
+                        .getInstance()
+                        .getFilePath(path)
+                        .toString())
                 .asBitmap()
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
@@ -109,7 +103,7 @@ public class FilterFragment extends BaseFragment
                 getActivity(),
                 new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.filter_list))),
                 arrayList
-                );
+        );
 
 
 
@@ -121,11 +115,6 @@ public class FilterFragment extends BaseFragment
         recyclerView.setAdapter(filterChooseRecyclerAdapter);
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_INSIDE);
         initData();
-    }
-
-    @Override
-    protected void setupViews() {
-
     }
 
     public void setImage(Bitmap image) {
