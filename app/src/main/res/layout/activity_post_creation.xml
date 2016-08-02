@@ -23,6 +23,6 @@
             />
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/create_post_content" />
+    <include layout="@layout/content_post_creation" />
 
 </android.support.design.widget.CoordinatorLayout>

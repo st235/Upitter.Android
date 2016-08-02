@@ -37,73 +37,62 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.GALLERY_MULTI_SELECTED_PHOTOS_LIST;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.QUIZ_MULTI_SELECTION_LIST;
 import static com.github.sasd97.upitter.Upitter.*;
 
-public class CreatePostActivity extends BaseActivity
+public class PostCreationActivity extends BaseActivity
     implements ImageHolderRecyclerAdapter.OnAmountChangeListener,
         MaterialDialog.ListCallbackSingleChoice,
         PostQueryService.OnPostListener,
         PostBuilder.OnPostBuilderListener {
 
     private CompanyModel company;
-    private PostQueryService queryService;
     private PostBuilder postBuilder;
 
-    private RecyclerView photosRecyclerView;
-    private LinearLayoutManager linearLayoutManager;
     private ImageHolderRecyclerAdapter imageHolderRecyclerAdapter;
+    @BindView(R.id.image_placeholder_recyclerview_publication) RecyclerView photosRecyclerView;
 
-    private ImageView addressIconImageView;
-    private ImageView quizIconImageView;
-    private ImageView photoIconImageView;
+    @BindView(R.id.address_icon_create_post_activity) ImageView addressIconImageView;
+    @BindView(R.id.quiz_icon_create_post_activity) ImageView quizIconImageView;
+    @BindView(R.id.photos_image_view_publication) ImageView photoIconImageView;
 
-    private TextView addressTextView;
-    private TextView quizTextView;
-    private TextView photoTextView;
+    @BindView(R.id.address_text_create_post_activity) TextView addressTextView;
+    @BindView(R.id.quiz_text_create_post_activity) TextView quizTextView;
+    @BindView(R.id.photos_text_view_publication) TextView photoTextView;
 
-    private MaterialEditText postTitleEditText;
-    private MaterialEditText postTextEditText;
+    @BindView(R.id.post_title_create_post_activity) MaterialEditText postTitleEditText;
+    @BindView(R.id.post_description_create_post_activity) MaterialEditText postTextEditText;
 
-    private ImageView categoryPreviewImageView;
-    private TextView categoryTextView;
+    @BindView(R.id.category_preview_create_post_activity) ImageView categoryPreviewImageView;
+    @BindView(R.id.category_text_create_post_activity) TextView categoryTextView;
 
     private int whichCoordinatesSelected = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_post_activity);
-        setToolbar(R.id.toolbar, true);
+        setContentView(R.layout.activity_post_creation);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
-
-        company = (CompanyModel) getHolder().get();
-        queryService = PostQueryService.getService(this);
-        postBuilder = PostBuilder.getBuilder(this, queryService);
-
-        setCategory(Categories.getDefaultCategory());
-
-        linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        imageHolderRecyclerAdapter = new ImageHolderRecyclerAdapter(this, new ArrayList<String>(), this);
-        photosRecyclerView.setLayoutManager(linearLayoutManager);
-        photosRecyclerView.setAdapter(imageHolderRecyclerAdapter);
     }
 
     @Override
     protected void setupViews() {
-        photosRecyclerView = findById(R.id.image_placeholder_recyclerview_publication);
-        addressIconImageView = findById(R.id.address_icon_create_post_activity);
-        quizIconImageView = findById(R.id.quiz_icon_create_post_activity);
-        photoIconImageView = findById(R.id.photos_image_view_publication);
-        addressTextView = findById(R.id.address_text_create_post_activity);
-        quizTextView = findById(R.id.quiz_text_create_post_activity);
-        photoTextView = findById(R.id.photos_text_view_publication);
-        categoryPreviewImageView = findById(R.id.category_preview_create_post_activity);
-        categoryTextView = findById(R.id.category_text_create_post_activity);
-        postTitleEditText = findById(R.id.post_title_create_post_activity);
-        postTextEditText = findById(R.id.post_description_create_post_activity);
+        setToolbar(R.id.toolbar, true);
+
+        company = (CompanyModel) getHolder().get();
+        PostQueryService queryService = PostQueryService.getService(this);
+        postBuilder = PostBuilder.getBuilder(this, queryService);
+
+        setCategory(Categories.getDefaultCategory());
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        imageHolderRecyclerAdapter = new ImageHolderRecyclerAdapter(this, new ArrayList<String>(), this);
+        photosRecyclerView.setLayoutManager(linearLayoutManager);
+        photosRecyclerView.setAdapter(imageHolderRecyclerAdapter);
     }
 
     public void onPhotosClick(View v) {

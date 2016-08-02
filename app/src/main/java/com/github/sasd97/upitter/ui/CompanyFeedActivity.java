@@ -65,7 +65,7 @@ public class CompanyFeedActivity extends BaseActivity
         createPostView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CompanyFeedActivity.this, CreatePostActivity.class));
+                startActivity(new Intent(CompanyFeedActivity.this, PostCreationActivity.class));
             }
         });
 

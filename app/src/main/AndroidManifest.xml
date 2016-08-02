@@ -114,7 +114,7 @@
             android:label="@string/title_activity_people_tape"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.CreatePostActivity"
+            android:name=".ui.PostCreationActivity"
             android:label="@string/title_create_post_activity"
             android:parentActivityName=".ui.CompanyFeedActivity"
             android:theme="@style/AppTheme.NoActionBar">
