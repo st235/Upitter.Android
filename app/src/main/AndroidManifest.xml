@@ -123,7 +123,7 @@
                 android:value=".ui.CompanyFeedActivity" />
         </activity>
         <activity
-            android:name=".ui.results.QuizActivity"
+            android:name=".ui.results.QuizCreationResult"
             android:label="@string/quiz_label_create_post_activity"
             android:parentActivityName=".ui.CompanyFeedActivity"
             android:theme="@style/AppTheme.NoActionBar">

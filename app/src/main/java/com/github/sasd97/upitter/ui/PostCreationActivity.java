@@ -24,7 +24,7 @@ import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.ui.adapters.ImageHolderRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.results.PostTypeSelectionResult;
-import com.github.sasd97.upitter.ui.results.QuizActivity;
+import com.github.sasd97.upitter.ui.results.QuizCreationResult;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.ListUtils;
@@ -106,7 +106,7 @@ public class PostCreationActivity extends BaseActivity
     }
 
     public void onQuizClick(View v) {
-        Intent quizIntent = new Intent(this, QuizActivity.class);
+        Intent quizIntent = new Intent(this, QuizCreationResult.class);
         if (postBuilder.getQuiz() != null)
             quizIntent.putStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST, postBuilder.getQuiz());
         startActivityForResult(quizIntent, RequestCodesConstants.CREATE_QUIZ_REQUEST);

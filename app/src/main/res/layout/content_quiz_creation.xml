@@ -12,8 +12,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@android:color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.github.sasd97.upitter.ui.results.QuizActivity"
-    tools:showIn="@layout/quiz_activity">
+    tools:context=".ui.results.QuizCreationResult"
+    tools:showIn="@layout/activity_quiz_creation">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/quiz_recycler_view"

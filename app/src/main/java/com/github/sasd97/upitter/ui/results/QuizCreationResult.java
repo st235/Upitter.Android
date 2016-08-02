@@ -15,6 +15,7 @@ import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
+import butterknife.BindView;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.QUIZ_MULTI_SELECTION_LIST;
@@ -23,21 +24,25 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.QUIZ_MULTI
  * Created by alexander on 05.07.16.
  */
 
-public class QuizActivity extends BaseActivity
+public class QuizCreationResult extends BaseActivity
         implements QuizRecyclerAdapter.OnQuizChangeListener {
 
     private final int QUIZ_MAX_AMOUNT = 6;
 
-    private Button addButton;
-    private RecyclerView recyclerView;
-    private QuizRecyclerAdapter adapter;
+    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.quiz_add_button) Button addButton;
+    @BindView(R.id.quiz_recycler_view) RecyclerView recyclerView;
 
-    private FloatingActionButton fab;
+    private QuizRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.quiz_activity);
+        setContentView(R.layout.activity_quiz_creation);
+    }
+
+    @Override
+    protected void setupViews() {
         setToolbar(R.id.toolbar, true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
 
@@ -64,14 +69,6 @@ public class QuizActivity extends BaseActivity
                 finish();
             }
         });
-
-    }
-
-    @Override
-    protected void setupViews() {
-        recyclerView = findById(R.id.quiz_recycler_view);
-        addButton = findById(R.id.quiz_add_button);
-        fab = findById(R.id.fab);
     }
 
     public void onAddClick(View v) {
