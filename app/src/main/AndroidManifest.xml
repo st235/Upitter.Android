@@ -110,7 +110,7 @@
                 android:value=".ui.CompanyRegistrationActivity" />
         </activity>
         <activity
-            android:name=".ui.schemas.ShowOnMapActivity"
+            android:name=".ui.schemas.MapPreviewSchema"
             android:label="@string/title_activity_people_tape"
             android:theme="@style/AppTheme" />
         <activity

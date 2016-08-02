@@ -28,7 +28,7 @@ import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
-import com.github.sasd97.upitter.ui.schemas.ShowOnMapActivity;
+import com.github.sasd97.upitter.ui.schemas.MapPreviewSchema;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.ListUtils;
@@ -175,7 +175,7 @@ public class TapeRecyclerAdapter extends RecyclerView.Adapter<TapeRecyclerAdapte
 
             switch (item.getItemId()) {
                 case R.id.action_show_on_map:
-                    Intent intent = new Intent(context, ShowOnMapActivity.class);
+                    Intent intent = new Intent(context, MapPreviewSchema.class);
                     intent.putExtra(COORDINATES_ATTACH, post.toAuthorOnMapModel());
                     context.startActivity(intent);
                     break;

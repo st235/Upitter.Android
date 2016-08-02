@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import butterknife.BindView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATES_ATTACH;
@@ -43,34 +44,32 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATE
 /**
  * Created by alexander on 21.07.16.
  */
-public class ShowOnMapActivity extends BaseActivity
+public class MapPreviewSchema extends BaseActivity
         implements OnMapReadyCallback,
         LocationService.OnLocationListener,
         MapExecutor.OnMapExecutionListener,
         View.OnClickListener {
 
     private static final String TAG = "Show on map";
-    private String MAPS_API;
 
     private GoogleMap googleMap;
+    private Location currentLocation;
     private AuthorOnMapModel authorToShow;
 
-    private RelativeLayout rootLayout;
-    private FloatingActionButton fab;
-
-    private Location currentLocation;
-    private LocationService service;
+    @BindView(R.id.fab) FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_choose_activity);
+    }
+
+    @Override
+    protected void setupViews() {
         setToolbar(R.id.toolbar, true);
 
-        service = LocationService.getService(this);
+        LocationService service = LocationService.getService(this);
         service.init(this);
-
-        MAPS_API = getString(R.string.google_maps_api_key);
 
         authorToShow = getIntent().getParcelableExtra(COORDINATES_ATTACH);
 
@@ -80,12 +79,6 @@ public class ShowOnMapActivity extends BaseActivity
         mapFragment.getMapAsync(this);
 
         fab.setOnClickListener(this);
-    }
-
-    @Override
-    protected void setupViews() {
-        rootLayout = findById(R.id.root_layout);
-        fab = findById(R.id.fab);
     }
 
     @Override
@@ -121,7 +114,7 @@ public class ShowOnMapActivity extends BaseActivity
                 .with(this)
                 .load(authorToShow.getAuthorAvatarUrl())
                 .asBitmap()
-                .transform(new CenterCrop(this), new RoundedCornersTransformation(this, Dimens.dpToPx(4), 0))
+                .transform(new CenterCrop(this), new RoundedCornersTransformation(this, Dimens.drr(), 0))
                 .into(new SimpleTarget<Bitmap>(scaleSide, scaleSide) {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
