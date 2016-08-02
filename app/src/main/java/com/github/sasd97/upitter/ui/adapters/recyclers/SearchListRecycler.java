@@ -15,16 +15,19 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.skeletons.SearchableSkeleton;
+import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.utils.Dimens;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by alexander on 05.07.16.
  */
-public class SearchableRecyclerAdapter<T extends SearchableSkeleton>
-        extends RecyclerView.Adapter<SearchableRecyclerAdapter<T>.LocationSearchViewHolder> {
+public class SearchListRecycler<T extends SearchableSkeleton>
+        extends RecyclerView.Adapter<SearchListRecycler<T>.LocationSearchViewHolder> {
 
     public interface OnItemSelectedListener<T extends SearchableSkeleton> {
         void onItemSelected(boolean isChecked, T location, int position);
@@ -36,21 +39,21 @@ public class SearchableRecyclerAdapter<T extends SearchableSkeleton>
     private List<T> locationList;
     private OnItemSelectedListener onItemSelectedListener;
 
-    public SearchableRecyclerAdapter(boolean isMultiChoose,
-                                     boolean isSubtitles,
-                                     Context context,
-                                     List<T> locationList) {
+    public SearchListRecycler(boolean isMultiChoose,
+                              boolean isSubtitles,
+                              Context context,
+                              List<T> locationList) {
         this.locationList = locationList;
         this.context = context;
         this.isMultiChoose = isMultiChoose;
         this.isSubtitles = isSubtitles;
     }
 
-    public SearchableRecyclerAdapter(boolean isMultiChoose,
-                                     boolean isSubtitles,
-                                     Context context,
-                                     ArrayList<T> locationList,
-                                     OnItemSelectedListener listener) {
+    public SearchListRecycler(boolean isMultiChoose,
+                              boolean isSubtitles,
+                              Context context,
+                              ArrayList<T> locationList,
+                              OnItemSelectedListener listener) {
         this.locationList = locationList;
         this.context = context;
         this.isMultiChoose = isMultiChoose;
@@ -58,24 +61,22 @@ public class SearchableRecyclerAdapter<T extends SearchableSkeleton>
         onItemSelectedListener = listener;
     }
 
-    public class LocationSearchViewHolder extends RecyclerView.ViewHolder
+    public class LocationSearchViewHolder extends BaseViewHolder
             implements View.OnClickListener {
 
-        ImageView locationIcon;
-        TextView locationText;
-        TextView locationSubText;
-        CheckBox locationChecker;
+        @BindView(R.id.location_chooser_icon) ImageView locationIcon;
+        @BindView(R.id.location_chooser_text) TextView locationText;
+        @BindView(R.id.location_chooser_subtext) TextView locationSubText;
+        @BindView(R.id.location_chooser_checker) CheckBox locationChecker;
 
         private OnItemSelectedListener onItemSelectedListener;
 
         public LocationSearchViewHolder(View itemView) {
             super(itemView);
+        }
 
-            locationIcon = (ImageView) itemView.findViewById(R.id.location_chooser_icon);
-            locationText = (TextView) itemView.findViewById(R.id.location_chooser_text);
-            locationSubText = (TextView) itemView.findViewById(R.id.location_chooser_subtext);
-            locationChecker = (CheckBox) itemView.findViewById(R.id.location_chooser_checker);
-
+        @Override
+        protected void setupViews() {
             itemView.setOnClickListener(this);
 
             if (!isSubtitles) locationSubText.setVisibility(View.GONE);
@@ -109,7 +110,7 @@ public class SearchableRecyclerAdapter<T extends SearchableSkeleton>
 
     @Override
     public LocationSearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_search_single_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_search_list, parent, false);
         LocationSearchViewHolder holder = new LocationSearchViewHolder(v);
         if (onItemSelectedListener != null) holder.setOnItemSelectedListener(onItemSelectedListener);
         return holder;

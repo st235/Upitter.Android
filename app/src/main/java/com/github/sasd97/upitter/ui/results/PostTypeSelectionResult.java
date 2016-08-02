@@ -13,7 +13,7 @@ import android.view.View;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.IntentKeysConstants;
 import com.github.sasd97.upitter.models.CategoryModel;
-import com.github.sasd97.upitter.ui.adapters.recyclers.SearchableRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.SearchListRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.SlidrUtils;
@@ -30,10 +30,10 @@ import butterknife.BindView;
  */
 
 public class PostTypeSelectionResult extends BaseActivity
-        implements SearchableRecyclerAdapter.OnItemSelectedListener<CategoryModel>,
+        implements SearchListRecycler.OnItemSelectedListener<CategoryModel>,
         View.OnClickListener {
 
-    private SearchableRecyclerAdapter adapter;
+    private SearchListRecycler adapter;
     private List<CategoryModel> data = new ArrayList<>();
     @BindView(R.id.location_recycler_view) RecyclerView recyclerView;
 
@@ -51,7 +51,7 @@ public class PostTypeSelectionResult extends BaseActivity
 
         data = Categories.getCategories();
 
-        adapter = new SearchableRecyclerAdapter(false, false, this, data);
+        adapter = new SearchListRecycler(false, false, this, data);
         adapter.setOnItemSelectedListener(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

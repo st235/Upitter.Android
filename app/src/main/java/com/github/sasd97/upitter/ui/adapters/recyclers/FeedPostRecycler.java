@@ -27,8 +27,6 @@ import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.services.query.TapeQueryService;
-import com.github.sasd97.upitter.ui.adapters.TapeQuizRecyclerAdapter;
-import com.github.sasd97.upitter.ui.adapters.TapeQuizResultRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.ui.schemas.MapPreviewSchema;
@@ -73,7 +71,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
     public class TapeViewHolder extends BaseViewHolder
         implements TapeQueryService.OnTapeQueryListener,
-            TapeQuizRecyclerAdapter.OnItemClickListener,
+            FeedQuizVariantRecycler.OnItemClickListener,
             ImageCollageRecycler.OnImageClickListener,
             Toolbar.OnMenuItemClickListener {
 
@@ -188,7 +186,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
             quizVariantsRecyclerView.setVisibility(View.GONE);
             posts.set(getAdapterPosition(), post);
 
-            quizResultHorizontalChart.setAdapter(new TapeQuizResultRecyclerAdapter(post.getQuiz(),
+            quizResultHorizontalChart.setAdapter(new FeedQuizVariantVotedRecycler(post.getQuiz(),
                     context.getString(R.string.voice_postfix),
                     posts.get(getAdapterPosition()).getVotersAmount()));
             quizResultHorizontalChart.setHasFixedSize(true);
@@ -349,7 +347,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         if (post.isVotedByMe()) {
             holder.quizResultHorizontalChart.setVisibility(View.VISIBLE);
             holder.quizVariantsRecyclerView.setVisibility(View.GONE);
-            holder.quizResultHorizontalChart.setAdapter(new TapeQuizResultRecyclerAdapter(post.getQuiz(),
+            holder.quizResultHorizontalChart.setAdapter(new FeedQuizVariantVotedRecycler(post.getQuiz(),
                     context.getString(R.string.voice_postfix),
                     post.getVotersAmount()));
             holder.quizResultHorizontalChart.setHasFixedSize(true);
@@ -358,7 +356,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
         holder.quizResultHorizontalChart.setVisibility(View.GONE);
         holder.quizVariantsRecyclerView.setVisibility(View.VISIBLE);
-        holder.quizVariantsRecyclerView.setAdapter(new TapeQuizRecyclerAdapter(post.getQuiz(), holder));
+        holder.quizVariantsRecyclerView.setAdapter(new FeedQuizVariantRecycler(post.getQuiz(), holder));
     }
 
     private void obtainCollage(final TapeViewHolder holder, PostResponseModel post) {
