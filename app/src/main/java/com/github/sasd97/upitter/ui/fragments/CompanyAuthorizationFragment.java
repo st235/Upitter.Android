@@ -45,8 +45,8 @@ public class CompanyAuthorizationFragment extends BaseFragment
         GeocoderService.OnAddressListener,
         CompanyAuthorizationQueryService.OnCompanyAuthorizationListener {
 
-    @BindString(R.string.empty_field) private String EMPTY_FIELD;
-    @BindString(R.string.nothing_found_country_code_choose) private String COUNTRY_NOT_VALID;
+    @BindString(R.string.empty_field) String EMPTY_FIELD;
+    @BindString(R.string.nothing_found_country_code_choose) String COUNTRY_NOT_VALID;
 
     private boolean notACountryCode = false;
     private LocationService locationService;

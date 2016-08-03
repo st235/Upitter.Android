@@ -34,8 +34,8 @@ public class CompanyFeedActivity extends BaseActivity
 
     private CompanyModel company;
 
-    @BindView(R.id.drawer_layout) private DrawerLayout drawer;
-    @BindView(R.id.nav_view) private NavigationView navigationView;
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
+    @BindView(R.id.nav_view) NavigationView navigationView;
 
     private RelativeLayout createPostView;
     private ImageView logoImageView;
@@ -46,11 +46,11 @@ public class CompanyFeedActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_feed);
-        setToolbar(R.id.toolbar);
     }
 
     @Override
     protected void setupViews() {
+        setToolbar(R.id.toolbar);
         company = (CompanyModel) getHolder().get();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
