@@ -3,9 +3,7 @@ package com.github.sasd97.upitter.services;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.github.sasd97.upitter.models.CoordinatesModel;
 
@@ -16,6 +14,7 @@ import java.util.Locale;
 /**
  * Created by Alexadner Dadukin on 03.07.2016.
  */
+
 public class GeocoderService extends AsyncTask<CoordinatesModel, Void, CoordinatesModel> {
 
     public interface OnAddressListener {

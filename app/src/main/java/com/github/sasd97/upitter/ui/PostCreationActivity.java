@@ -26,6 +26,7 @@ import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.results.PostTypeSelectionResult;
 import com.github.sasd97.upitter.ui.results.QuizCreationResult;
 import com.github.sasd97.upitter.utils.Categories;
+import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.PostBuilder;
@@ -51,8 +52,10 @@ public class PostCreationActivity extends BaseActivity
 
     private CompanyModel company;
     private PostBuilder postBuilder;
-
+    private MaterialDialog progressDialog;
+    private int whichCoordinatesSelected = -1;
     private ImageHolderRecyclerAdapter imageHolderRecyclerAdapter;
+
     @BindView(R.id.image_placeholder_recyclerview_publication) RecyclerView photosRecyclerView;
 
     @BindView(R.id.address_icon_create_post_activity) ImageView addressIconImageView;
@@ -69,8 +72,6 @@ public class PostCreationActivity extends BaseActivity
     @BindView(R.id.category_preview_create_post_activity) ImageView categoryPreviewImageView;
     @BindView(R.id.category_text_create_post_activity) TextView categoryTextView;
 
-    private int whichCoordinatesSelected = -1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,10 +82,10 @@ public class PostCreationActivity extends BaseActivity
     @Override
     protected void setupViews() {
         setToolbar(R.id.toolbar, true);
-
         company = (CompanyModel) getHolder().get();
         PostQueryService queryService = PostQueryService.getService(this);
         postBuilder = PostBuilder.getBuilder(this, queryService);
+        progressDialog = DialogUtils.showProgressDialog(this);
 
         setCategory(Categories.getDefaultCategory());
 
@@ -138,6 +139,8 @@ public class PostCreationActivity extends BaseActivity
                 .title(postTitleEditText.getText().toString().trim())
                 .text(postTextEditText.getText().toString().trim())
                 .build(company.getAccessToken());
+
+        progressDialog.show();
     }
 
     @Override
@@ -161,7 +164,15 @@ public class PostCreationActivity extends BaseActivity
 
     @Override
     public void onCreatePost() {
+        progressDialog.dismiss();
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (progressDialog != null && progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 
     @Override

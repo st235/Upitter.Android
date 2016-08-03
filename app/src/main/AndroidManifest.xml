@@ -116,6 +116,7 @@
         <activity
             android:name=".ui.PostCreationActivity"
             android:label="@string/title_create_post_activity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
             android:parentActivityName=".ui.CompanyFeedActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

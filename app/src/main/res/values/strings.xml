@@ -10,6 +10,10 @@
     <string name="debug_dialog_confirm">Agree</string>
     <!-- Endregion -->
 
+    <!-- Progress dialog region. -->
+    <string name="progress_dialog_title">Still progress&#8230;</string>
+    <!-- Endregion -->
+
     <!-- Region permissions -->
     <string name="permission_granted">Permission granted</string>
     <string name="permission_denied">Permission denied</string>

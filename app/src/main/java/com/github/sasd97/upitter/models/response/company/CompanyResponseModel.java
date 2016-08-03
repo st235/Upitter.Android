@@ -122,11 +122,12 @@ public class CompanyResponseModel extends BaseResponseModel {
         for (Integer activity: mActivities)
             activities.append(activity).append("\n");
 
-        return String.format(Locale.getDefault(), "Business\nCustom id: %1$s\nName: %2$s\nIs verify: %3$b\nActivities: [%4$s]\nSite: %5$s\n",
+        return String.format(Locale.getDefault(), "Business\nCustom id: %1$s\nName: %2$s\nIs verify: %3$b\nActivities: [%4$s]\nSite: %5$s\nAvatar url: %6$s",
                 mCustomId,
                 mName,
                 mIsVerify,
                 activities.toString(),
-                mSite);
+                mSite,
+                mLogoUrl);
     }
 }

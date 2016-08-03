@@ -39,6 +39,8 @@ public class CodeVerificationActivity extends BaseActivity implements
         RequestCodeReceiver.OnRequestCodeReceiveListener,
         CompanyAuthorizationQueryService.OnCompanyAuthorizationListener {
 
+    private final static String TAG = "Code Verification";
+
     private final String UPITTER_SMS_HEADER = "999999";
 
     private PhoneModel currentPhone;
@@ -109,6 +111,7 @@ public class CodeVerificationActivity extends BaseActivity implements
     @Override
     public void onAuthorize(CompanyResponseModel companyResponseModel) {
         setHolder(CompanyHolder.getHolder());
+        Log.d(TAG, companyResponseModel.toString());
 
         CompanyModel companyModel = new CompanyModel
                 .Builder()
@@ -124,8 +127,6 @@ public class CodeVerificationActivity extends BaseActivity implements
                 .coordinates(companyResponseModel.getCoordinates())
                 .accessToken(companyResponseModel.getAccessToken())
                 .build();
-
-        Log.d("PRESAVE", companyModel.toString());
 
         getHolder().save(companyModel);
         startActivity(new Intent(this, CompanyFeedActivity.class));

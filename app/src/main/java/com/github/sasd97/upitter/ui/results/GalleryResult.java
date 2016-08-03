@@ -45,6 +45,7 @@ public class GalleryResult extends BaseActivity
         OnGalleryInteractionListener {
 
     private static final String TAG = "Gallery Activity";
+    private static final String EMPTY_TOOLBAR = "";
 
     private final static int DEFAULT_MULTI_SELECT_MAX_AMOUNT = 3;
     private final static boolean IS_GALLERY_IN_MULTI_SELECTION_MODE = false;
@@ -70,6 +71,7 @@ public class GalleryResult extends BaseActivity
     @Override
     protected void setupViews() {
         setToolbar(R.id.toolbar, true);
+        getSupportActionBar().setTitle(EMPTY_TOOLBAR);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
 
         initConfiguration(getIntent());

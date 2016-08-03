@@ -375,6 +375,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
     }
 
     public String getFirstPostId() {
+        if (getItemCount() == 0) return "0";
         return posts.get(FIRST_POSITION).getId();
     }
 

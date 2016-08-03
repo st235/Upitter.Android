@@ -20,9 +20,18 @@ public class DialogUtils {
     public static MaterialDialog showDebugInfo(Context context) {
         return new MaterialDialog
                 .Builder(context)
-                .title(context.getString(R.string.debug_dialog_title))
-                .content(context.getString(R.string.debug_dialog_content))
-                .positiveText(context.getString(R.string.debug_dialog_confirm))
+                .title(R.string.debug_dialog_title)
+                .content(R.string.debug_dialog_content)
+                .positiveText(R.string.debug_dialog_confirm)
+                .cancelable(false)
+                .build();
+    }
+
+    public static MaterialDialog showProgressDialog(Context context) {
+        return new MaterialDialog
+                .Builder(context)
+                .content(R.string.progress_dialog_title)
+                .progress(true, 0)
                 .cancelable(false)
                 .build();
     }
