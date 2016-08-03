@@ -59,7 +59,7 @@ public final class RestService {
                 .build();
 
         fileServerAPI = new Retrofit.Builder()
-                .baseUrl(FILE_SERVER_API_URL)
+                .baseUrl(FILE_PRE_PRODUCTION_SERVER_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

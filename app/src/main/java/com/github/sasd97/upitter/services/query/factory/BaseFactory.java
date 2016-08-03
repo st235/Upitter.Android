@@ -54,6 +54,13 @@ public interface BaseFactory {
                                                                 @Path("countryCode") String countryCode,
                                                                 @Field("code") String requestCode);
 
+
+    @FormUrlEncoded
+    @POST("debug/authorization/phone/verify_development/{number}/{countryCode}")
+    Call<AuthorizationRequestCodeResponseModel> debugRequestCode(@Path("number") String number,
+                                                                @Path("countryCode") String countryCode,
+                                                                @Field("code") String requestCode);
+
     @POST("authorization/phone/add_info/{number}/{countryCode}")
     Call<AuthorizationCompanyResponseModel> registerCompany(@Path("number") String number,
                                                             @Path("countryCode") String countryCode,

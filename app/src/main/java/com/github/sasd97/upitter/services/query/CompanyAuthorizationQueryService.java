@@ -85,6 +85,35 @@ public class CompanyAuthorizationQueryService {
         });
     }
 
+    public void debugRequestCode(@NonNull String number,
+                                @NonNull String countryCode,
+                                @NonNull final String requestCode) {
+        Call<AuthorizationRequestCodeResponseModel> sendRequest = RestService
+                .baseFactory()
+                .debugRequestCode(number, countryCode, requestCode);
+        sendRequest.enqueue(new Callback<AuthorizationRequestCodeResponseModel>() {
+            @Override
+            public void onResponse(Call<AuthorizationRequestCodeResponseModel> call, Response<AuthorizationRequestCodeResponseModel> response) {
+                if (!RestService.handleError(call, response, listener)) return;
+
+                RequestCodeResponseModel responseModel = response.body().getRequestCode();
+                if (!response.body().isSuccess()) {
+                    listener.onSendCodeError(responseModel.getAttemptsAmount());
+                    return;
+                }
+
+                if (!responseModel.isAuthorized()) listener.onRegister(responseModel.getTemporaryToken());
+                else listener.onAuthorize(responseModel.getCompany());
+            }
+
+            @Override
+            public void onFailure(Call<AuthorizationRequestCodeResponseModel> call, Throwable t) {
+                t.printStackTrace();
+                listener.onError(RestService.getEmptyError());
+            }
+        });
+    }
+
     public void registerCompanyUser(@NonNull CompanyModel.Builder builder) {
         final CompanyModel register = builder.build();
         RequestBody body = RestService.obtainJsonRaw(register.toJson());

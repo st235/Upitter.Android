@@ -4,6 +4,12 @@
     <string name="empty_field">Empty</string>
     <!-- Endregion -->
 
+    <!-- Debug dialog region. -->
+    <string name="debug_dialog_title">Debug build</string>
+    <string name="debug_dialog_content">Warning. Current application remaining in debug mode.\nAll forms are fill by default values. For developers purposes only.\nVersion: 0.0.2.1\nVersion code: 365\nBuild date: 8/3/16\nUpitter LLC</string>
+    <string name="debug_dialog_confirm">Agree</string>
+    <!-- Endregion -->
+
     <!-- Region permissions -->
     <string name="permission_granted">Permission granted</string>
     <string name="permission_denied">Permission denied</string>

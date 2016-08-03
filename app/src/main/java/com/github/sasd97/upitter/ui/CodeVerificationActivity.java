@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
+import com.github.sasd97.upitter.BuildConfig;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.receivers.RequestCodeReceiver;
 import com.github.sasd97.upitter.holders.CompanyHolder;
@@ -59,6 +60,8 @@ public class CodeVerificationActivity extends BaseActivity implements
         currentPhone = getIntent().getParcelableExtra(RECEIVED_PHONE);
         queryService = CompanyAuthorizationQueryService.getService(this);
         requestCodeReceiver = RequestCodeReceiver.getReceiver(this);
+
+        if (BuildConfig.DEBUG) requestCodeEdt.setText("615243");
     }
 
     public void onLoginClick(View v) {
@@ -150,6 +153,14 @@ public class CodeVerificationActivity extends BaseActivity implements
 
     private void setRequestCode(@NonNull String requestCode) {
         requestCodeEdt.setText(requestCode);
+
+        if (BuildConfig.DEBUG) {
+            queryService.debugRequestCode(
+                    currentPhone.getPhoneBody(),
+                    currentPhone.getDialCode(),
+                    requestCode);
+            return;
+        }
 
         queryService.sendRequestCode(
                 currentPhone.getPhoneBody(),

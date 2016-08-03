@@ -47,11 +47,11 @@ public class ImageCollageRecycler extends RecyclerView.Adapter<ImageCollageRecyc
 
         public CollageViewHolder(View itemView) {
             super(itemView);
-            rootImage = (ImageView) itemView;
         }
 
         @Override
         protected void setupViews() {
+            rootImage = (ImageView) itemView;
             rootImage.setOnClickListener(this);
         }
 

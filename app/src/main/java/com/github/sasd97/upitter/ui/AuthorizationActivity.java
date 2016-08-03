@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.github.sasd97.upitter.BuildConfig;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.holders.CompanyHolder;
 import com.github.sasd97.upitter.holders.PeopleHolder;
@@ -19,6 +20,7 @@ import com.github.sasd97.upitter.holders.UserHolder;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.ui.adapters.pagers.AuthorizationPager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.Permissions;
 
 import butterknife.BindView;
@@ -73,6 +75,10 @@ public class AuthorizationActivity extends BaseActivity
                 Manifest.permission.RECEIVE_SMS,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (BuildConfig.DEBUG) DialogUtils
+                .showDebugInfo(this)
+                .show();
     }
 
     @Override

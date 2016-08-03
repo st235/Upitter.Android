@@ -10,5 +10,5 @@ public interface MethodConstants {
     String FILE_SERVER_API_URL = "http://192.168.1.6:6000/";
 
     String BASE_PRE_PRODUCTION_API_URL = "https://upitter.herokuapp.com/";
-    String FILE_PRE_PRODUCTION_SERVER_API_URL = "https://upitter-fileserver.herokuapp.com/";
+    String FILE_PRE_PRODUCTION_SERVER_API_URL = "http://fileserver.upitter.com/";
 }
