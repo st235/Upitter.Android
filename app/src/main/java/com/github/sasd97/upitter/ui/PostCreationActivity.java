@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -207,7 +208,7 @@ public class PostCreationActivity extends BaseActivity
 
     @Override
     public void onPrepareError() {
-
+        Snackbar.make(getRootView(), "Вы не заполнили обязательное поле", Snackbar.LENGTH_SHORT).show();
     }
 
     private void handleImages(Intent data) {
