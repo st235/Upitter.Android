@@ -49,8 +49,7 @@ import java.util.Locale;
 )
 public class Upitter extends Application {
 
-    private static String LANGUAGE;
-
+    private static String language;
     private static UserHolder holder;
 
     @Override
@@ -91,7 +90,7 @@ public class Upitter extends Application {
     }
 
     public static String language() {
-        if (LANGUAGE == null) LANGUAGE = Locale.getDefault().getLanguage();
-        return LANGUAGE;
+        if (language == null) language = Locale.getDefault().getLanguage();
+        return language;
     }
 }

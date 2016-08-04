@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.utils.Prefs;
+import com.twitter.sdk.android.core.models.User;
 
 /**
  * Created by Alexadner Dadukin on 02.07.2016.
@@ -15,6 +16,7 @@ public abstract class UserHolder <T extends UserModel> {
 
     private static final String USER = "USER_AVAILABLE";
     private static final String USER_TYPE = "USER_TYPE";
+    private static final String USER_ACCESS_TOKEN = "USER_ACCESS_TOKEN";
 
     protected T userModel;
 
@@ -37,6 +39,10 @@ public abstract class UserHolder <T extends UserModel> {
         return Prefs.get().getInt(USER_TYPE, 0);
     }
 
+    public static String getAccessToken() {
+        return Prefs.get().getString(USER_ACCESS_TOKEN, "");
+    }
+
     public abstract void set(T userModel);
     public abstract void restore();
     public abstract T get();
@@ -46,6 +52,7 @@ public abstract class UserHolder <T extends UserModel> {
 
         Prefs.put(USER, true);
         Prefs.put(USER_TYPE, this.userModel.getType().getValue());
+        Prefs.put(USER_ACCESS_TOKEN, this.userModel.getAccessToken());
     }
 
     public void delete() {

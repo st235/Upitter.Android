@@ -53,6 +53,13 @@ public class AuthorizationActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authorization);
+
+        Permissions.getPermission(this,
+                REQUEST_COMPLEX,
+                Manifest.permission.RECEIVE_SMS,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     @Override
@@ -69,12 +76,6 @@ public class AuthorizationActivity extends BaseActivity
         viewPager.setAdapter(authorizationPager);
         viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
-
-        Permissions.getPermission(this,
-                REQUEST_COMPLEX,
-                Manifest.permission.RECEIVE_SMS,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION);
 
         if (BuildConfig.DEBUG) DialogUtils
                 .showDebugInfo(this)

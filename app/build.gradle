@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
@@ -54,4 +54,7 @@ dependencies {
     compile 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     compile('com.twitter.sdk.android:twitter-core:1.6.6@aar') { transitive = true; }
+    compile files('src/main/libs/activation.jar')
+    compile files('src/main/libs/additionnal.jar')
+    compile files('src/main/libs/mail.jar')
 }

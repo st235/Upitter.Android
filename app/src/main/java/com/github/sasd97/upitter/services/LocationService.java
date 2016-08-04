@@ -9,6 +9,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -23,33 +24,42 @@ import java.util.Locale;
 /**
  * Created by alexander on 23.06.16.
  */
+@SuppressWarnings("MissingPermission")
 public class LocationService implements LocationListener {
 
     private final static String TAG = "Location Service";
 
     public interface OnLocationListener {
         void onLocationFind(Location location);
+
         void onLocationChanged(Location location);
     }
+
+    private static LocationService service;
+    private static boolean isInit = false;
 
     private final long MIN_TIME = 2000;
     private final float MIN_DISTANCE = 10;
 
-    private LocationManager locationManager;
-
     private Location currentLocation;
-
     private OnLocationListener listener;
+    private LocationManager locationManager;
 
     private LocationService(OnLocationListener context) {
         listener = context;
     }
 
     public static LocationService getService(OnLocationListener listener) {
-        return new LocationService(listener);
+        if (service != null) return service;
+        service = new LocationService(listener);
+        return service;
     }
 
     public void init(Context context) {
+        if (isInit) return;
+        Log.d(TAG, "Init method is executed");
+        Log.d(TAG, String.format("Is available call location: %1$b", isPermissionGrant(context)));
+
         locationManager = (LocationManager)
                 context.getSystemService(Context.LOCATION_SERVICE);
 
@@ -62,18 +72,17 @@ public class LocationService implements LocationListener {
 
         String provider = locationManager.getBestProvider(criteria, true);
 
-        if (ActivityCompat
-                .checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
+        if (!isPermissionGrant(context)) {return;}
         locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DISTANCE, this);
 
-        currentLocation = locationManager.getLastKnownLocation(provider);
+        currentLocation = getLastKnownLocation(context);
+
         if (currentLocation != null) {
-            Log.d(TAG, "location initialized");
+            Log.d(TAG, currentLocation.toString());
             listener.onLocationFind(currentLocation);
         }
+
+        isInit = true;
     }
 
     @Override
@@ -95,5 +104,26 @@ public class LocationService implements LocationListener {
     @Override
     public void onProviderDisabled(String s) {
         Log.d(TAG, String.format("Current provider disabled. Description: %1$s", s));
+    }
+
+    private Location getLastKnownLocation(Context context) {
+        List<String> providers = locationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Log.d(TAG, provider);
+            if (!isPermissionGrant(context)) break;
+            Location l = locationManager.getLastKnownLocation(provider);
+            if (l == null) continue;
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
+
+    private boolean isPermissionGrant(Context context) {
+        return ActivityCompat
+                .checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 }
