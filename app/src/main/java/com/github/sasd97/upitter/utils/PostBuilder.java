@@ -29,6 +29,7 @@ public class PostBuilder implements OnQueueListener<List<ImageResponseModel>> {
     enum Type { SIMPLE_POST, POST_WITH_QUIZ, POST_WITH_IMAGES, COMPLEX_POST }
 
     public interface OnPostBuilderListener {
+        void onPrepare();
         void onBuild(); //  FIXME: add onPrepare method to lock ui before post
         void onPublicationError();
         void onPrepareError();
@@ -119,6 +120,7 @@ public class PostBuilder implements OnQueueListener<List<ImageResponseModel>> {
             listener.onPrepareError();
             return;
         }
+        listener.onPrepare();
         this.accessToken = accessToken;
 
         Log.d(TAG, identityType().toString());

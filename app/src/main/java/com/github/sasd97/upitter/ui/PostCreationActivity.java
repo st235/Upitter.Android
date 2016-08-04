@@ -139,8 +139,6 @@ public class PostCreationActivity extends BaseActivity
                 .title(postTitleEditText.getText().toString().trim())
                 .text(postTextEditText.getText().toString().trim())
                 .build(company.getAccessToken());
-
-        progressDialog.show();
     }
 
     @Override
@@ -190,6 +188,11 @@ public class PostCreationActivity extends BaseActivity
         categoryPreviewImageView.setImageDrawable(preview);
         categoryTextView.setText(category.getTitle());
         postBuilder.category(category);
+    }
+
+    @Override
+    public void onPrepare() {
+        progressDialog.show();
     }
 
     @Override

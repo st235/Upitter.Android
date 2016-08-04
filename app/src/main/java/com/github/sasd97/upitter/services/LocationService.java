@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.github.sasd97.upitter.models.CoordinatesModel;
+import com.github.sasd97.upitter.utils.Connectivity;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,13 +51,19 @@ public class LocationService implements LocationListener {
     }
 
     public static LocationService getService(OnLocationListener listener) {
-        if (service != null) return service;
+        if (service != null) return service(listener);
         service = new LocationService(listener);
         return service;
     }
 
     public void init(Context context) {
-        if (isInit) return;
+        if (isInit) {
+            Log.d(TAG, "Method was init");
+            Log.d(TAG, String.valueOf(currentLocation != null));
+            if (currentLocation != null) listener.onLocationFind(currentLocation);
+            return;
+        }
+
         Log.d(TAG, "Init method is executed");
         Log.d(TAG, String.format("Is available call location: %1$b", isPermissionGrant(context)));
 
@@ -70,7 +77,7 @@ public class LocationService implements LocationListener {
         criteria.setCostAllowed(true);
         criteria.setPowerRequirement(Criteria.POWER_LOW);
 
-        String provider = locationManager.getBestProvider(criteria, true);
+        String provider = Connectivity.isConnected() ? LocationManager.NETWORK_PROVIDER : locationManager.getBestProvider(criteria, true);
 
         if (!isPermissionGrant(context)) {return;}
         locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DISTANCE, this);
@@ -83,6 +90,11 @@ public class LocationService implements LocationListener {
         }
 
         isInit = true;
+    }
+
+    public static LocationService service(OnLocationListener listener) {
+        service.listener = listener;
+        return service;
     }
 
     @Override
