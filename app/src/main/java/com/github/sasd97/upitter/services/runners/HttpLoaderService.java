@@ -1,9 +1,6 @@
-package com.github.sasd97.upitter.runners;
+package com.github.sasd97.upitter.services.runners;
 
 import android.util.Log;
-
-import org.acra.util.IOUtils;
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -18,15 +15,15 @@ import java.net.URL;
  * Created by alexander on 29.07.16.
  */
 
-public class HttpRunner {
+public class HttpLoaderService {
 
     static InputStream is = null;
     static String json = "";
 
-    private HttpRunner() {}
+    private HttpLoaderService() {}
 
-    public static HttpRunner getRunner() {
-        return new HttpRunner();
+    public static HttpLoaderService getRunner() {
+        return new HttpLoaderService();
     }
 
     public String getJSONFromUrl(String path, String encoding) {

@@ -2,20 +2,19 @@ package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
 
+import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
-import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.response.ErrorResponseModel;
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
 import com.github.sasd97.upitter.models.response.user.UserResponseModel;
 import com.github.sasd97.upitter.services.RestService;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
  * Created by Alex on 10.06.2016.
  */
+
 public class UserAuthorizationQueryService {
 
     public interface OnSocialAuthorizationListener extends OnErrorQueryListener {
@@ -58,17 +57,12 @@ public class UserAuthorizationQueryService {
     }
 
     private void notifyServerBySignIn(@NonNull Call<AuthorizationResponseModel> notify) {
-        notify.enqueue(new Callback<AuthorizationResponseModel>() {
+        notify.enqueue(new Callback<AuthorizationResponseModel>(listener) {
             @Override
             public void onResponse(Call<AuthorizationResponseModel> call, Response<AuthorizationResponseModel> response) {
+                super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onServerNotify(response.body().getUser());
-            }
-
-            @Override
-            public void onFailure(Call<AuthorizationResponseModel> call, Throwable t) {
-                t.printStackTrace();
-                listener.onError(RestService.getEmptyError());
             }
         });
     }

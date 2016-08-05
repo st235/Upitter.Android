@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.utils;
+package com.github.sasd97.upitter.services;
 
 import android.util.Log;
 
@@ -6,9 +6,8 @@ import com.github.sasd97.upitter.events.OnQueueListener;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
-import com.github.sasd97.upitter.services.ImagesUploadQueue;
-import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
+import com.github.sasd97.upitter.utils.ListUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
@@ -16,23 +15,27 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
+import static com.github.sasd97.upitter.constants.PostCreateConstants.TITLE_MIN_LENGTH;
+import static com.github.sasd97.upitter.constants.PostCreateConstants.DESCRIPTION_MIN_LENGTH;
 
 /**
  * Created by alexander on 12.07.16.
  */
 
-public class PostBuilder implements OnQueueListener<List<ImageResponseModel>> {
+public class PostBuilderService implements OnQueueListener<List<ImageResponseModel>> {
 
     private static final String TAG = "Post builder";
 
-    enum Type { SIMPLE_POST, POST_WITH_QUIZ, POST_WITH_IMAGES, COMPLEX_POST }
+    private enum Type { SIMPLE_POST, POST_WITH_QUIZ, POST_WITH_IMAGES, COMPLEX_POST }
+    public enum Missing { MISSING_LOCATION, SHORT_TITLE, SHORT_DESCRIPTION }
 
     public interface OnPostBuilderListener {
+        void onBuild();
         void onPrepare();
-        void onBuild(); //  FIXME: add onPrepare method to lock ui before post
-        void onPublicationError();
         void onPrepareError();
+        void onPublicationError();
+        void onValidationError(List<Missing> missing);
     }
 
     private Type postType;
@@ -71,42 +74,42 @@ public class PostBuilder implements OnQueueListener<List<ImageResponseModel>> {
     private PostQueryService queryService;
     private OnPostBuilderListener listener;
 
-    private PostBuilder(OnPostBuilderListener listener, PostQueryService queryService) {
+    private PostBuilderService(OnPostBuilderListener listener, PostQueryService queryService) {
         this.listener = listener;
         this.queryService = queryService;
     }
 
-    public static PostBuilder getBuilder(OnPostBuilderListener listener, PostQueryService queryService) {
-        return new PostBuilder(listener, queryService);
+    public static PostBuilderService getBuilder(OnPostBuilderListener listener, PostQueryService queryService) {
+        return new PostBuilderService(listener, queryService);
     }
 
-    public PostBuilder title(String title) {
+    public PostBuilderService title(String title) {
         this.title = title;
         return this;
     }
 
-    public PostBuilder text(String text) {
+    public PostBuilderService text(String text) {
         this.text = text;
         return this;
     }
 
-    public PostBuilder category(CategoryModel category) {
+    public PostBuilderService category(CategoryModel category) {
         this.category = category.getId();
         return this;
     }
 
-    public PostBuilder coordinates(CoordinatesModel coordinates) {
+    public PostBuilderService coordinates(CoordinatesModel coordinates) {
         this.latitude = coordinates.getLatitude();
         this.longitude = coordinates.getLongitude();
         return this;
     }
 
-    public PostBuilder quiz(ArrayList<String> quiz) {
+    public PostBuilderService quiz(ArrayList<String> quiz) {
         this.quiz = quiz;
         return this;
     }
 
-    public PostBuilder rawPhotos(ArrayList<String> rawPhotos) {
+    public PostBuilderService rawPhotos(ArrayList<String> rawPhotos) {
         this.rawPhotos = rawPhotos;
         return this;
     }
@@ -117,7 +120,7 @@ public class PostBuilder implements OnQueueListener<List<ImageResponseModel>> {
 
     public void build(String accessToken) {
         if (!validateForms()) {
-            listener.onPrepareError();
+            listener.onValidationError(obtainMissing());
             return;
         }
         listener.onPrepare();
@@ -143,10 +146,8 @@ public class PostBuilder implements OnQueueListener<List<ImageResponseModel>> {
 
     private void complete() {
         Log.d(TAG, toJson());
-        final String language = Locale.getDefault().getLanguage();
         queryService
                 .createPost(accessToken,
-                        language,
                         RestService.obtainJsonRaw(toJson()));
     }
 
@@ -179,6 +180,14 @@ public class PostBuilder implements OnQueueListener<List<ImageResponseModel>> {
         if (latitude == null || longitude == null) result = false;
         if (category == null) result = false;
         return result;
+    }
+
+    private List<Missing> obtainMissing() {
+        List<Missing> missing = new ArrayList<>();
+        if (latitude == null || longitude == null) missing.add(Missing.MISSING_LOCATION);
+        if (title.length() < TITLE_MIN_LENGTH) missing.add(Missing.SHORT_TITLE);
+        if (text.length() < DESCRIPTION_MIN_LENGTH) missing.add(Missing.SHORT_DESCRIPTION);
+        return missing;
     }
 
     @Override

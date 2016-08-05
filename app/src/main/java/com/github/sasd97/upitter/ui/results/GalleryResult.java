@@ -25,9 +25,9 @@ import com.github.sasd97.upitter.ui.adapters.spinner.GalleryAlbumPreviewSpinner;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.utils.Gallery;
+import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Search;
 import com.github.sasd97.upitter.utils.SlidrUtils;
-import com.github.sasd97.upitter.utils.mutators.PhotoMutator;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
@@ -42,7 +42,8 @@ public class GalleryResult extends BaseActivity
         implements View.OnClickListener,
         AdapterView.OnItemSelectedListener,
         OnSearchListener,
-        OnGalleryInteractionListener {
+        OnGalleryInteractionListener,
+        ListUtils.OnListMutateListener<String, ImageSkeleton> {
 
     private static final String TAG = "Gallery Activity";
     private static final String EMPTY_TOOLBAR = "";
@@ -139,7 +140,7 @@ public class GalleryResult extends BaseActivity
         spinner.setAdapter(galleryAlbumPreviewSpinner);
         spinner.setVisibility(View.VISIBLE);
 
-        galleryImageGridRecycler.addAll(PhotoMutator.mutate(paths));
+        galleryImageGridRecycler.addAll(ListUtils.mutateConcrete(paths, this));
         imageGridRecyclerView.setVisibility(View.VISIBLE);
         progressRelativeLayout.setVisibility(View.GONE);
     }
@@ -221,5 +222,13 @@ public class GalleryResult extends BaseActivity
         intent.putExtra(PUT_CROPPED_IMAGE, data.getStringExtra(PUT_CROPPED_IMAGE));
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @Override
+    public ImageSkeleton mutate(String object) {
+        return new ImageSkeleton
+                .Builder()
+                .path(object)
+                .build();
     }
 }

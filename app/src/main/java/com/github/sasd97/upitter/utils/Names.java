@@ -1,8 +1,6 @@
 package com.github.sasd97.upitter.utils;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-
 import java.util.Date;
 
 /**

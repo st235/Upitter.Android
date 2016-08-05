@@ -6,7 +6,7 @@ import android.content.Context;
 import com.github.sasd97.upitter.holders.UserHolder;
 import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.utils.Assets;
-import com.github.sasd97.upitter.utils.Authorization;
+import com.github.sasd97.upitter.services.AuthorizationService;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Connectivity;
 import com.github.sasd97.upitter.utils.Keyboard;
@@ -63,7 +63,7 @@ public class Upitter extends Application {
         super.onCreate();
 
         Assets.init(this);
-        Authorization.init(this);
+        AuthorizationService.init(this);
         Categories.init(this);
         Connectivity.init(this);
         Keyboard.init(this);

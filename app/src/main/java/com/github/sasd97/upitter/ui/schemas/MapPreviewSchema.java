@@ -20,7 +20,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.AuthorOnMapModel;
-import com.github.sasd97.upitter.runners.MapExecutor;
+import com.github.sasd97.upitter.services.runners.MapExecutorService;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Dimens;
@@ -44,7 +44,7 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATE
 public class MapPreviewSchema extends BaseActivity
         implements OnMapReadyCallback,
         LocationService.OnLocationListener,
-        MapExecutor.OnMapExecutionListener,
+        MapExecutorService.OnMapExecutionListener,
         View.OnClickListener {
 
     private static final String TAG = "Show on map";
@@ -88,7 +88,7 @@ public class MapPreviewSchema extends BaseActivity
                 authorToShow.getLatitude(),
                 authorToShow.getLongitude());
 
-        MapExecutor.execute(url, this);
+        MapExecutorService.execute(url, this);
     }
 
     private void setupViews(final GoogleMap googleMap, final LatLng position) {

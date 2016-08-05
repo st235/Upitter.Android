@@ -155,6 +155,13 @@
     <string name="send_label_create_post_activity">Send</string>
     <string name="title_activity_people_tape">People Tape</string>
     <string name="choose_address_create_post_activity">Choose address</string>
+    <string name="miss_snackbar_create_post_activity">Some information need</string>
+    <string name="miss_snackbar_action_create_post_activity">Show</string>
+    <string name="miss_title_create_post_activity">Some information need</string>
+    <string name="miss_content_create_post_activity">Please complete next fields:</string>
+    <string name="miss_location_create_post_activity">Miss location</string>
+    <string name="short_title_create_post_activity">Too short title</string>
+    <string name="short_description_post_activity">Too short description</string>
     <!-- Endregion -->
 
     <!-- Tape region -->

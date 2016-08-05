@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.runners;
+package com.github.sasd97.upitter.services.runners;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 /**
  * Created by alexander on 29.07.16.
  */
-public class MapExecutor extends AsyncTask<Void, Void, String> {
+public class MapExecutorService extends AsyncTask<Void, Void, String> {
 
     private String url;
     private OnMapExecutionListener listener;
@@ -15,16 +15,16 @@ public class MapExecutor extends AsyncTask<Void, Void, String> {
         void onBuildPath(String response);
     }
 
-    private MapExecutor(@NonNull String url,
-                        @NonNull OnMapExecutionListener listener){
+    private MapExecutorService(@NonNull String url,
+                               @NonNull OnMapExecutionListener listener){
         this.url = url;
         this.listener = listener;
     }
 
     public static void execute(@NonNull String url,
                                @NonNull OnMapExecutionListener listener) {
-        MapExecutor mapExecutor = new MapExecutor(url, listener);
-        mapExecutor.execute();
+        MapExecutorService mapExecutorService = new MapExecutorService(url, listener);
+        mapExecutorService.execute();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MapExecutor extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        HttpRunner runner = HttpRunner.getRunner();
+        HttpLoaderService runner = HttpLoaderService.getRunner();
         return runner.getJSONFromUrl(url, "iso-8859-1");
     }
 

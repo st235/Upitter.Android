@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.utils;
+package com.github.sasd97.upitter.services;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -27,13 +27,13 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.FACEBOOK
  * Created by Alex on 10.06.2016.
  */
 
-public final class Authorization {
+public final class AuthorizationService {
 
     private static GoogleSignInOptions googleSignInOptions;
     private static TwitterAuthClient twitterClient;
     private static CallbackManager facebookClient;
 
-    private Authorization() {}
+    private AuthorizationService() {}
 
     public static void init(Context context) {
         initFacebook(context);

@@ -17,8 +17,8 @@ import com.github.sasd97.upitter.events.OnGalleryInteractionListener;
 import com.github.sasd97.upitter.models.skeletons.ImageSkeleton;
 import com.github.sasd97.upitter.ui.adapters.filters.GalleryImageFilter;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
+import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Names;
-import com.github.sasd97.upitter.utils.mutators.PhotoMutator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -177,7 +177,12 @@ public class GalleryImageGridRecycler extends RecyclerView.Adapter<GalleryImageG
     }
 
     public ArrayList<String> getFilterPathList() {
-        return PhotoMutator.backMutate(imagesPathsFiltered);
+        return ListUtils.mutateConcrete(imagesPathsFiltered, new ListUtils.OnListMutateListener<ImageSkeleton, String>() {
+            @Override
+            public String mutate(ImageSkeleton object) {
+                return object.getPath();
+            }
+        });
     }
 
     public ArrayList<ImageSkeleton> getFilterImageList() {

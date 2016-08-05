@@ -22,7 +22,7 @@ import com.github.sasd97.upitter.models.response.user.UserResponseModel;
 import com.github.sasd97.upitter.services.query.UserAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.CompanyFeedActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
-import com.github.sasd97.upitter.utils.Authorization;
+import com.github.sasd97.upitter.services.AuthorizationService;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -70,13 +70,13 @@ public class UserAuthorizationFragment extends BaseFragment
         super.onViewCreated(view, savedInstanceState);
 
         final String[] facebookScope = getResources().getStringArray(R.array.facebook_app_scope);
-        googleClient = Authorization.google(getContext(), getActivity(), this);
-        LoginManager.getInstance().registerCallback(Authorization.facebook(), this);
+        googleClient = AuthorizationService.google(getContext(), getActivity(), this);
+        LoginManager.getInstance().registerCallback(AuthorizationService.facebook(), this);
 
         signTwitterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Authorization.twitter().authorize(getActivity(), new Callback<TwitterSession>() {
+                AuthorizationService.twitter().authorize(getActivity(), new Callback<TwitterSession>() {
                     @Override
                     public void success(Result<TwitterSession> result) {
                         service.notifyByTwitter(result.data.getAuthToken().token, result.data.getAuthToken().secret);
@@ -176,18 +176,18 @@ public class UserAuthorizationFragment extends BaseFragment
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == TWITTER_SIGN_IN_REQUEST) {
-            Authorization.twitter().onActivityResult(requestCode, resultCode, data);
+            AuthorizationService.twitter().onActivityResult(requestCode, resultCode, data);
             return;
         }
 
         if (FacebookSdk.isFacebookRequestCode(requestCode)) {
-            Authorization.facebook().onActivityResult(requestCode, resultCode, data);
+            AuthorizationService.facebook().onActivityResult(requestCode, resultCode, data);
             return;
         }
 
         if (requestCode == GOOGLE_SIGN_IN_REQUEST && resultCode == FragmentActivity.RESULT_OK) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) Authorization.obtainGoogle(service, result);
+            if (result.isSuccess()) AuthorizationService.obtainGoogle(service, result);
             else showErrorSnackbar();
         }
     }

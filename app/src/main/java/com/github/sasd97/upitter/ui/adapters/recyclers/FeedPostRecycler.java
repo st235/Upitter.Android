@@ -26,7 +26,7 @@ import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
-import com.github.sasd97.upitter.services.query.TapeQueryService;
+import com.github.sasd97.upitter.services.query.FeedQueryService;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.ui.schemas.MapPreviewSchema;
@@ -70,7 +70,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
     }
 
     public class TapeViewHolder extends BaseViewHolder
-        implements TapeQueryService.OnTapeQueryListener,
+        implements FeedQueryService.OnTapeQueryListener,
             FeedQuizVariantRecycler.OnItemClickListener,
             ImageCollageRecycler.OnImageClickListener,
             Toolbar.OnMenuItemClickListener {
@@ -100,7 +100,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         @BindView(R.id.quiz_result_post_single_view) RecyclerView quizResultHorizontalChart;
         @BindView(R.id.post_images_post_single_view) RecyclerView imagesRecyclerView;
 
-        private TapeQueryService queryService;
+        private FeedQueryService queryService;
         private View.OnClickListener likeClick;
         private View.OnClickListener favoriteClick;
 
@@ -110,15 +110,14 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
         @Override
         protected void setupViews() {
-            queryService = TapeQueryService.getService(this);
+            queryService = FeedQueryService.getService(this);
             postToolbar.setOnMenuItemClickListener(this);
 
             likeClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     likeShineButton.setChecked(true);
-                    queryService.like(Locale.getDefault().getLanguage(),
-                            company.getAccessToken(),
+                    queryService.like(company.getAccessToken(),
                             posts.get(getAdapterPosition()).getId());
                 }
             };
@@ -126,8 +125,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
             favoriteClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    queryService.favorite(Locale.getDefault().getLanguage(),
-                            company.getAccessToken(),
+                    queryService.favorite(company.getAccessToken(),
                             posts.get(getAdapterPosition()).getId());
                 }
             };
@@ -219,8 +217,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
         @Override
         public void onItemClick(int position) {
-            queryService.vote(Locale.getDefault().getLanguage(),
-                    company.getAccessToken(),
+            queryService.vote(company.getAccessToken(),
                     posts.get(getAdapterPosition()).getId(),
                     position);
         }

@@ -144,7 +144,6 @@ public class BaseFeedFragment extends BaseFragment
 
         postQueryService.obtainPosts(
                 getHolder().get().getAccessToken(),
-                Locale.getDefault().getLanguage(),
                 100000,
                 location.getLatitude(),
                 location.getLongitude(),
@@ -213,7 +212,6 @@ public class BaseFeedFragment extends BaseFragment
         feedPostRecycler.refresh();
         postQueryService.obtainPosts(
                 getHolder().get().getAccessToken(),
-                Locale.getDefault().getLanguage(),
                 100000,
                 location.getLatitude(),
                 location.getLongitude(),

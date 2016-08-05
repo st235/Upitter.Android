@@ -30,7 +30,7 @@ import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.ListUtils;
-import com.github.sasd97.upitter.utils.PostBuilder;
+import com.github.sasd97.upitter.services.PostBuilderService;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
@@ -41,18 +41,19 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.github.sasd97.upitter.Upitter.*;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.GALLERY_MULTI_SELECTED_PHOTOS_LIST;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.QUIZ_MULTI_SELECTION_LIST;
-import static com.github.sasd97.upitter.Upitter.*;
+import static com.github.sasd97.upitter.services.PostBuilderService.Missing.*;
 
 public class PostCreationActivity extends BaseActivity
     implements ImageHolderRecyclerAdapter.OnAmountChangeListener,
         MaterialDialog.ListCallbackSingleChoice,
         PostQueryService.OnPostListener,
-        PostBuilder.OnPostBuilderListener {
+        PostBuilderService.OnPostBuilderListener {
 
     private CompanyModel company;
-    private PostBuilder postBuilder;
+    private PostBuilderService postBuilderService;
     private MaterialDialog progressDialog;
     private int whichCoordinatesSelected = -1;
     private ImageHolderRecyclerAdapter imageHolderRecyclerAdapter;
@@ -85,7 +86,7 @@ public class PostCreationActivity extends BaseActivity
         setToolbar(R.id.toolbar, true);
         company = (CompanyModel) getHolder().get();
         PostQueryService queryService = PostQueryService.getService(this);
-        postBuilder = PostBuilder.getBuilder(this, queryService);
+        postBuilderService = PostBuilderService.getBuilder(this, queryService);
         progressDialog = DialogUtils.showProgressDialog(this);
 
         setCategory(Categories.getDefaultCategory());
@@ -109,8 +110,8 @@ public class PostCreationActivity extends BaseActivity
 
     public void onQuizClick(View v) {
         Intent quizIntent = new Intent(this, QuizCreationResult.class);
-        if (postBuilder.getQuiz() != null)
-            quizIntent.putStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST, postBuilder.getQuiz());
+        if (postBuilderService.getQuiz() != null)
+            quizIntent.putStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST, postBuilderService.getQuiz());
         startActivityForResult(quizIntent, RequestCodesConstants.CREATE_QUIZ_REQUEST);
     }
 
@@ -136,7 +137,7 @@ public class PostCreationActivity extends BaseActivity
     }
 
     public void onSendClick(View v) {
-        postBuilder
+        postBuilderService
                 .title(postTitleEditText.getText().toString().trim())
                 .text(postTextEditText.getText().toString().trim())
                 .build(company.getAccessToken());
@@ -150,7 +151,7 @@ public class PostCreationActivity extends BaseActivity
 
     @Override
     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-        postBuilder.coordinates(company.getCoordinates().get(which));
+        postBuilderService.coordinates(company.getCoordinates().get(which));
         whichCoordinatesSelected = which;
         highlightHandler(addressIconImageView, addressTextView, R.drawable.ic_icon_map_active, R.color.colorAccent);
         return false;
@@ -188,7 +189,7 @@ public class PostCreationActivity extends BaseActivity
         Drawable preview = ContextCompat.getDrawable(this, category.getIntImage());
         categoryPreviewImageView.setImageDrawable(preview);
         categoryTextView.setText(category.getTitle());
-        postBuilder.category(category);
+        postBuilderService.category(category);
     }
 
     @Override
@@ -202,18 +203,56 @@ public class PostCreationActivity extends BaseActivity
     }
 
     @Override
+    public void onValidationError(List<PostBuilderService.Missing> list) {
+        final String newLine = "\n";
+        final String content = getString(R.string.miss_content_create_post_activity);
+        final StringBuilder builder = new StringBuilder(content).append(newLine);
+
+        for (PostBuilderService.Missing missing: list) {
+            switch (missing) {
+                case MISSING_LOCATION:
+                    builder.append(getString(R.string.miss_location_create_post_activity)).append(newLine);
+                    break;
+                case SHORT_TITLE:
+                    builder.append(getString(R.string.short_title_create_post_activity)).append(newLine);
+                    break;
+                case SHORT_DESCRIPTION:
+                    builder.append(getString(R.string.short_description_post_activity)).append(newLine);
+                    break;
+            }
+        }
+
+        Snackbar
+                .make(getRootView(), R.string.miss_snackbar_create_post_activity, Snackbar.LENGTH_LONG)
+                .setAction(R.string.miss_snackbar_action_create_post_activity, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MaterialDialog
+                                .Builder(PostCreationActivity.this)
+                                .title(R.string.miss_title_create_post_activity)
+                                .content(builder.toString())
+                                .show();
+                    }
+                })
+                .show();
+    }
+
+    @Override
     public void onPublicationError() {
 
     }
 
     @Override
     public void onPrepareError() {
-        Snackbar.make(getRootView(), "Вы не заполнили обязательное поле", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getRootView(),
+                "Images doesnot download on server",
+                Snackbar.LENGTH_SHORT)
+                .show();
     }
 
     private void handleImages(Intent data) {
         ArrayList<String> selectedPhotos = data.getStringArrayListExtra(GALLERY_MULTI_SELECTED_PHOTOS_LIST);
-        postBuilder.rawPhotos(selectedPhotos);
+        postBuilderService.rawPhotos(selectedPhotos);
         imageHolderRecyclerAdapter.addAll(selectedPhotos);
 
         highlightHandler(photoIconImageView, photoTextView, R.drawable.ic_icon_add_photo_active, R.color.colorAccent);
@@ -221,7 +260,7 @@ public class PostCreationActivity extends BaseActivity
     }
 
     private void handleQuiz(Intent data) {
-        postBuilder.quiz(data.getStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST));
+        postBuilderService.quiz(data.getStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST));
         highlightHandler(quizIconImageView, quizTextView, R.drawable.ic_icon_quiz_active, R.color.colorAccent);
     }
 

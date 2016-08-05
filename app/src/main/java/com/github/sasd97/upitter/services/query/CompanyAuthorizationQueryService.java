@@ -1,8 +1,8 @@
 package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
+import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
@@ -14,7 +14,6 @@ import com.github.sasd97.upitter.services.RestService;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -41,19 +40,18 @@ public class CompanyAuthorizationQueryService {
 
     public void obtainCodeRequest(@NonNull String number,
                                   @NonNull String countryCode) {
-        Call<SimpleResponseModel> obtainRequest = RestService.baseFactory().obtainRequestCode(number, countryCode);
-        obtainRequest.enqueue(new Callback<SimpleResponseModel>() {
+
+        Call<SimpleResponseModel> obtainRequest = RestService
+                .baseFactory()
+                .obtainRequestCode(number, countryCode);
+
+        obtainRequest.enqueue(new Callback<SimpleResponseModel>(listener) {
 
             @Override
             public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
+                super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onCodeObtained();
-            }
-
-            @Override
-            public void onFailure(Call<SimpleResponseModel> call, Throwable t) {
-                t.printStackTrace();
-                listener.onError(RestService.getEmptyError());
             }
         });
     }
@@ -61,10 +59,14 @@ public class CompanyAuthorizationQueryService {
     public void sendRequestCode(@NonNull String number,
                                 @NonNull String countryCode,
                                 @NonNull final String requestCode) {
-        Call<AuthorizationRequestCodeResponseModel> sendRequest = RestService.baseFactory().sendRequestCode(number, countryCode, requestCode);
-        sendRequest.enqueue(new Callback<AuthorizationRequestCodeResponseModel>() {
+        Call<AuthorizationRequestCodeResponseModel> sendRequest = RestService
+                .baseFactory()
+                .sendRequestCode(number, countryCode, requestCode);
+
+        sendRequest.enqueue(new Callback<AuthorizationRequestCodeResponseModel>(listener) {
             @Override
             public void onResponse(Call<AuthorizationRequestCodeResponseModel> call, Response<AuthorizationRequestCodeResponseModel> response) {
+                super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
 
                 RequestCodeResponseModel responseModel = response.body().getRequestCode();
@@ -75,12 +77,6 @@ public class CompanyAuthorizationQueryService {
 
                 if (!responseModel.isAuthorized()) listener.onRegister(responseModel.getTemporaryToken());
                 else listener.onAuthorize(responseModel.getCompany());
-            }
-
-            @Override
-            public void onFailure(Call<AuthorizationRequestCodeResponseModel> call, Throwable t) {
-                t.printStackTrace();
-                listener.onError(RestService.getEmptyError());
             }
         });
     }
@@ -91,9 +87,11 @@ public class CompanyAuthorizationQueryService {
         Call<AuthorizationRequestCodeResponseModel> sendRequest = RestService
                 .baseFactory()
                 .debugRequestCode(number, countryCode, requestCode);
-        sendRequest.enqueue(new Callback<AuthorizationRequestCodeResponseModel>() {
+
+        sendRequest.enqueue(new Callback<AuthorizationRequestCodeResponseModel>(listener) {
             @Override
             public void onResponse(Call<AuthorizationRequestCodeResponseModel> call, Response<AuthorizationRequestCodeResponseModel> response) {
+                super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
 
                 RequestCodeResponseModel responseModel = response.body().getRequestCode();
@@ -105,34 +103,23 @@ public class CompanyAuthorizationQueryService {
                 if (!responseModel.isAuthorized()) listener.onRegister(responseModel.getTemporaryToken());
                 else listener.onAuthorize(responseModel.getCompany());
             }
-
-            @Override
-            public void onFailure(Call<AuthorizationRequestCodeResponseModel> call, Throwable t) {
-                t.printStackTrace();
-                listener.onError(RestService.getEmptyError());
-            }
         });
     }
 
     public void registerCompanyUser(@NonNull CompanyModel.Builder builder) {
         final CompanyModel register = builder.build();
+
         RequestBody body = RestService.obtainJsonRaw(register.toJson());
 
         Call<AuthorizationCompanyResponseModel> registerCall = RestService.baseFactory()
                 .registerCompany(register.getPhone().getPhoneBody(), register.getPhone().getDialCode(), body);
 
-        registerCall.enqueue(new Callback<AuthorizationCompanyResponseModel>() {
+        registerCall.enqueue(new Callback<AuthorizationCompanyResponseModel>(listener) {
             @Override
             public void onResponse(Call<AuthorizationCompanyResponseModel> call, Response<AuthorizationCompanyResponseModel> response) {
+                super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 if (response.body().isSuccess()) listener.onAuthorize(response.body().getBusinessUser());
-            }
-
-            @Override
-            public void onFailure(Call<AuthorizationCompanyResponseModel> call, Throwable t) {
-                t.printStackTrace();
-                Log.d("ERROR", call.request().url().toString());
-                listener.onError(RestService.getEmptyError());
             }
         });
     }

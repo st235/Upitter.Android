@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
 
+import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
 import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
 import com.github.sasd97.upitter.models.response.categories.CatergoriesResponseModel;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -33,22 +33,17 @@ public class CategoriesQueryService {
         return new CategoriesQueryService(listener);
     }
 
-    public void getCategories(@NonNull String language) {
+    public void getCategories(@NonNull String accessToken) {
         Call<CatergoriesResponseModel> getCategories = RestService
                 .baseFactory()
-                .getCategories(Locale.getDefault().getLanguage(), language);
+                .getCategories(Locale.getDefault().getLanguage(), accessToken);
 
-        getCategories.enqueue(new Callback<CatergoriesResponseModel>() {
+        getCategories.enqueue(new Callback<CatergoriesResponseModel>(listener) {
             @Override
             public void onResponse(Call<CatergoriesResponseModel> call, Response<CatergoriesResponseModel> response) {
+                super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onGetCategories(response.body().getCategories());
-            }
-
-            @Override
-            public void onFailure(Call<CatergoriesResponseModel> call, Throwable t) {
-                t.printStackTrace();
-                listener.onError(RestService.getEmptyError());
             }
         });
     }
