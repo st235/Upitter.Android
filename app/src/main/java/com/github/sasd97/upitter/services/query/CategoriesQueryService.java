@@ -17,6 +17,7 @@ import retrofit2.Response;
 /**
  * Created by alexander on 27.06.16.
  */
+
 public class CategoriesQueryService {
 
     public interface OnCategoryListener extends OnErrorQueryListener {

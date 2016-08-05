@@ -9,6 +9,7 @@ import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.response.SimpleErrorResponseModel;
 import com.github.sasd97.upitter.services.query.factory.BaseFactory;
 import com.github.sasd97.upitter.services.query.factory.FileServerFactory;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,7 +127,7 @@ public final class RestService {
         String log = String.format(Locale.getDefault(), "Request\nurl %1$s\nmethod %2$s\n",
                 call.request().url().toString(),
                 call.request().method());
-        Log.d(TAG, log);
+        Logger.i(log);
     }
 
     public static void handleThrows(@NonNull Throwable t,
@@ -135,7 +136,7 @@ public final class RestService {
         ErrorModel errorModel = getEmptyError();
         t.printStackTrace();
         logRequest(call);
-        Log.d(TAG, errorModel.toString());
+        Logger.e(errorModel.toString());
         listener.onError(errorModel);
     }
 

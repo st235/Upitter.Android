@@ -3,6 +3,7 @@ package com.github.sasd97.upitter;
 import android.app.Application;
 import android.content.Context;
 
+import com.github.sasd97.upitter.holders.LocationHolder;
 import com.github.sasd97.upitter.holders.UserHolder;
 import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.utils.Assets;
@@ -12,6 +13,8 @@ import com.github.sasd97.upitter.utils.Connectivity;
 import com.github.sasd97.upitter.utils.Keyboard;
 import com.github.sasd97.upitter.utils.Palette;
 import com.github.sasd97.upitter.utils.Prefs;
+import com.orhanobut.logger.LogLevel;
+import com.orhanobut.logger.Logger;
 import com.orm.SugarContext;
 
 import org.acra.ACRA;
@@ -49,6 +52,8 @@ import java.util.Locale;
 )
 public class Upitter extends Application {
 
+    private static final String TAG = "Upitter Application";
+
     private static String language;
     private static UserHolder holder;
 
@@ -62,6 +67,11 @@ public class Upitter extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Logger
+                .init(TAG)
+                .methodCount(3)
+                .logLevel(BuildConfig.DEBUG ? LogLevel.FULL : LogLevel.NONE);
+
         Assets.init(this);
         AuthorizationService.init(this);
         Categories.init(this);
@@ -72,6 +82,7 @@ public class Upitter extends Application {
         SugarContext.init(this);
         RestService.init();
 
+        LocationHolder.init();
         holder = UserHolder.init();
     }
 

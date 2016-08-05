@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
 import com.github.sasd97.upitter.R;
@@ -24,6 +25,10 @@ public final class Palette {
 
     public static int getAvatarPalette() {
         return ContextCompat.getColor(context, R.color.colorPrimary);
+    }
+
+    public static int getPrimaryTransparentColor() {
+        return Color.parseColor("#B30B5199");
     }
 
     public static int[] getSwipeRefreshPalette() {

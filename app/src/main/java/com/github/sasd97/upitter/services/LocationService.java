@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.github.sasd97.upitter.holders.LocationHolder;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.utils.Connectivity;
 
@@ -56,6 +57,15 @@ public class LocationService implements LocationListener {
         return service;
     }
 
+    public static LocationService service(OnLocationListener listener) {
+        service.listener = listener;
+        return service;
+    }
+
+    public static boolean isInit() {
+        return isInit;
+    }
+
     public void init(Context context) {
         if (isInit) {
             Log.d(TAG, "Method was init");
@@ -86,20 +96,18 @@ public class LocationService implements LocationListener {
 
         if (currentLocation != null) {
             Log.d(TAG, currentLocation.toString());
+            LocationHolder.setLocation(currentLocation);
             listener.onLocationFind(currentLocation);
         }
 
         isInit = true;
     }
 
-    public static LocationService service(OnLocationListener listener) {
-        service.listener = listener;
-        return service;
-    }
-
     @Override
     public void onLocationChanged(Location location) {
         Log.d(TAG, "location changed");
+        currentLocation = location;
+        LocationHolder.setLocation(location);
         listener.onLocationChanged(location);
     }
 
@@ -116,6 +124,10 @@ public class LocationService implements LocationListener {
     @Override
     public void onProviderDisabled(String s) {
         Log.d(TAG, String.format("Current provider disabled. Description: %1$s", s));
+    }
+
+    public Location getCurrentLocation() {
+        return currentLocation;
     }
 
     private Location getLastKnownLocation(Context context) {

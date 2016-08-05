@@ -296,4 +296,10 @@
     </string>
     <string name="title_activity_show_company_locations">ShowCompanyLocationsActivity</string>
     <!-- Endregion -->
+
+    <!-- Location chooser region -->
+    <string name="your_position_location_activity">Choose your location</string>
+    <string name="your_radius_location_activity">Your radius</string>
+    <string name="radius_postfix_location_activity">m</string>
+    <!-- Endregion -->
 </resources>

@@ -9,5 +9,5 @@ public interface LocationConstants {
     int MIN_RADIUS = 10;
     int MAX_RADIUS = 10_000;
 
-    
+    String RADIUS_KEY = "RADIUS_KEY";
 }

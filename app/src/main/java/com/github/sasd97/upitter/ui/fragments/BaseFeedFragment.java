@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.behaviors.OnEndlessRecyclerViewScrollListener;
+import com.github.sasd97.upitter.holders.LocationHolder;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
@@ -21,6 +22,7 @@ import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.services.query.RefreshQueryService;
+import com.github.sasd97.upitter.ui.results.LocationSelectionResult;
 import com.github.sasd97.upitter.ui.adapters.recyclers.FeedPostRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
@@ -28,13 +30,13 @@ import com.github.sasd97.upitter.ui.results.CategoriesSelectionResult;
 import com.github.sasd97.upitter.utils.Palette;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import butterknife.BindView;
 
 import static com.github.sasd97.upitter.Upitter.*;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.CATEGORIES_ATTACH;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CATEGORIES_ACTIVITY_REQUEST;
+import static com.github.sasd97.upitter.constants.RequestCodesConstants.LOCATION_CHANGE_REQUEST;
 
 /**
  * Created by alexander on 08.07.16.
@@ -112,9 +114,9 @@ public class BaseFeedFragment extends BaseFragment
                 refreshQueryService.loadOld(
                         userModel.getAccessToken(),
                         feedPostRecycler.getLastPostId(),
-                        100000,
-                        location.getLatitude(),
-                        location.getLongitude(),
+                        LocationHolder.getRadius(),
+                        LocationHolder.getLocation().getLatitude(),
+                        LocationHolder.getLocation().getLongitude(),
                         categoriesSelected);
             }
         });
@@ -144,9 +146,9 @@ public class BaseFeedFragment extends BaseFragment
 
         postQueryService.obtainPosts(
                 getHolder().get().getAccessToken(),
-                100000,
-                location.getLatitude(),
-                location.getLongitude(),
+                LocationHolder.getRadius(),
+                LocationHolder.getLocation().getLatitude(),
+                LocationHolder.getLocation().getLongitude(),
                 categoriesSelected);
     }
 
@@ -157,9 +159,9 @@ public class BaseFeedFragment extends BaseFragment
     public void onRefresh() {
         refreshQueryService.loadNew(
                 userModel.getAccessToken(),
-                100000,
-                location.getLatitude(),
-                location.getLongitude(),
+                LocationHolder.getRadius(),
+                LocationHolder.getLocation().getLatitude(),
+                LocationHolder.getLocation().getLongitude(),
                 feedPostRecycler.getFirstPostId(),
                 categoriesSelected);
     }
@@ -197,10 +199,14 @@ public class BaseFeedFragment extends BaseFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_choose_category) {
-            Intent intent = new Intent(getContext(), CategoriesSelectionResult.class);
-            startActivityForResult(intent, CATEGORIES_ACTIVITY_REQUEST);
-            return true;
+        switch (id) {
+            case R.id.action_choose_category:
+                Intent intent = new Intent(getContext(), CategoriesSelectionResult.class);
+                startActivityForResult(intent, CATEGORIES_ACTIVITY_REQUEST);
+                return true;
+            case R.id.action_choose_location:
+                startActivityForResult(new Intent(getContext(), LocationSelectionResult.class), LOCATION_CHANGE_REQUEST);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -212,19 +218,35 @@ public class BaseFeedFragment extends BaseFragment
         feedPostRecycler.refresh();
         postQueryService.obtainPosts(
                 getHolder().get().getAccessToken(),
-                100000,
-                location.getLatitude(),
-                location.getLongitude(),
+                LocationHolder.getRadius(),
+                LocationHolder.getLocation().getLatitude(),
+                LocationHolder.getLocation().getLongitude(),
+                categoriesSelected);
+    }
+
+    private void handleLocation() {
+        feedPostRecycler.refresh();
+        postQueryService.obtainPosts(
+                getHolder().get().getAccessToken(),
+                LocationHolder.getRadius(),
+                LocationHolder.getLocation().getLatitude(),
+                LocationHolder.getLocation().getLongitude(),
                 categoriesSelected);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, requestCode + ";" + resultCode + ";" + BaseActivity.RESULT_OK);
         if (resultCode != BaseActivity.RESULT_OK) return;
 
         if (requestCode == CATEGORIES_ACTIVITY_REQUEST) {
             handleCategoriesIntent(data);
+            return;
+        }
+
+        if (requestCode == LOCATION_CHANGE_REQUEST) {
+            handleLocation();
             return;
         }
     }

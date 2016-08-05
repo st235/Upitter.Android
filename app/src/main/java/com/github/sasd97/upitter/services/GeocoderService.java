@@ -6,6 +6,7 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 
 import com.github.sasd97.upitter.models.CoordinatesModel;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,6 +34,24 @@ public class GeocoderService extends AsyncTask<CoordinatesModel, Void, Coordinat
     public static void find(Context context, CoordinatesModel coordinatesModel, OnAddressListener listener) {
         GeocoderService service = new GeocoderService(context, listener);
         service.execute(coordinatesModel);
+    }
+
+    public static LatLng getCoordinates(Context context, String query) {
+        Geocoder geocoder = new Geocoder(context);
+
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(query, 1);
+
+            if (addresses.size() > 0) {
+                double latitude = addresses.get(0).getLatitude();
+                double longitude = addresses.get(0).getLongitude();
+                return new LatLng(latitude, longitude);
+            }
+
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
