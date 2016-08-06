@@ -302,4 +302,12 @@
     <string name="your_radius_location_activity">Your radius</string>
     <string name="radius_postfix_location_activity">m</string>
     <!-- Endregion -->
+
+    <!-- Company settings region -->
+    <string-array name="settings_pager">
+        <item>Base</item>
+        <item>Additional</item>
+    </string-array>
+    <string name="upload_avatar">Upload avatar</string>
+    <!-- Endregion -->
 </resources>
