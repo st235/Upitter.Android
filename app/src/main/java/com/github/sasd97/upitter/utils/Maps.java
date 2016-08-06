@@ -1,6 +1,5 @@
 package com.github.sasd97.upitter.utils;
 
-import android.graphics.Color;
 import android.util.Log;
 
 import com.github.sasd97.upitter.R;
@@ -8,6 +7,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +15,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by alexander on 29.07.16.
@@ -43,13 +42,13 @@ public class Maps {
         url.append(Double.toString(destLongitude));
         url.append("&sensor=false&mode=driving&alternatives=true");
 
-        Log.d(TAG, url.toString());
+        Logger.d(url.toString());
         return url.toString();
     }
 
     public static void drawPath(GoogleMap map,
                          String jsonResponse) {
-        Log.d(TAG, jsonResponse);
+        Logger.json(jsonResponse);
         try {
             final JSONObject json = new JSONObject(jsonResponse);
             JSONArray routeArray = json.getJSONArray("routes");

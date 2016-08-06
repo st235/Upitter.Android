@@ -20,6 +20,7 @@ import com.github.sasd97.upitter.holders.UserHolder;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.ui.adapters.pagers.AuthorizationPager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.ui.results.CompanyCoordinatesSelectionResult;
 import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.Permissions;
 

@@ -3,6 +3,7 @@ package com.github.sasd97.upitter.ui.results;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -64,8 +65,8 @@ public class CompanyCoordinatesSelectionResult extends BaseActivity implements
         rootView.addView(marker);
         marker.setLayoutParams(ViewUtils.layToCenter(rootView,
                 marker,
-                Dimens.dpToPx(65),
-                Dimens.dpToPx(100)));
+                Dimens.dpToPx(55),
+                Dimens.dpToPx(60)));
     }
 
     @Override

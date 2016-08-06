@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -25,6 +27,7 @@ import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Maps;
+import com.github.sasd97.upitter.utils.Names;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -106,24 +109,43 @@ public class MapPreviewSchema extends BaseActivity
         drawable.setBounds(0, 0, side, side);
         drawable.draw(canvas);
 
-        if (authorToShow.isAvatar())
-        Glide
-                .with(this)
-                .load(authorToShow.getAuthorAvatarUrl())
-                .asBitmap()
-                .transform(new CenterCrop(this), new RoundedCornersTransformation(this, Dimens.drr(), 0))
-                .into(new SimpleTarget<Bitmap>(scaleSide, scaleSide) {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        int extraOffset = offset + (scaleSide - resource.getWidth()) / 2;
+        if (authorToShow.isAvatar()) {
+            Glide
+                    .with(this)
+                    .load(authorToShow.getAuthorAvatarUrl())
+                    .asBitmap()
+                    .transform(new CenterCrop(this), new RoundedCornersTransformation(this, Dimens.drr(), 0))
+                    .into(new SimpleTarget<Bitmap>(scaleSide, scaleSide) {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            int extraOffset = offset + (scaleSide - resource.getWidth()) / 2;
 
-                        canvas.drawBitmap(resource,
-                                null,
-                                new Rect(extraOffset, topOffset, side - extraOffset, side - topOffset - bottomOffset),
-                                null);
-                        setMarker(googleMap, position, marker);
-                    }
-                });
+                            canvas.drawBitmap(resource,
+                                    null,
+                                    new Rect(extraOffset, topOffset, side - extraOffset, side - topOffset - bottomOffset),
+                                    null);
+                            setMarker(googleMap, position, marker);
+                        }
+                    });
+            return;
+        }
+
+        String preview = Names.getNamePreview(authorToShow.getAuthorName());
+
+        TextDrawable textDrawable = TextDrawable
+                .builder()
+                .buildRoundRect(preview,
+                        ContextCompat.getColor(this, R.color.colorShadowDark),
+                        Dimens.dpToPx(4));
+
+        Bitmap resource = convertToBitmap(textDrawable, scaleSide, scaleSide);
+        int extraOffset = offset + (scaleSide - resource.getWidth()) / 2;
+
+        canvas.drawBitmap(resource,
+                null,
+                new Rect(extraOffset, topOffset, side - extraOffset, side - topOffset - bottomOffset),
+                null);
+        setMarker(googleMap, position, marker);
     }
 
     private void setMarker(GoogleMap googleMap, LatLng position, Bitmap marker) {
@@ -131,6 +153,15 @@ public class MapPreviewSchema extends BaseActivity
                 .position(position)
                 .flat(true)
                 .icon(BitmapDescriptorFactory.fromBitmap(marker)));
+    }
+
+    private Bitmap convertToBitmap(Drawable drawable, int widthPixels, int heightPixels) {
+        Bitmap mutableBitmap = Bitmap.createBitmap(widthPixels, heightPixels, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(mutableBitmap);
+        drawable.setBounds(0, 0, widthPixels, heightPixels);
+        drawable.draw(canvas);
+
+        return mutableBitmap;
     }
 
     @Override

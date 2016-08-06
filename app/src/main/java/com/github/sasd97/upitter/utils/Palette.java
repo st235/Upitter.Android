@@ -9,6 +9,7 @@ import com.github.sasd97.upitter.R;
 /**
  * Created by Alex on 09.06.2016.
  */
+
 public final class Palette {
 
     private static Context context;

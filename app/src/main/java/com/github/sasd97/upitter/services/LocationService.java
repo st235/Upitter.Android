@@ -3,29 +3,24 @@ package com.github.sasd97.upitter.services;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.github.sasd97.upitter.holders.LocationHolder;
-import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.utils.Connectivity;
+import com.orhanobut.logger.Logger;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by alexander on 23.06.16.
  */
+
 @SuppressWarnings("MissingPermission")
 public class LocationService implements LocationListener {
 
@@ -68,14 +63,14 @@ public class LocationService implements LocationListener {
 
     public void init(Context context) {
         if (isInit) {
-            Log.d(TAG, "Method was init");
-            Log.d(TAG, String.valueOf(currentLocation != null));
+            Logger.v("Method was init");
+            Logger.v(String.valueOf(currentLocation != null));
             if (currentLocation != null) listener.onLocationFind(currentLocation);
             return;
         }
 
-        Log.d(TAG, "Init method is executed");
-        Log.d(TAG, String.format("Is available call location: %1$b", isPermissionGrant(context)));
+        Logger.v("Init method is executed");
+        Logger.v("Is available call location: %1$b", isPermissionGrant(context));
 
         locationManager = (LocationManager)
                 context.getSystemService(Context.LOCATION_SERVICE);
@@ -87,7 +82,8 @@ public class LocationService implements LocationListener {
         criteria.setCostAllowed(true);
         criteria.setPowerRequirement(Criteria.POWER_LOW);
 
-        String provider = Connectivity.isConnected() ? LocationManager.NETWORK_PROVIDER : locationManager.getBestProvider(criteria, true);
+        String provider = Connectivity.isConnected() && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+                ? LocationManager.NETWORK_PROVIDER : locationManager.getBestProvider(criteria, true);
 
         if (!isPermissionGrant(context)) {return;}
         locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DISTANCE, this);
@@ -95,7 +91,7 @@ public class LocationService implements LocationListener {
         currentLocation = getLastKnownLocation(context);
 
         if (currentLocation != null) {
-            Log.d(TAG, currentLocation.toString());
+            Logger.i(currentLocation.toString());
             LocationHolder.setLocation(currentLocation);
             listener.onLocationFind(currentLocation);
         }
@@ -113,17 +109,17 @@ public class LocationService implements LocationListener {
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
-        Log.d(TAG, String.format("Current provider change state. Description: %1$s, flag: %2$d", s, i));
+        Logger.d("Current provider change state. Description: %1$s, flag: %2$d", s, i);
     }
 
     @Override
     public void onProviderEnabled(String s) {
-        Log.d(TAG, String.format("Current provider enabled. Description: %1$s", s));
+        Logger.d("Current provider enabled. Description: %1$s", s);
     }
 
     @Override
     public void onProviderDisabled(String s) {
-        Log.d(TAG, String.format("Current provider disabled. Description: %1$s", s));
+        Logger.d("Current provider disabled. Description: %1$s", s);
     }
 
     public Location getCurrentLocation() {
@@ -134,7 +130,7 @@ public class LocationService implements LocationListener {
         List<String> providers = locationManager.getProviders(true);
         Location bestLocation = null;
         for (String provider : providers) {
-            Log.d(TAG, provider);
+            Logger.d(provider);
             if (!isPermissionGrant(context)) break;
             Location l = locationManager.getLastKnownLocation(provider);
             if (l == null) continue;

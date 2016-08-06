@@ -15,6 +15,7 @@ import com.github.sasd97.upitter.services.query.FileUploadQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.SlidrUtils;
+import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
@@ -59,7 +60,7 @@ public class CompanySettingsActivity extends BaseActivity
 
     @Override
     public void onUpload(String path) {
-        Log.d(TAG, path);
+        Logger.d(path);
         //obtainCompanyLogo(companyModel, profileAvatarImageView, path);
     }
 
