@@ -2,6 +2,8 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 
@@ -16,6 +18,8 @@ import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
+import butterknife.BindView;
+
 import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.PUT_CROPPED_IMAGE;
 
@@ -26,6 +30,9 @@ public class CompanySettingsActivity extends BaseActivity
 
     private CompanyModel companyModel;
     private FileUploadQueryService service;
+
+    @BindView(R.id.view_pager) ViewPager viewPager;
+    @BindView(R.id.tabs) TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
