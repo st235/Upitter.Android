@@ -85,7 +85,7 @@ public class PostQueryService {
                           @NonNull String postId) {
         Call<PostResponseModel> createPost = RestService
                 .baseFactory()
-                .watchPost(language(), accessToken, postId);
+                .watchPost(postId, accessToken, language());
 
         createPost.enqueue(new Callback<PostResponseModel>(listener) {
             @Override

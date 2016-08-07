@@ -131,11 +131,10 @@ public interface BaseFactory {
                                            @Field("ln") String language,
                                            @Field("logoUrl") String logoUrl);
 
-    @FormUrlEncoded
-    @POST("post/watch/{postId}")
+    @GET("post/watch/{postId}")
     Call<PostResponseModel> watchPost(@Path("postId") String postId,
-                                        @Field("accessToken") String accessToken,
-                                        @Field("ln") String language);
+                                        @Query("accessToken") String accessToken,
+                                        @Query("ln") String language);
 
     @GET("/post/find/{postId}")
     Call<PostResponseModel> findPostById(@Path("postId") String postId,

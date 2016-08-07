@@ -104,6 +104,7 @@ public class PostPreviewSchema extends BaseActivity
         postId = getIntent().getStringExtra(POST_ID);
         
         postQueryService.findPost(user.getAccessToken(), postId);
+        postQueryService.watchPost(user.getAccessToken(), postId);
     }
 
     @Override
@@ -185,7 +186,7 @@ public class PostPreviewSchema extends BaseActivity
 
     @Override
     public void onPostWatch(int amount) {
-
+        watchesAmountTextView.setText(String.valueOf(amount));
     }
 
     @Override
