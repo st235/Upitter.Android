@@ -1,5 +1,7 @@
 package com.github.sasd97.upitter.holders;
 
+import android.support.annotation.NonNull;
+
 import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.utils.Prefs;
 
@@ -47,6 +49,11 @@ public class PeopleHolder extends UserHolder<PeopleModel> {
         Prefs.put(USER_ACCESS_TOKEN, this.userModel.getAccessToken());
         Prefs.put(USER_SEX, this.userModel.getSex());
         Prefs.put(USER_IS_VERIFY, this.userModel.isVerify());
+    }
+
+    @Override
+    public void saveAvatar(@NonNull String path) {
+        Prefs.put(USER_AVATAR_URL, path);
     }
 
     @Override

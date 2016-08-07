@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.holders;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.github.sasd97.upitter.models.UserModel;
@@ -46,6 +47,7 @@ public abstract class UserHolder <T extends UserModel> {
     public abstract void set(T userModel);
     public abstract void restore();
     public abstract T get();
+    public abstract void saveAvatar(@NonNull String path);
 
     public  void save(T userModel) {
         this.userModel = userModel;

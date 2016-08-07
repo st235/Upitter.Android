@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.holders;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.utils.Prefs;
@@ -59,6 +60,13 @@ public class CompanyHolder extends UserHolder<CompanyModel> {
         }
 
         update(queryList.get(FIRST_POSITION), userModel);
+    }
+
+    @Override
+    public void saveAvatar(@NonNull String path) {
+        if (this.userModel == null) return;
+        this.userModel.setAvatarUrl(path);
+        this.userModel.save();
     }
 
     public void update(CompanyModel fromDB, CompanyModel fromServer) {

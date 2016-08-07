@@ -179,6 +179,8 @@ public class PostBuilderService implements OnQueueListener<List<ImageResponseMod
         boolean result = true;
         if (latitude == null || longitude == null) result = false;
         if (category == null) result = false;
+        if (title.length() < TITLE_MIN_LENGTH) result = false;
+        if (text.length() < DESCRIPTION_MIN_LENGTH) result = false;
         return result;
     }
 

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
+import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.RestService;
@@ -23,6 +24,8 @@ public class PostQueryService {
 
     public interface OnPostListener extends OnErrorQueryListener {
         void onPostObtained(PostsResponseModel posts);
+        void onPostWatch(int amount);
+        void onFindPost(PostResponseModel post);
         void onCreatePost();
     }
 
@@ -64,7 +67,6 @@ public class PostQueryService {
 
     public void createPost(@NonNull String accessToken,
                            @NonNull RequestBody body) {
-
         Call<PostResponseModel> createPost = RestService
                 .baseFactory()
                 .createPost(language(), accessToken, body);
@@ -75,6 +77,38 @@ public class PostQueryService {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onCreatePost();
+            }
+        });
+    }
+
+    public void watchPost(@NonNull String accessToken,
+                          @NonNull String postId) {
+        Call<PostResponseModel> createPost = RestService
+                .baseFactory()
+                .watchPost(language(), accessToken, postId);
+
+        createPost.enqueue(new Callback<PostResponseModel>(listener) {
+            @Override
+            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+                super.onResponse(call, response);
+                if (!RestService.handleError(call, response, listener)) return;
+                listener.onPostWatch(response.body().getResponseModel().getWatchesAmount());
+            }
+        });
+    }
+
+    public void findPost(@NonNull String accessToken,
+                          @NonNull String postId) {
+        Call<PostResponseModel> createPost = RestService
+                .baseFactory()
+                .findPostById(language(), accessToken, postId);
+
+        createPost.enqueue(new Callback<PostResponseModel>(listener) {
+            @Override
+            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+                super.onResponse(call, response);
+                if (!RestService.handleError(call, response, listener)) return;
+                listener.onFindPost(response.body().getResponseModel());
             }
         });
     }

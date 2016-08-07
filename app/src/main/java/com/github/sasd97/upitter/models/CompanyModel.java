@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.models;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.github.sasd97.upitter.models.skeletons.RequestSkeleton;
@@ -108,6 +109,10 @@ public class CompanyModel extends UserModel
     @Override
     public String getAvatarUrl() {
         return mAvatarUrl;
+    }
+
+    public void setAvatarUrl(@NonNull String avatarUrl) {
+        mAvatarUrl = avatarUrl;
     }
 
     @Override

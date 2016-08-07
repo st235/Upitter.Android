@@ -14,11 +14,14 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.fragments.BaseFeedFragment;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class PeopleFeedActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener {
+
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,6 @@ public class PeopleFeedActivity extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -84,7 +86,6 @@ public class PeopleFeedActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

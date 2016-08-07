@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="32dp"
-    android:paddingRight="32dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     android:paddingTop="16dp">
 
     <LinearLayout
@@ -24,6 +25,7 @@
             />
 
         <TextView
+            android:id="@+id/current_avatar_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -37,4 +39,19 @@
 
     </LinearLayout>
 
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/company_title_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/company_title_hint"
+        app:met_floatingLabel="highlight"
+        />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/company_description_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/company_description_hint"
+        app:met_floatingLabel="highlight"
+        />
 </LinearLayout>

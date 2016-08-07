@@ -26,7 +26,7 @@ public interface FileServerFactory {
                                                 @PartMap() HashMap<String, RequestBody> body);
 
     @Multipart
-    @POST("reload/avatar")
-    Call<UploadAvatarResponseModel> reloadAvatar(@Part("id") RequestBody id,
+    @POST("upload/avatar")
+    Call<UploadAvatarResponseModel> uploadAvatar(@Part("id") RequestBody id,
                                                 @PartMap() HashMap<String, RequestBody> body);
 }

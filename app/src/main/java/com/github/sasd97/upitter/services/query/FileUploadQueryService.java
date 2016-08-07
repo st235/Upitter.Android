@@ -56,4 +56,24 @@ public class FileUploadQueryService {
             }
         });
     }
+
+    public void uploadAvatar(@NonNull String id,
+                            @NonNull String path) {
+
+        HashMap<String, RequestBody> imageBody = RestService.obtainImageMultipart(new File(path));
+
+        Call<UploadAvatarResponseModel> uploadImage = RestService
+                .fileServerFactory()
+                .uploadAvatar(RestService.obtainTextMultipart(id),
+                        imageBody);
+
+        uploadImage.enqueue(new Callback<UploadAvatarResponseModel>(listener) {
+            @Override
+            public void onResponse(Call<UploadAvatarResponseModel> call, Response<UploadAvatarResponseModel> response) {
+                super.onResponse(call, response);
+                if (!RestService.handleError(call, response, listener)) return;
+                listener.onUpload(response.body().getImageModel().getPath());
+            }
+        });
+    }
 }

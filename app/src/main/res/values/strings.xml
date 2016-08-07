@@ -308,6 +308,16 @@
         <item>Base</item>
         <item>Additional</item>
     </string-array>
+
     <string name="upload_avatar">Upload avatar</string>
+    <string name="avatar_upload_state_pending">Uploading&#8230;</string>
+    <string name="avatar_upload_state_success">Success</string>
+    <string name="avatar_upload_state_error">Error</string>
+    <string name="company_title_hint">Title</string>
+    <string name="company_description_hint">Description</string>
+    <!-- Endregion -->
+
+    <!-- Post preview region -->
+    <string name="title_activity_post_preview_schema">PostPreviewSchema</string>
     <!-- Endregion -->
 </resources>

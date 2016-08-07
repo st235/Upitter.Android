@@ -5,6 +5,7 @@ import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequ
 import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.categories.CatergoriesResponseModel;
+import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
@@ -123,4 +124,22 @@ public interface BaseFactory {
                                        @Path("voteVariant") int voteVariant,
                                        @Query("ln") String language,
                                        @Query("accessToken") String accessToken);
+
+    @FormUrlEncoded
+    @POST("company/edit")
+    Call<CompanyResponseModel> editCompanyLogo(@Field("accessToken") String accessToken,
+                                           @Field("ln") String language,
+                                           @Field("logoUrl") String logoUrl);
+
+    @FormUrlEncoded
+    @POST("post/watch/{postId}")
+    Call<PostResponseModel> watchPost(@Path("postId") String postId,
+                                        @Field("accessToken") String accessToken,
+                                        @Field("ln") String language);
+
+    @FormUrlEncoded
+    @POST("/post/find/{postId}")
+    Call<PostResponseModel> findPostById(@Path("postId") String postId,
+                                        @Field("accessToken") String accessToken,
+                                        @Field("ln") String language);
 }

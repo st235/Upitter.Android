@@ -27,7 +27,7 @@ public class CompanySettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_settings);
         setToolbar(R.id.toolbar, true);
-        Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.1f));
+        Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.2f));
     }
 
     @Override
