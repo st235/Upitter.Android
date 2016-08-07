@@ -68,6 +68,9 @@ public class CompanyFeedActivity extends BaseActivity
         createPostView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                }
                 startActivity(new Intent(CompanyFeedActivity.this, PostCreationActivity.class));
             }
         });
