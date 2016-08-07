@@ -13,7 +13,15 @@ import java.util.Locale;
  * Created by alexander on 04.07.16.
  */
 
-public class ImageResponseModel {
+public class ImageResponseModel extends BaseResponseModel<ImageResponseModel> {
+
+    @SerializedName("fid")
+    @Expose
+    private String mFid;
+
+    @SerializedName("uuid")
+    @Expose
+    private String mUuid;
 
     @SerializedName("width")
     @Expose
@@ -27,9 +35,25 @@ public class ImageResponseModel {
     @Expose
     private double mAspectRatio;
 
-    @SerializedName("path")
+    @SerializedName("type")
     @Expose
-    private String mPath;
+    private String mFileType;
+
+    @SerializedName("originalUrl")
+    @Expose
+    private String mOriginalUrl;
+
+    @SerializedName("thumbUrl")
+    @Expose
+    private String mThumbUrl;
+
+    public String getFid() {
+        return mFid;
+    }
+
+    public String getUuid() {
+        return mUuid;
+    }
 
     public int getWidth() {
         return mWidth;
@@ -47,8 +71,12 @@ public class ImageResponseModel {
         return CollageUtils.calculateImageType(mHeight, mWidth);
     }
 
-    public String getPath() {
-        return mPath;
+    public String getOriginalUrl() {
+        return mOriginalUrl;
+    }
+
+    public String getThumbUrl() {
+        return mThumbUrl;
     }
 
     public String toJson() {
@@ -58,7 +86,9 @@ public class ImageResponseModel {
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "Path image %1$s",
-                mPath);
+        return String.format(Locale.getDefault(),
+                "Path image %1$s %2$s",
+                mOriginalUrl,
+                mThumbUrl);
     }
 }

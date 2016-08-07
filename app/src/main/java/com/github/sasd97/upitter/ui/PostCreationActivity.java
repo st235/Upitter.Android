@@ -88,6 +88,7 @@ public class PostCreationActivity extends BaseActivity
         company = (CompanyModel) getHolder().get();
         PostQueryService queryService = PostQueryService.getService(this);
         postBuilderService = PostBuilderService.getBuilder(this, queryService);
+        postBuilderService.uid(company.getUId());
         progressDialog = DialogUtils.showProgressDialog(this);
 
         setCategory(Categories.getDefaultCategory());

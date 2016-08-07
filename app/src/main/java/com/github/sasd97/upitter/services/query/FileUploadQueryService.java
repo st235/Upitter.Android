@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
-import com.github.sasd97.upitter.models.response.fileServer.UploadAvatarResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.services.RestService;
 
 import java.io.File;
@@ -40,19 +40,19 @@ public class FileUploadQueryService {
 
         HashMap<String, RequestBody> imageBody = RestService.obtainImageMultipart(new File(path));
 
-        Call<UploadAvatarResponseModel> uploadImage = RestService
+        Call<MediaResponseModel> uploadImage = RestService
                 .fileServerFactory()
                 .uploadImage(RestService.obtainTextMultipart(id),
                         RestService.obtainTextMultipart(type),
                         RestService.obtainTextMultipart(purpose),
                         imageBody);
 
-        uploadImage.enqueue(new Callback<UploadAvatarResponseModel>(listener) {
+        uploadImage.enqueue(new Callback<MediaResponseModel>(listener) {
             @Override
-            public void onResponse(Call<UploadAvatarResponseModel> call, Response<UploadAvatarResponseModel> response) {
+            public void onResponse(Call<MediaResponseModel> call, Response<MediaResponseModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
-                listener.onUpload(response.body().getImageModel().getPath());
+                listener.onUpload(response.body().getPath());
             }
         });
     }
@@ -62,17 +62,17 @@ public class FileUploadQueryService {
 
         HashMap<String, RequestBody> imageBody = RestService.obtainImageMultipart(new File(path));
 
-        Call<UploadAvatarResponseModel> uploadImage = RestService
+        Call<MediaResponseModel> uploadImage = RestService
                 .fileServerFactory()
                 .uploadAvatar(RestService.obtainTextMultipart(id),
                         imageBody);
 
-        uploadImage.enqueue(new Callback<UploadAvatarResponseModel>(listener) {
+        uploadImage.enqueue(new Callback<MediaResponseModel>(listener) {
             @Override
-            public void onResponse(Call<UploadAvatarResponseModel> call, Response<UploadAvatarResponseModel> response) {
+            public void onResponse(Call<MediaResponseModel> call, Response<MediaResponseModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
-                listener.onUpload(response.body().getImageModel().getPath());
+                listener.onUpload(response.body().getPath());
             }
         });
     }

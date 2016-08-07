@@ -1,14 +1,13 @@
 package com.github.sasd97.upitter.components;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.utils.CollageUtils;
 import com.github.sasd97.upitter.utils.Dimens;
 
@@ -31,11 +30,11 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
     private static final String TAG = "Collage Layout Manager";
 
     private Collage type;
-    private List<MediaResponseModel> images;
+    private List<ImageResponseModel> images;
 
     private int margin;
 
-    public CollageLayoutManager(List<MediaResponseModel> images) {
+    public CollageLayoutManager(List<ImageResponseModel> images) {
         this.images = images;
         this.margin = Dimens.dpToPx(1);
     }
@@ -192,20 +191,20 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
     private boolean isAllWide() {
         boolean wide = true;
-        for (MediaResponseModel image: images) wide &= (
-                CollageUtils.calculateImageType(image.getExtra().getHeight(), image.getExtra().getWidth()) == WIDE_PICTURE);
+        for (ImageResponseModel image: images) wide &= (
+                CollageUtils.calculateImageType(image.getHeight(), image.getWidth()) == WIDE_PICTURE);
         return wide;
     }
 
     private int countSummaryX() {
         int result = 0;
-        for (MediaResponseModel image: images) result += image.getExtra().getHeight();
+        for (ImageResponseModel image: images) result += image.getHeight();
         return result;
     }
 
     private int countSummaryY() {
         int result = 0;
-        for (MediaResponseModel image: images) result += image.getExtra().getWidth();
+        for (ImageResponseModel image: images) result += image.getWidth();
         return result;
     }
 
@@ -216,9 +215,9 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
     private int countMaxX() {
         int max = 0;
-        for (MediaResponseModel image: images)
-            if (image.getExtra().getHeight() > max)
-                max = image.getExtra().getHeight();
+        for (ImageResponseModel image: images)
+            if (image.getHeight() > max)
+                max = image.getHeight();
         return max;
     }
 }

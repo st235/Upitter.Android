@@ -10,7 +10,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.utils.CollageUtils;
 
@@ -23,7 +24,7 @@ import java.util.List;
 public class ImageCollageRecycler extends RecyclerView.Adapter<ImageCollageRecycler.CollageViewHolder> {
 
     private Context context;
-    private List<MediaResponseModel> images;
+    private List<ImageResponseModel> images;
 
     private OnImageClickListener listener;
 
@@ -31,7 +32,7 @@ public class ImageCollageRecycler extends RecyclerView.Adapter<ImageCollageRecyc
         void onImageClick(int position);
     }
 
-    public ImageCollageRecycler(Context context, List<MediaResponseModel> images) {
+    public ImageCollageRecycler(Context context, List<ImageResponseModel> images) {
         this.context = context;
         this.images = images;
     }
@@ -71,17 +72,13 @@ public class ImageCollageRecycler extends RecyclerView.Adapter<ImageCollageRecyc
 
     @Override
     public void onBindViewHolder(CollageViewHolder holder, int position) {
-        MediaResponseModel media = images.get(position);
+        ImageResponseModel media = images.get(position);
 
         Glide
                 .with(context)
-                .load(media.getUrl())
+                .load(media.getThumbUrl())
                 .centerCrop()
                 .into(holder.rootImage);
-
-        Log.d("IMAGE_SPEC", String.format("Aspect: %1$f, Type: %2$d",
-                CollageUtils.calculateAspectRatio(media.getExtra().getHeight(), media.getExtra().getWidth()),
-                CollageUtils.calculateImageType(media.getExtra().getHeight(), media.getExtra().getWidth())));
     }
 
     @Override

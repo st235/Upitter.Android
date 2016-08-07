@@ -5,6 +5,7 @@ import android.util.Log;
 import com.github.sasd97.upitter.events.OnQueueListener;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
+import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.utils.ListUtils;
@@ -12,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ import static com.github.sasd97.upitter.constants.PostCreateConstants.DESCRIPTIO
  * Created by alexander on 12.07.16.
  */
 
-public class PostBuilderService implements OnQueueListener<List<ImageResponseModel>> {
+public class PostBuilderService implements OnQueueListener<List<FileResponseModel>> {
 
     private static final String TAG = "Post builder";
 
@@ -39,6 +41,8 @@ public class PostBuilderService implements OnQueueListener<List<ImageResponseMod
     }
 
     private Type postType;
+
+    private String uid;
 
     @SerializedName("title")
     @Expose
@@ -66,7 +70,7 @@ public class PostBuilderService implements OnQueueListener<List<ImageResponseMod
 
     @SerializedName("images")
     @Expose
-    private List<ImageResponseModel> photos;
+    private List<FileResponseModel> photos;
     private ArrayList<String> rawPhotos;
 
     private String accessToken;
@@ -81,6 +85,11 @@ public class PostBuilderService implements OnQueueListener<List<ImageResponseMod
 
     public static PostBuilderService getBuilder(OnPostBuilderListener listener, PostQueryService queryService) {
         return new PostBuilderService(listener, queryService);
+    }
+
+    public PostBuilderService uid(String uid) {
+        this.uid = uid;
+        return this;
     }
 
     public PostBuilderService title(String title) {
@@ -145,7 +154,8 @@ public class PostBuilderService implements OnQueueListener<List<ImageResponseMod
     }
 
     private void complete() {
-        Log.d(TAG, toJson());
+        Logger.d(toJson());
+
         queryService
                 .createPost(accessToken,
                         RestService.obtainJsonRaw(toJson()));
@@ -153,7 +163,7 @@ public class PostBuilderService implements OnQueueListener<List<ImageResponseMod
 
     private void preparePhotos(ArrayList<String> photos) {
         ImagesUploadQueue
-                .executeQueue(this,
+                .executeQueue(uid, this,
                         ListUtils.toArray(String.class, photos));
     }
 
@@ -193,7 +203,7 @@ public class PostBuilderService implements OnQueueListener<List<ImageResponseMod
     }
 
     @Override
-    public void onQueueCompete(List<ImageResponseModel> photos) {
+    public void onQueueCompete(List<FileResponseModel> photos) {
         this.photos = photos;
         complete();
     }

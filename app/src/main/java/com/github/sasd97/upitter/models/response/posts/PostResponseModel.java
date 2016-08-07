@@ -1,13 +1,10 @@
 package com.github.sasd97.upitter.models.response.posts;
 
-import android.util.Log;
-
 import com.github.sasd97.upitter.models.AuthorOnMapModel;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
 import com.github.sasd97.upitter.models.response.coordinates.CoordinatesResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
-import com.github.sasd97.upitter.models.response.phone.PhoneResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.models.response.quiz.QuizResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -44,9 +41,9 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
     @Expose
     private List<QuizResponseModel> mQuiz;
 
-    @SerializedName("media")
+    @SerializedName("images")
     @Expose
-    private List<MediaResponseModel> mMedia;
+    private List<ImageResponseModel> mImages;
 
     @SerializedName("fromNow")
     @Expose
@@ -112,7 +109,7 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
         return mQuiz;
     }
 
-    public List<MediaResponseModel> getMedia() { return mMedia; }
+    public List<ImageResponseModel> getImages() { return mImages; }
 
     public int getCommentsAmount() { return mCommentsAmount; }
 

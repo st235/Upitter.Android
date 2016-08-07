@@ -24,7 +24,8 @@ import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
+import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.services.query.FeedQueryService;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
@@ -207,10 +208,10 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         public void onImageClick(int position) {
             PostResponseModel postResponseModel = posts.get(getAdapterPosition());
             Intent intent = new Intent(context, AlbumPreviewGallerySchema.class);
-            intent.putStringArrayListExtra(LIST_ATTACH, ListUtils.mutateConcrete(postResponseModel.getMedia(), new ListUtils.OnListMutateListener<MediaResponseModel, String>() {
+            intent.putStringArrayListExtra(LIST_ATTACH, ListUtils.mutateConcrete(postResponseModel.getImages(), new ListUtils.OnListMutateListener<ImageResponseModel, String>() {
                 @Override
-                public String mutate(MediaResponseModel object) {
-                    return object.getUrl();
+                public String mutate(ImageResponseModel object) {
+                    return object.getThumbUrl();
                 }
             }));
             intent.putExtra(POSITION_ATTACH, position);
@@ -367,13 +368,13 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
     }
 
     private void obtainCollage(final TapeViewHolder holder, PostResponseModel post) {
-        if (post.getMedia() == null || post.getMedia().size() == 0) {
+        if (post.getImages() == null || post.getImages().size() == 0) {
             holder.imagesRecyclerView.setVisibility(View.GONE);
             return;
         }
 
-        CollageLayoutManager collageLayoutManager = new CollageLayoutManager(post.getMedia());
-        ImageCollageRecycler adapter = new ImageCollageRecycler(context, post.getMedia());
+        CollageLayoutManager collageLayoutManager = new CollageLayoutManager(post.getImages());
+        ImageCollageRecycler adapter = new ImageCollageRecycler(context, post.getImages());
         adapter.setOnItemClickListener(holder);
 
         holder.imagesRecyclerView.setVisibility(View.VISIBLE);
