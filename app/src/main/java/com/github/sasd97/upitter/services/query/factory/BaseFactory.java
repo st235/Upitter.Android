@@ -137,9 +137,8 @@ public interface BaseFactory {
                                         @Field("accessToken") String accessToken,
                                         @Field("ln") String language);
 
-    @FormUrlEncoded
-    @POST("/post/find/{postId}")
+    @GET("/post/find/{postId}")
     Call<PostResponseModel> findPostById(@Path("postId") String postId,
-                                        @Field("accessToken") String accessToken,
-                                        @Field("ln") String language);
+                                        @Query("accessToken") String accessToken,
+                                        @Query("ln") String language);
 }

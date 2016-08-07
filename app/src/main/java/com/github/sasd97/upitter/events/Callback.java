@@ -25,7 +25,7 @@ public abstract class Callback<T> implements retrofit2.Callback<T> {
     @Override
     public void onFailure(Call<T> call, Throwable t) {
         RestService.logRequest(call);
-        t.printStackTrace();
+        RestService.handleThrows(t, call, listener);
         listener.onError(RestService.getEmptyError());
     }
 }

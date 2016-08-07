@@ -99,7 +99,7 @@ public final class RestService {
         try {
             error = converter.convert(response.errorBody());
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.e(e, TAG);
             return new SimpleErrorResponseModel();
         }
 
@@ -134,9 +134,8 @@ public final class RestService {
                                     @NonNull Call<?> call,
                                     @NonNull OnErrorQueryListener listener) {
         ErrorModel errorModel = getEmptyError();
-        t.printStackTrace();
         logRequest(call);
-        Logger.e(errorModel.toString());
+        Logger.e(t, TAG);
         listener.onError(errorModel);
     }
 

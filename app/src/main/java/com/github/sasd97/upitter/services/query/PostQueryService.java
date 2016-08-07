@@ -101,7 +101,7 @@ public class PostQueryService {
                           @NonNull String postId) {
         Call<PostResponseModel> createPost = RestService
                 .baseFactory()
-                .findPostById(language(), accessToken, postId);
+                .findPostById(postId, accessToken, language());
 
         createPost.enqueue(new Callback<PostResponseModel>(listener) {
             @Override

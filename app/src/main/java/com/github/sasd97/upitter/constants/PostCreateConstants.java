@@ -8,4 +8,6 @@ public interface PostCreateConstants {
 
     int TITLE_MIN_LENGTH = 2;
     int DESCRIPTION_MIN_LENGTH = 5;
+
+    String POST_ID = "POST_ID_ATTACH";
 }

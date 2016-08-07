@@ -18,6 +18,7 @@ import com.github.sasd97.upitter.holders.LocationHolder;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
+import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
@@ -176,6 +177,16 @@ public class BaseFeedFragment extends BaseFragment
     @Override
     public void onLoadOld(PostsResponseModel posts) {
         feedPostRecycler.addBehind(posts.getPosts());
+    }
+
+    @Override
+    public void onPostWatch(int amount) {
+
+    }
+
+    @Override
+    public void onFindPost(PostResponseModel post) {
+
     }
 
     @Override

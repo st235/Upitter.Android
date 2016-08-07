@@ -30,6 +30,7 @@ import com.github.sasd97.upitter.services.query.FeedQueryService;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.ui.schemas.MapPreviewSchema;
+import com.github.sasd97.upitter.ui.schemas.PostPreviewSchema;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.ListUtils;
@@ -38,7 +39,6 @@ import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -48,6 +48,7 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATE
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.LIST_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.MODE_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.POSITION_ATTACH;
+import static com.github.sasd97.upitter.constants.PostCreateConstants.POST_ID;
 
 /**
  * Created by alexander on 08.07.16.
@@ -73,7 +74,8 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         implements FeedQueryService.OnTapeQueryListener,
             FeedQuizVariantRecycler.OnItemClickListener,
             ImageCollageRecycler.OnImageClickListener,
-            Toolbar.OnMenuItemClickListener {
+            Toolbar.OnMenuItemClickListener,
+            View.OnClickListener {
 
         @BindView(R.id.post_toolbar) Toolbar postToolbar;
 
@@ -106,6 +108,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
         public TapeViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -220,6 +223,13 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
             queryService.vote(company.getAccessToken(),
                     posts.get(getAdapterPosition()).getId(),
                     position);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(context, PostPreviewSchema.class);
+            intent.putExtra(POST_ID, posts.get(getAdapterPosition()).getId());
+            context.startActivity(intent);
         }
     }
 

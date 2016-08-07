@@ -20,6 +20,7 @@ import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.ErrorModel;
+import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.ui.adapters.ImageHolderRecyclerAdapter;
@@ -159,6 +160,16 @@ public class PostCreationActivity extends BaseActivity
 
     @Override
     public void onPostObtained(PostsResponseModel posts) {
+
+    }
+
+    @Override
+    public void onPostWatch(int amount) {
+
+    }
+
+    @Override
+    public void onFindPost(PostResponseModel post) {
 
     }
 
