@@ -72,7 +72,7 @@ public class FileUploadQueryService {
             public void onResponse(Call<MediaResponseModel> call, Response<MediaResponseModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
-                listener.onUpload(response.body().getPath());
+                listener.onUpload(response.body().getResponseModel().getPath());
             }
         });
     }

@@ -20,6 +20,7 @@ import com.github.sasd97.upitter.services.query.FileUploadQueryService;
 import com.github.sasd97.upitter.ui.CompanySettingsActivity;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
+import com.github.sasd97.upitter.ui.results.GalleryResult;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.Names;
