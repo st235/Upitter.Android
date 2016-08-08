@@ -10,10 +10,13 @@ import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.utils.CollageUtils;
 import com.github.sasd97.upitter.utils.Dimens;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
 import static com.github.sasd97.upitter.constants.ImageCollageConstants.Collage;
+import static com.github.sasd97.upitter.constants.ImageCollageConstants.SQUARE_PICTURE;
+import static com.github.sasd97.upitter.constants.ImageCollageConstants.TIGHT_PICTURE;
 import static com.github.sasd97.upitter.constants.ImageCollageConstants.WIDE_PICTURE;
 
 /**
@@ -22,12 +25,12 @@ import static com.github.sasd97.upitter.constants.ImageCollageConstants.WIDE_PIC
 
 public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
+    private static final String TAG = "Collage Layout Manager";
+
     private static final int FIRST_VIEW = 0;
     private static final int OFFSET_VIEW_POSITION = 1;
     private static final int LEFT_POSITION = 0;
     private static final int TOP_POSITION = 0;
-
-    private static final String TAG = "Collage Layout Manager";
 
     private Collage type;
     private List<ImageResponseModel> images;
@@ -80,11 +83,55 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
     }
 
     private void toSimpleCollage(RecyclerView.Recycler recycler) {
+        toSquareCollage(recycler);
+//        ImageResponseModel image = images.get(FIRST_VIEW);
+//
+//        Logger.d(image.toString());
+//        Logger.d(image.getType());
+//
+//        switch (image.getType()) {
+//            case SQUARE_PICTURE:
+//                toSquareCollage(recycler);
+//                break;
+//            case TIGHT_PICTURE:
+//                toTightCollage(recycler);
+//                break;
+//            case WIDE_PICTURE:
+//                toWideCollage(recycler);
+//                break;
+//        }
+    }
+
+    private void toWideCollage(RecyclerView.Recycler recycler) {
+        ImageView imageView = (ImageView) recycler.getViewForPosition(FIRST_VIEW);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        addView(imageView);
+
+        final int width = getWidth();
+        final int height = width / 2;
+
+        measureChildWithMargins(imageView, getWidth(), getHeight());
+        layoutDecorated(imageView, LEFT_POSITION, TOP_POSITION, width, height);
+    }
+
+    private void toSquareCollage(RecyclerView.Recycler recycler) {
         ImageView imageView = (ImageView) recycler.getViewForPosition(FIRST_VIEW);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         addView(imageView);
         measureChildWithMargins(imageView, getWidth(), getHeight());
         layoutDecorated(imageView, LEFT_POSITION, TOP_POSITION, getWidth(), getHeight());
+    }
+
+    private void toTightCollage(RecyclerView.Recycler recycler) {
+        ImageView imageView = (ImageView) recycler.getViewForPosition(FIRST_VIEW);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        addView(imageView);
+
+        final int width = getWidth();
+        final int height = width * 2;
+
+        measureChildWithMargins(imageView, getWidth(), getHeight());
+        layoutDecorated(imageView, LEFT_POSITION, TOP_POSITION, width, height);
     }
 
     private void toTwiceCollage(RecyclerView.Recycler recycler) {

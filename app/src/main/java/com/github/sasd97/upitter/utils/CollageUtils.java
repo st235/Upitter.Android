@@ -18,7 +18,7 @@ public class CollageUtils {
     private CollageUtils() {}
 
     public static int calculateImageType(int x, int y) {
-        int aspect = x / y;
+        double aspect = (double) x / (double) y;
         if (aspect > MEASURE_UNIT) return TIGHT_PICTURE;
         if (aspect < MEASURE_UNIT) return WIDE_PICTURE;
         return SQUARE_PICTURE;

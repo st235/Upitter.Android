@@ -216,20 +216,17 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
                         android:padding="8dp">
 
-                        <com.sackcentury.shinebuttonlib.ShineButton
+                        <ImageView
                             android:id="@+id/favorites_icon_post_single_view"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:layout_gravity="center"
                             android:layout_marginRight="8dp"
                             android:layout_marginEnd="8dp"
-                            android:src="@color/colorIcons"
-                            app:btn_color="@color/colorIcons"
-                            app:btn_fill_color="@color/colorAccent"
-                            app:allow_random_color="false"
-                            app:siShape="@drawable/ic_feed_icon_favorite"
+                            android:src="@drawable/ic_feed_icon_favorite"
                             />
                     </LinearLayout>
 
@@ -287,15 +284,11 @@
                             tools:text="15000"
                             />
 
-                        <com.sackcentury.shinebuttonlib.ShineButton
+                        <ImageView
                             android:id="@+id/like_icon_post_single_view"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
-                            android:src="@color/colorIcons"
-                            app:btn_color="@color/colorIcons"
-                            app:btn_fill_color="@color/colorAccent"
-                            app:allow_random_color="false"
-                            app:siShape="@drawable/ic_feed_icon_like"
+                            android:src="@drawable/ic_feed_icon_like"
                             />
                     </LinearLayout>
                 </LinearLayout>

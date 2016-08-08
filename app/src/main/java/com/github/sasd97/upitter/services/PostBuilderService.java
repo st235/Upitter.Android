@@ -70,7 +70,7 @@ public class PostBuilderService implements OnQueueListener<List<FileResponseMode
 
     @SerializedName("images")
     @Expose
-    private List<FileResponseModel> photos;
+    private List<String> photos;
     private ArrayList<String> rawPhotos;
 
     private String accessToken;
@@ -154,7 +154,7 @@ public class PostBuilderService implements OnQueueListener<List<FileResponseMode
     }
 
     private void complete() {
-        Logger.d(toJson());
+        Logger.json(toJson());
 
         queryService
                 .createPost(accessToken,
@@ -204,7 +204,12 @@ public class PostBuilderService implements OnQueueListener<List<FileResponseMode
 
     @Override
     public void onQueueCompete(List<FileResponseModel> photos) {
-        this.photos = photos;
+        this.photos = ListUtils.mutate(photos, new ListUtils.OnListMutateListener<FileResponseModel, String>() {
+            @Override
+            public String mutate(FileResponseModel object) {
+                return object.getFid();
+            }
+        });
         complete();
     }
 

@@ -18,7 +18,6 @@ import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
@@ -36,7 +35,6 @@ import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
-import com.sackcentury.shinebuttonlib.ShineButton;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -69,22 +67,16 @@ public class PostPreviewSchema extends BaseActivity
     @BindView(R.id.offset_from_now_post_single_view) TextView offsetFromNow;
     @BindView(R.id.watch_counter_post_single_view) TextView watchesAmountTextView;
 
-    @BindView(R.id.user_icon_post_single_view)
-    ImageView userAvatarImageView;
-    @BindView(R.id.category_preview_post_single_view)
-    CircleImageView categoryImageView;
+    @BindView(R.id.user_icon_post_single_view) ImageView userAvatarImageView;
+    @BindView(R.id.category_preview_post_single_view) CircleImageView categoryImageView;
     @BindView(R.id.comments_icon_post_single_view) ImageView commentImageView;
+    @BindView(R.id.like_icon_post_single_view) ImageView likeImageButton;
+    @BindView(R.id.favorites_icon_post_single_view) ImageView favoriteImageButton;
 
-    @BindView(R.id.like_icon_post_single_view)
-    ShineButton likeShineButton;
-    @BindView(R.id.favorites_icon_post_single_view) ShineButton favoriteShineButton;
-
-    @BindView(R.id.like_layout_post_single_view)
-    LinearLayout likeLinearLayout;
+    @BindView(R.id.like_layout_post_single_view) LinearLayout likeLinearLayout;
     @BindView(R.id.comments_layout_post_single_view) LinearLayout commentLinearLayout;
 
-    @BindView(R.id.quiz_variants_post_single_view)
-    RecyclerView quizVariantsRecyclerView;
+    @BindView(R.id.quiz_variants_post_single_view) RecyclerView quizVariantsRecyclerView;
     @BindView(R.id.quiz_result_post_single_view) RecyclerView quizResultHorizontalChart;
     @BindView(R.id.post_images_post_single_view) RecyclerView imagesRecyclerView;
 
@@ -102,7 +94,7 @@ public class PostPreviewSchema extends BaseActivity
         feedQueryService = FeedQueryService.getService(this);
         user = getHolder().get();
         postId = getIntent().getStringExtra(POST_ID);
-        
+
         postQueryService.findPost(user.getAccessToken(), postId);
         postQueryService.watchPost(user.getAccessToken(), postId);
     }
@@ -110,6 +102,7 @@ public class PostPreviewSchema extends BaseActivity
     @Override
     public void onFindPost(PostResponseModel post) {
         Logger.d(post.toString());
+        this.post = post;
         CompanyResponseModel author = post.getCompany();
 
         obtainPostAuthor(author);
@@ -119,8 +112,7 @@ public class PostPreviewSchema extends BaseActivity
     @Override
     public void onLike(PostResponseModel post) {
         this.post = post;
-        likeShineButton.showAnim();
-        likeShineButton.setImageResource(R.drawable.ic_feed_icon_like_active);
+        likeImageButton.setImageResource(R.drawable.ic_feed_icon_like_active);
         likeAmountTextView.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
         likeAmountTextView.setText(post.getLikesAmount());
     }
@@ -128,7 +120,7 @@ public class PostPreviewSchema extends BaseActivity
     @Override
     public void onDislike(PostResponseModel post) {
         this.post = post;
-        likeShineButton.setImageResource(R.drawable.ic_feed_icon_like);
+        likeImageButton.setImageResource(R.drawable.ic_feed_icon_like);
         likeAmountTextView.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         likeAmountTextView.setText(post.getLikesAmount());
     }
@@ -136,8 +128,7 @@ public class PostPreviewSchema extends BaseActivity
     @Override
     public void onAddFavorites(PostResponseModel post) {
         this.post = post;
-        favoriteShineButton.showAnim();
-        favoriteShineButton.setImageResource(R.drawable.ic_feed_icon_favorite_active);
+        favoriteImageButton.setImageResource(R.drawable.ic_feed_icon_favorite_active);
         likeAmountTextView.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
     }
 
@@ -156,10 +147,11 @@ public class PostPreviewSchema extends BaseActivity
     @Override
     public void onImageClick(int position) {
         Intent intent = new Intent(this, AlbumPreviewGallerySchema.class);
-        intent.putStringArrayListExtra(LIST_ATTACH, ListUtils.mutateConcrete(post.getImages(), new ListUtils.OnListMutateListener<ImageResponseModel, String>() {
+        intent.putStringArrayListExtra(LIST_ATTACH,
+                ListUtils.mutateConcrete(post.getImages(), new ListUtils.OnListMutateListener<ImageResponseModel, String>() {
             @Override
             public String mutate(ImageResponseModel object) {
-                return object.getThumbUrl();
+                return object.getOriginalUrl();
             }
         }));
         intent.putExtra(POSITION_ATTACH, position);
@@ -227,9 +219,9 @@ public class PostPreviewSchema extends BaseActivity
 
     private void obtainPost(PostResponseModel post) {
         obtainCategory(categoryImageView, categoryNameTextView, post.getCategoryId());
-        obtainSubBar(likeShineButton, likeAmountTextView,
+        obtainSubBar(likeImageButton, likeAmountTextView,
                 commentImageView, commentsAmountTextView,
-                favoriteShineButton, post);
+                favoriteImageButton, post);
         obtainQuiz(post);
         obtainCollage(post);
 

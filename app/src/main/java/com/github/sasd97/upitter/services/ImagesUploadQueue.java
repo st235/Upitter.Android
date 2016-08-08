@@ -56,9 +56,10 @@ public class ImagesUploadQueue extends AsyncTask<String, Integer, ArrayList<File
             RestService.logRequest(call);
 
             try {
-                FileResponseModel model = call.execute().body();
+                FileResponseModel model = call.execute().body().getResponseModel();
+                Logger.i("%1$s;%2$s", uid, path);
                 Logger.d(model.toString());
-                result.add(model.getResponseModel());
+                result.add(model);
             } catch (IOException io) {
                 Logger.e(io, TAG);
             } catch (Exception e) {

@@ -87,8 +87,10 @@ public class ImageResponseModel extends BaseResponseModel<ImageResponseModel> {
     @Override
     public String toString() {
         return String.format(Locale.getDefault(),
-                "Path image %1$s %2$s",
+                "Path image\n%1$s\n%2$s\nwidth: %3$d\nheight: %4$d\n",
                 mOriginalUrl,
-                mThumbUrl);
+                mThumbUrl,
+                mWidth,
+                mHeight);
     }
 }

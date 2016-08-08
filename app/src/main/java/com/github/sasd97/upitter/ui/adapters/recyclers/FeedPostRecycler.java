@@ -24,7 +24,6 @@ import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.services.query.FeedQueryService;
@@ -36,7 +35,6 @@ import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Palette;
-import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,9 +90,8 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         @BindView(R.id.user_icon_post_single_view) ImageView userAvatarImageView;
         @BindView(R.id.category_preview_post_single_view) CircleImageView categoryImageView;
         @BindView(R.id.comments_icon_post_single_view) ImageView commentImageView;
-
-        @BindView(R.id.like_icon_post_single_view) ShineButton likeShineButton;
-        @BindView(R.id.favorites_icon_post_single_view) ShineButton favoriteShineButton;
+        @BindView(R.id.like_icon_post_single_view) ImageView likeImageButton;
+        @BindView(R.id.favorites_icon_post_single_view) ImageView favoriteImageButton;
 
         @BindView(R.id.like_layout_post_single_view) LinearLayout likeLinearLayout;
         @BindView(R.id.comments_layout_post_single_view) LinearLayout commentLinearLayout;
@@ -120,7 +117,6 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
             likeClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    likeShineButton.setChecked(true);
                     queryService.like(company.getAccessToken(),
                             posts.get(getAdapterPosition()).getId());
                 }
@@ -134,9 +130,9 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
                 }
             };
 
-            likeShineButton.setOnClickListener(likeClick);
+            likeImageButton.setOnClickListener(likeClick);
             likeLinearLayout.setOnClickListener(likeClick);
-            favoriteShineButton.setOnClickListener(favoriteClick);
+            favoriteImageButton.setOnClickListener(favoriteClick);
 
             quizResultHorizontalChart.setLayoutManager(new LinearLayoutManager(context));
             quizVariantsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -160,8 +156,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         @Override
         public void onLike(PostResponseModel post) {
             posts.set(getAdapterPosition(), post);
-            likeShineButton.showAnim();
-            likeShineButton.setImageResource(R.drawable.ic_feed_icon_like_active);
+            likeImageButton.setImageResource(R.drawable.ic_feed_icon_like_active);
             likeAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
             likeAmountTextView.setText(post.getLikesAmount());
         }
@@ -169,7 +164,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         @Override
         public void onDislike(PostResponseModel post) {
             posts.set(getAdapterPosition(), post);
-            likeShineButton.setImageResource(R.drawable.ic_feed_icon_like);
+            likeImageButton.setImageResource(R.drawable.ic_feed_icon_like);
             likeAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
             likeAmountTextView.setText(post.getLikesAmount());
         }
@@ -177,8 +172,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         @Override
         public void onAddFavorites(PostResponseModel post) {
             posts.set(getAdapterPosition(), post);
-            favoriteShineButton.showAnim();
-            favoriteShineButton.setImageResource(R.drawable.ic_feed_icon_favorite_active);
+            favoriteImageButton.setImageResource(R.drawable.ic_feed_icon_favorite_active);
             likeAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
         }
 
@@ -211,7 +205,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
             intent.putStringArrayListExtra(LIST_ATTACH, ListUtils.mutateConcrete(postResponseModel.getImages(), new ListUtils.OnListMutateListener<ImageResponseModel, String>() {
                 @Override
                 public String mutate(ImageResponseModel object) {
-                    return object.getThumbUrl();
+                    return object.getOriginalUrl();
                 }
             }));
             intent.putExtra(POSITION_ATTACH, position);
@@ -289,9 +283,9 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         obtainToolbar(holder.postToolbar, post.getCompany());
 
         obtainCategory(holder.categoryImageView, holder.categoryNameTextView, post.getCategoryId());
-        obtainSubBar(holder.likeShineButton, holder.likeAmountTextView,
+        obtainSubBar(holder.likeImageButton, holder.likeAmountTextView,
                 holder.commentImageView, holder.commentsAmountTextView,
-                holder.favoriteShineButton, post);
+                holder.favoriteImageButton, post);
         obtainQuiz(holder, post);
         obtainCollage(holder, post);
 
