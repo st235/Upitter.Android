@@ -72,6 +72,8 @@ public class Search extends AsyncTask<Void, Void, ArrayList<String>> {
 
         ArrayList<String> cats = findFolder();
 
+        if (cats == null) return null;
+
         for(String path: cats) {
             final File searched = new File(path);
             final FolderModel.Builder folderBuilder = new FolderModel

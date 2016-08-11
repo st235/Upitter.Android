@@ -29,6 +29,7 @@ import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.results.CategoriesSelectionResult;
 import com.github.sasd97.upitter.utils.Palette;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -110,7 +111,9 @@ public class BaseFeedFragment extends BaseFragment
         tapeRecyclerView.addOnScrollListener(new OnEndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                if (feedPostRecycler.getItemCount() <= 20) return;
+                Logger.i("Infinity scroll detected");
+                Logger.i(String.valueOf(feedPostRecycler.getItemCount()));
+                if (feedPostRecycler.getItemCount() < 20) return;
 
                 refreshQueryService.loadOld(
                         userModel.getAccessToken(),

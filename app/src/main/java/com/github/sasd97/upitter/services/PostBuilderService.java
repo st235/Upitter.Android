@@ -162,6 +162,8 @@ public class PostBuilderService implements OnQueueListener<List<FileResponseMode
     }
 
     private void preparePhotos(ArrayList<String> photos) {
+        Logger.i(uid);
+
         ImagesUploadQueue
                 .executeQueue(uid, this,
                         ListUtils.toArray(String.class, photos));
@@ -210,6 +212,8 @@ public class PostBuilderService implements OnQueueListener<List<FileResponseMode
                 return object.getFid();
             }
         });
+
+        for (FileResponseModel photo: photos) Logger.i(photo.toString());
         complete();
     }
 
