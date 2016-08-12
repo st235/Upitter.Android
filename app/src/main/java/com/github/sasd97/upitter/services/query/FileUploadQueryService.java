@@ -2,8 +2,10 @@ package com.github.sasd97.upitter.services.query;
 
 import android.support.annotation.NonNull;
 
+import com.github.sasd97.upitter.components.ImageUploadRequestBody;
 import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
+import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 import com.github.sasd97.upitter.services.RestService;
 
@@ -73,6 +75,26 @@ public class FileUploadQueryService {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onUpload(response.body().getResponseModel().getPath());
+            }
+        });
+    }
+
+    public void uploadPostImage(@NonNull String id,
+                                @NonNull String path,
+                                @NonNull ImageUploadRequestBody.UploadCallback callback) {
+        File file = new File(path);
+        final RequestBody requestId = RestService.obtainTextMultipart(id);
+        ImageUploadRequestBody imageToRequest = new ImageUploadRequestBody(file, callback);
+
+        Call<FileResponseModel> uploadPostImage = RestService
+                .fileServerFactory()
+                .uploadPostImage(requestId, imageToRequest);
+
+        uploadPostImage.enqueue(new Callback<FileResponseModel>(listener) {
+            @Override
+            public void onResponse(Call<FileResponseModel> call, Response<FileResponseModel> response) {
+                super.onResponse(call, response);
+                listener.onUpload(response.body().getResponseModel().getFid());
             }
         });
     }

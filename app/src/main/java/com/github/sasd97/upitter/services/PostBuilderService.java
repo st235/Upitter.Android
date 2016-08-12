@@ -2,11 +2,9 @@ package com.github.sasd97.upitter.services;
 
 import android.util.Log;
 
-import com.github.sasd97.upitter.events.OnQueueListener;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.google.gson.Gson;
@@ -25,7 +23,7 @@ import static com.github.sasd97.upitter.constants.PostCreateConstants.DESCRIPTIO
  * Created by alexander on 12.07.16.
  */
 
-public class PostBuilderService implements OnQueueListener<List<FileResponseModel>> {
+public class PostBuilderService {
 
     private static final String TAG = "Post builder";
 
@@ -71,7 +69,6 @@ public class PostBuilderService implements OnQueueListener<List<FileResponseMode
     @SerializedName("images")
     @Expose
     private List<String> photos;
-    private ArrayList<String> rawPhotos;
 
     private String accessToken;
 
@@ -118,8 +115,9 @@ public class PostBuilderService implements OnQueueListener<List<FileResponseMode
         return this;
     }
 
-    public PostBuilderService rawPhotos(ArrayList<String> rawPhotos) {
-        this.rawPhotos = rawPhotos;
+    public PostBuilderService addPhoto(String photo) {
+        if (this.photos == null) this.photos = new ArrayList<>();
+        this.photos.add(photo);
         return this;
     }
 
@@ -137,41 +135,17 @@ public class PostBuilderService implements OnQueueListener<List<FileResponseMode
 
         Log.d(TAG, identityType().toString());
 
-        switch (identityType()) {
-            case SIMPLE_POST:
-                complete();
-                break;
-            case POST_WITH_QUIZ:
-                complete();
-                break;
-            case POST_WITH_IMAGES:
-                preparePhotos(rawPhotos);
-                break;
-            case COMPLEX_POST:
-                preparePhotos(rawPhotos);
-                break;
-        }
-    }
-
-    private void complete() {
         Logger.json(toJson());
 
         queryService
                 .createPost(accessToken,
                         RestService.obtainJsonRaw(toJson()));
-    }
 
-    private void preparePhotos(ArrayList<String> photos) {
-        Logger.i(uid);
-
-        ImagesUploadQueue
-                .executeQueue(uid, this,
-                        ListUtils.toArray(String.class, photos));
     }
 
     private Type identityType() {
         if (postType != null) return postType;
-        if (ListUtils.isUndefined(quiz) && ListUtils.isUndefined(rawPhotos)) {
+        if (ListUtils.isUndefined(quiz) && ListUtils.isUndefined(photos)) {
             postType = Type.SIMPLE_POST;
             return postType;
         }
@@ -179,7 +153,7 @@ public class PostBuilderService implements OnQueueListener<List<FileResponseMode
             postType = Type.POST_WITH_IMAGES;
             return postType;
         }
-        if (ListUtils.isUndefined(rawPhotos)) {
+        if (ListUtils.isUndefined(photos)) {
             postType = Type.POST_WITH_QUIZ;
             return postType;
         }
@@ -203,25 +177,6 @@ public class PostBuilderService implements OnQueueListener<List<FileResponseMode
         if (text.length() < DESCRIPTION_MIN_LENGTH) missing.add(Missing.SHORT_DESCRIPTION);
         return missing;
     }
-
-    @Override
-    public void onQueueCompete(List<FileResponseModel> photos) {
-        this.photos = ListUtils.mutate(photos, new ListUtils.OnListMutateListener<FileResponseModel, String>() {
-            @Override
-            public String mutate(FileResponseModel object) {
-                return object.getFid();
-            }
-        });
-
-        for (FileResponseModel photo: photos) Logger.i(photo.toString());
-        complete();
-    }
-
-    @Override
-    public void onQueueError() {
-        listener.onPrepareError();
-    }
-
 
     private String toJson() {
         Gson builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();

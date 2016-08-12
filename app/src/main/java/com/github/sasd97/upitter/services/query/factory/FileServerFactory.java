@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.services.query.factory;
 
+import com.github.sasd97.upitter.components.ImageUploadRequestBody;
 import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
 import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
 
@@ -17,6 +18,8 @@ import retrofit2.http.PartMap;
  */
 public interface FileServerFactory {
 
+    String FILE_MULTIPART_SCHEMA = "image\"; filename=\"1\"";
+
     @Multipart
     @POST("upload/image")
     Call<MediaResponseModel> uploadImage(@Part("id") RequestBody id,
@@ -27,10 +30,10 @@ public interface FileServerFactory {
     @Multipart
     @POST("upload/avatar")
     Call<MediaResponseModel> uploadAvatar(@Part("id") RequestBody id,
-                                                @PartMap() HashMap<String, RequestBody> body);
+                                          @PartMap() HashMap<String, RequestBody> body);
 
     @Multipart
     @POST("upload/post_image")
     Call<FileResponseModel> uploadPostImage(@Part("id") RequestBody id,
-                                            @PartMap() HashMap<String, RequestBody> body);
+                                            @Part(FILE_MULTIPART_SCHEMA) ImageUploadRequestBody image);
 }

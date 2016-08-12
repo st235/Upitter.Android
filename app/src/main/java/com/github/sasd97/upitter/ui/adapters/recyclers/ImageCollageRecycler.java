@@ -77,7 +77,7 @@ public class ImageCollageRecycler extends RecyclerView.Adapter<ImageCollageRecyc
         Glide
                 .with(context)
                 .load(media.getThumbUrl())
-                .centerCrop()
+                .placeholder(R.drawable.image_placeholder)
                 .into(holder.rootImage);
     }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="84dp"
-    android:layout_height="84dp"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
     android:orientation="vertical"
     android:gravity="center"
     android:layout_margin="4dp">
@@ -24,5 +24,12 @@
         android:scaleType="centerInside"
         android:background="@drawable/close_button_background"
         android:src="@drawable/ic_close_black_24dp"
+        />
+
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        android:id="@+id/progress_view_image_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
         />
 </RelativeLayout>

@@ -23,7 +23,7 @@ import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
 import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
 import com.github.sasd97.upitter.services.query.PostQueryService;
-import com.github.sasd97.upitter.ui.adapters.ImageHolderRecyclerAdapter;
+import com.github.sasd97.upitter.ui.adapters.recyclers.ImageHolderRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.results.PostTypeSelectionResult;
 import com.github.sasd97.upitter.ui.results.QuizCreationResult;
@@ -33,6 +33,7 @@ import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.services.PostBuilderService;
 import com.github.sasd97.upitter.utils.SlidrUtils;
+import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -45,7 +46,6 @@ import butterknife.BindView;
 import static com.github.sasd97.upitter.Upitter.*;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.GALLERY_MULTI_SELECTED_PHOTOS_LIST;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.QUIZ_MULTI_SELECTION_LIST;
-import static com.github.sasd97.upitter.services.PostBuilderService.Missing.*;
 
 public class PostCreationActivity extends BaseActivity
     implements ImageHolderRecyclerAdapter.OnAmountChangeListener,
@@ -58,6 +58,9 @@ public class PostCreationActivity extends BaseActivity
     private MaterialDialog progressDialog;
     private int whichCoordinatesSelected = -1;
     private ImageHolderRecyclerAdapter imageHolderRecyclerAdapter;
+
+    private int imageCounter = 0;
+    private int loadedImagesCounter = 0;
 
     @BindView(R.id.image_placeholder_recyclerview_publication) RecyclerView photosRecyclerView;
 
@@ -139,10 +142,21 @@ public class PostCreationActivity extends BaseActivity
     }
 
     public void onSendClick(View v) {
+        if (imageCounter != loadedImagesCounter) {
+            Logger.i("Not enought photos attach");
+            return;
+        }
+
         postBuilderService
                 .title(postTitleEditText.getText().toString().trim())
                 .text(postTextEditText.getText().toString().trim())
                 .build(company.getAccessToken());
+    }
+
+    @Override
+    public void onLoad(String fid) {
+        loadedImagesCounter++;
+        postBuilderService.addPhoto(fid);
     }
 
     @Override
@@ -264,9 +278,10 @@ public class PostCreationActivity extends BaseActivity
 
     private void handleImages(Intent data) {
         ArrayList<String> selectedPhotos = data.getStringArrayListExtra(GALLERY_MULTI_SELECTED_PHOTOS_LIST);
-        postBuilderService.rawPhotos(selectedPhotos);
-        imageHolderRecyclerAdapter.addAll(selectedPhotos);
 
+        imageCounter = selectedPhotos.size();
+        loadedImagesCounter = 0;
+        imageHolderRecyclerAdapter.reload(selectedPhotos);
         highlightHandler(photoIconImageView, photoTextView, R.drawable.ic_icon_add_photo_active, R.color.colorAccent);
         photosRecyclerView.setVisibility(View.VISIBLE);
     }
