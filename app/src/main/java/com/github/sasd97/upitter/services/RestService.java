@@ -16,8 +16,10 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -54,12 +56,19 @@ public final class RestService {
     private RestService() {}
 
     public static void init() {
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
+
         baseAPI = new Retrofit.Builder()
                 .baseUrl(BASE_PRE_PRODUCTION_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         fileServerAPI = new Retrofit.Builder()
+                .client(okHttpClient)
                 .baseUrl(FILE_PRE_PRODUCTION_SERVER_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
