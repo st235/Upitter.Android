@@ -8,6 +8,7 @@ import java.util.Locale;
 /**
  * Created by Alex on 10.06.2016.
  */
+
 public class ErrorResponseModel {
 
     @SerializedName("code")
@@ -31,5 +32,17 @@ public class ErrorResponseModel {
         return String.format(Locale.getDefault(), "Error: [code: %1$d,\n message: %2$s]",
                 mCode,
                 mMessage);
+    }
+
+    /**
+     * Created by alexander on 04.07.16.
+     */
+
+    public static class SimpleErrorResponseModel extends BaseResponseModel {
+
+        @Override
+        public String toString() {
+            return getResponseInfo();
+        }
     }
 }

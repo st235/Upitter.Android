@@ -12,7 +12,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.CategoryPointerModel;
 import com.github.sasd97.upitter.services.query.CategoriesQueryService;
 import com.github.sasd97.upitter.ui.adapters.recyclers.CategoriesListRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
@@ -37,7 +37,7 @@ public class CategoriesSelectionResult extends BaseActivity
     @BindView(R.id.recycler_view_categories_activity) RecyclerView categoryRecyclerView;
 
     private List<Integer> selectedCategories;
-    private List<CategoryResponseModel> categories;
+    private List<CategoryPointerModel> categories;
     private CategoriesListRecycler categoriesListRecycler;
 
     @Override
@@ -54,7 +54,7 @@ public class CategoriesSelectionResult extends BaseActivity
         if (getIntent().hasExtra(CATEGORIES_ATTACH))
             selectedCategories = getIntent().getIntegerArrayListExtra(CATEGORIES_ATTACH);
 
-        categoriesListRecycler = new CategoriesListRecycler(this, new ArrayList<CategoryResponseModel>());
+        categoriesListRecycler = new CategoriesListRecycler(this, new ArrayList<CategoryPointerModel>());
         categoriesListRecycler.setOnItemClickListener(this);
 
         categoryRecyclerView.setHasFixedSize(true);
@@ -82,29 +82,29 @@ public class CategoriesSelectionResult extends BaseActivity
     }
 
     @Override
-    public void onGetCategories(List<CategoryResponseModel> categories) {
+    public void onGetCategories(List<CategoryPointerModel> categories) {
         this.categories = categories;
 
-        categoriesListRecycler.addAll(ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryResponseModel>() {
+        categoriesListRecycler.addAll(ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryPointerModel>() {
             @Override
-            public boolean isFit(CategoryResponseModel other) {
+            public boolean isFit(CategoryPointerModel other) {
                 return other.getId() % 100 == 0;
             }
         }));
 
         if (selectedCategories == null || selectedCategories.size() == 0) return;
-        categoriesListRecycler.each(new ListUtils.OnIteratorListener<CategoryResponseModel>() {
+        categoriesListRecycler.each(new ListUtils.OnIteratorListener<CategoryPointerModel>() {
             @Override
-            public void iterate(CategoryResponseModel object, List<CategoryResponseModel> all) {
+            public void iterate(CategoryPointerModel object, List<CategoryPointerModel> all) {
                 preSelectCategories(object, selectedCategories);
             }
         });
     }
 
-    private void preSelectCategories(final CategoryResponseModel parentModel, List<Integer> selected) {
+    private void preSelectCategories(final CategoryPointerModel parentModel, List<Integer> selected) {
         if (!parentModel.isParent()) return;
 
-        List<CategoryResponseModel> children = getChildren(parentModel);
+        List<CategoryPointerModel> children = getChildren(parentModel);
 
         List<Integer> childrenSelected = ListUtils.filter(selected, new ListUtils.OnListInteractionListener<Integer>() {
             @Override
@@ -126,8 +126,8 @@ public class CategoriesSelectionResult extends BaseActivity
     }
 
     @Override
-    public void onClick(final CategoryResponseModel category, final int position) {
-        final List<CategoryResponseModel> subCategories = getChildren(category);
+    public void onClick(final CategoryPointerModel category, final int position) {
+        final List<CategoryPointerModel> subCategories = getChildren(category);
 
         new MaterialDialog.Builder(this)
                 .title(category.getTitle())
@@ -155,10 +155,10 @@ public class CategoriesSelectionResult extends BaseActivity
 
     }
 
-    private List<CategoryResponseModel> getChildren(final CategoryResponseModel category) {
-        return ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryResponseModel>() {
+    private List<CategoryPointerModel> getChildren(final CategoryPointerModel category) {
+        return ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryPointerModel>() {
             @Override
-            public boolean isFit(CategoryResponseModel other) {
+            public boolean isFit(CategoryPointerModel other) {
                 return other.getParentId() == category.getId();
             }
         });

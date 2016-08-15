@@ -1,9 +1,5 @@
-package com.github.sasd97.upitter.models.response.categories;
+package com.github.sasd97.upitter.models.response.pointers;
 
-import android.util.Log;
-
-import com.github.sasd97.upitter.models.CategoryModel;
-import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,7 +9,8 @@ import java.util.Locale;
 /**
  * Created by alexander on 27.06.16.
  */
-public class CategoryResponseModel extends BaseResponseModel {
+
+public class CategoryPointerModel {
 
     @SerializedName("customId")
     @Expose
@@ -46,7 +43,7 @@ public class CategoryResponseModel extends BaseResponseModel {
         return mParentId;
     }
 
-    public void setSubcategoriesId(Integer[] subcategories, List<CategoryResponseModel> children) {
+    public void setSubcategoriesId(Integer[] subcategories, List<CategoryPointerModel> children) {
         mSubcategoriesSelectedIds = subcategories;
         final int size = children.size();
         int counter = 0;
@@ -62,7 +59,7 @@ public class CategoryResponseModel extends BaseResponseModel {
         }
     }
 
-    public void setSubcategoriesSelected(Integer[] subcategories, List<CategoryResponseModel> list) {
+    public void setSubcategoriesSelected(Integer[] subcategories, List<CategoryPointerModel> list) {
         mSubcategoriesSelected = subcategories;
         final int length = subcategories.length;
 

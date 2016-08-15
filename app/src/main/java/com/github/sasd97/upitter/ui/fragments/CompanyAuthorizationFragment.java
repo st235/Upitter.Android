@@ -17,7 +17,7 @@ import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.CountryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PhoneModel;
-import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.services.GeocoderService;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
@@ -167,7 +167,7 @@ public class CompanyAuthorizationFragment extends BaseFragment
     }
 
     @Override
-    public void onAuthorize(CompanyResponseModel companyResponseModel) {
+    public void onAuthorize(CompanyPointerModel companyPointerModel) {
 
     }
 

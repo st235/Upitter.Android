@@ -6,10 +6,10 @@ import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
-import com.github.sasd97.upitter.models.response.authorization.AuthorizationCompanyResponseModel;
-import com.github.sasd97.upitter.models.response.authorization.AuthorizationRequestCodeResponseModel;
-import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
-import com.github.sasd97.upitter.models.response.requestCode.RequestCodeResponseModel;
+import com.github.sasd97.upitter.models.response.containers.AuthorizationCompanyContainerModel;
+import com.github.sasd97.upitter.models.response.containers.AuthorizationRequestCodeContainerModel;
+import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.RequestCodePointerModel;
 import com.github.sasd97.upitter.services.RestService;
 
 import okhttp3.RequestBody;
@@ -24,7 +24,7 @@ public class CompanyAuthorizationQueryService {
     public interface OnCompanyAuthorizationListener extends OnErrorQueryListener {
         void onCodeObtained();
         void onSendCodeError(int attemptsAmount);
-        void onAuthorize(CompanyResponseModel companyModel);
+        void onAuthorize(CompanyPointerModel companyModel);
         void onRegister(String temporaryToken);
     }
 
@@ -59,17 +59,17 @@ public class CompanyAuthorizationQueryService {
     public void sendRequestCode(@NonNull String number,
                                 @NonNull String countryCode,
                                 @NonNull final String requestCode) {
-        Call<AuthorizationRequestCodeResponseModel> sendRequest = RestService
+        Call<AuthorizationRequestCodeContainerModel> sendRequest = RestService
                 .baseFactory()
                 .sendRequestCode(number, countryCode, requestCode);
 
-        sendRequest.enqueue(new Callback<AuthorizationRequestCodeResponseModel>(listener) {
+        sendRequest.enqueue(new Callback<AuthorizationRequestCodeContainerModel>(listener) {
             @Override
-            public void onResponse(Call<AuthorizationRequestCodeResponseModel> call, Response<AuthorizationRequestCodeResponseModel> response) {
+            public void onResponse(Call<AuthorizationRequestCodeContainerModel> call, Response<AuthorizationRequestCodeContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
 
-                RequestCodeResponseModel responseModel = response.body().getRequestCode();
+                RequestCodePointerModel responseModel = response.body().getRequestCode();
                 if (!response.body().isSuccess()) {
                     listener.onSendCodeError(responseModel.getAttemptsAmount());
                     return;
@@ -84,17 +84,17 @@ public class CompanyAuthorizationQueryService {
     public void debugRequestCode(@NonNull String number,
                                 @NonNull String countryCode,
                                 @NonNull final String requestCode) {
-        Call<AuthorizationRequestCodeResponseModel> sendRequest = RestService
+        Call<AuthorizationRequestCodeContainerModel> sendRequest = RestService
                 .baseFactory()
                 .debugRequestCode(number, countryCode, requestCode);
 
-        sendRequest.enqueue(new Callback<AuthorizationRequestCodeResponseModel>(listener) {
+        sendRequest.enqueue(new Callback<AuthorizationRequestCodeContainerModel>(listener) {
             @Override
-            public void onResponse(Call<AuthorizationRequestCodeResponseModel> call, Response<AuthorizationRequestCodeResponseModel> response) {
+            public void onResponse(Call<AuthorizationRequestCodeContainerModel> call, Response<AuthorizationRequestCodeContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
 
-                RequestCodeResponseModel responseModel = response.body().getRequestCode();
+                RequestCodePointerModel responseModel = response.body().getRequestCode();
                 if (!response.body().isSuccess()) {
                     listener.onSendCodeError(responseModel.getAttemptsAmount());
                     return;
@@ -111,12 +111,12 @@ public class CompanyAuthorizationQueryService {
 
         RequestBody body = RestService.obtainJsonRaw(register.toJson());
 
-        Call<AuthorizationCompanyResponseModel> registerCall = RestService.baseFactory()
+        Call<AuthorizationCompanyContainerModel> registerCall = RestService.baseFactory()
                 .registerCompany(register.getPhone().getPhoneBody(), register.getPhone().getDialCode(), body);
 
-        registerCall.enqueue(new Callback<AuthorizationCompanyResponseModel>(listener) {
+        registerCall.enqueue(new Callback<AuthorizationCompanyContainerModel>(listener) {
             @Override
-            public void onResponse(Call<AuthorizationCompanyResponseModel> call, Response<AuthorizationCompanyResponseModel> response) {
+            public void onResponse(Call<AuthorizationCompanyContainerModel> call, Response<AuthorizationCompanyContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 if (response.body().isSuccess()) listener.onAuthorize(response.body().getBusinessUser());

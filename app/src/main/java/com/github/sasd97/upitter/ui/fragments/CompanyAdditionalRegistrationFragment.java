@@ -17,7 +17,7 @@ import com.github.sasd97.upitter.holders.CompanyHolder;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.services.GeocoderService;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.CompanyFeedActivity;
@@ -128,21 +128,21 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
     }
 
     @Override
-    public void onAuthorize(CompanyResponseModel companyResponseModel) {
+    public void onAuthorize(CompanyPointerModel companyPointerModel) {
         setHolder(CompanyHolder.getHolder());
 
         CompanyModel companyModel = new CompanyModel
                 .Builder()
-                .id(companyResponseModel.getId())
-                .name(companyResponseModel.getName())
-                .isVerify(companyResponseModel.isVerify())
-                .avatarUrl(companyResponseModel.getLogoUrl())
-                .description(companyResponseModel.getDescription())
-                .categories(companyResponseModel.getActivity())
-                .contactPhones(companyResponseModel.getContactPhones())
-                .site(companyResponseModel.getSite())
-                .coordinates(companyResponseModel.getCoordinates())
-                .accessToken(companyResponseModel.getAccessToken())
+                .id(companyPointerModel.getId())
+                .name(companyPointerModel.getName())
+                .isVerify(companyPointerModel.isVerify())
+                .avatarUrl(companyPointerModel.getLogoUrl())
+                .description(companyPointerModel.getDescription())
+                .categories(companyPointerModel.getActivity())
+                .contactPhones(companyPointerModel.getContactPhones())
+                .site(companyPointerModel.getSite())
+                .coordinates(companyPointerModel.getCoordinates())
+                .accessToken(companyPointerModel.getAccessToken())
                 .build();
 
         getHolder().save(companyModel);

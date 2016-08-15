@@ -5,8 +5,10 @@ import android.support.annotation.NonNull;
 import com.github.sasd97.upitter.components.ImageUploadRequestBody;
 import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
-import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
+import com.github.sasd97.upitter.models.response.containers.FileContainerModel;
+import com.github.sasd97.upitter.models.response.containers.MediaContainerModel;
+import com.github.sasd97.upitter.models.response.pointers.FilePointerModel;
+import com.github.sasd97.upitter.models.response.pointers.MediaPointerModel;
 import com.github.sasd97.upitter.services.RestService;
 
 import java.io.File;
@@ -42,19 +44,19 @@ public class FileUploadQueryService {
 
         HashMap<String, RequestBody> imageBody = RestService.obtainImageMultipart(new File(path));
 
-        Call<MediaResponseModel> uploadImage = RestService
+        Call<MediaContainerModel> uploadImage = RestService
                 .fileServerFactory()
                 .uploadImage(RestService.obtainTextMultipart(id),
                         RestService.obtainTextMultipart(type),
                         RestService.obtainTextMultipart(purpose),
                         imageBody);
 
-        uploadImage.enqueue(new Callback<MediaResponseModel>(listener) {
+        uploadImage.enqueue(new Callback<MediaContainerModel>(listener) {
             @Override
-            public void onResponse(Call<MediaResponseModel> call, Response<MediaResponseModel> response) {
+            public void onResponse(Call<MediaContainerModel> call, Response<MediaContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
-                listener.onUpload(response.body().getPath());
+                listener.onUpload(response.body().getResponseModel().getPath());
             }
         });
     }
@@ -64,14 +66,14 @@ public class FileUploadQueryService {
 
         HashMap<String, RequestBody> imageBody = RestService.obtainImageMultipart(new File(path));
 
-        Call<MediaResponseModel> uploadImage = RestService
+        Call<MediaContainerModel> uploadImage = RestService
                 .fileServerFactory()
                 .uploadAvatar(RestService.obtainTextMultipart(id),
                         imageBody);
 
-        uploadImage.enqueue(new Callback<MediaResponseModel>(listener) {
+        uploadImage.enqueue(new Callback<MediaContainerModel>(listener) {
             @Override
-            public void onResponse(Call<MediaResponseModel> call, Response<MediaResponseModel> response) {
+            public void onResponse(Call<MediaContainerModel> call, Response<MediaContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onUpload(response.body().getResponseModel().getPath());
@@ -86,13 +88,13 @@ public class FileUploadQueryService {
         final RequestBody requestId = RestService.obtainTextMultipart(id);
         ImageUploadRequestBody imageToRequest = new ImageUploadRequestBody(file, callback);
 
-        Call<FileResponseModel> uploadPostImage = RestService
+        Call<FileContainerModel> uploadPostImage = RestService
                 .fileServerFactory()
                 .uploadPostImage(requestId, imageToRequest);
 
-        uploadPostImage.enqueue(new Callback<FileResponseModel>(listener) {
+        uploadPostImage.enqueue(new Callback<FileContainerModel>(listener) {
             @Override
-            public void onResponse(Call<FileResponseModel> call, Response<FileResponseModel> response) {
+            public void onResponse(Call<FileContainerModel> call, Response<FileContainerModel> response) {
                 super.onResponse(call, response);
                 listener.onUpload(response.body().getResponseModel().getFid());
             }

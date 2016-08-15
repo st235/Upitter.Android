@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
-import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.google.gson.Gson;

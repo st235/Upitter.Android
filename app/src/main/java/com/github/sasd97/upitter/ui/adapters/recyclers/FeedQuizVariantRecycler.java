@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.models.response.quiz.QuizResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.QuizPointerModel;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
@@ -27,14 +27,14 @@ public class FeedQuizVariantRecycler extends RecyclerView.Adapter<FeedQuizVarian
     }
 
     private OnItemClickListener listener;
-    private List<QuizResponseModel> quiz;
+    private List<QuizPointerModel> quiz;
 
     public FeedQuizVariantRecycler(OnItemClickListener listener) {
         this.quiz = new ArrayList<>();
         this.listener = listener;
     }
 
-    public FeedQuizVariantRecycler(List<QuizResponseModel> quiz, OnItemClickListener listener) {
+    public FeedQuizVariantRecycler(List<QuizPointerModel> quiz, OnItemClickListener listener) {
         this.quiz = quiz;
         this.listener = listener;
     }
@@ -75,7 +75,7 @@ public class FeedQuizVariantRecycler extends RecyclerView.Adapter<FeedQuizVarian
         return quiz.size();
     }
 
-    public void addAll(List<QuizResponseModel> quiz) {
+    public void addAll(List<QuizPointerModel> quiz) {
         this.quiz.addAll(quiz);
     }
 }

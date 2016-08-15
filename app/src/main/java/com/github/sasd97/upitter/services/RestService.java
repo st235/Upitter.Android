@@ -1,12 +1,11 @@
 package com.github.sasd97.upitter.services;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
-import com.github.sasd97.upitter.models.response.SimpleErrorResponseModel;
+import com.github.sasd97.upitter.models.response.ErrorResponseModel;
 import com.github.sasd97.upitter.services.query.factory.BaseFactory;
 import com.github.sasd97.upitter.services.query.factory.FileServerFactory;
 import com.orhanobut.logger.Logger;
@@ -28,8 +27,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.github.sasd97.upitter.constants.MethodConstants.BASE_API_URL;
-import static com.github.sasd97.upitter.constants.MethodConstants.FILE_SERVER_API_URL;
 import static com.github.sasd97.upitter.constants.MethodConstants.BASE_PRE_PRODUCTION_API_URL;
 import static com.github.sasd97.upitter.constants.MethodConstants.FILE_PRE_PRODUCTION_SERVER_API_URL;
 
@@ -100,16 +97,16 @@ public final class RestService {
         return RequestBody.create(MediaType.parse(JSON_MEDIATYPE), jsonRaw);
     }
 
-    public static SimpleErrorResponseModel parseError(Response<?> response) {
-        Converter<ResponseBody, SimpleErrorResponseModel> converter =
-                baseAPI.responseBodyConverter(SimpleErrorResponseModel.class, new Annotation[0]);
-        SimpleErrorResponseModel error;
+    public static ErrorResponseModel.SimpleErrorResponseModel parseError(Response<?> response) {
+        Converter<ResponseBody, ErrorResponseModel.SimpleErrorResponseModel> converter =
+                baseAPI.responseBodyConverter(ErrorResponseModel.SimpleErrorResponseModel.class, new Annotation[0]);
+        ErrorResponseModel.SimpleErrorResponseModel error;
 
         try {
             error = converter.convert(response.errorBody());
         } catch (IOException e) {
             Logger.e(e, TAG);
-            return new SimpleErrorResponseModel();
+            return new ErrorResponseModel.SimpleErrorResponseModel();
         }
 
         return error;
@@ -124,7 +121,7 @@ public final class RestService {
             return false;
         }
 
-        SimpleErrorResponseModel error = parseError(response);
+        ErrorResponseModel.SimpleErrorResponseModel error = parseError(response);
 
         if (error.getError() == null) listener.onError(getEmptyError());
         else listener.onError(error.getError(call.request().url().toString()));

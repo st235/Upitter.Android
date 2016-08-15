@@ -9,6 +9,7 @@ import java.util.Locale;
 /**
  * Created by Alex on 10.06.2016.
  */
+
 public abstract class BaseResponseModel<T> {
 
     @SerializedName("success")

@@ -5,7 +5,8 @@ import android.support.annotation.NonNull;
 import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
 import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
+import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
+import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
 import com.github.sasd97.upitter.services.RestService;
 
 import retrofit2.Call;
@@ -20,13 +21,13 @@ import static com.github.sasd97.upitter.Upitter.language;
 public class FeedQueryService {
 
     public interface OnTapeQueryListener extends OnErrorQueryListener {
-        void onLike(PostResponseModel post);
-        void onDislike(PostResponseModel post);
+        void onLike(PostPointerModel post);
+        void onDislike(PostPointerModel post);
 
-        void onAddFavorites(PostResponseModel post);
-        void onRemoveFromFavorites(PostResponseModel post);
+        void onAddFavorites(PostPointerModel post);
+        void onRemoveFromFavorites(PostPointerModel post);
 
-        void onVote(PostResponseModel post);
+        void onVote(PostPointerModel post);
 
         @Override
         void onError(ErrorModel error);
@@ -44,13 +45,13 @@ public class FeedQueryService {
 
     public void like(@NonNull String accessToken,
                      @NonNull String postId) {
-        final Call<PostResponseModel> like = RestService
+        final Call<PostContainerModel> like = RestService
                 .baseFactory()
                 .likePost(postId, language(), accessToken);
 
-        like.enqueue(new Callback<PostResponseModel>(listener) {
+        like.enqueue(new Callback<PostContainerModel>(listener) {
             @Override
-            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+            public void onResponse(Call<PostContainerModel> call, Response<PostContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
 
@@ -62,16 +63,16 @@ public class FeedQueryService {
 
     public void favorite(@NonNull String accessToken,
                          @NonNull String postId) {
-        final Call<PostResponseModel> favorite = RestService
+        final Call<PostContainerModel> favorite = RestService
                 .baseFactory()
                 .addPostToFavorite(postId, language(), accessToken);
 
-        favorite.enqueue(new Callback<PostResponseModel>(listener) {
+        favorite.enqueue(new Callback<PostContainerModel>(listener) {
             @Override
-            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+            public void onResponse(Call<PostContainerModel> call, Response<PostContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
-                listener.onAddFavorites(response.body());
+                listener.onAddFavorites(response.body().getResponseModel());
             }
         });
     }
@@ -79,13 +80,13 @@ public class FeedQueryService {
     public void vote(@NonNull String accessToken,
                      @NonNull String postId,
                      int voteVariant) {
-        final Call<PostResponseModel> favorite = RestService
+        final Call<PostContainerModel> favorite = RestService
                 .baseFactory()
                 .voteInPost(postId, voteVariant, language(), accessToken);
 
-        favorite.enqueue(new Callback<PostResponseModel>(listener) {
+        favorite.enqueue(new Callback<PostContainerModel>(listener) {
             @Override
-            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+            public void onResponse(Call<PostContainerModel> call, Response<PostContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onVote(response.body().getResponseModel());

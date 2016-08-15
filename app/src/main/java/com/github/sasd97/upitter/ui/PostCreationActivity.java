@@ -20,8 +20,8 @@ import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
-import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.PostsPointerModel;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.ui.adapters.recyclers.ImageHolderRecyclerAdapter;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
@@ -174,7 +174,7 @@ public class PostCreationActivity extends BaseActivity
     }
 
     @Override
-    public void onPostObtained(PostsResponseModel posts) {
+    public void onPostObtained(PostsPointerModel posts) {
 
     }
 
@@ -184,7 +184,7 @@ public class PostCreationActivity extends BaseActivity
     }
 
     @Override
-    public void onFindPost(PostResponseModel post) {
+    public void onFindPost(PostPointerModel post) {
 
     }
 

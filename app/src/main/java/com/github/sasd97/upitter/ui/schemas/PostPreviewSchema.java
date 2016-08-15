@@ -17,10 +17,10 @@ import com.github.sasd97.upitter.components.CollageLayoutManager;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
-import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
-import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
-import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
+import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.PostsPointerModel;
 import com.github.sasd97.upitter.services.query.FeedQueryService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.ui.adapters.recyclers.FeedQuizVariantRecycler;
@@ -54,7 +54,7 @@ public class PostPreviewSchema extends BaseActivity
 
     private String postId;
     private UserModel user;
-    private PostResponseModel post;
+    private PostPointerModel post;
     private PostQueryService postQueryService;
     private FeedQueryService feedQueryService;
 
@@ -100,17 +100,17 @@ public class PostPreviewSchema extends BaseActivity
     }
 
     @Override
-    public void onFindPost(PostResponseModel post) {
+    public void onFindPost(PostPointerModel post) {
         Logger.d(post.toString());
         this.post = post;
-        CompanyResponseModel author = post.getCompany();
+        CompanyPointerModel author = post.getCompany();
 
         obtainPostAuthor(author);
         obtainPost(post);
     }
 
     @Override
-    public void onLike(PostResponseModel post) {
+    public void onLike(PostPointerModel post) {
         this.post = post;
         likeImageButton.setImageResource(R.drawable.ic_feed_icon_like_active);
         likeAmountTextView.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
@@ -118,7 +118,7 @@ public class PostPreviewSchema extends BaseActivity
     }
 
     @Override
-    public void onDislike(PostResponseModel post) {
+    public void onDislike(PostPointerModel post) {
         this.post = post;
         likeImageButton.setImageResource(R.drawable.ic_feed_icon_like);
         likeAmountTextView.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
@@ -126,14 +126,14 @@ public class PostPreviewSchema extends BaseActivity
     }
 
     @Override
-    public void onAddFavorites(PostResponseModel post) {
+    public void onAddFavorites(PostPointerModel post) {
         this.post = post;
         favoriteImageButton.setImageResource(R.drawable.ic_feed_icon_favorite_active);
         likeAmountTextView.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
     }
 
     @Override
-    public void onVote(PostResponseModel post) {
+    public void onVote(PostPointerModel post) {
         quizResultHorizontalChart.setVisibility(View.VISIBLE);
         quizVariantsRecyclerView.setVisibility(View.GONE);
         this.post = post;
@@ -148,9 +148,9 @@ public class PostPreviewSchema extends BaseActivity
     public void onImageClick(int position) {
         Intent intent = new Intent(this, AlbumPreviewGallerySchema.class);
         intent.putStringArrayListExtra(LIST_ATTACH,
-                ListUtils.mutateConcrete(post.getImages(), new ListUtils.OnListMutateListener<ImageResponseModel, String>() {
+                ListUtils.mutateConcrete(post.getImages(), new ListUtils.OnListMutateListener<ImagePointerModel, String>() {
             @Override
-            public String mutate(ImageResponseModel object) {
+            public String mutate(ImagePointerModel object) {
                 return object.getOriginalUrl();
             }
         }));
@@ -167,7 +167,7 @@ public class PostPreviewSchema extends BaseActivity
     }
 
     @Override
-    public void onRemoveFromFavorites(PostResponseModel post) {
+    public void onRemoveFromFavorites(PostPointerModel post) {
 
     }
 
@@ -182,7 +182,7 @@ public class PostPreviewSchema extends BaseActivity
     }
 
     @Override
-    public void onPostObtained(PostsResponseModel posts) {
+    public void onPostObtained(PostsPointerModel posts) {
 
     }
 
@@ -192,12 +192,12 @@ public class PostPreviewSchema extends BaseActivity
     }
 
 
-    private void obtainPostAuthor(CompanyResponseModel author) {
+    private void obtainPostAuthor(CompanyPointerModel author) {
         obtainAvatar(userAvatarImageView, author);
         userNameTextView.setText(author.getName());
     }
 
-    private void obtainAvatar(ImageView holder, CompanyResponseModel author) {
+    private void obtainAvatar(ImageView holder, CompanyPointerModel author) {
         if (author.getLogoUrl() == null) {
             TextDrawable textDrawable = TextDrawable
                     .builder()
@@ -217,7 +217,7 @@ public class PostPreviewSchema extends BaseActivity
                 .into(holder);
     }
 
-    private void obtainPost(PostResponseModel post) {
+    private void obtainPost(PostPointerModel post) {
         obtainCategory(categoryImageView, categoryNameTextView, post.getCategoryId());
         obtainSubBar(likeImageButton, likeAmountTextView,
                 commentImageView, commentsAmountTextView,
@@ -239,7 +239,7 @@ public class PostPreviewSchema extends BaseActivity
 
     private void obtainSubBar(ImageView likesImageHolder, TextView likesTextHolder,
                               ImageView commentsImageHolder, TextView commentsTextHolder,
-                              ImageView favoritesImageHolder, PostResponseModel post) {
+                              ImageView favoritesImageHolder, PostPointerModel post) {
 
         if (post.isLikedByMe()) {
             likesImageHolder.setImageResource(R.drawable.ic_feed_icon_like_active);
@@ -264,7 +264,7 @@ public class PostPreviewSchema extends BaseActivity
         commentsTextHolder.setText(String.valueOf(post.getCommentsAmount()));
     }
 
-    private void obtainQuiz(PostResponseModel post) {
+    private void obtainQuiz(PostPointerModel post) {
         if (post.getQuiz() == null || post.getQuiz().size() == 0) {
             quizResultHorizontalChart.setVisibility(View.GONE);
             quizVariantsRecyclerView.setVisibility(View.GONE);
@@ -286,7 +286,7 @@ public class PostPreviewSchema extends BaseActivity
         quizVariantsRecyclerView.setAdapter(new FeedQuizVariantRecycler(post.getQuiz(), this));
     }
 
-    private void obtainCollage(PostResponseModel post) {
+    private void obtainCollage(PostPointerModel post) {
         if (post.getImages() == null || post.getImages().size() == 0) {
             imagesRecyclerView.setVisibility(View.GONE);
             return;

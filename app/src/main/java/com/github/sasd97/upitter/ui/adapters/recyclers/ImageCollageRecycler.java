@@ -2,7 +2,6 @@ package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
-import com.github.sasd97.upitter.utils.CollageUtils;
 
 import java.util.List;
 
@@ -24,7 +21,7 @@ import java.util.List;
 public class ImageCollageRecycler extends RecyclerView.Adapter<ImageCollageRecycler.CollageViewHolder> {
 
     private Context context;
-    private List<ImageResponseModel> images;
+    private List<ImagePointerModel> images;
 
     private OnImageClickListener listener;
 
@@ -32,7 +29,7 @@ public class ImageCollageRecycler extends RecyclerView.Adapter<ImageCollageRecyc
         void onImageClick(int position);
     }
 
-    public ImageCollageRecycler(Context context, List<ImageResponseModel> images) {
+    public ImageCollageRecycler(Context context, List<ImagePointerModel> images) {
         this.context = context;
         this.images = images;
     }
@@ -72,7 +69,7 @@ public class ImageCollageRecycler extends RecyclerView.Adapter<ImageCollageRecyc
 
     @Override
     public void onBindViewHolder(CollageViewHolder holder, int position) {
-        ImageResponseModel media = images.get(position);
+        ImagePointerModel media = images.get(position);
 
         Glide
                 .with(context)

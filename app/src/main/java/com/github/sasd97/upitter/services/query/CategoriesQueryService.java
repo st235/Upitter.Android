@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
-import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
-import com.github.sasd97.upitter.models.response.categories.CatergoriesResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.CategoryPointerModel;
+import com.github.sasd97.upitter.models.response.containers.CategoriesContainerModel;
 import com.github.sasd97.upitter.services.RestService;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import retrofit2.Response;
 public class CategoriesQueryService {
 
     public interface OnCategoryListener extends OnErrorQueryListener {
-        void onGetCategories(List<CategoryResponseModel> categories);
+        void onGetCategories(List<CategoryPointerModel> categories);
     }
 
     private OnCategoryListener listener;
@@ -35,13 +35,13 @@ public class CategoriesQueryService {
     }
 
     public void getCategories(@NonNull String accessToken) {
-        Call<CatergoriesResponseModel> getCategories = RestService
+        Call<CategoriesContainerModel> getCategories = RestService
                 .baseFactory()
                 .getCategories(Locale.getDefault().getLanguage(), accessToken);
 
-        getCategories.enqueue(new Callback<CatergoriesResponseModel>(listener) {
+        getCategories.enqueue(new Callback<CategoriesContainerModel>(listener) {
             @Override
-            public void onResponse(Call<CatergoriesResponseModel> call, Response<CatergoriesResponseModel> response) {
+            public void onResponse(Call<CategoriesContainerModel> call, Response<CategoriesContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onGetCategories(response.body().getCategories());

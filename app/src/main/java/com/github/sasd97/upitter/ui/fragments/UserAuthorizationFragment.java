@@ -18,7 +18,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.holders.PeopleHolder;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PeopleModel;
-import com.github.sasd97.upitter.models.response.user.UserResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.UserPointerModel;
 import com.github.sasd97.upitter.services.query.UserAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.CompanyFeedActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
@@ -136,19 +136,19 @@ public class UserAuthorizationFragment extends BaseFragment
     }
 
     @Override
-    public void onServerNotify(UserResponseModel userResponseModel) {
+    public void onServerNotify(UserPointerModel userPointerModel) {
         PeopleModel.Builder builder = new PeopleModel
                 .Builder()
-                .nickname(userResponseModel.getNickname())
-                .sex(userResponseModel.getSex())
-                .isVerify(userResponseModel.isVerify())
-                .accessToken(userResponseModel.getToken());
+                .nickname(userPointerModel.getNickname())
+                .sex(userPointerModel.getSex())
+                .isVerify(userPointerModel.isVerify())
+                .accessToken(userPointerModel.getToken());
 
-        if (userResponseModel.isField(userResponseModel.getName())) builder.name(userResponseModel.getName());
-        if (userResponseModel.isField(userResponseModel.getSurname())) builder.surname(userResponseModel.getSurname());
-        if (userResponseModel.isField(userResponseModel.getDescription())) builder.description(userResponseModel.getDescription());
-        if (userResponseModel.isField(userResponseModel.getAvatarUrl())) builder.avatarUrl(userResponseModel.getAvatarUrl());
-        if (userResponseModel.isField(userResponseModel.getEmail())) builder.email(userResponseModel.getEmail());
+        if (userPointerModel.getName() != null) builder.name(userPointerModel.getName());
+        if (userPointerModel.getSurname() != null) builder.surname(userPointerModel.getSurname());
+        if (userPointerModel.getDescription() != null) builder.description(userPointerModel.getDescription());
+        if (userPointerModel.getAvatarUrl() != null) builder.avatarUrl(userPointerModel.getAvatarUrl());
+        if (userPointerModel.getEmail() != null) builder.email(userPointerModel.getEmail());
 
         setHolder(PeopleHolder.getHolder());
         getHolder().save(builder.build());

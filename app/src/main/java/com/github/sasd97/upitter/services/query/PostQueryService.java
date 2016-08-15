@@ -4,9 +4,10 @@ import android.support.annotation.NonNull;
 
 import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
-import com.github.sasd97.upitter.models.response.SimpleResponseModel;
-import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
-import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
+import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
+import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
+import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.PostsPointerModel;
 import com.github.sasd97.upitter.services.RestService;
 import java.util.List;
 
@@ -23,9 +24,9 @@ import static com.github.sasd97.upitter.Upitter.language;
 public class PostQueryService {
 
     public interface OnPostListener extends OnErrorQueryListener {
-        void onPostObtained(PostsResponseModel posts);
+        void onPostObtained(PostsPointerModel posts);
         void onPostWatch(int amount);
-        void onFindPost(PostResponseModel post);
+        void onFindPost(PostPointerModel post);
         void onCreatePost();
     }
 
@@ -45,7 +46,7 @@ public class PostQueryService {
                             double longitude,
                             @NonNull List<Integer> categories) {
 
-        Call<PostsResponseModel> obtainPosts =
+        Call<PostsContainerModel> obtainPosts =
                 RestService
                 .baseFactory()
                 .obtainPosts(language(),
@@ -55,9 +56,9 @@ public class PostQueryService {
                         radius,
                         categories);
 
-        obtainPosts.enqueue(new Callback<PostsResponseModel>(listener) {
+        obtainPosts.enqueue(new Callback<PostsContainerModel>(listener) {
             @Override
-            public void onResponse(Call<PostsResponseModel> call, Response<PostsResponseModel> response) {
+            public void onResponse(Call<PostsContainerModel> call, Response<PostsContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onPostObtained(response.body().getResponseModel());
@@ -67,13 +68,13 @@ public class PostQueryService {
 
     public void createPost(@NonNull String accessToken,
                            @NonNull RequestBody body) {
-        Call<PostResponseModel> createPost = RestService
+        Call<PostContainerModel> createPost = RestService
                 .baseFactory()
                 .createPost(language(), accessToken, body);
 
-        createPost.enqueue(new Callback<PostResponseModel>(listener) {
+        createPost.enqueue(new Callback<PostContainerModel>(listener) {
             @Override
-            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+            public void onResponse(Call<PostContainerModel> call, Response<PostContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onCreatePost();
@@ -83,13 +84,13 @@ public class PostQueryService {
 
     public void watchPost(@NonNull String accessToken,
                           @NonNull String postId) {
-        Call<PostResponseModel> createPost = RestService
+        Call<PostContainerModel> createPost = RestService
                 .baseFactory()
                 .watchPost(postId, accessToken, language());
 
-        createPost.enqueue(new Callback<PostResponseModel>(listener) {
+        createPost.enqueue(new Callback<PostContainerModel>(listener) {
             @Override
-            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+            public void onResponse(Call<PostContainerModel> call, Response<PostContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onPostWatch(response.body().getResponseModel().getWatchesAmount());
@@ -99,13 +100,13 @@ public class PostQueryService {
 
     public void findPost(@NonNull String accessToken,
                           @NonNull String postId) {
-        Call<PostResponseModel> createPost = RestService
+        Call<PostContainerModel> createPost = RestService
                 .baseFactory()
                 .findPostById(postId, accessToken, language());
 
-        createPost.enqueue(new Callback<PostResponseModel>(listener) {
+        createPost.enqueue(new Callback<PostContainerModel>(listener) {
             @Override
-            public void onResponse(Call<PostResponseModel> call, Response<PostResponseModel> response) {
+            public void onResponse(Call<PostContainerModel> call, Response<PostContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onFindPost(response.body().getResponseModel());

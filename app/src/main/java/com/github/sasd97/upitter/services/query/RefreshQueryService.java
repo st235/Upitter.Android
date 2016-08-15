@@ -4,7 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
-import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
+import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
+import com.github.sasd97.upitter.models.response.pointers.PostsPointerModel;
 import com.github.sasd97.upitter.services.RestService;
 
 import java.util.List;
@@ -21,8 +22,8 @@ import static com.github.sasd97.upitter.Upitter.language;
 public class RefreshQueryService {
 
     public interface OnRefreshListener extends OnErrorQueryListener {
-        void onLoadNew(PostsResponseModel posts);
-        void onLoadOld(PostsResponseModel posts);
+        void onLoadNew(PostsPointerModel posts);
+        void onLoadOld(PostsPointerModel posts);
         void onEmpty();
     }
 
@@ -42,7 +43,7 @@ public class RefreshQueryService {
                         double longitude,
                         @NonNull String postId,
                         @NonNull List<Integer> categories) {
-        Call<PostsResponseModel> loadNew = RestService
+        Call<PostsContainerModel> loadNew = RestService
                 .baseFactory()
                 .obtainNewPosts(language(),
                                 accessToken,
@@ -52,9 +53,9 @@ public class RefreshQueryService {
                                 postId,
                                 categories);
 
-        loadNew.enqueue(new Callback<PostsResponseModel>(listener) {
+        loadNew.enqueue(new Callback<PostsContainerModel>(listener) {
             @Override
-            public void onResponse(Call<PostsResponseModel> call, Response<PostsResponseModel> response) {
+            public void onResponse(Call<PostsContainerModel> call, Response<PostsContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 if (response.body().getResponseModel().getPosts().size() == 0) {
@@ -72,7 +73,7 @@ public class RefreshQueryService {
                         double latitude,
                         double longitude,
                         @NonNull List<Integer> categories) {
-        Call<PostsResponseModel> loadOld = RestService
+        Call<PostsContainerModel> loadOld = RestService
                 .baseFactory()
                 .obtainOldPosts(language(),
                         accessToken,
@@ -82,9 +83,9 @@ public class RefreshQueryService {
                         postId,
                         categories);
 
-        loadOld.enqueue(new Callback<PostsResponseModel>(listener) {
+        loadOld.enqueue(new Callback<PostsContainerModel>(listener) {
             @Override
-            public void onResponse(Call<PostsResponseModel> call, Response<PostsResponseModel> response) {
+            public void onResponse(Call<PostsContainerModel> call, Response<PostsContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onLoadOld(response.body().getResponseModel());

@@ -1,4 +1,4 @@
-package com.github.sasd97.upitter.models.response.user;
+package com.github.sasd97.upitter.models.response.pointers;
 
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.google.gson.annotations.Expose;
@@ -10,7 +10,7 @@ import java.util.Locale;
 /**
  * Created by Alex on 16.06.2016.
  */
-public class UserResponseModel extends BaseResponseModel {
+public class UserPointerModel {
 
     @SerializedName("customId")
     @Expose

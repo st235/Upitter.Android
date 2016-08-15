@@ -23,9 +23,9 @@ import com.github.sasd97.upitter.components.CollageLayoutManager;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
-import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
+import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
 import com.github.sasd97.upitter.services.query.FeedQueryService;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
@@ -61,7 +61,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
     private Context context;
 
     private CompanyModel company;
-    private List<PostResponseModel> posts;
+    private List<PostPointerModel> posts;
 
     public FeedPostRecycler(Context context, CompanyModel company) {
         posts = new ArrayList<>();
@@ -140,7 +140,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            PostResponseModel post = posts.get(getAdapterPosition());
+            PostPointerModel post = posts.get(getAdapterPosition());
 
             switch (item.getItemId()) {
                 case R.id.action_show_on_map:
@@ -154,7 +154,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         }
 
         @Override
-        public void onLike(PostResponseModel post) {
+        public void onLike(PostPointerModel post) {
             posts.set(getAdapterPosition(), post);
             likeImageButton.setImageResource(R.drawable.ic_feed_icon_like_active);
             likeAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
@@ -162,7 +162,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         }
 
         @Override
-        public void onDislike(PostResponseModel post) {
+        public void onDislike(PostPointerModel post) {
             posts.set(getAdapterPosition(), post);
             likeImageButton.setImageResource(R.drawable.ic_feed_icon_like);
             likeAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -170,14 +170,14 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         }
 
         @Override
-        public void onAddFavorites(PostResponseModel post) {
+        public void onAddFavorites(PostPointerModel post) {
             posts.set(getAdapterPosition(), post);
             favoriteImageButton.setImageResource(R.drawable.ic_feed_icon_favorite_active);
             likeAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
         }
 
         @Override
-        public void onVote(PostResponseModel post) {
+        public void onVote(PostPointerModel post) {
             quizResultHorizontalChart.setVisibility(View.VISIBLE);
             quizVariantsRecyclerView.setVisibility(View.GONE);
             posts.set(getAdapterPosition(), post);
@@ -189,7 +189,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         }
 
         @Override
-        public void onRemoveFromFavorites(PostResponseModel post) {
+        public void onRemoveFromFavorites(PostPointerModel post) {
 
         }
 
@@ -200,11 +200,11 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
         @Override
         public void onImageClick(int position) {
-            PostResponseModel postResponseModel = posts.get(getAdapterPosition());
+            PostPointerModel postPointerModel = posts.get(getAdapterPosition());
             Intent intent = new Intent(context, AlbumPreviewGallerySchema.class);
-            intent.putStringArrayListExtra(LIST_ATTACH, ListUtils.mutateConcrete(postResponseModel.getImages(), new ListUtils.OnListMutateListener<ImageResponseModel, String>() {
+            intent.putStringArrayListExtra(LIST_ATTACH, ListUtils.mutateConcrete(postPointerModel.getImages(), new ListUtils.OnListMutateListener<ImagePointerModel, String>() {
                 @Override
-                public String mutate(ImageResponseModel object) {
+                public String mutate(ImagePointerModel object) {
                     return object.getOriginalUrl();
                 }
             }));
@@ -237,8 +237,8 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
     @Override
     public void onBindViewHolder(final TapeViewHolder holder, int position) {
-        PostResponseModel post = posts.get(position);
-        CompanyResponseModel author = post.getCompany();
+        PostPointerModel post = posts.get(position);
+        CompanyPointerModel author = post.getCompany();
 
         obtainPostAuthor(holder, author);
         obtainPost(holder, post);
@@ -249,17 +249,17 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         return posts.size();
     }
 
-    public void addAll(List<PostResponseModel> posts) {
+    public void addAll(List<PostPointerModel> posts) {
         this.posts.addAll(posts);
         notifyItemInserted(this.posts.size());
     }
 
-    private void obtainPostAuthor(TapeViewHolder holder, CompanyResponseModel author) {
+    private void obtainPostAuthor(TapeViewHolder holder, CompanyPointerModel author) {
         obtainAvatar(holder.userAvatarImageView, author);
         holder.userNameTextView.setText(author.getName());
     }
 
-    private void obtainAvatar(ImageView holder, CompanyResponseModel author) {
+    private void obtainAvatar(ImageView holder, CompanyPointerModel author) {
         if (author.getLogoUrl() == null) {
             TextDrawable textDrawable = TextDrawable
                     .builder()
@@ -279,7 +279,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
                 .into(holder);
     }
 
-    private void obtainPost(TapeViewHolder holder, PostResponseModel post) {
+    private void obtainPost(TapeViewHolder holder, PostPointerModel post) {
         obtainToolbar(holder.postToolbar, post.getCompany());
 
         obtainCategory(holder.categoryImageView, holder.categoryNameTextView, post.getCategoryId());
@@ -295,7 +295,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         holder.watchesAmountTextView.setText(String.valueOf(post.getWatchesAmount()));
     }
 
-    private void obtainToolbar(Toolbar toolbar, CompanyResponseModel author) {
+    private void obtainToolbar(Toolbar toolbar, CompanyPointerModel author) {
         toolbar.getMenu().clear();
 
         if (company.getUId().equalsIgnoreCase(author.getId())) {
@@ -314,7 +314,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
     private void obtainSubBar(ImageView likesImageHolder, TextView likesTextHolder,
                               ImageView commentsImageHolder, TextView commentsTextHolder,
-                              ImageView favoritesImageHolder, PostResponseModel post) {
+                              ImageView favoritesImageHolder, PostPointerModel post) {
 
         if (post.isLikedByMe()) {
             likesImageHolder.setImageResource(R.drawable.ic_feed_icon_like_active);
@@ -339,7 +339,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         commentsTextHolder.setText(String.valueOf(post.getCommentsAmount()));
     }
 
-    private void obtainQuiz(TapeViewHolder holder, PostResponseModel post) {
+    private void obtainQuiz(TapeViewHolder holder, PostPointerModel post) {
         if (post.getQuiz() == null || post.getQuiz().size() == 0) {
             holder.quizResultHorizontalChart.setVisibility(View.GONE);
             holder.quizVariantsRecyclerView.setVisibility(View.GONE);
@@ -361,7 +361,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         holder.quizVariantsRecyclerView.setAdapter(new FeedQuizVariantRecycler(post.getQuiz(), holder));
     }
 
-    private void obtainCollage(final TapeViewHolder holder, PostResponseModel post) {
+    private void obtainCollage(final TapeViewHolder holder, PostPointerModel post) {
         if (post.getImages() == null || post.getImages().size() == 0) {
             holder.imagesRecyclerView.setVisibility(View.GONE);
             return;
@@ -385,12 +385,12 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         return posts.get(getItemCount() - 1).getId();
     }
 
-    public void addAhead(List<PostResponseModel> newPosts) {
+    public void addAhead(List<PostPointerModel> newPosts) {
         posts.addAll(FIRST_POSITION, newPosts);
         notifyItemInserted(newPosts.size() - 1);
     }
 
-    public void addBehind(List<PostResponseModel> newPosts) {
+    public void addBehind(List<PostPointerModel> newPosts) {
         posts.addAll(newPosts);
         notifyItemInserted(posts.size());
     }

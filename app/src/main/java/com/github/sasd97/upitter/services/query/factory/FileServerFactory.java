@@ -1,8 +1,10 @@
 package com.github.sasd97.upitter.services.query.factory;
 
 import com.github.sasd97.upitter.components.ImageUploadRequestBody;
-import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.MediaResponseModel;
+import com.github.sasd97.upitter.models.response.containers.FileContainerModel;
+import com.github.sasd97.upitter.models.response.containers.MediaContainerModel;
+import com.github.sasd97.upitter.models.response.pointers.FilePointerModel;
+import com.github.sasd97.upitter.models.response.pointers.MediaPointerModel;
 
 import java.util.HashMap;
 
@@ -22,18 +24,18 @@ public interface FileServerFactory {
 
     @Multipart
     @POST("upload/image")
-    Call<MediaResponseModel> uploadImage(@Part("id") RequestBody id,
-                                         @Part("type") RequestBody type,
-                                         @Part("purpose") RequestBody purpose,
-                                         @PartMap() HashMap<String, RequestBody> body);
-
-    @Multipart
-    @POST("upload/avatar")
-    Call<MediaResponseModel> uploadAvatar(@Part("id") RequestBody id,
+    Call<MediaContainerModel> uploadImage(@Part("id") RequestBody id,
+                                          @Part("type") RequestBody type,
+                                          @Part("purpose") RequestBody purpose,
                                           @PartMap() HashMap<String, RequestBody> body);
 
     @Multipart
+    @POST("upload/avatar")
+    Call<MediaContainerModel> uploadAvatar(@Part("id") RequestBody id,
+                                         @PartMap() HashMap<String, RequestBody> body);
+
+    @Multipart
     @POST("upload/post_image")
-    Call<FileResponseModel> uploadPostImage(@Part("id") RequestBody id,
-                                            @Part(FILE_MULTIPART_SCHEMA) ImageUploadRequestBody image);
+    Call<FileContainerModel> uploadPostImage(@Part("id") RequestBody id,
+                                             @Part(FILE_MULTIPART_SCHEMA) ImageUploadRequestBody image);
 }

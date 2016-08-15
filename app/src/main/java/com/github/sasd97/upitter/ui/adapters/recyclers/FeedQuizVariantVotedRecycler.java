@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.models.response.quiz.QuizResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.QuizPointerModel;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 
 import java.util.List;
@@ -24,11 +24,11 @@ import butterknife.BindView;
 public class FeedQuizVariantVotedRecycler extends RecyclerView.Adapter<FeedQuizVariantVotedRecycler.TapeQuizViewHolder> {
 
     private int summaryAmount = -1;
-    private List<QuizResponseModel> quiz;
+    private List<QuizPointerModel> quiz;
     private String votesPostfix;
     private String votesSchema = "%1$d %2$s";
 
-    public FeedQuizVariantVotedRecycler(List<QuizResponseModel> quiz, String votesPostfix, int summaryAmount) {
+    public FeedQuizVariantVotedRecycler(List<QuizPointerModel> quiz, String votesPostfix, int summaryAmount) {
             this.quiz = quiz;
             this.summaryAmount = summaryAmount;
             this.votesPostfix = votesPostfix;

@@ -16,7 +16,7 @@ import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PhoneModel;
 import com.github.sasd97.upitter.models.SmsModel;
-import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.SlidrUtils;
@@ -109,23 +109,23 @@ public class CodeVerificationActivity extends BaseActivity implements
     }
 
     @Override
-    public void onAuthorize(CompanyResponseModel companyResponseModel) {
+    public void onAuthorize(CompanyPointerModel companyPointerModel) {
         setHolder(CompanyHolder.getHolder());
-        Log.d(TAG, companyResponseModel.toString());
+        Log.d(TAG, companyPointerModel.toString());
 
         CompanyModel companyModel = new CompanyModel
                 .Builder()
-                .id(companyResponseModel.getId())
-                .name(companyResponseModel.getName())
-                .isVerify(companyResponseModel.isVerify())
-                .avatarUrl(companyResponseModel.getLogoUrl())
-                .description(companyResponseModel.getDescription())
-                .categories(companyResponseModel.getActivity())
+                .id(companyPointerModel.getId())
+                .name(companyPointerModel.getName())
+                .isVerify(companyPointerModel.isVerify())
+                .avatarUrl(companyPointerModel.getLogoUrl())
+                .description(companyPointerModel.getDescription())
+                .categories(companyPointerModel.getActivity())
                 .phone(currentPhone)
-                .contactPhones(companyResponseModel.getContactPhones())
-                .site(companyResponseModel.getSite())
-                .coordinates(companyResponseModel.getCoordinates())
-                .accessToken(companyResponseModel.getAccessToken())
+                .contactPhones(companyPointerModel.getContactPhones())
+                .site(companyPointerModel.getSite())
+                .coordinates(companyPointerModel.getCoordinates())
+                .accessToken(companyPointerModel.getAccessToken())
                 .build();
 
         getHolder().save(companyModel);

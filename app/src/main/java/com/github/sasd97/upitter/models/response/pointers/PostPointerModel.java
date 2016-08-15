@@ -1,11 +1,6 @@
-package com.github.sasd97.upitter.models.response.posts;
+package com.github.sasd97.upitter.models.response.pointers;
 
 import com.github.sasd97.upitter.models.AuthorOnMapModel;
-import com.github.sasd97.upitter.models.response.BaseResponseModel;
-import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
-import com.github.sasd97.upitter.models.response.coordinates.CoordinatesResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
-import com.github.sasd97.upitter.models.response.quiz.QuizResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,7 +10,8 @@ import java.util.Locale;
 /**
  * Created by alexander on 08.07.16.
  */
-public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
+
+public class PostPointerModel {
 
     @SerializedName("customId")
     @Expose
@@ -23,7 +19,7 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
 
     @SerializedName("author")
     @Expose
-    private CompanyResponseModel mCompany;
+    private CompanyPointerModel mCompany;
 
     @SerializedName("title")
     @Expose
@@ -39,11 +35,11 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
 
     @SerializedName("variants")
     @Expose
-    private List<QuizResponseModel> mQuiz;
+    private List<QuizPointerModel> mQuiz;
 
     @SerializedName("images")
     @Expose
-    private List<ImageResponseModel> mImages;
+    private List<ImagePointerModel> mImages;
 
     @SerializedName("fromNow")
     @Expose
@@ -75,13 +71,13 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
 
     @SerializedName("coordinates")
     @Expose
-    private CoordinatesResponseModel mCoordinates;
+    private CoordinatesPointerModel mCoordinates;
 
     public String getId() {
         return mPostId;
     }
 
-    public CompanyResponseModel getCompany() {
+    public CompanyPointerModel getCompany() {
         return mCompany;
     }
 
@@ -105,11 +101,11 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
         return mLikesAmount;
     }
 
-    public List<QuizResponseModel> getQuiz() {
+    public List<QuizPointerModel> getQuiz() {
         return mQuiz;
     }
 
-    public List<ImageResponseModel> getImages() { return mImages; }
+    public List<ImagePointerModel> getImages() { return mImages; }
 
     public int getCommentsAmount() { return mCommentsAmount; }
 
@@ -117,7 +113,7 @@ public class PostResponseModel extends BaseResponseModel<PostResponseModel> {
 
     public int getWatchesAmount() { return mWatchesAmount; }
 
-    public CoordinatesResponseModel getCoordinates() {
+    public CoordinatesPointerModel getCoordinates() {
         return mCoordinates;
     }
 

@@ -18,8 +18,8 @@ import com.github.sasd97.upitter.holders.LocationHolder;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
-import com.github.sasd97.upitter.models.response.posts.PostResponseModel;
-import com.github.sasd97.upitter.models.response.posts.PostsResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.PostsPointerModel;
 import com.github.sasd97.upitter.services.LocationService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.services.query.RefreshQueryService;
@@ -130,7 +130,7 @@ public class BaseFeedFragment extends BaseFragment
     }
 
     @Override
-    public void onPostObtained(PostsResponseModel posts) {
+    public void onPostObtained(PostsPointerModel posts) {
         feedPostRecycler.addAll(posts.getPosts());
     }
 
@@ -171,14 +171,14 @@ public class BaseFeedFragment extends BaseFragment
     }
 
     @Override
-    public void onLoadNew(PostsResponseModel posts) {
+    public void onLoadNew(PostsPointerModel posts) {
         if (swipeRefreshLayout.isShown())
             swipeRefreshLayout.setRefreshing(false);
         feedPostRecycler.addAhead(posts.getPosts());
     }
 
     @Override
-    public void onLoadOld(PostsResponseModel posts) {
+    public void onLoadOld(PostsPointerModel posts) {
         feedPostRecycler.addBehind(posts.getPosts());
     }
 
@@ -188,7 +188,7 @@ public class BaseFeedFragment extends BaseFragment
     }
 
     @Override
-    public void onFindPost(PostResponseModel post) {
+    public void onFindPost(PostPointerModel post) {
 
     }
 

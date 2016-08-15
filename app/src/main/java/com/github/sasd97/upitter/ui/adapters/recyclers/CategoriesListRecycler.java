@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.models.response.categories.CategoryResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.CategoryPointerModel;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Palette;
@@ -28,14 +28,14 @@ import butterknife.BindView;
 public class CategoriesListRecycler extends RecyclerView.Adapter<CategoriesListRecycler.CategoryViewHolder> {
 
     public interface OnItemClickListener {
-        void onClick(CategoryResponseModel category, int position);
+        void onClick(CategoryPointerModel category, int position);
     }
 
     private Context context;
     private OnItemClickListener listener;
-    private List<CategoryResponseModel> categories;
+    private List<CategoryPointerModel> categories;
 
-    public CategoriesListRecycler(Context context, List<CategoryResponseModel> categories) {
+    public CategoriesListRecycler(Context context, List<CategoryPointerModel> categories) {
         this.context = context;
         this.categories = categories;
     }
@@ -74,7 +74,7 @@ public class CategoriesListRecycler extends RecyclerView.Adapter<CategoriesListR
 
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
-        CategoryResponseModel category = categories.get(position);
+        CategoryPointerModel category = categories.get(position);
         final String preview = getCategoryPreview(category.getTitle());
 
         TextDrawable circlePreview = TextDrawable
@@ -101,7 +101,7 @@ public class CategoriesListRecycler extends RecyclerView.Adapter<CategoriesListR
         return categories.size();
     }
 
-    public void addAll(List<CategoryResponseModel> list) {
+    public void addAll(List<CategoryPointerModel> list) {
         categories.addAll(list);
         notifyItemInserted(categories.size());
     }
@@ -109,7 +109,7 @@ public class CategoriesListRecycler extends RecyclerView.Adapter<CategoriesListR
     public ArrayList<Integer> getSelected() {
         ArrayList<Integer> result = new ArrayList<>();
 
-        for (CategoryResponseModel category: categories) {
+        for (CategoryPointerModel category: categories) {
             if (category.getSelectedSubcategoriesIds() != null)
                 for (Integer id: category.getSelectedSubcategoriesIds())
                     result.add(id);
@@ -118,10 +118,10 @@ public class CategoriesListRecycler extends RecyclerView.Adapter<CategoriesListR
         return result;
     }
 
-    public void each(@NonNull ListUtils.OnIteratorListener<CategoryResponseModel> listener) {
-        final List<CategoryResponseModel> parents = ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryResponseModel>() {
+    public void each(@NonNull ListUtils.OnIteratorListener<CategoryPointerModel> listener) {
+        final List<CategoryPointerModel> parents = ListUtils.filter(categories, new ListUtils.OnListInteractionListener<CategoryPointerModel>() {
             @Override
-            public boolean isFit(CategoryResponseModel other) {
+            public boolean isFit(CategoryPointerModel other) {
                 return other.isParent();
             }
         });

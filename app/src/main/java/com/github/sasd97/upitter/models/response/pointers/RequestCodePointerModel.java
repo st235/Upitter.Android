@@ -1,6 +1,6 @@
-package com.github.sasd97.upitter.models.response.requestCode;
+package com.github.sasd97.upitter.models.response.pointers;
 
-import com.github.sasd97.upitter.models.response.company.CompanyResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +10,7 @@ import java.util.Locale;
  * Created by alexander on 24.06.16.
  */
 
-public class RequestCodeResponseModel {
+public class RequestCodePointerModel {
 
     @SerializedName("isAuthorized")
     @Expose
@@ -26,7 +26,7 @@ public class RequestCodeResponseModel {
 
     @SerializedName("businessUser")
     @Expose
-    private CompanyResponseModel mBusinessUser;
+    private CompanyPointerModel mBusinessUser;
 
     public boolean isAuthorized() {
         return mIsAuthorized;
@@ -40,7 +40,7 @@ public class RequestCodeResponseModel {
         return mAttemptsAmount;
     }
 
-    public CompanyResponseModel getCompany() {
+    public CompanyPointerModel getCompany() {
         return mBusinessUser;
     }
 

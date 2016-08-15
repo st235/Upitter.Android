@@ -1,18 +1,17 @@
-package com.github.sasd97.upitter.models.response.authorization;
+package com.github.sasd97.upitter.models.response.containers;
 
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
-import com.github.sasd97.upitter.models.response.user.UserResponseModel;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.github.sasd97.upitter.models.response.pointers.UserPointerModel;
 
 import java.util.Locale;
 
 /**
  * Created by Alex on 10.06.2016.
  */
-public class AuthorizationResponseModel extends BaseResponseModel<UserResponseModel> {
 
-    public UserResponseModel getUser() {
+public class AuthorizationContainerModel extends BaseResponseModel<UserPointerModel> {
+
+    public UserPointerModel getUser() {
         return mResponse;
     }
 

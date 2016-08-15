@@ -1,6 +1,5 @@
-package com.github.sasd97.upitter.models.response.quiz;
+package com.github.sasd97.upitter.models.response.pointers;
 
-import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +8,8 @@ import java.util.Locale;
 /**
  * Created by alexander on 13.07.16.
  */
-public class QuizResponseModel extends BaseResponseModel {
+
+public class QuizPointerModel {
 
 
     @SerializedName("value")

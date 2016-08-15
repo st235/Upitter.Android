@@ -6,17 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.github.sasd97.upitter.models.response.fileServer.FileResponseModel;
-import com.github.sasd97.upitter.models.response.fileServer.ImageResponseModel;
+import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
 import com.github.sasd97.upitter.utils.CollageUtils;
 import com.github.sasd97.upitter.utils.Dimens;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
 import static com.github.sasd97.upitter.constants.ImageCollageConstants.Collage;
-import static com.github.sasd97.upitter.constants.ImageCollageConstants.SQUARE_PICTURE;
-import static com.github.sasd97.upitter.constants.ImageCollageConstants.TIGHT_PICTURE;
 import static com.github.sasd97.upitter.constants.ImageCollageConstants.WIDE_PICTURE;
 
 /**
@@ -33,11 +29,11 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
     private static final int TOP_POSITION = 0;
 
     private Collage type;
-    private List<ImageResponseModel> images;
+    private List<ImagePointerModel> images;
 
     private int margin;
 
-    public CollageLayoutManager(List<ImageResponseModel> images) {
+    public CollageLayoutManager(List<ImagePointerModel> images) {
         this.images = images;
         this.margin = Dimens.dpToPx(1);
     }
@@ -84,7 +80,7 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
     private void toSimpleCollage(RecyclerView.Recycler recycler) {
         toSquareCollage(recycler);
-//        ImageResponseModel image = images.get(FIRST_VIEW);
+//        ImagePointerModel image = images.get(FIRST_VIEW);
 //
 //        Logger.d(image.toString());
 //        Logger.d(image.getType());
@@ -238,20 +234,20 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
     private boolean isAllWide() {
         boolean wide = true;
-        for (ImageResponseModel image: images) wide &= (
+        for (ImagePointerModel image: images) wide &= (
                 CollageUtils.calculateImageType(image.getHeight(), image.getWidth()) == WIDE_PICTURE);
         return wide;
     }
 
     private int countSummaryX() {
         int result = 0;
-        for (ImageResponseModel image: images) result += image.getHeight();
+        for (ImagePointerModel image: images) result += image.getHeight();
         return result;
     }
 
     private int countSummaryY() {
         int result = 0;
-        for (ImageResponseModel image: images) result += image.getWidth();
+        for (ImagePointerModel image: images) result += image.getWidth();
         return result;
     }
 
@@ -262,7 +258,7 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
     private int countMaxX() {
         int max = 0;
-        for (ImageResponseModel image: images)
+        for (ImagePointerModel image: images)
             if (image.getHeight() > max)
                 max = image.getHeight();
         return max;

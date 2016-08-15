@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnErrorQueryListener;
-import com.github.sasd97.upitter.models.response.authorization.AuthorizationResponseModel;
-import com.github.sasd97.upitter.models.response.user.UserResponseModel;
+import com.github.sasd97.upitter.models.response.containers.AuthorizationContainerModel;
+import com.github.sasd97.upitter.models.response.pointers.UserPointerModel;
 import com.github.sasd97.upitter.services.RestService;
 
 import retrofit2.Call;
@@ -18,7 +18,7 @@ import retrofit2.Response;
 public class UserAuthorizationQueryService {
 
     public interface OnSocialAuthorizationListener extends OnErrorQueryListener {
-        void onServerNotify(UserResponseModel userResponseModel);
+        void onServerNotify(UserPointerModel userPointerModel);
     }
 
     private OnSocialAuthorizationListener listener;
@@ -32,7 +32,7 @@ public class UserAuthorizationQueryService {
     }
 
     public void notifyByGoogle(@NonNull String tokenId) {
-        Call<AuthorizationResponseModel> notify = RestService
+        Call<AuthorizationContainerModel> notify = RestService
                 .baseFactory()
                 .authorizeWithGooglePlus(tokenId);
 
@@ -40,7 +40,7 @@ public class UserAuthorizationQueryService {
     }
 
     public void notifyByFacebook(@NonNull String accessToken) {
-        Call<AuthorizationResponseModel> notify = RestService
+        Call<AuthorizationContainerModel> notify = RestService
                 .baseFactory()
                 .authorizeWithFacebook(accessToken);
 
@@ -49,17 +49,17 @@ public class UserAuthorizationQueryService {
 
     public void notifyByTwitter(@NonNull String token,
                                 @NonNull String secret) {
-        Call<AuthorizationResponseModel> notify = RestService
+        Call<AuthorizationContainerModel> notify = RestService
                 .baseFactory()
                 .authorizeWithTwitter(token, secret);
 
         notifyServerBySignIn(notify);
     }
 
-    private void notifyServerBySignIn(@NonNull Call<AuthorizationResponseModel> notify) {
-        notify.enqueue(new Callback<AuthorizationResponseModel>(listener) {
+    private void notifyServerBySignIn(@NonNull Call<AuthorizationContainerModel> notify) {
+        notify.enqueue(new Callback<AuthorizationContainerModel>(listener) {
             @Override
-            public void onResponse(Call<AuthorizationResponseModel> call, Response<AuthorizationResponseModel> response) {
+            public void onResponse(Call<AuthorizationContainerModel> call, Response<AuthorizationContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onServerNotify(response.body().getUser());

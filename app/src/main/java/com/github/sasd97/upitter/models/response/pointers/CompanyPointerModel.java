@@ -1,9 +1,6 @@
-package com.github.sasd97.upitter.models.response.company;
+package com.github.sasd97.upitter.models.response.pointers;
 
 import com.github.sasd97.upitter.models.CoordinatesModel;
-import com.github.sasd97.upitter.models.response.BaseResponseModel;
-import com.github.sasd97.upitter.models.response.coordinates.CoordinatesResponseModel;
-import com.github.sasd97.upitter.models.response.phone.PhoneResponseModel;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Names;
 import com.google.gson.annotations.Expose;
@@ -15,7 +12,8 @@ import java.util.Locale;
 /**
  * Created by alexander on 28.06.16.
  */
-public class CompanyResponseModel extends BaseResponseModel {
+
+public class CompanyPointerModel {
 
     @SerializedName("customId")
     @Expose
@@ -51,11 +49,11 @@ public class CompanyResponseModel extends BaseResponseModel {
 
     @SerializedName("coordinates")
     @Expose
-    private List<CoordinatesResponseModel> mCoordinates;
+    private List<CoordinatesPointerModel> mCoordinates;
 
     @SerializedName("phone")
     @Expose
-    private PhoneResponseModel mPhone;
+    private PhonePointerModel mPhone;
 
     @SerializedName("accessToken")
     @Expose
@@ -96,9 +94,9 @@ public class CompanyResponseModel extends BaseResponseModel {
     }
 
     public List<CoordinatesModel> getCoordinates() {
-        return ListUtils.mutate(mCoordinates, new ListUtils.OnListMutateListener<CoordinatesResponseModel, CoordinatesModel>() {
+        return ListUtils.mutate(mCoordinates, new ListUtils.OnListMutateListener<CoordinatesPointerModel, CoordinatesModel>() {
             @Override
-            public CoordinatesModel mutate(CoordinatesResponseModel object) {
+            public CoordinatesModel mutate(CoordinatesPointerModel object) {
                 return new CoordinatesModel.Builder()
                         .latitude(object.getLatitude())
                         .longitude(object.getLongitude())
@@ -108,7 +106,7 @@ public class CompanyResponseModel extends BaseResponseModel {
         });
     }
 
-    public PhoneResponseModel getPhone() {
+    public PhonePointerModel getPhone() {
         return mPhone;
     }
 

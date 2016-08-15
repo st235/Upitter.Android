@@ -1,15 +1,13 @@
-package com.github.sasd97.upitter.models.response.fileServer;
+package com.github.sasd97.upitter.models.response.pointers;
 
-import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.Locale;
 
 /**
  * Created by Alexadner Dadukin on 22.07.2016.
  */
 
-public class FileResponseModel extends BaseResponseModel<FileResponseModel> {
+public class FilePointerModel {
 
     @SerializedName("fid")
     private String mFid;

@@ -1,6 +1,5 @@
-package com.github.sasd97.upitter.models.response.phone;
+package com.github.sasd97.upitter.models.response.pointers;
 
-import com.github.sasd97.upitter.models.response.BaseResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +9,7 @@ import java.util.Locale;
  * Created by alexander on 30.06.16.
  */
 
-public class PhoneResponseModel extends BaseResponseModel {
+public class PhonePointerModel {
 
     @SerializedName("code")
     @Expose
