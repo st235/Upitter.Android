@@ -12,15 +12,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.services.query.FileUploadQueryService;
 import com.github.sasd97.upitter.utils.Dimens;
-import com.github.sasd97.upitter.utils.Names;
 
 import java.io.File;
 
@@ -70,7 +66,7 @@ public class ImageUploaderView extends LinearLayout implements
         this.context = context;
         this.service = FileUploadQueryService.getService(this);
 
-        rootView = LayoutInflater.from(context).inflate(R.layout.image_uploader_single_view, this);
+        rootView = LayoutInflater.from(context).inflate(R.layout.row_image_uploader, this);
 
         imagePreviewImageView = (ImageView) rootView.findViewById(R.id.image_preview_image_uploader_single_view);
         helpTextView = (TextView) rootView.findViewById(R.id.text_view_image_uploader_single_view);

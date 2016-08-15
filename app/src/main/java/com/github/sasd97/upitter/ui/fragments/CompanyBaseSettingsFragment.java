@@ -49,6 +49,7 @@ public class CompanyBaseSettingsFragment extends BaseFragment
     @BindView(R.id.company_avatar_base_settings) ImageView companyAvatar;
     @BindView(R.id.current_avatar_state) TextView uploadState;
     @BindView(R.id.company_title_edittext) EditText companyTitleEdt;
+    @BindView(R.id.company_alias_edittext) EditText companyAliasEdt;
     @BindView(R.id.company_description_edittext) EditText companyDescriptionEdt;
 
     @BindString(R.string.avatar_upload_state_success) String UPLOAD_SUCCESS;
@@ -71,6 +72,7 @@ public class CompanyBaseSettingsFragment extends BaseFragment
 
         obtainCompanyLogo(companyAvatar, companyModel.getAvatarUrl());
         companyTitleEdt.setText(companyModel.getName());
+        companyAliasEdt.setText(companyModel.getAlias());
         companyDescriptionEdt.setText(companyModel.getDescription());
     }
 
@@ -79,6 +81,11 @@ public class CompanyBaseSettingsFragment extends BaseFragment
         uploadState.setText(UPLOAD_SUCCESS);
         getHolder().saveAvatar(path);
         obtainCompanyLogo(companyAvatar, path);
+    }
+
+    @Override
+    public void onAliasChanged(String alias) {
+
     }
 
     @Override

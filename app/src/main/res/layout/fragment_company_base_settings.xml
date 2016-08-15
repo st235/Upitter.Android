@@ -40,6 +40,15 @@
     </LinearLayout>
 
     <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/company_alias_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/company_alias_hint"
+        android:layout_marginTop="8dp"
+        app:met_floatingLabel="highlight"
+        />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/company_title_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,6 +69,34 @@
     <RelativeLayout
         style="@style/Upitter.LayoutButton.Rounded.BabyBlue.Light"
         android:id="@+id/categories_choose_base_settings"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_category"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:text="@string/categories_label_company_registration_activity"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/Upitter.LayoutButton.Rounded.BabyBlue.Light"
+        android:id="@+id/change_address"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
         android:clickable="true">

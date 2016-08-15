@@ -40,6 +40,10 @@ public class CompanyModel extends UserModel
     @Expose
     private String mName;
 
+    @SerializedName("alias")
+    @Expose
+    private String mAlias;
+
     @SerializedName("description")
     @Expose
     private String mDescription;
@@ -104,6 +108,10 @@ public class CompanyModel extends UserModel
     @Override
     public String getName() {
         return mName;
+    }
+
+    public String getAlias() {
+        return mAlias == null ? mId : mAlias;
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.github.sasd97.upitter.models.response.containers.CategoriesContainerM
 import com.github.sasd97.upitter.models.response.containers.CompanyContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
+import com.github.sasd97.upitter.models.response.containers.SocialIconContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostsPointerModel;
@@ -136,8 +137,12 @@ public interface BaseFactory {
                                      @Query("accessToken") String accessToken,
                                      @Query("ln") String language);
 
-    @GET("/post/find/{postId}")
+    @GET("post/find/{postId}")
     Call<PostContainerModel> findPostById(@Path("postId") String postId,
                                         @Query("accessToken") String accessToken,
                                         @Query("ln") String language);
+
+    @GET("general/socialInfo/get")
+    Call<SocialIconContainerModel> obtainSocialIcons(@Query("accessToken") String accessToken,
+                                                @Query("ln") String language);
 }

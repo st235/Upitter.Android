@@ -20,6 +20,7 @@ public class CompanyQueryService {
 
     public interface OnCompanyListener extends OnErrorQueryListener {
         void onAvatarChanged(String path);
+        void onAliasChanged(String alias);
     }
 
     private OnCompanyListener listener;

@@ -314,6 +314,7 @@
     <string name="avatar_upload_state_success">Success</string>
     <string name="avatar_upload_state_error">Error</string>
     <string name="company_title_hint">Title</string>
+    <string name="company_alias_hint">Alias</string>
     <string name="company_description_hint">Description</string>
     <!-- Endregion -->
 

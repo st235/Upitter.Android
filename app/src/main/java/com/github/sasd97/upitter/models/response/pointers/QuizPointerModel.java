@@ -11,7 +11,6 @@ import java.util.Locale;
 
 public class QuizPointerModel {
 
-
     @SerializedName("value")
     @Expose
     private String mValue;

@@ -48,7 +48,6 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
         this.type = Collage.getType(getItemCount());
-        Log.d(TAG, String.format("Type of collage: %1$s", type.toString()));
         detachAndScrapAttachedViews(recycler);
         chooseCollage(recycler);
     }

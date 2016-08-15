@@ -3,7 +3,6 @@ package com.github.sasd97.upitter.ui;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.adapters.pagers.CompanySettingsPager;
@@ -14,7 +13,6 @@ import com.r0adkll.slidr.model.SlidrPosition;
 
 import butterknife.BindArray;
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class CompanySettingsActivity extends BaseActivity {
 
@@ -29,7 +27,7 @@ public class CompanySettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_settings);
         setToolbar(R.id.toolbar, true);
-        Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.2f));
+        Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.3f));
     }
 
     @Override
