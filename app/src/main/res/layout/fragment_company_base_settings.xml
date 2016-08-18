@@ -68,7 +68,7 @@
 
     <RelativeLayout
         style="@style/Upitter.LayoutButton.Rounded.BabyBlue.Light"
-        android:id="@+id/categories_choose_base_settings"
+        android:id="@+id/choose_location_fragment_company_base_settings"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
         android:clickable="true">
@@ -90,7 +90,7 @@
             android:textColor="@color/colorPrimary"
             android:layout_centerInParent="true"
             android:textSize="18sp"
-            android:text="@string/categories_label_company_registration_activity"
+            android:text="@string/choose_location_company_base_settings"
             />
     </RelativeLayout>
 

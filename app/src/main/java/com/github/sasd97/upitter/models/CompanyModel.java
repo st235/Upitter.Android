@@ -54,7 +54,7 @@ public class CompanyModel extends UserModel
     private List<Integer> mCategories;
     private String mCategoriesRepresentation;
 
-    @SerializedName("contactsPhones")
+    @SerializedName("contactPhones")
     @Expose
     @Ignore
     private List<String> mContactPhones;
@@ -110,8 +110,16 @@ public class CompanyModel extends UserModel
         return mName;
     }
 
+    public void setName(@NonNull String name) {
+        mName = name;
+    }
+
     public String getAlias() {
         return mAlias == null ? mId : mAlias;
+    }
+
+    public void setAlias(@NonNull String alias) {
+        mAlias = alias;
     }
 
     @Override
@@ -126,6 +134,18 @@ public class CompanyModel extends UserModel
     @Override
     public String getDescription() {
         return mDescription;
+    }
+
+    public void setDescription(@NonNull String description) {
+        mDescription = description;
+    }
+
+    public String getSite() {
+        return mSite;
+    }
+
+    public void setSite(@NonNull String site) {
+        mSite = site;
     }
 
     @Override
@@ -153,21 +173,25 @@ public class CompanyModel extends UserModel
 
     public List<Integer> getCategories() {
         if (mCategories != null) return mCategories;
-        if (mCategoriesRepresentation == null) return null;
+        if (mCategoriesRepresentation == null) return new ArrayList<>();
         Type type = new TypeToken<List<Integer>>(){}.getType();
         return ListUtils.fromJson(type, mCategoriesRepresentation);
     }
 
     public List<String> getContactPhones() {
         if (mContactPhones != null) return mContactPhones;
-        if (mContactPhonesRepresentation == null) return null;
+        if (mContactPhonesRepresentation == null) return new ArrayList<>();
         Type type = new TypeToken<List<String>>(){}.getType();
         return ListUtils.fromJson(type, mContactPhonesRepresentation);
     }
 
+    public void setContactPhones(@NonNull List<String> contactPhones) {
+        mContactPhones = contactPhones;
+    }
+
     public List<CoordinatesModel> getCoordinates() {
         if (mCoordinates != null) return mCoordinates;
-        if (mCoordinatesRepresentation == null) return null;
+        if (mCoordinatesRepresentation == null) return new ArrayList<>();
         Log.d("REPRESENTATION", mCoordinatesRepresentation);
         Type type = new TypeToken<List<CoordinatesModel>>(){}.getType();
         return ListUtils.fromJson(type, mCoordinatesRepresentation);
@@ -175,6 +199,10 @@ public class CompanyModel extends UserModel
 
     @Override
     public long save() {
+        Gson gson = new Gson();
+        mCategoriesRepresentation = gson.toJson(mCategories);
+        mContactPhonesRepresentation = gson.toJson(mContactPhones);
+        mCoordinatesRepresentation = gson.toJson(mCoordinates);
         if (mPhone != null) mPhone.save();
         return super.save();
     }

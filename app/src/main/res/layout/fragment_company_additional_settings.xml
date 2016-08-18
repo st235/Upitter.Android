@@ -16,18 +16,46 @@
         android:layout_marginTop="8dp"
         />
 
+    <RelativeLayout
+        style="@style/Upitter.LayoutButton.Rounded.BabyBlue.Light"
+        android:id="@+id/add_phone_button_settings_additional_fragment"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_add_more"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:text="@string/add_phone_label_company_registration_activity"
+            />
+    </RelativeLayout>
+
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/company_site_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/company_alias_hint"
+        android:hint="@string/company_site_hint"
         android:layout_marginTop="8dp"
         app:met_floatingLabel="highlight"
         />
 
     <RelativeLayout
         style="@style/Upitter.LayoutButton.Rounded.BabyBlue.Light"
-        android:id="@+id/categories_choose_base_settings"
+        android:id="@+id/social_links_chooser_button"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
         android:clickable="true">
@@ -49,7 +77,7 @@
             android:textColor="@color/colorPrimary"
             android:layout_centerInParent="true"
             android:textSize="18sp"
-            android:text="@string/categories_label_company_registration_activity"
+            android:text="@string/choose_social_icons_links"
             />
     </RelativeLayout>
 </LinearLayout>

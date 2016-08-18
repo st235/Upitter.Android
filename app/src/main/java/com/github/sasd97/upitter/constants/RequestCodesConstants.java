@@ -17,6 +17,8 @@ public interface RequestCodesConstants {
     int SHOW_ON_MAP_POINT_REQUEST = 1004;
     int CREATE_QUIZ_REQUEST = 1005;
     int LOCATION_CHANGE_REQUEST = 1006;
+    int SETUP_LOCATION = 1007;
+    int CHOOSE_SOCIAL_LINKS = 1008;
 
     String CODE_RECEIVER_INTENT_NAME = "com.github.sasd97.recievers.HANDLE_SMS_CODE";
 }

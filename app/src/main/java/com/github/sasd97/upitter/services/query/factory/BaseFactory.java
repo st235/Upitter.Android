@@ -145,4 +145,9 @@ public interface BaseFactory {
     @GET("general/socialInfo/get")
     Call<SocialIconContainerModel> obtainSocialIcons(@Query("accessToken") String accessToken,
                                                 @Query("ln") String language);
+
+    @POST("company/edit")
+    Call<CompanyContainerModel> editCompany(@Query("ln") String language,
+                                        @Query("accessToken") String accessToken,
+                                        @Body RequestBody company);
 }

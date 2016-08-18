@@ -163,6 +163,10 @@
         <activity
             android:name=".ui.schemas.PostPreviewSchema"
             android:label="@string/title_activity_post_preview_schema"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.results.SetupLocationResult"
+            android:label="@string/title_activity_setup_location_result"
             android:theme="@style/AppTheme"></activity>
     </application>
 

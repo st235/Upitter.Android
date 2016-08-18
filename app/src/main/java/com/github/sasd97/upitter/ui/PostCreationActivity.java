@@ -31,7 +31,7 @@ import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.ListUtils;
-import com.github.sasd97.upitter.services.PostBuilderService;
+import com.github.sasd97.upitter.services.builders.PostBuilderService;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;

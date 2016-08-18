@@ -316,9 +316,20 @@
     <string name="company_title_hint">Title</string>
     <string name="company_alias_hint">Alias</string>
     <string name="company_description_hint">Description</string>
+    <string name="company_site_hint">Site</string>
+    <string name="choose_social_icons_links">Social links</string>
+    <string name="choose_location_company_base_settings">Choose location</string>
     <!-- Endregion -->
 
     <!-- Post preview region -->
     <string name="title_activity_post_preview_schema">PostPreviewSchema</string>
+    <string name="title_activity_setup_location_result">SetupLocationResult</string>
+    <!-- Endregion -->
+
+    <!-- Setup location region -->
+    <string-array name="setup_location_pager">
+        <item>Preview</item>
+        <item>List</item>
+    </string-array>
     <!-- Endregion -->
 </resources>

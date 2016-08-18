@@ -2,7 +2,8 @@ package com.github.sasd97.upitter.ui.fragments;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,10 +18,9 @@ import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.services.query.CompanyQueryService;
 import com.github.sasd97.upitter.services.query.FileUploadQueryService;
-import com.github.sasd97.upitter.ui.CompanySettingsActivity;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
-import com.github.sasd97.upitter.ui.results.GalleryResult;
+import com.github.sasd97.upitter.ui.results.SetupLocationResult;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.Names;
@@ -60,13 +60,18 @@ public class CompanyBaseSettingsFragment extends BaseFragment
         super(R.layout.fragment_company_base_settings);
     }
 
-    public static CompanyBaseSettingsFragment getFragment() {
-        return new CompanyBaseSettingsFragment();
+    public static CompanyBaseSettingsFragment getFragment(CompanyModel companyModel) {
+        CompanyBaseSettingsFragment fragment = new CompanyBaseSettingsFragment();
+        fragment.setCompany(companyModel);
+        return fragment;
+    }
+
+    public void setCompany(CompanyModel company) {
+        companyModel = company;
     }
 
     @Override
     protected void setupViews() {
-        companyModel = (CompanyModel) getHolder().get();
         companyQueryService = CompanyQueryService.getService(this);
         fileUploadQueryService = FileUploadQueryService.getService(this);
 
@@ -74,6 +79,61 @@ public class CompanyBaseSettingsFragment extends BaseFragment
         companyTitleEdt.setText(companyModel.getName());
         companyAliasEdt.setText(companyModel.getAlias());
         companyDescriptionEdt.setText(companyModel.getDescription());
+
+        companyTitleEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                companyModel.setName(editable.toString());
+            }
+        });
+        companyAliasEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                companyModel.setAlias(editable.toString());
+            }
+        });
+        companyDescriptionEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                companyModel.setDescription(editable.toString());
+            }
+        });
+    }
+
+    @OnClick(R.id.choose_location_fragment_company_base_settings)
+    public void onLocationChoose(View v) {
+        Intent intent = new Intent(getContext(), SetupLocationResult.class);
+        startActivity(intent);
     }
 
     @Override

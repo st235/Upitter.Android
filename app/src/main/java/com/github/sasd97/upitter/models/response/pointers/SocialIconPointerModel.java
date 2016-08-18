@@ -1,5 +1,7 @@
 package com.github.sasd97.upitter.models.response.pointers;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,12 +20,24 @@ public class SocialIconPointerModel {
     @Expose
     private String mAvatar;
 
+    @SerializedName("link")
+    @Expose
+    private String mLink;
+
     public String getTitle() {
         return mTitle;
     }
 
     public String getAvatar() {
         return mAvatar;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public void setLink(@NonNull String link) {
+        mLink = link;
     }
 
     @Override

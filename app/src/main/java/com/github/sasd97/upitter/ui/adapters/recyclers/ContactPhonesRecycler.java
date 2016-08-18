@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +14,7 @@ import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -22,12 +24,27 @@ import butterknife.BindView;
 
 public class ContactPhonesRecycler extends RecyclerView.Adapter<ContactPhonesRecycler.PhonesViewHolder> {
 
+    public interface OnContentChangedListener {
+        void onChanged(List<String> content);
+    }
+
     private final String EMPTY_PHONE_HOLDER = "";
-    private ArrayList<String> phones;
+
+    private List<String> phones;
+    private OnContentChangedListener listener;
 
     public ContactPhonesRecycler() {
         phones = new ArrayList<>();
         phones.add(EMPTY_PHONE_HOLDER);
+    }
+
+    public ContactPhonesRecycler(List<String> phones) {
+        this.phones = phones;
+        if (phones.size() == 0) phones.add(EMPTY_PHONE_HOLDER);
+    }
+
+    public void setContentChangeListener(@NonNull OnContentChangedListener listener) {
+        this.listener = listener;
     }
 
     public class PhonesViewHolder extends BaseViewHolder implements TextWatcher {
@@ -56,6 +73,7 @@ public class ContactPhonesRecycler extends RecyclerView.Adapter<ContactPhonesRec
         @Override
         public void afterTextChanged(Editable editable) {
             phones.set(getAdapterPosition(), editable.toString());
+            if (listener != null) listener.onChanged(phones);
         }
     }
 
@@ -68,7 +86,10 @@ public class ContactPhonesRecycler extends RecyclerView.Adapter<ContactPhonesRec
 
     @Override
     public void onBindViewHolder(PhonesViewHolder holder, int position) {
-
+        String phone = phones.get(position);
+        if (!phone.equalsIgnoreCase(EMPTY_PHONE_HOLDER)) {
+            holder.phoneEditText.setText(phone);
+        }
     }
 
     @Override
@@ -86,7 +107,7 @@ public class ContactPhonesRecycler extends RecyclerView.Adapter<ContactPhonesRec
         notifyItemRemoved(position);
     }
 
-    public ArrayList<String> getPhones() {
+    public List<String> getPhones() {
         return phones;
     }
 }

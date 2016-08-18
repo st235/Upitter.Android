@@ -1,9 +1,9 @@
 package com.github.sasd97.upitter.holders;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.utils.Prefs;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -13,7 +13,6 @@ import java.util.List;
 
 public class CompanyHolder extends UserHolder<CompanyModel> {
 
-    private static final String TAG = "Company Holder";
     private static final int FIRST_POSITION = 0;
 
     private static final String USER_CUSTOM_ID = "USER_CUSTOM_ID";
@@ -39,8 +38,8 @@ public class CompanyHolder extends UserHolder<CompanyModel> {
         List<CompanyModel> queryList = CompanyModel.find(CompanyModel.class, "m_id = ?", id);
 
         if (queryList != null && queryList.size() != 0) this.userModel = queryList.get(0);
-        if (this.userModel != null) Log.d(TAG, this.userModel.toString());
-        else Log.d(TAG, "User is null");
+        if (this.userModel != null) Logger.d(this.userModel.toString());
+        else Logger.d("User is null");
     }
 
     @Override
