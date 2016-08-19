@@ -58,7 +58,7 @@ public class CompanyFeedActivity extends BaseActivity
     protected void setupViews() {
         setToolbar(R.id.toolbar);
         company = ((CompanyHolder) getHolder()).get();
-        Logger.i(company.toJson());
+        Logger.json(company.toJson());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);

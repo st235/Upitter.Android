@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.ui.fragments;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +22,7 @@ import com.github.sasd97.upitter.services.query.CompanyQueryService;
 import com.github.sasd97.upitter.services.query.FileUploadQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
+import com.github.sasd97.upitter.ui.results.CategoriesSelectionResult;
 import com.github.sasd97.upitter.ui.results.SetupLocationResult;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Gallery;
@@ -36,8 +38,10 @@ import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.Upitter.getHolder;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.CATEGORIES_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.PUT_CROPPED_IMAGE;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.LOCATION_LIST;
+import static com.github.sasd97.upitter.constants.RequestCodesConstants.CATEGORIES_ACTIVITY_REQUEST;
 
 /**
  * Created by alexander on 06.08.16.
@@ -143,6 +147,13 @@ public class CompanyBaseSettingsFragment extends BaseFragment
         startActivity(intent);
     }
 
+    @OnClick(R.id.choose_category_fragment_company_base_settings)
+    public void onCategoryChooseClick(View v) {
+        Intent intent = new Intent(getActivity(), CategoriesSelectionResult.class);
+        intent.putIntegerArrayListExtra(CATEGORIES_ATTACH, new ArrayList<>(companyModel.getCategories()));
+        startActivityForResult(intent, CATEGORIES_ACTIVITY_REQUEST);
+    }
+
     @Override
     public void onAvatarChanged(String path) {
         uploadState.setText(UPLOAD_SUCCESS);
@@ -183,6 +194,11 @@ public class CompanyBaseSettingsFragment extends BaseFragment
         fileUploadQueryService.uploadAvatar(companyModel.getUId(), path);
     }
 
+    private void handleCategoriesIntent(@NonNull Intent intent) {
+        ArrayList<Integer> categoriesSelected = intent.getIntegerArrayListExtra(CATEGORIES_ATTACH);
+        companyModel.setCategories(categoriesSelected);
+    }
+
     private void obtainCompanyLogo(ImageView holder, String logoUrl) {
         if (logoUrl == null) {
             String preview = Names.getNamePreview(companyModel.getName());
@@ -209,6 +225,11 @@ public class CompanyBaseSettingsFragment extends BaseFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != BaseActivity.RESULT_OK) return;
+
+        if (requestCode == CATEGORIES_ACTIVITY_REQUEST) {
+            handleCategoriesIntent(data);
+            return;
+        }
 
         if (requestCode == RequestCodesConstants.GALLERY_ACTIVITY_REQUEST) {
             handleImage(data);

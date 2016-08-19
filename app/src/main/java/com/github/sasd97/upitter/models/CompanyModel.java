@@ -49,7 +49,7 @@ public class CompanyModel extends UserModel
     @Expose
     private String mDescription;
 
-    @SerializedName("category")
+    @SerializedName("activity")
     @Expose
     @Ignore
     private List<Integer> mCategories;
@@ -178,6 +178,12 @@ public class CompanyModel extends UserModel
         if (mCategoriesRepresentation == null) return new ArrayList<>();
         Type type = new TypeToken<List<Integer>>(){}.getType();
         return ListUtils.fromJson(type, mCategoriesRepresentation);
+    }
+
+    public void setCategories(List<Integer> list) {
+        mCategories = list;
+        Gson gson = new Gson();
+        mCategoriesRepresentation = gson.toJson(mCategories);
     }
 
     public List<String> getContactPhones() {
