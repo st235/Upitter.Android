@@ -20,6 +20,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.holders.CompanyHolder;
 import com.github.sasd97.upitter.models.CompanyModel;
+import com.github.sasd97.upitter.models.ErrorModel;
+import com.github.sasd97.upitter.models.response.containers.ApplicationInfoContainerModel;
+import com.github.sasd97.upitter.services.query.ApplicationInfoQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.fragments.BaseFeedFragment;
@@ -34,11 +37,13 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import static com.github.sasd97.upitter.Upitter.*;
 
 public class CompanyFeedActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ApplicationInfoQueryService.OnInfoListener {
 
     private static final String TAG = "Company Feed Activity";
 
     private CompanyModel company;
+    private ApplicationInfoQueryService infoQueryService;
 
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
@@ -59,6 +64,9 @@ public class CompanyFeedActivity extends BaseActivity
         setToolbar(R.id.toolbar);
         company = ((CompanyHolder) getHolder()).get();
         Logger.json(company.toJson());
+
+        infoQueryService = ApplicationInfoQueryService.getService(this);
+        infoQueryService.obtainInfo(company.getAccessToken());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -176,5 +184,15 @@ public class CompanyFeedActivity extends BaseActivity
         getHolder().delete();
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onObtainInfo(int code, int version) {
+        Logger.i(code + ";" + version);
+    }
+
+    @Override
+    public void onError(ErrorModel error) {
+
     }
 }

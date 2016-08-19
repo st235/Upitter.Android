@@ -6,7 +6,7 @@
 
     <!-- Debug dialog region. -->
     <string name="debug_dialog_title">Debug build</string>
-    <string name="debug_dialog_content">Warning. Current application remaining in debug mode.\nAll forms are fill by default values. For developers purposes only.\nVersion: 0.0.2.5\nVersion code: 401\nBuild date: 8/6/16\nUpitter LLC</string>
+    <string name="debug_dialog_content" translatable="false">Warning. Current application remaining in debug mode.\nAll forms are fill by default values. For developers purposes only.\nVersion: 0.0.2.5\nVersion code: 401\nBuild date: 8/6/16\nUpitter LLC</string>
     <string name="debug_dialog_confirm">Agree</string>
     <!-- Endregion -->
 
@@ -40,7 +40,7 @@
     <string name="user_registration_tab_login_activity">User</string>
     <string name="company_registration_tab_login_activity">Company</string>
     <string name="continue_label_login_activity">Continue</string>
-    <string name="google_plus_label_login_activity">Google+</string>
+    <string name="google_plus_label_login_activity" translatable="false">Google+</string>
     <string name="enter_phone_number_label_login_activity">Enter your phone number:</string>
     <string name="sign_in_with_login_activity">Sign in with:</string>
     <string name="authorized_successfully_login_activity">Authorized successfully</string>
@@ -48,9 +48,9 @@
     <string name="cancel_authorization_login_activity">Authorization canceled</string>
     <string name="divider_text_login_activity">or</string>
     <string name="skip_registration_label_login_activity">Skip</string>
-    <string name="twitter_label_login_activity">Twitter</string>
-    <string name="facebook_label_login_activity">Facebook</string>
-    <string name="google_label_login_activity">Google</string>
+    <string name="twitter_label_login_activity" translatable="false">Twitter</string>
+    <string name="facebook_label_login_activity" translatable="false">Facebook</string>
+    <string name="google_label_login_activity" translatable="false">Google</string>
     <string name="dial_code_hint_login_activity">Code</string>
     <string name="dial_body_hint_login_activity">Phone</string>
     <string name="detecting_your_position_login_activity">Detect position&#8230;</string>
@@ -64,8 +64,8 @@
 
     <!-- Tape activity region -->
     <string name="title_activity_tape">Tape</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <!-- Endregion -->
 
@@ -170,7 +170,7 @@
 
     <!-- Company tape region -->
     <string name="create_post_company_tape">Create post</string>
-    <string name="user_placeholder_company_tape">Upitter company</string>
+    <string name="user_placeholder_company_tape" translatable="false">Upitter company</string>
     <string name="category_placeholder_company_tape">Some category</string>
     <!-- Endregion -->
 
@@ -205,7 +205,7 @@
     <!-- Company settings region -->
     <string name="company_name_company_settings">Company name</string>
 
-    <string name="large_text">
+    <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -294,7 +294,7 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="title_activity_show_company_locations">ShowCompanyLocationsActivity</string>
+    <string name="title_activity_show_company_locations">Company Locations</string>
     <!-- Endregion -->
 
     <!-- Location chooser region -->
@@ -322,8 +322,8 @@
     <!-- Endregion -->
 
     <!-- Post preview region -->
-    <string name="title_activity_post_preview_schema">PostPreviewSchema</string>
-    <string name="title_activity_setup_location_result">SetupLocationResult</string>
+    <string name="title_activity_post_preview_schema">Post</string>
+    <string name="title_activity_setup_location_result">Location Settings</string>
     <!-- Endregion -->
 
     <!-- Setup location region -->

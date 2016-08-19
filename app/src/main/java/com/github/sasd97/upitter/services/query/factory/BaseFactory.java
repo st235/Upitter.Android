@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.services.query.factory;
 
+import com.github.sasd97.upitter.models.response.containers.ApplicationInfoContainerModel;
 import com.github.sasd97.upitter.models.response.containers.AuthorizationCompanyContainerModel;
 import com.github.sasd97.upitter.models.response.containers.AuthorizationRequestCodeContainerModel;
 import com.github.sasd97.upitter.models.response.containers.AuthorizationContainerModel;
@@ -159,4 +160,8 @@ public interface BaseFactory {
     Call<PostsContainerModel> obtainOldFavorites(@Query("ln") String language,
                                                  @Query("accessToken") String accessToken,
                                                  @Query("postId") String postId);
+
+    @GET("service/info/android/get/v")
+    Call<ApplicationInfoContainerModel> checkForUpdates(@Query("ln") String language,
+                                                        @Query("accessToken") String accessToken);
 }
