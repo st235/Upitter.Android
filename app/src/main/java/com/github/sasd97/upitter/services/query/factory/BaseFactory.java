@@ -150,4 +150,8 @@ public interface BaseFactory {
     Call<CompanyContainerModel> editCompany(@Query("ln") String language,
                                         @Query("accessToken") String accessToken,
                                         @Body RequestBody company);
+
+    @GET("post/favorites")
+    Call<PostsContainerModel> obtainFavorites(@Query("ln") String language,
+                                              @Query("accessToken") String accessToken);
 }

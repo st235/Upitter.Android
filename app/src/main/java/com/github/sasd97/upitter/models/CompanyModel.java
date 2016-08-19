@@ -11,6 +11,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.internal.Streams;
 import com.google.gson.reflect.TypeToken;
+import com.orhanobut.logger.Logger;
 import com.orm.dsl.Ignore;
 import com.orm.dsl.Table;
 import com.orm.dsl.Unique;
@@ -192,7 +193,7 @@ public class CompanyModel extends UserModel
     public List<CoordinatesModel> getCoordinates() {
         if (mCoordinates != null) return mCoordinates;
         if (mCoordinatesRepresentation == null) return new ArrayList<>();
-        Log.d("REPRESENTATION", mCoordinatesRepresentation);
+        Logger.i(mCoordinatesRepresentation);
         Type type = new TypeToken<List<CoordinatesModel>>(){}.getType();
         return ListUtils.fromJson(type, mCoordinatesRepresentation);
     }

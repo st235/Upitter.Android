@@ -72,7 +72,8 @@ public class FeedQueryService {
             public void onResponse(Call<PostContainerModel> call, Response<PostContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
-                listener.onAddFavorites(response.body().getResponseModel());
+                if (response.body().getPost().isFavoriteByMe()) listener.onAddFavorites(response.body().getResponseModel());
+                else listener.onRemoveFromFavorites(response.body().getResponseModel());
             }
         });
     }

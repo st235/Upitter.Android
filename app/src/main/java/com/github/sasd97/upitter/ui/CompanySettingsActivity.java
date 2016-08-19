@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.holders.CompanyHolder;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
@@ -62,7 +63,7 @@ public class CompanySettingsActivity extends BaseActivity
     public void onSuccess(CompanyPointerModel company) {
         Logger.i(companyModel.toString());
         Logger.json(companyModel.toJson());
-        getHolder().save(companyModel);
+        ((CompanyHolder) getHolder()).save(companyModel);
         finish();
     }
 

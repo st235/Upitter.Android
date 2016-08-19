@@ -69,6 +69,10 @@ public class PostPointerModel {
     @Expose
     private boolean mIsVotedByMe = false;
 
+    @SerializedName("isFavoriteByMe")
+    @Expose
+    private boolean mIsFavoriteByMe = false;
+
     @SerializedName("coordinates")
     @Expose
     private CoordinatesPointerModel mCoordinates;
@@ -123,6 +127,10 @@ public class PostPointerModel {
 
     public boolean isVotedByMe() {
         return mIsVotedByMe;
+    }
+
+    public boolean isFavoriteByMe() {
+        return mIsFavoriteByMe;
     }
 
     public AuthorOnMapModel toAuthorOnMapModel() {

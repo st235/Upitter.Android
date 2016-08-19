@@ -15,6 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.constants.RequestCodesConstants;
 import com.github.sasd97.upitter.models.CompanyModel;
+import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.services.query.CompanyQueryService;
 import com.github.sasd97.upitter.services.query.FileUploadQueryService;
@@ -23,8 +24,11 @@ import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.results.SetupLocationResult;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Gallery;
+import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Names;
 import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -33,6 +37,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.PUT_CROPPED_IMAGE;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.LOCATION_LIST;
 
 /**
  * Created by alexander on 06.08.16.
@@ -133,6 +138,8 @@ public class CompanyBaseSettingsFragment extends BaseFragment
     @OnClick(R.id.choose_location_fragment_company_base_settings)
     public void onLocationChoose(View v) {
         Intent intent = new Intent(getContext(), SetupLocationResult.class);
+        ArrayList<CoordinatesModel> concreteCoordinates = new ArrayList<>(companyModel.getCoordinates());
+        intent.putParcelableArrayListExtra(LOCATION_LIST, concreteCoordinates);
         startActivity(intent);
     }
 
@@ -145,7 +152,7 @@ public class CompanyBaseSettingsFragment extends BaseFragment
 
     @Override
     public void onAliasChanged(String alias) {
-
+        Logger.i(alias);
     }
 
     @Override

@@ -33,4 +33,8 @@ public interface IntentKeysConstants {
     //Quiz region
     String QUIZ_MULTI_SELECTION_LIST = "QUIZ_MULTI_SELECTION_LIST";
     //Endregion
+
+    //Location attach region
+    String LOCATION_LIST = "LOCATION_LIST_ATTACHED";
+    //Endregion
 }

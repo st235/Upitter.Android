@@ -43,7 +43,7 @@ public class CompanyPointerModel {
     @Expose
     private String mSite;
 
-    @SerializedName("contactsPhones")
+    @SerializedName("contactPhones")
     @Expose
     private List<String> mContactPhones;
 

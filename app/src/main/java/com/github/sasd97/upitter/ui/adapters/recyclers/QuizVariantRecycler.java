@@ -21,6 +21,7 @@ import butterknife.BindView;
 /**
  * Created by alexander on 05.07.16.
  */
+
 public class QuizVariantRecycler extends RecyclerView.Adapter<QuizVariantRecycler.QuizViewHolder> {
 
     public interface OnQuizChangeListener {

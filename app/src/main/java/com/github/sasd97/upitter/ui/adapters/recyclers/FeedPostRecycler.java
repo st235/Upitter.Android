@@ -23,6 +23,7 @@ import com.github.sasd97.upitter.components.CollageLayoutManager;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
+import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
@@ -60,13 +61,13 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
     private Context context;
 
-    private CompanyModel company;
+    private UserModel user;
     private List<PostPointerModel> posts;
 
-    public FeedPostRecycler(Context context, CompanyModel company) {
+    public FeedPostRecycler(Context context, UserModel user) {
         posts = new ArrayList<>();
         this.context = context;
-        this.company = company;
+        this.user = user;
     }
 
     public class TapeViewHolder extends BaseViewHolder
@@ -118,7 +119,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
             likeClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    queryService.like(company.getAccessToken(),
+                    queryService.like(user.getAccessToken(),
                             posts.get(getAdapterPosition()).getId());
                 }
             };
@@ -126,7 +127,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
             favoriteClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    queryService.favorite(company.getAccessToken(),
+                    queryService.favorite(user.getAccessToken(),
                             posts.get(getAdapterPosition()).getId());
                 }
             };
@@ -173,7 +174,6 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         public void onAddFavorites(PostPointerModel post) {
             posts.set(getAdapterPosition(), post);
             favoriteImageButton.setImageResource(R.drawable.ic_feed_icon_favorite_active);
-            likeAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
         }
 
         @Override
@@ -190,7 +190,8 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
         @Override
         public void onRemoveFromFavorites(PostPointerModel post) {
-
+            posts.set(getAdapterPosition(), post);
+            favoriteImageButton.setImageResource(R.drawable.ic_feed_icon_favorite);
         }
 
         @Override
@@ -215,7 +216,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
         @Override
         public void onItemClick(int position) {
-            queryService.vote(company.getAccessToken(),
+            queryService.vote(user.getAccessToken(),
                     posts.get(getAdapterPosition()).getId(),
                     position);
         }
@@ -240,7 +241,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         PostPointerModel post = posts.get(position);
         CompanyPointerModel author = post.getCompany();
 
-        obtainPostAuthor(holder, author);
+        if (author != null) obtainPostAuthor(holder, author);
         obtainPost(holder, post);
     }
 
@@ -298,7 +299,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
     private void obtainToolbar(Toolbar toolbar, CompanyPointerModel author) {
         toolbar.getMenu().clear();
 
-        if (company.getUId().equalsIgnoreCase(author.getId())) {
+        if (user.getUId().equalsIgnoreCase(author.getId())) {
             toolbar.inflateMenu(R.menu.post_owner_single_view_menu);
             return;
         }
@@ -337,6 +338,9 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         }
 
         commentsTextHolder.setText(String.valueOf(post.getCommentsAmount()));
+
+        if (post.isFavoriteByMe()) favoritesImageHolder.setImageResource(R.drawable.ic_feed_icon_favorite_active);
+        else favoritesImageHolder.setImageResource(R.drawable.ic_feed_icon_favorite);
     }
 
     private void obtainQuiz(TapeViewHolder holder, PostPointerModel post) {

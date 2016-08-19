@@ -19,11 +19,15 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.holders.CompanyHolder;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.fragments.BaseFeedFragment;
+import com.github.sasd97.upitter.ui.fragments.FavoritesFragment;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -54,7 +58,8 @@ public class CompanyFeedActivity extends BaseActivity
     @Override
     protected void setupViews() {
         setToolbar(R.id.toolbar);
-        company = (CompanyModel) getHolder().get();
+        company = ((CompanyHolder) getHolder()).get();
+        Logger.i(company.toJson());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -140,6 +145,12 @@ public class CompanyFeedActivity extends BaseActivity
         }
 
         switch (id) {
+            case R.id.nav_tape:
+                navigate(BaseFeedFragment.getFragment());
+                break;
+            case R.id.nav_favorites:
+                navigate(FavoritesFragment.getFragment());
+                break;
             case R.id.nav_settings:
                 startActivity(new Intent(this, CompanySettingsActivity.class));
                 break;
@@ -151,6 +162,14 @@ public class CompanyFeedActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void navigate(BaseFragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void deleteSession() {

@@ -24,9 +24,10 @@ import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
 /**
  * Created by Alex on 09.06.2016.
  */
+
 public class CountryCodeListRecycler
-        extends RecyclerView.Adapter<CountryCodeListRecycler.CountryCodeChooseViewHolder>  implements
-        StickyHeaderAdapter<CountryCodeListRecycler.CountryHeaderViewHolder>,
+        extends RecyclerView.Adapter<CountryCodeListRecycler.CountryCodeChooseViewHolder>
+        implements StickyHeaderAdapter<CountryCodeListRecycler.CountryHeaderViewHolder>,
         FastScrollRecyclerView.SectionedAdapter {
 
     public interface OnItemClickListener {

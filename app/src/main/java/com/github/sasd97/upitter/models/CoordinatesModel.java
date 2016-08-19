@@ -42,6 +42,7 @@ public class CoordinatesModel implements RequestSkeleton, Parcelable {
     protected CoordinatesModel(Parcel in) {
         mLatitude = in.readDouble();
         mLongitude = in.readDouble();
+        mAddressName = in.readString();
         mAddress = in.readParcelable(Address.class.getClassLoader());
         if (mAddress != null) mAddressName = mAddress.getAddressLine(0);
     }
@@ -71,6 +72,8 @@ public class CoordinatesModel implements RequestSkeleton, Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeDouble(mLatitude);
         parcel.writeDouble(mLongitude);
+        if (mAddressName == null) mAddressName = "";
+        parcel.writeString(mAddressName);
         parcel.writeParcelable(mAddress, i);
     }
 

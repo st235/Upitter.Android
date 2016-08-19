@@ -20,6 +20,7 @@ import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.services.query.CompanyAuthorizationQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.SlidrUtils;
+import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -111,7 +112,7 @@ public class CodeVerificationActivity extends BaseActivity implements
     @Override
     public void onAuthorize(CompanyPointerModel companyPointerModel) {
         setHolder(CompanyHolder.getHolder());
-        Log.d(TAG, companyPointerModel.toString());
+        Logger.d(companyPointerModel.toString());
 
         CompanyModel companyModel = new CompanyModel
                 .Builder()
@@ -128,7 +129,7 @@ public class CodeVerificationActivity extends BaseActivity implements
                 .accessToken(companyPointerModel.getAccessToken())
                 .build();
 
-        getHolder().save(companyModel);
+        ((CompanyHolder) getHolder()).save(companyModel);
         startActivity(new Intent(this, CompanyFeedActivity.class));
         finish();
     }
