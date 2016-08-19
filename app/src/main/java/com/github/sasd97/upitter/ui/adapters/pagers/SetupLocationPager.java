@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.github.sasd97.upitter.ui.fragments.AppInfoFragment;
+import com.github.sasd97.upitter.ui.fragments.NavigationPaginationPreviewFragment;
 
 /**
  * Created by alexander on 18.08.16.
@@ -20,7 +21,12 @@ public class SetupLocationPager extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new AppInfoFragment();
+        switch (position) {
+            case 0:
+                return NavigationPaginationPreviewFragment.getFragment();
+            default:
+                return NavigationPaginationPreviewFragment.getFragment();
+        }
     }
 
     @Override

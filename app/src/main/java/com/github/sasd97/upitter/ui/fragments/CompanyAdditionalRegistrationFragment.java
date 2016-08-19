@@ -145,7 +145,7 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
                 .accessToken(companyPointerModel.getAccessToken())
                 .build();
 
-        getHolder().save(companyModel);
+        ((CompanyHolder) getHolder()).save(companyModel);
         startActivity(new Intent(getContext(), CompanyFeedActivity.class));
         getActivity().finish();
     }

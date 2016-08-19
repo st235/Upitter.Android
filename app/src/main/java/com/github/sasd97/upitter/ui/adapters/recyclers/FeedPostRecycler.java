@@ -95,6 +95,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
         @BindView(R.id.like_layout_post_single_view) LinearLayout likeLinearLayout;
         @BindView(R.id.comments_layout_post_single_view) LinearLayout commentLinearLayout;
+        @BindView(R.id.favorites_layout_post_single_view) LinearLayout favoritesLinearLayout;
 
         @BindView(R.id.quiz_variants_post_single_view) RecyclerView quizVariantsRecyclerView;
         @BindView(R.id.quiz_result_post_single_view) RecyclerView quizResultHorizontalChart;
@@ -130,9 +131,8 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
                 }
             };
 
-            likeImageButton.setOnClickListener(likeClick);
             likeLinearLayout.setOnClickListener(likeClick);
-            favoriteImageButton.setOnClickListener(favoriteClick);
+            favoritesLinearLayout.setOnClickListener(favoriteClick);
 
             quizResultHorizontalChart.setLayoutManager(new LinearLayoutManager(context));
             quizVariantsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
