@@ -16,6 +16,7 @@ public final class Names {
     private static final String SPACE = " ";
     private static final String SLASH = "/";
     private static final String START = "*";
+    private static final String DOGISH = "@";
     private static final String FILE = "file://";
 
     private static final String SINGE_POINT = ".";
@@ -38,6 +39,12 @@ public final class Names {
         String relativelyName = fileName.substring(folderName.length() + 1);
         if (relativelyName.contains(SLASH)) return false;
         return true;
+    }
+
+    public static String obtainAlias(@NonNull String alais) {
+        StringBuilder builder = new StringBuilder(DOGISH);
+        builder.append(alais.toLowerCase());
+        return builder.toString();
     }
 
     public static String getUniqueFileName(@NonNull String extension) {

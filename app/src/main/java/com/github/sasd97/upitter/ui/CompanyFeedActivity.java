@@ -3,7 +3,6 @@ package com.github.sasd97.upitter.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -47,7 +46,7 @@ public class CompanyFeedActivity extends BaseActivity
     private RelativeLayout createPostView;
     private ImageView logoImageView;
     private TextView titleTextView;
-    private TextView categoryTextView;
+    private TextView aliasTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +89,13 @@ public class CompanyFeedActivity extends BaseActivity
         createPostView = findById(header, R.id.create_post_tape_company_nav_header);
         logoImageView = findById(header, R.id.logo_company_tape);
         titleTextView = findById(header, R.id.title_company_tape);
-        categoryTextView = findById(header, R.id.category_title_category_single_view);
+        aliasTextView = findById(header, R.id.alias_company_tape);
     }
 
     private void obtainCompanyHeader() {
         obtainCompanyLogo(logoImageView, company.getAvatarUrl());
         titleTextView.setText(company.getName());
-        //categoryTextView.setText(company.get);
+        aliasTextView.setText(Names.obtainAlias(company.getAlias()));
     }
 
     private void obtainCompanyLogo(ImageView holder, String logoUrl) {

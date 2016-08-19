@@ -85,6 +85,7 @@ public class CompanyModel extends UserModel
         mId = builder.id;
         mIsVerify = builder.isVerify;
         mName = builder.name;
+        mAlias = builder.alias;
         mDescription = builder.description;
         mCategories = builder.categories;
         mPhone = builder.phone;
@@ -242,6 +243,7 @@ public class CompanyModel extends UserModel
     public static class Builder {
 
         private String id;
+        private String alias;
         private boolean isVerify;
         private String name;
         private String description;
@@ -271,6 +273,11 @@ public class CompanyModel extends UserModel
 
         public Builder description(String description) {
             this.description = description;
+            return this;
+        }
+
+        public Builder alias(String alias) {
+            this.alias = alias;
             return this;
         }
 

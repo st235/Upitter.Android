@@ -43,11 +43,12 @@
                 />
 
             <TextView
-                android:id="@+id/category_company_tape"
+                android:id="@+id/alias_company_tape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/category_placeholder_company_tape"
+                android:textStyle="italic"
                 tools:text="Wear and Cloath"
                 />
         </LinearLayout>

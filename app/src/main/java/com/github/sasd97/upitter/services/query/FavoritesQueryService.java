@@ -23,6 +23,7 @@ public class FavoritesQueryService {
 
     public interface OnFavoritesObtainListener extends OnErrorQueryListener {
         void onFavoritesObtained(List<PostPointerModel> favorites);
+        void onOldFavoritesObtained(List<PostPointerModel> favorites);
     }
 
     private OnFavoritesObtainListener listener;
@@ -46,6 +47,22 @@ public class FavoritesQueryService {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onFavoritesObtained(response.body().getPosts());
+            }
+        });
+    }
+
+    public void obtainOldFavorites(@NonNull String accessToken,
+                                   @NonNull String postId) {
+        Call<PostsContainerModel> obtainFavorites = RestService
+                .baseFactory()
+                .obtainOldFavorites(language(), accessToken, postId);
+
+        obtainFavorites.enqueue(new Callback<PostsContainerModel>(listener) {
+            @Override
+            public void onResponse(Call<PostsContainerModel> call, Response<PostsContainerModel> response) {
+                super.onResponse(call, response);
+                if (!RestService.handleError(call, response, listener)) return;
+                listener.onOldFavoritesObtained(response.body().getPosts());
             }
         });
     }

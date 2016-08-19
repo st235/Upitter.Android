@@ -154,4 +154,9 @@ public interface BaseFactory {
     @GET("post/favorites")
     Call<PostsContainerModel> obtainFavorites(@Query("ln") String language,
                                               @Query("accessToken") String accessToken);
+
+    @GET("post/favorites")
+    Call<PostsContainerModel> obtainOldFavorites(@Query("ln") String language,
+                                                 @Query("accessToken") String accessToken,
+                                                 @Query("postId") String postId);
 }

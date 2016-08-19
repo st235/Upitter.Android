@@ -118,6 +118,7 @@ public class CodeVerificationActivity extends BaseActivity implements
                 .Builder()
                 .id(companyPointerModel.getId())
                 .name(companyPointerModel.getName())
+                .alias(companyPointerModel.getAlias())
                 .isVerify(companyPointerModel.isVerify())
                 .avatarUrl(companyPointerModel.getLogoUrl())
                 .description(companyPointerModel.getDescription())

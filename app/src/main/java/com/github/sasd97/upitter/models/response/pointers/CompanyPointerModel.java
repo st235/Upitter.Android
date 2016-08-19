@@ -31,6 +31,10 @@ public class CompanyPointerModel {
     @Expose
     private String mDescription;
 
+    @SerializedName("alias")
+    @Expose
+    private String mAlias;
+
     @SerializedName("logoUrl")
     @Expose
     private String mLogoUrl;
@@ -76,6 +80,10 @@ public class CompanyPointerModel {
     }
 
     public String getDescription() { return mDescription; }
+
+    public String getAlias() {
+        return mAlias;
+    }
 
     public String getLogoUrl() {
         return mLogoUrl;
