@@ -10,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 401
-        versionName "0.0.3.0"
+        versionName "0.0.3.1"
     }
     buildTypes {
         release {
@@ -25,10 +25,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
-    compile 'com.android.support:support-v4:24.1.1'
-    compile 'com.android.support:gridlayout-v7:24.1.1'
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
+    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:gridlayout-v7:24.2.0'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:24.2.0'
     compile 'com.google.android.gms:play-services-maps:9.4.0'
     compile 'ch.acra:acra:4.9.0-RC-2'
     compile 'com.orhanobut:logger:1.15'

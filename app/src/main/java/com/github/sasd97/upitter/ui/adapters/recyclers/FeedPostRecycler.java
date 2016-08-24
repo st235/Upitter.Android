@@ -35,6 +35,7 @@ import com.github.sasd97.upitter.ui.schemas.PostPreviewSchema;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.ListUtils;
+import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.Palette;
 
 import java.util.ArrayList;
@@ -55,10 +56,11 @@ import static com.github.sasd97.upitter.constants.PostCreateConstants.POST_ID;
  * Created by alexander on 08.07.16.
  */
 
-public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.TapeViewHolder> {
+public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private static final String TAG = "TAPE RECYCLER ADAPTER";
-    private static final int FIRST_POSITION = 0;
+    private static final int FIRST_POSITION = 1;
+    private final int HEADER_VIEW = 0;
+    private final int ITEM_VIEW = 1;
 
     private Context context;
 
@@ -67,6 +69,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
 
     public FeedPostRecycler(Context context, UserModel user) {
         posts = new ArrayList<>();
+        posts.add(new PostPointerModel());
         this.context = context;
         this.user = user;
     }
@@ -231,15 +234,58 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
         }
     }
 
-    @Override
-    public TapeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        View v = LayoutInflater.from(context).inflate(R.layout.row_feed_post, parent, false);
-        return new TapeViewHolder(v);
+    public class TapeHeaderViewHolder extends BaseViewHolder {
+
+        @BindView(R.id.avatar_row_feed_header) CircleImageView avatarUrl;
+
+        public TapeHeaderViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        protected void setupViews() {
+
+        }
     }
 
     @Override
-    public void onBindViewHolder(final TapeViewHolder holder, int position) {
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+
+        switch (viewType) {
+            case HEADER_VIEW:
+                View header = LayoutInflater.from(context).inflate(R.layout.row_feed_header, parent, false);
+                return new TapeHeaderViewHolder(header);
+            case ITEM_VIEW:
+                View item = LayoutInflater.from(context).inflate(R.layout.row_feed_post, parent, false);
+                return new TapeViewHolder(item);
+            default:
+                View v = LayoutInflater.from(context).inflate(R.layout.row_feed_post, parent, false);
+                return new TapeViewHolder(v);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (isHeaderView(position)) return HEADER_VIEW;
+        return ITEM_VIEW;
+    }
+
+    private boolean isHeaderView(int position) {
+        return position == 0;
+    }
+
+    @Override
+    public void onBindViewHolder(final BaseViewHolder holder, int position) {
+        if (holder instanceof TapeViewHolder) obtainItem((TapeViewHolder) holder, position);
+        else if (holder instanceof TapeHeaderViewHolder) obtainHeader((TapeHeaderViewHolder) holder);
+    }
+
+    private void obtainHeader(final TapeHeaderViewHolder holder) {
+        obtainAvatar(holder.avatarUrl, user.getAvatarUrl(), Names.getNamePreview(user.getName()));
+    }
+
+    private void obtainItem(final TapeViewHolder holder, int position) {
         PostPointerModel post = posts.get(position);
         CompanyPointerModel author = post.getCompany();
 
@@ -258,26 +304,26 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
     }
 
     private void obtainPostAuthor(TapeViewHolder holder, CompanyPointerModel author) {
-        obtainAvatar(holder.userAvatarImageView, author);
+        obtainAvatar(holder.userAvatarImageView, author.getLogoUrl(), author.getPreview());
         holder.userNameTextView.setText(author.getName());
     }
 
-    private void obtainAvatar(ImageView holder, CompanyPointerModel author) {
-        if (author.getLogoUrl() == null) {
+    private void obtainAvatar(ImageView holder, String url, String title) {
+        if (url == null) {
             TextDrawable textDrawable = TextDrawable
                     .builder()
                     .beginConfig()
-                    .width(Dimens.dpToPx(28))
-                    .height(Dimens.dpToPx(28))
+                    .width(Dimens.dpToPx(55))
+                    .height(Dimens.dpToPx(55))
                     .endConfig()
-                    .buildRoundRect(author.getPreview(), Palette.getAvatarPalette(), Dimens.dpToPx(5));
+                    .buildRoundRect(title, Palette.getAvatarPalette(), Dimens.dpToPx(5));
             holder.setImageDrawable(textDrawable);
             return;
         }
 
         Glide
                 .with(context)
-                .load(author.getLogoUrl())
+                .load(url)
                 .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, Dimens.dpToPx(4), 0))
                 .into(holder);
     }
@@ -383,7 +429,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
     }
 
     public String getFirstPostId() {
-        if (getItemCount() == 0) return "0";
+        if (getItemCount() == 0) return "null";
         return posts.get(FIRST_POSITION).getId();
     }
 

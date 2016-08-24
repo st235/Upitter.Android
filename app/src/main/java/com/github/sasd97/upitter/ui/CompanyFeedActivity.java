@@ -170,6 +170,9 @@ public class CompanyFeedActivity extends BaseActivity
                 currentState = SETTINGS_STARTED;
                 startActivity(new Intent(this, CompanySettingsActivity.class));
                 break;
+            case R.id.nav_app:
+                startActivity(new Intent(this, AppInfoActivity.class));
+                break;
             case R.id.nav_logout:
                 deleteSession();
                 break;

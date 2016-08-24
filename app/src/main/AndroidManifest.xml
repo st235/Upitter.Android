@@ -210,6 +210,12 @@
             android:label="@string/title_activity_company_profile"
             android:theme="@style/AppTheme"
             />
+
+        <activity
+            android:name=".ui.AppInfoActivity"
+            android:label="@string/title_activity_company_profile"
+            android:theme="@style/AppTheme"
+            />
     </application>
 
 </manifest>

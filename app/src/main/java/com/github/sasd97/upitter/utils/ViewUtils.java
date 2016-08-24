@@ -13,7 +13,6 @@ public class ViewUtils {
     private ViewUtils() {}
 
     public static RelativeLayout.LayoutParams layToCenter(final RelativeLayout parent,
-                                                          View child,
                                                           final int width,
                                                           final int height) {
         final Rect drawingRect = new Rect();

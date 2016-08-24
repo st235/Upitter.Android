@@ -62,9 +62,7 @@ public class CompanyCoordinatesSelectionResult extends BaseActivity implements
         marker.setImageResource(R.drawable.ic_upitter_marker);
         marker.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
-        rootView.addView(marker);
-        marker.setLayoutParams(ViewUtils.layToCenter(rootView,
-                marker,
+        rootView.addView(marker, ViewUtils.layToCenter(rootView,
                 Dimens.dpToPx(55),
                 Dimens.dpToPx(60)));
     }
