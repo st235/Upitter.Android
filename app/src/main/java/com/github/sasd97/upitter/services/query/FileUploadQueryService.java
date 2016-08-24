@@ -96,6 +96,7 @@ public class FileUploadQueryService {
             @Override
             public void onResponse(Call<FileContainerModel> call, Response<FileContainerModel> response) {
                 super.onResponse(call, response);
+                if (!RestService.handleError(call, response, listener)) return;
                 listener.onUpload(response.body().getResponseModel().getFid());
             }
         });

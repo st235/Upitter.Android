@@ -76,14 +76,17 @@ public class CountryCodeListRecycler
         }
     }
 
-    public class CountryHeaderViewHolder extends RecyclerView.ViewHolder {
+    public class CountryHeaderViewHolder extends BaseViewHolder {
 
-        private TextView abcSectionTextView;
+        @BindView(R.id.abc_section_country_code_header) TextView abcSectionTextView;
 
         public CountryHeaderViewHolder(View itemView) {
             super(itemView);
+        }
 
-            abcSectionTextView = (TextView) itemView.findViewById(R.id.abc_section_country_code_header);
+        @Override
+        protected void setupViews() {
+
         }
     }
 

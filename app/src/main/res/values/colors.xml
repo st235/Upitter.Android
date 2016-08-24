@@ -35,6 +35,7 @@
 
     <!-- Gallery region. -->
     <color name="colorGalleryBackground">#313131</color>
+    <color name="colorEditImageSubBar">#263545</color>
     <!-- Endregion -->
 
     <!-- Navigation drawer region. -->

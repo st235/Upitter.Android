@@ -192,6 +192,7 @@ public class GalleryResult extends BaseActivity
         Intent intent = new Intent(this, AlbumPreviewGallerySchema.class);
         intent.putExtra(PATH_ATTACH, path.getPath());
         intent.putExtra(POSITION_ATTACH, position);
+        intent.putExtra(GALLERY_MULTI_SELECTION_MODE, isMultiSelectionMode);
         intent.putStringArrayListExtra(LIST_ATTACH, galleryImageGridRecycler.getFilterPathList());
 
         if (!isMultiSelectionMode) {

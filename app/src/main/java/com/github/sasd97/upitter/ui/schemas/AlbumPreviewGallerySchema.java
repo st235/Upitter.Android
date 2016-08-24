@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.github.sasd97.upitter.ui.adapters.pagers.GalleryAlbumPager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.results.ImageEditingResult;
 import com.github.sasd97.upitter.utils.SlidrUtils;
+import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
@@ -26,10 +28,9 @@ import butterknife.BindView;
 
 public class AlbumPreviewGallerySchema extends BaseActivity {
 
-    private static final String TAG = "Gallery Album Preview";
-
     @BindString(R.string.image_of_gallery_album_preview_activity) String OF_PREFIX;
     private String TITLE_SCHEMA = "%1$d %2$s %3$d";
+    private final static boolean IS_GALLERY_NO_SUBBAR = false;
 
     private int albumSize = 0;
 
@@ -37,9 +38,11 @@ public class AlbumPreviewGallerySchema extends BaseActivity {
     private int currentGalleryPosition;
     private int mode;
 
+    private boolean isBottomBar = false;
     private GalleryAlbumPager mSectionsPagerAdapter;
 
     @BindView(R.id.container) ViewPager mViewPager;
+    @BindView(R.id.activity_album_grid_layout) GridLayout gridLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,13 @@ public class AlbumPreviewGallerySchema extends BaseActivity {
     protected void setupViews() {
         setToolbar(R.id.toolbar, true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.VERTICAL, 0.1f));
+
+        isBottomBar = getIntent().getBooleanExtra(GALLERY_MULTI_SELECTION_MODE, IS_GALLERY_NO_SUBBAR)
+                || getIntent().getBooleanExtra(GALLERY_PREVIEW_SELECTION_MODE, IS_GALLERY_NO_SUBBAR);
+
+
+        Logger.i(String.valueOf(isBottomBar));
+        if (isBottomBar) gridLayout.setVisibility(View.GONE);
 
         imagePaths = getIntent().getStringArrayListExtra(LIST_ATTACH);
         currentGalleryPosition = getIntent().getIntExtra(POSITION_ATTACH, 0);
@@ -82,8 +92,6 @@ public class AlbumPreviewGallerySchema extends BaseActivity {
     }
 
     public void onApplyClick(View v) {
-        Log.d(TAG, imagePaths.get(mViewPager.getCurrentItem()));
-
         Intent result = new Intent();
         result.putExtra(PUT_CROPPED_IMAGE, imagePaths.get(mViewPager.getCurrentItem()));
         setResult(RESULT_OK, result);

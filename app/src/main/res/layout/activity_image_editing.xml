@@ -23,10 +23,22 @@
             />
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        android:layout_height="match_parent"
+    <RelativeLayout
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        layout="@layout/content_image_editing"
-        />
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        tools:context=".ui.results.ImageEditingResult">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -11,13 +11,9 @@ import com.github.sasd97.upitter.events.OnApplyLongListener;
 import com.github.sasd97.upitter.events.OnEditImageChooseListener;
 import com.github.sasd97.upitter.events.OnSaveListener;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.fragments.GalleryImageCropFragment;
-import com.github.sasd97.upitter.ui.fragments.GalleryImageFilterFragment;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnMenuTabClickListener;
 
 import java.util.ArrayList;
 
@@ -40,47 +36,6 @@ public class ImageEditingResult extends BaseActivity
 
         originalPath = getIntent().getStringExtra("PATH_ATTACH");
         editImageChooseListener = this;
-
-        BottomBar bottomBar = BottomBar.attach(this, savedInstanceState);
-        bottomBar.useDarkTheme();
-        bottomBar.setItemsFromMenu(R.menu.bottom_menu_edit, new OnMenuTabClickListener() {
-            @Override
-            public void onMenuTabSelected(@IdRes int menuItemId) {
-                switch (menuItemId) {
-                    case R.id.bottom_bar_filter:
-                        editImageChooseListener.save(new OnApplyLongListener() {
-                            @Override
-                            public void onApplied(String path) {
-                                GalleryImageFilterFragment galleryImageFilterFragment = GalleryImageFilterFragment.getFragment(path);
-                                editImageChooseListener = galleryImageFilterFragment;
-                                ImageEditingResult.this.getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(R.id.fragment_container, galleryImageFilterFragment)
-                                        .commit();
-                            }
-                        });
-                        break;
-                    case R.id.bottom_bar_crop:
-                        editImageChooseListener.save(new OnApplyLongListener() {
-                            @Override
-                            public void onApplied(String path) {
-                                GalleryImageCropFragment galleryImageCropFragment = GalleryImageCropFragment.getFragment(path);
-                                editImageChooseListener = galleryImageCropFragment;
-                                ImageEditingResult.this.getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(R.id.fragment_container, galleryImageCropFragment)
-                                        .commit();
-                            }
-                        });
-                        break;
-                }
-            }
-
-            @Override
-            public void onMenuTabReSelected(@IdRes int menuItemId) {
-
-            }
-        });
     }
 
     @Override

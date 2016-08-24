@@ -11,6 +11,7 @@
         android:id="@+id/image_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         />
 
     <ImageButton
@@ -23,13 +24,13 @@
         android:layout_margin="4dp"
         android:scaleType="centerInside"
         android:background="@drawable/close_button_background"
-        android:src="@drawable/ic_close_black_24dp"
+        android:src="@drawable/ic_close"
         />
 
     <com.github.rahatarmanahmed.cpv.CircularProgressView
         android:id="@+id/progress_view_image_placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
+        android:layout_margin="20dp"
         />
 </RelativeLayout>

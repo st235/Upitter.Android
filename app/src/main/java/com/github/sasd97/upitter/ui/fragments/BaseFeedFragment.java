@@ -53,7 +53,6 @@ public class BaseFeedFragment extends BaseFragment
     private static final String TAG = "TAPE FRAGMENT";
 
     private UserModel userModel;
-    private Location location;
 
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.swipe_layout_tape) SwipeRefreshLayout swipeRefreshLayout;
@@ -63,6 +62,7 @@ public class BaseFeedFragment extends BaseFragment
     private RefreshQueryService refreshQueryService;
     private FeedPostRecycler feedPostRecycler;
     private ArrayList<Integer> categoriesSelected;
+    private LinearLayoutManager linearLayoutManager;
 
     public BaseFeedFragment() {
         super(R.layout.fragment_base_feed);
@@ -78,7 +78,7 @@ public class BaseFeedFragment extends BaseFragment
         userModel = getHolder().get();
         categoriesSelected = new ArrayList<>();
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager = new LinearLayoutManager(getContext());
         feedPostRecycler = new FeedPostRecycler(getContext(), (CompanyModel) getHolder().get());
         tapeRecyclerView.setLayoutManager(linearLayoutManager);
         tapeRecyclerView.setAdapter(feedPostRecycler);
@@ -146,8 +146,6 @@ public class BaseFeedFragment extends BaseFragment
 
     @Override
     public void onLocationFind(Location location) {
-        this.location = location;
-
         postQueryService.obtainPosts(
                 getHolder().get().getAccessToken(),
                 LocationHolder.getRadius(),
@@ -174,7 +172,9 @@ public class BaseFeedFragment extends BaseFragment
     public void onLoadNew(PostsPointerModel posts) {
         if (swipeRefreshLayout.isShown())
             swipeRefreshLayout.setRefreshing(false);
+        linearLayoutManager.scrollToPosition(0);
         feedPostRecycler.addAhead(posts.getPosts());
+
     }
 
     @Override
@@ -227,7 +227,6 @@ public class BaseFeedFragment extends BaseFragment
     }
 
     private void handleCategoriesIntent(@NonNull Intent intent) {
-        Log.d(TAG, "Query");
         categoriesSelected = intent.getIntegerArrayListExtra(CATEGORIES_ATTACH);
         feedPostRecycler.refresh();
         postQueryService.obtainPosts(
@@ -251,7 +250,6 @@ public class BaseFeedFragment extends BaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, requestCode + ";" + resultCode + ";" + BaseActivity.RESULT_OK);
         if (resultCode != BaseActivity.RESULT_OK) return;
 
         if (requestCode == CATEGORIES_ACTIVITY_REQUEST) {

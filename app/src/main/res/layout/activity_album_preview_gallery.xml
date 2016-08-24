@@ -20,7 +20,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@drawable/black_gradient_from_top"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -31,18 +31,21 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             />
+
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.GridLayout
+        android:id="@+id/activity_album_grid_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/black_gradient_from_bottom"
         android:layout_gravity="bottom"
         android:padding="8dp"
         app:orientation="horizontal"
         app:columnCount="2"
         app:rowCount="1">
 
-        <LinearLayout
+        <Button
             android:id="@+id/edit_gallery_album_preview_activity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -50,29 +53,15 @@
             android:clickable="true"
             android:onClick="onEditClick"
             app:layout_column="0"
-            app:layout_columnWeight="1"
+            app:layout_columnWeight="3"
             android:gravity="center"
-            android:background="?android:selectableItemBackground">
+            android:background="@drawable/rounded_button_shape_white_transient"
+            android:layout_margin="8dp"
+            android:textColor="@android:color/white"
+            android:text="@string/edit_gallery_album_preview_activity"
+            />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_edit_white_24dp"
-                android:scaleType="centerInside"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="4dp"
-                android:gravity="center"
-                android:text="@string/edit_gallery_album_preview_activity"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <Button
             android:id="@+id/apply_gallery_album_preview_activity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -80,26 +69,13 @@
             android:clickable="true"
             android:onClick="onApplyClick"
             app:layout_column="1"
-            app:layout_columnWeight="1"
+            android:background="@drawable/rounded_button_shape_white_transient"
+            app:layout_columnWeight="2"
             android:gravity="center"
-            android:background="?android:selectableItemBackground">
+            android:layout_margin="8dp"
+            android:textColor="@android:color/white"
+            android:text="@string/apply_gallery_album_preview_activity"
+            />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_done_white_24dp"
-                android:scaleType="centerInside"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="4dp"
-                android:gravity="center"
-                android:text="@string/apply_gallery_album_preview_activity"
-                />
-
-        </LinearLayout>
     </android.support.v7.widget.GridLayout>
 </android.support.design.widget.CoordinatorLayout>

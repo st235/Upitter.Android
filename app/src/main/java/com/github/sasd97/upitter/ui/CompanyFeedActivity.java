@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,7 +22,6 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.holders.CompanyHolder;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.response.containers.ApplicationInfoContainerModel;
 import com.github.sasd97.upitter.services.query.ApplicationInfoQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
@@ -35,15 +35,16 @@ import butterknife.BindView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.Upitter.*;
+import static com.github.sasd97.upitter.constants.FeedStartupLinks.NOTHING_STARTED;
+import static com.github.sasd97.upitter.constants.FeedStartupLinks.SETTINGS_STARTED;
+import static com.github.sasd97.upitter.constants.FeedStartupLinks.CREATE_POST_STARTED;
 
 public class CompanyFeedActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ApplicationInfoQueryService.OnInfoListener {
 
-    private static final String TAG = "Company Feed Activity";
-
     private CompanyModel company;
-    private boolean isSettingsStarted = false;
+    private int currentState = NOTHING_STARTED;
     private ApplicationInfoQueryService infoQueryService;
 
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
@@ -53,6 +54,8 @@ public class CompanyFeedActivity extends BaseActivity
     private ImageView logoImageView;
     private TextView titleTextView;
     private TextView aliasTextView;
+
+    private BaseFeedFragment baseFeedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,8 @@ public class CompanyFeedActivity extends BaseActivity
         setToolbar(R.id.toolbar);
         company = ((CompanyHolder) getHolder()).get();
         Logger.json(company.toJson());
+
+        baseFeedFragment = BaseFeedFragment.getFragment();
 
         infoQueryService = ApplicationInfoQueryService.getService(this);
         infoQueryService.obtainInfo(company.getAccessToken());
@@ -84,13 +89,15 @@ public class CompanyFeedActivity extends BaseActivity
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.closeDrawer(GravityCompat.START);
                 }
+
+                currentState = CREATE_POST_STARTED;
                 startActivity(new Intent(CompanyFeedActivity.this, PostCreationActivity.class));
             }
         });
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container, BaseFeedFragment.getFragment())
+                .add(R.id.fragment_container, baseFeedFragment)
                 .commit();
     }
 
@@ -124,7 +131,7 @@ public class CompanyFeedActivity extends BaseActivity
         Glide
                 .with(this)
                 .load(logoUrl)
-                .bitmapTransform(new CenterCrop(this), new RoundedCornersTransformation(this, Dimens.dpToPx(4), 0))
+                .bitmapTransform(new CenterCrop(this), new RoundedCornersTransformation(this, Dimens.drr(), 0))
                 .into(holder);
     }
 
@@ -154,13 +161,13 @@ public class CompanyFeedActivity extends BaseActivity
 
         switch (id) {
             case R.id.nav_tape:
-                navigate(BaseFeedFragment.getFragment());
+                navigate(baseFeedFragment);
                 break;
             case R.id.nav_favorites:
                 navigate(FavoritesFragment.getFragment());
                 break;
             case R.id.nav_settings:
-                isSettingsStarted = true;
+                currentState = SETTINGS_STARTED;
                 startActivity(new Intent(this, CompanySettingsActivity.class));
                 break;
             case R.id.nav_logout:
@@ -191,9 +198,17 @@ public class CompanyFeedActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (isSettingsStarted) {
-            isSettingsStarted = false;
-            obtainCompanyHeader();
+        switch (currentState) {
+            case SETTINGS_STARTED:
+                currentState = NOTHING_STARTED;
+                obtainCompanyHeader();
+                break;
+            case CREATE_POST_STARTED:
+                currentState = NOTHING_STARTED;
+                refreshTape();
+                break;
+            default:
+                break;
         }
     }
 
@@ -205,5 +220,13 @@ public class CompanyFeedActivity extends BaseActivity
     @Override
     public void onError(ErrorModel error) {
 
+    }
+
+    private void refreshTape() {
+        baseFeedFragment.onRefresh();
+
+        Snackbar
+                .make(getRootView(), "Refreshing...", Snackbar.LENGTH_SHORT)
+                .show();
     }
 }

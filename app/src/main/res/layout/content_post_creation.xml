@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:padding="4dp"
-            android:background="#f2f6f8"
+            android:background="@drawable/above_score_stroke"
             android:visibility="gone"
             />
 
@@ -107,9 +107,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp"
+            android:padding="12dp"
             android:gravity="center"
-            android:background="#e5eef2">
+            android:background="#f2f5f8">
 
             <android.support.v7.widget.GridLayout
                 android:layout_width="match_parent"
@@ -132,55 +132,11 @@
 
                     <ImageView
                         android:id="@+id/address_icon_create_post_activity"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_icon_map"
+                        android:src="@drawable/ic_map"
                         android:scaleType="centerInside"
-                        />
-
-                    <TextView
-                        android:id="@+id/address_text_create_post_activity"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_marginBottom="4dp"
-                        android:gravity="center"
-                        android:textSize="12sp"
-                        android:text="@string/address_label_create_post_activity"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:clickable="true"
-                    android:onClick="onQuizClick"
-                    app:layout_column="1"
-                    app:layout_columnWeight="2"
-                    android:gravity="center"
-                    android:background="?android:selectableItemBackground">
-
-                    <ImageView
-                        android:id="@+id/quiz_icon_create_post_activity"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_icon_quiz"
-                        android:scaleType="centerInside"
-                        />
-
-                    <TextView
-                        android:id="@+id/quiz_text_create_post_activity"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_marginBottom="4dp"
-                        android:gravity="center"
-                        android:textSize="12sp"
-                        android:text="@string/quiz_label_create_post_activity"
                         />
 
                 </LinearLayout>
@@ -192,7 +148,7 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:onClick="onPhotosClick"
-                    app:layout_column="2"
+                    app:layout_column="1"
                     app:layout_row="0"
                     app:layout_columnWeight="2"
                     android:gravity="center"
@@ -200,22 +156,34 @@
 
                     <ImageView
                         android:id="@+id/photos_image_view_publication"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_icon_add_photo"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_photo"
                         android:contentDescription="@string/app_name"
                         android:scaleType="centerInside"
                         />
 
-                    <TextView
-                        android:id="@+id/photos_text_view_publication"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_marginBottom="4dp"
-                        android:gravity="center"
-                        android:textSize="12sp"
-                        android:text="@string/photo_label_create_post_activity"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:onClick="onQuizClick"
+                    app:layout_column="2"
+                    app:layout_row="0"
+                    app:layout_columnWeight="2"
+                    android:gravity="center"
+                    android:background="?android:selectableItemBackground">
+
+                    <ImageView
+                        android:id="@+id/quiz_icon_create_post_activity"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_squize"
+                        android:scaleType="centerInside"
                         />
 
                 </LinearLayout>
@@ -225,16 +193,20 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     app:layout_column="3"
-                    app:layout_columnWeight="3">
+                    app:layout_columnWeight="2"
+                    android:clickable="true"
+                    android:onClick="onSendClick"
+                    android:background="?android:selectableItemBackground">
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="onSendClick"
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:text="@string/send_label_create_post_activity"
                         android:layout_gravity="center"
-                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:src="@drawable/ic_send"
+                        android:scaleType="centerInside"
                         />
+
                 </LinearLayout>
             </android.support.v7.widget.GridLayout>
         </LinearLayout>

@@ -40,7 +40,7 @@ public class CompanyCoordinatesSelectionResult extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_coordinates_selection);
+        setContentView(R.layout.acitivity_map_preview);
     }
 
     @Override

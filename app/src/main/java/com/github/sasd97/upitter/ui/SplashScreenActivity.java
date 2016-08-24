@@ -9,7 +9,6 @@ import com.github.sasd97.upitter.holders.PeopleHolder;
 import com.github.sasd97.upitter.holders.UserHolder;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.orhanobut.logger.Logger;
 
 import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.Upitter.setHolder;

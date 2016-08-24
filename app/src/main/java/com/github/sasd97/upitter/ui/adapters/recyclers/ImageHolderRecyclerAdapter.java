@@ -9,12 +9,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.components.ImageUploadRequestBody;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.services.query.FileUploadQueryService;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
+import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
 import com.orhanobut.logger.Logger;
 
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.Upitter.getHolder;
 
@@ -119,7 +122,7 @@ public class ImageHolderRecyclerAdapter extends RecyclerView.Adapter<ImageHolder
                 .load(Names.getInstance()
                         .getFilePath(path)
                         .toString())
-                .centerCrop()
+                .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, Dimens.drr(), 0))
                 .into(holder.imagePreview);
 
         service.uploadPostImage(userId, path, holder);

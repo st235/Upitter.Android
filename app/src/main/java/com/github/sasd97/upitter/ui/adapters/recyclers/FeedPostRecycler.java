@@ -45,6 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATES_ATTACH;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.GALLERY_PREVIEW_SELECTION_MODE;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.LIST_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.MODE_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.POSITION_ATTACH;
@@ -209,6 +210,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<FeedPostRecycler.Tape
                     return object.getOriginalUrl();
                 }
             }));
+            intent.putExtra(GALLERY_PREVIEW_SELECTION_MODE, true);
             intent.putExtra(POSITION_ATTACH, position);
             intent.putExtra(MODE_ATTACH, 1);
             context.startActivity(intent);

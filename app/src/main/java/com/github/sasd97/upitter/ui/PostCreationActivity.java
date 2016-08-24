@@ -68,10 +68,6 @@ public class PostCreationActivity extends BaseActivity
     @BindView(R.id.quiz_icon_create_post_activity) ImageView quizIconImageView;
     @BindView(R.id.photos_image_view_publication) ImageView photoIconImageView;
 
-    @BindView(R.id.address_text_create_post_activity) TextView addressTextView;
-    @BindView(R.id.quiz_text_create_post_activity) TextView quizTextView;
-    @BindView(R.id.photos_text_view_publication) TextView photoTextView;
-
     @BindView(R.id.post_title_create_post_activity) MaterialEditText postTitleEditText;
     @BindView(R.id.post_description_create_post_activity) MaterialEditText postTextEditText;
 
@@ -162,14 +158,14 @@ public class PostCreationActivity extends BaseActivity
     @Override
     public void onEmpty() {
         photosRecyclerView.setVisibility(View.GONE);
-        highlightHandler(photoIconImageView, photoTextView, R.drawable.ic_icon_add_photo, R.color.colorPrimary);
+        highlightHandler(photoIconImageView, R.drawable.ic_photo);
     }
 
     @Override
     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
         postBuilderService.coordinates(company.getCoordinates().get(which));
         whichCoordinatesSelected = which;
-        highlightHandler(addressIconImageView, addressTextView, R.drawable.ic_icon_map_active, R.color.colorAccent);
+        highlightHandler(addressIconImageView, R.drawable.ic_map_active);
         return false;
     }
 
@@ -206,9 +202,8 @@ public class PostCreationActivity extends BaseActivity
         Log.d("ERROR", error.toString());
     }
 
-    public void highlightHandler(ImageView imageView, TextView textView, int drawable, int color) {
+    public void highlightHandler(ImageView imageView,int drawable) {
         imageView.setImageDrawable(ContextCompat.getDrawable(this, drawable));
-        textView.setTextColor(ContextCompat.getColor(this, color));
     }
 
     private void setCategory(CategoryModel category) {
@@ -282,13 +277,13 @@ public class PostCreationActivity extends BaseActivity
         imageCounter = selectedPhotos.size();
         loadedImagesCounter = 0;
         imageHolderRecyclerAdapter.reload(selectedPhotos);
-        highlightHandler(photoIconImageView, photoTextView, R.drawable.ic_icon_add_photo_active, R.color.colorAccent);
+        highlightHandler(photoIconImageView, R.drawable.ic_photo_active);
         photosRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void handleQuiz(Intent data) {
         postBuilderService.quiz(data.getStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST));
-        highlightHandler(quizIconImageView, quizTextView, R.drawable.ic_icon_quiz_active, R.color.colorAccent);
+        highlightHandler(quizIconImageView, R.drawable.ic_squize_active);
     }
 
     private void handleCategories(Intent data) {
