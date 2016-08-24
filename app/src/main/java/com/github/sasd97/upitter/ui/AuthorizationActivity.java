@@ -65,11 +65,6 @@ public class AuthorizationActivity extends BaseActivity
 
     @Override
     protected void setupViews() {
-        if (isUserAvailable()) {
-            initUser();
-            return;
-        }
-
         initColors();
 
         authorizationPager = new AuthorizationPager(this, getSupportFragmentManager());
@@ -107,31 +102,6 @@ public class AuthorizationActivity extends BaseActivity
                 changeTabLayoutColor(tabLayout, COLOR_BABY_BLUE);
                 break;
         }
-    }
-
-    private void initUser() {
-        Class<?> target;
-
-        switch (UserModel.UserType.getTypeByValue(UserHolder.getUserType())) {
-            case People:
-                setHolder(PeopleHolder.getHolder());
-                target = PeopleFeedActivity.class;
-                break;
-            case Company:
-                setHolder(CompanyHolder.getHolder());
-                target = CompanyFeedActivity.class;
-                break;
-            default:
-                setHolder(PeopleHolder.getHolder());
-                target = PeopleFeedActivity.class;
-                break;
-        }
-
-        getHolder().restore();
-
-        Intent intent = new Intent(this, target);
-        startActivity(intent);
-        finish();
     }
 
     private void drawBackgroundByPosition(int position) {

@@ -3,13 +3,13 @@ package com.github.sasd97.upitter.ui;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.ui.base.BaseActivity;
 
-public class CompanyProfileActivity extends AppCompatActivity {
+public class CompanyProfileActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,4 +28,8 @@ public class CompanyProfileActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void setupViews() {
+
+    }
 }

@@ -43,6 +43,7 @@ public class CompanyFeedActivity extends BaseActivity
     private static final String TAG = "Company Feed Activity";
 
     private CompanyModel company;
+    private boolean isSettingsStarted = false;
     private ApplicationInfoQueryService infoQueryService;
 
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
@@ -159,6 +160,7 @@ public class CompanyFeedActivity extends BaseActivity
                 navigate(FavoritesFragment.getFragment());
                 break;
             case R.id.nav_settings:
+                isSettingsStarted = true;
                 startActivity(new Intent(this, CompanySettingsActivity.class));
                 break;
             case R.id.nav_logout:
@@ -184,6 +186,15 @@ public class CompanyFeedActivity extends BaseActivity
         getHolder().delete();
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isSettingsStarted) {
+            isSettingsStarted = false;
+            obtainCompanyHeader();
+        }
     }
 
     @Override
