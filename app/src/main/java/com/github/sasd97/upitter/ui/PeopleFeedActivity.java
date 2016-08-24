@@ -42,10 +42,10 @@ public class PeopleFeedActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragment_container, BaseFeedFragment.getFragment())
-                .commit();
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.fragment_container, BaseFeedFragment.getFragment())
+//                .commit();
     }
 
     @Override

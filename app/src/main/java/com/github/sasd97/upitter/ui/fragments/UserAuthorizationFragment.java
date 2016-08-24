@@ -20,7 +20,7 @@ import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.response.pointers.UserPointerModel;
 import com.github.sasd97.upitter.services.query.UserAuthorizationQueryService;
-import com.github.sasd97.upitter.ui.CompanyFeedActivity;
+import com.github.sasd97.upitter.ui.PeopleFeedActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.services.AuthorizationService;
 import com.google.android.gms.auth.api.Auth;
@@ -157,7 +157,7 @@ public class UserAuthorizationFragment extends BaseFragment
                 .make(getView(), getString(R.string.authorized_successfully_login_activity), Snackbar.LENGTH_LONG)
                 .show();
 
-        startActivity(new Intent(getActivity(), CompanyFeedActivity.class));
+        startActivity(new Intent(getActivity(), PeopleFeedActivity.class));
     }
 
     @Override
