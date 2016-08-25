@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -137,8 +138,8 @@ public class CompanyFeedActivity extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawer.isDrawerOpen(Gravity.START)) {
+            drawer.closeDrawer(Gravity.START);
         } else {
             super.onBackPressed();
         }

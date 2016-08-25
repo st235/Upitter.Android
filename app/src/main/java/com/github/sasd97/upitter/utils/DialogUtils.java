@@ -35,4 +35,23 @@ public class DialogUtils {
                 .cancelable(false)
                 .build();
     }
+
+    public static MaterialDialog showUpdateDialog(Context context) {
+        return new MaterialDialog
+                .Builder(context)
+                .title(R.string.title_update_dialog)
+                .content(R.string.content_update_dialog)
+                .positiveText(R.string.upload_update_dialog)
+                .negativeText(R.string.close_update_dialog)
+                .build();
+    }
+
+    public static MaterialDialog showNoUpdatesDialog(Context context) {
+        return new MaterialDialog
+                .Builder(context)
+                .title(R.string.title_no_updates_dialog)
+                .content(R.string.content_no_updates_dialog)
+                .positiveText(R.string.ok_no_updates_dialog)
+                .build();
+    }
 }

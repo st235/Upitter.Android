@@ -86,7 +86,7 @@ public class LocationService implements LocationListener {
                 ? LocationManager.NETWORK_PROVIDER : locationManager.getBestProvider(criteria, true);
 
         if (!isPermissionGrant(context)) {return;}
-        locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DISTANCE, this);
+        if (provider != null) locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DISTANCE, this);
 
         currentLocation = getLastKnownLocation(context);
 

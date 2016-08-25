@@ -45,7 +45,7 @@
     <string name="delete_post_tape_single_view">Удалить пост</string>
     <string name="description_label_code_confirm_activity">Мы отправили на Ваш телефон код подтвержения.\nЕсли код не был введен в поле ниже автоматически, пожалуйста, введите его вручную.</string>
     <string name="description_label_company_registration_activity">Описание</string>
-    <string name="detecting_your_position_login_activity">Удалить позицию…</string>
+    <string name="detecting_your_position_login_activity">Определение позиции…</string>
     <string name="dial_body_hint_login_activity">Телефон</string>
     <string name="dial_code_hint_login_activity">Код</string>
     <string name="divider_text_login_activity">или</string>
@@ -114,7 +114,7 @@
     <string name="user_registration_tab_login_activity">Пользователь</string>
     <string name="voice_postfix">голос (-а)</string>
     <string name="watch_count_tape_single_view">0</string>
-    <string name="whats_up_label_create_post_activity">Начни писать новость тут#8230;</string>
+    <string name="whats_up_label_create_post_activity">Начни писать новость тут&#8230;</string>
     <string name="whats_up_title_create_post_activity">Заголовок</string>
     <string name="wrong_request_code_confirm_activity">Неправильный код запроса</string>
     <string name="your_position_location_activity">Выберите местоположение</string>

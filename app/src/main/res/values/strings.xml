@@ -14,6 +14,19 @@
     <string name="progress_dialog_title">Still progress&#8230;</string>
     <!-- Endregion -->
 
+    <!-- Update dialog region. -->
+    <string name="title_update_dialog">New version available</string>
+    <string name="content_update_dialog">Your current version is too old</string>
+    <string name="upload_update_dialog">Upload from Google Play</string>
+    <string name="close_update_dialog">Close</string>
+    <!-- Endregion -->
+
+    <!-- No updates dialog region. -->
+    <string name="title_no_updates_dialog">No updates</string>
+    <string name="content_no_updates_dialog">You current version is actual</string>
+    <string name="ok_no_updates_dialog">Ok</string>
+    <!-- Endregion -->
+
     <!-- Region permissions -->
     <string name="permission_granted">Permission granted</string>
     <string name="permission_denied">Permission denied</string>

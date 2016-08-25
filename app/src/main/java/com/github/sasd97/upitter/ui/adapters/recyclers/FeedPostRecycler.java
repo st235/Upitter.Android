@@ -28,6 +28,7 @@ import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
 import com.github.sasd97.upitter.services.query.FeedQueryService;
+import com.github.sasd97.upitter.ui.PostCreationActivity;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.ui.schemas.MapPreviewSchema;
@@ -234,17 +235,32 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         }
     }
 
-    public class TapeHeaderViewHolder extends BaseViewHolder {
+    public class TapeHeaderViewHolder extends BaseViewHolder implements View.OnClickListener {
 
         @BindView(R.id.avatar_row_feed_header) CircleImageView avatarUrl;
+        @BindView(R.id.photo_row_feed_header) ImageView photoAttach;
 
         public TapeHeaderViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         protected void setupViews() {
+            photoAttach.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.photo_row_feed_header:
+
+                    break;
+                default:
+                    Intent intent = new Intent(context, PostCreationActivity.class);
+                    context.startActivity(intent);
+                    break;
+            }
         }
     }
 
@@ -450,5 +466,6 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
     public void refresh() {
         notifyItemRangeRemoved(0, getItemCount());
         posts.clear();
+        posts.add(new PostPointerModel());
     }
 }

@@ -4,82 +4,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@color/colorNavigationDrawerAccent"
-    android:gravity="bottom"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:background="@color/colorNavigationDrawerAccent"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/logo_company_tape"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            />
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/title_company_tape"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
-                android:text="@string/user_placeholder_company_tape"
-                tools:text="Adidas"
+            <ImageView
+                android:id="@+id/logo_company_tape"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
                 />
 
-            <TextView
-                android:id="@+id/alias_company_tape"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/category_placeholder_company_tape"
-                android:textStyle="italic"
-                tools:text="Wear and Cloath"
-                />
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_company_tape"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:text="@string/user_placeholder_company_tape"
+                    tools:text="Adidas"
+                    />
+
+                <TextView
+                    android:id="@+id/alias_company_tape"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/category_placeholder_company_tape"
+                    android:textStyle="italic"
+                    tools:text="Wear and Cloath"
+                    />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/create_post_tape_company_nav_header"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:background="@drawable/rounded_button_shape_blue_grey">
+        <RelativeLayout
+            android:id="@+id/create_post_tape_company_nav_header"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:background="@drawable/rounded_button_shape_blue_grey">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_icon_createpost"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:scaleType="centerInside"
-            />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_icon_createpost"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:scaleType="centerInside"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"
-            android:textSize="18sp"
-            android:text="@string/create_post_company_tape"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:text="@string/create_post_company_tape"
+                />
 
         </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>
