@@ -35,7 +35,7 @@ public class FileUtils implements Handler.Callback {
         return new FileUtils(listener);
     }
 
-    public void copyFile(final File src, final String dest) {
+    public void copyFile(final File src, final File dest) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -71,9 +71,9 @@ public class FileUtils implements Handler.Callback {
                 listener.onError();
                 break;
             case COPY_MESSAGE_ID:
-                if (!(message.obj instanceof String)) break;
-                String destination = (String) message.obj;
-                listener.onCopy(new File(destination));
+                if (!(message.obj instanceof File)) break;
+                File destination = (File) message.obj;
+                listener.onCopy(destination);
                 break;
         }
         return false;
