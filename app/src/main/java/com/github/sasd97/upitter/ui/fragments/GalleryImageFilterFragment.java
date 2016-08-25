@@ -3,42 +3,40 @@ package com.github.sasd97.upitter.ui.fragments;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.events.OnApplyLongListener;
-import com.github.sasd97.upitter.events.OnEditImageChooseListener;
+import com.github.sasd97.upitter.events.OnGalleryModificationlistener;
 import com.github.sasd97.upitter.ui.adapters.recyclers.FilterListRecycler;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
-import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.filters.GPUImageFilterTools;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 import butterknife.BindView;
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
 
+import static com.github.sasd97.upitter.constants.GalleryConstants.UPITTER_FOLDER;
+
 /**
  * Created by Alex on 10.05.2016.
  */
 
 public class GalleryImageFilterFragment extends BaseFragment
-        implements FilterListRecycler.OnFilterChooseListener,
-        OnEditImageChooseListener {
+        implements FilterListRecycler.OnFilterChooseListener {
 
-    private static final String IMAGE_PATH = "IMAGE_PATH";
+    private File file;
 
     private GPUImageFilter mFilter;
     private GPUImageFilterTools.FilterAdjuster mFilterAdjuster;
@@ -65,11 +63,9 @@ public class GalleryImageFilterFragment extends BaseFragment
         super(R.layout.fragment_gallery_image_filter);
     }
 
-    public static GalleryImageFilterFragment getFragment(String path) {
+    public static GalleryImageFilterFragment getFragment(File file) {
         GalleryImageFilterFragment galleryImageFilterFragment = new GalleryImageFilterFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(IMAGE_PATH, path);
-        galleryImageFilterFragment.setArguments(bundle);
+        galleryImageFilterFragment.setFile(file);
         return galleryImageFilterFragment;
     }
 
@@ -80,20 +76,16 @@ public class GalleryImageFilterFragment extends BaseFragment
 
     @Override
     protected void setupViews() {
-        final String path = getArguments().getString(IMAGE_PATH);
-
         Glide
                 .with(this)
-                .load(Names
-                        .getInstance()
-                        .getFilePath(path)
-                        .toString())
+                .load(file)
                 .asBitmap()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                         setImage(resource);
-
                     }
                 });
 
@@ -104,8 +96,6 @@ public class GalleryImageFilterFragment extends BaseFragment
                 arrayList
         );
 
-
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         filterListRecycler.setListener(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -114,6 +104,28 @@ public class GalleryImageFilterFragment extends BaseFragment
         recyclerView.setAdapter(filterListRecycler);
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_INSIDE);
         initData();
+    }
+
+    public void reloadFile() {
+        if (file == null) return;
+
+        Glide
+                .with(this)
+                .load(file)
+                .asBitmap()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        setImage(resource);
+
+                    }
+                });
+    }
+
+    private void setFile(File file) {
+        this.file = file;
     }
 
     public void setImage(Bitmap image) {
@@ -181,17 +193,11 @@ public class GalleryImageFilterFragment extends BaseFragment
         }
     }
 
-    @Override
-    public void save(final OnApplyLongListener listener) {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "UPITTER_" + timeStamp + ".jpg";
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        final File destination = new File(storageDir, "/LocLook/"+imageFileName);
-
-        gpuImageView.saveToPictures("Upitter", imageFileName, new GPUImageView.OnPictureSavedListener() {
+    public void save(@NonNull final OnGalleryModificationlistener listener) {
+        gpuImageView.saveToPictures(UPITTER_FOLDER, file.getName(), new GPUImageView.OnPictureSavedListener() {
             @Override
             public void onPictureSaved(Uri uri) {
-                listener.onApplied(destination.getAbsolutePath());
+                listener.onSave(file.getAbsolutePath());
             }
         });
     }

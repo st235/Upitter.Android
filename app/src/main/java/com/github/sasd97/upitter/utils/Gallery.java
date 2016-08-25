@@ -7,12 +7,15 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.FolderModel;
 import com.github.sasd97.upitter.ui.results.GalleryResult;
 
+import java.io.File;
 import java.util.ArrayList;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
+import static com.github.sasd97.upitter.constants.GalleryConstants.COPY_PREFIX;
 
 /**
  * Created by Alex on 07.02.2016.
  */
+
 public class Gallery {
 
     private static String ALL_NAME;
@@ -37,6 +40,10 @@ public class Gallery {
         all.amount(allAmount);
         all.name(ALL_NAME);
         return all.build();
+    }
+
+    public static File getCopyFile(File folder, File src) {
+        return new File(folder, FileUtils.getFileName(src) + COPY_PREFIX + FileUtils.getFileExtension(src));
     }
 
     public static class Builder {

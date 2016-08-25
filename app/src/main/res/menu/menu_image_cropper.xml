@@ -5,10 +5,18 @@
     tools:context=".ui.result.EditImageActivity">
 
     <item
-        android:id="@+id/action_save"
+        android:id="@+id/action_apply"
         android:orderInCategory="100"
         android:icon="@drawable/ic_check_white_24dp"
         android:title="Apply"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/action_save"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_save_white_24dp"
+        android:title="Save"
         app:showAsAction="always"
         />
 </menu>

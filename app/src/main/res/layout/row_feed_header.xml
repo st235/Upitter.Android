@@ -3,19 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
+    android:padding="8dp"
     android:background="@android:color/white">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar_row_feed_header"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginRight="4dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="8dp"
         />
 
     <TextView
@@ -36,7 +34,6 @@
         android:id="@+id/photo_row_feed_header"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="8dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_photo"

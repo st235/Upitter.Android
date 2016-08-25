@@ -24,6 +24,14 @@ public final class Palette {
         return ContextCompat.getColor(context, colorResId);
     }
 
+    public static int obtainColor(String colorResSchema) {
+        return Color.parseColor(colorResSchema);
+    }
+
+    public static int getPrimaryColor() {
+        return ContextCompat.getColor(context, R.color.colorPrimary);
+    }
+
     public static int getAvatarPalette() {
         return ContextCompat.getColor(context, R.color.colorPrimary);
     }

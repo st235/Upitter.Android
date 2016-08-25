@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayout;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.adapters.pagers.GalleryAlbumPager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.results.ImageEditingResult;
+import com.github.sasd97.upitter.ui.results.GalleryImageEditingResult;
 import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
@@ -99,7 +98,7 @@ public class AlbumPreviewGallerySchema extends BaseActivity {
     }
 
     public void onEditClick(View v) {
-        Intent intent = new Intent(AlbumPreviewGallerySchema.this, ImageEditingResult.class);
+        Intent intent = new Intent(AlbumPreviewGallerySchema.this, GalleryImageEditingResult.class);
         intent.putExtra(PATH_ATTACH, imagePaths.get(mViewPager.getCurrentItem()));
         startActivityForResult(intent, 12);
     }

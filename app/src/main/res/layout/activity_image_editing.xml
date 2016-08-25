@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.results.ImageEditingResult">
+    tools:context=".ui.results.GalleryImageEditingResult">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -27,18 +27,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/black"
-        tools:context=".ui.results.ImageEditingResult">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".ui.results.GalleryImageEditingResult">
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/toggleGroup"
             />
 
-        <ToggleButton
-            android:layout_width="match_parent"
+        <RadioGroup
+            android:id="@+id/toggleGroup"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_alignParentBottom="true"
-            />
+            >
+
+            <ToggleButton
+                android:id="@+id/filter_toggle"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textOn="FILTER"
+                android:textOff="FILTER"
+                android:onClick="onToggle"
+                android:checked="true"
+                android:textColor="@android:color/white"
+                android:background="@drawable/toggle_button_selector"
+                />
+            <ToggleButton
+                android:id="@+id/crop_toggle"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textOn="CROP"
+                android:textOff="CROP"
+                android:onClick="onToggle"
+                android:textColor="@android:color/white"
+                android:background="@drawable/toggle_button_selector"
+                />
+        </RadioGroup>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

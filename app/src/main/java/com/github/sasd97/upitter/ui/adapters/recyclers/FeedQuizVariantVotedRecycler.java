@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.response.pointers.QuizPointerModel;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
+import com.github.sasd97.upitter.utils.Palette;
 
 import java.util.List;
 import java.util.Locale;
@@ -59,15 +61,24 @@ public class FeedQuizVariantVotedRecycler extends RecyclerView.Adapter<FeedQuizV
 
     @Override
     public void onBindViewHolder(TapeQuizViewHolder holder, int position) {
-        int percentage = (int) ((double) quiz.get(position).getCount() / summaryAmount * 100);
+        QuizPointerModel quizPointerModel = quiz.get(position);
+        int percentage = (int) ((double) quizPointerModel.getCount() / summaryAmount * 100);
 
-        holder.resultText.setText(quiz.get(position).getValue());
+        holder.resultText.setText(quizPointerModel.getValue());
         holder.resultPercentage.setText(String.format(Locale.getDefault(),
                 votesSchema,
                 quiz.get(position).getCount(),
                 votesPostfix));
         holder.resultProgress.setProgress(percentage);
         holder.resultProgress.setMax(100);
+
+        if (quizPointerModel.isMyVote()) {
+            holder.resultText.setTextColor(Palette.getPrimaryColor());
+            holder.resultPercentage.setTextColor(Palette.getPrimaryColor());
+        } else {
+            holder.resultText.setTextColor(Palette.obtainColor(R.color.colorBlack));
+            holder.resultPercentage.setTextColor(Palette.obtainColor(R.color.colorBlack));
+        }
     }
 
     @Override

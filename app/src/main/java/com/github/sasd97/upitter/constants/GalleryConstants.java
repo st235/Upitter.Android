@@ -1,7 +1,5 @@
 package com.github.sasd97.upitter.constants;
 
-import android.util.Log;
-
 import com.github.sasd97.upitter.utils.Names;
 
 /**
@@ -9,6 +7,9 @@ import com.github.sasd97.upitter.utils.Names;
  */
 
 public interface GalleryConstants {
+
+    String UPITTER_FOLDER = "/Upitter";
+    String COPY_PREFIX = "_copy.";
 
     enum AlbumMode {
 

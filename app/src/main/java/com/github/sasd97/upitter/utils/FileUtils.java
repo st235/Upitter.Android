@@ -35,6 +35,20 @@ public class FileUtils implements Handler.Callback {
         return new FileUtils(listener);
     }
 
+    public static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+            return fileName.substring(fileName.lastIndexOf(".")+1);
+        else return "";
+    }
+
+    public static String getFileName(File file) {
+        String path = file.getPath();
+        int lastIndexSplash = path.lastIndexOf("/");
+        int position = lastIndexSplash == -1 ? 0 : lastIndexSplash;
+        return path.substring(position, path.lastIndexOf("."));
+    }
+
     public void copyFile(final File src, final File dest) {
         new Thread(new Runnable() {
             @Override
