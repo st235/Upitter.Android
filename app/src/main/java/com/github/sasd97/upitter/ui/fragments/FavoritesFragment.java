@@ -49,7 +49,7 @@ public class FavoritesFragment extends BaseFragment implements FavoritesQuerySer
         queryService = FavoritesQueryService.getService(this);
         queryService.obtainFavorites(userModel.getAccessToken());
 
-        feedPostRecycler = new FeedPostRecycler(getContext(), userModel);
+        feedPostRecycler = new FeedPostRecycler(getContext(), userModel, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(feedPostRecycler);
 

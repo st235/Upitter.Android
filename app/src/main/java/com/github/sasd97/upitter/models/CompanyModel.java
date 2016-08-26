@@ -177,7 +177,8 @@ public class CompanyModel extends UserModel
         if (mCategories != null) return mCategories;
         if (mCategoriesRepresentation == null) return new ArrayList<>();
         Type type = new TypeToken<List<Integer>>(){}.getType();
-        return ListUtils.fromJson(type, mCategoriesRepresentation);
+        mCategories = ListUtils.fromJson(type, mCategoriesRepresentation);
+        return mCategories;
     }
 
     public void setCategories(List<Integer> list) {
@@ -190,7 +191,8 @@ public class CompanyModel extends UserModel
         if (mContactPhones != null) return mContactPhones;
         if (mContactPhonesRepresentation == null) return new ArrayList<>();
         Type type = new TypeToken<List<String>>(){}.getType();
-        return ListUtils.fromJson(type, mContactPhonesRepresentation);
+        mContactPhones = ListUtils.fromJson(type, mContactPhonesRepresentation);
+        return mContactPhones;
     }
 
     public void setContactPhones(@NonNull List<String> contactPhones) {
@@ -202,7 +204,8 @@ public class CompanyModel extends UserModel
         if (mCoordinatesRepresentation == null) return new ArrayList<>();
         Logger.i(mCoordinatesRepresentation);
         Type type = new TypeToken<List<CoordinatesModel>>(){}.getType();
-        return ListUtils.fromJson(type, mCoordinatesRepresentation);
+        mCoordinates = ListUtils.fromJson(type, mCoordinatesRepresentation);
+        return mCoordinates;
     }
 
     @Override
@@ -217,6 +220,9 @@ public class CompanyModel extends UserModel
 
     @Override
     public String toJson() {
+        getContactPhones();
+        getCategories();
+        getCoordinates();
         Gson builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         return builder.toJson(this);
     }

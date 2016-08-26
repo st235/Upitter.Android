@@ -59,20 +59,29 @@ import static com.github.sasd97.upitter.constants.PostCreateConstants.POST_ID;
 
 public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private static final int FIRST_POSITION = 1;
     private final int HEADER_VIEW = 0;
     private final int ITEM_VIEW = 1;
 
-    private Context context;
-
     private UserModel user;
+    private Context context;
+    private boolean isHeader = true;
     private List<PostPointerModel> posts;
+
+    private int FIRST_POSITION = 1;
 
     public FeedPostRecycler(Context context, UserModel user) {
         posts = new ArrayList<>();
         posts.add(new PostPointerModel());
         this.context = context;
         this.user = user;
+    }
+
+    public FeedPostRecycler(Context context, UserModel user, boolean isHeader) {
+        this.user = user;
+        this.context = context;
+        this.isHeader = isHeader;
+        posts = new ArrayList<>();
+        if (!isHeader) FIRST_POSITION = 0;
     }
 
     public class TapeViewHolder extends BaseViewHolder
@@ -283,7 +292,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (isHeaderView(position)) return HEADER_VIEW;
+        if (isHeader && isHeaderView(position)) return HEADER_VIEW;
         return ITEM_VIEW;
     }
 
@@ -466,6 +475,6 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
     public void refresh() {
         notifyItemRangeRemoved(0, getItemCount());
         posts.clear();
-        posts.add(new PostPointerModel());
+        if (isHeader) posts.add(new PostPointerModel());
     }
 }

@@ -61,7 +61,7 @@ public class CompanySettingsActivity extends BaseActivity
 
     @Override
     public void onSuccess(CompanyPointerModel company) {
-        Logger.i(companyModel.toString());
+        Logger.i("Success edit!");
         Logger.json(companyModel.toJson());
         ((CompanyHolder) getHolder()).save(companyModel);
         finish();
@@ -69,6 +69,6 @@ public class CompanySettingsActivity extends BaseActivity
 
     @Override
     public void onError(ErrorModel error) {
-        Logger.i(error.toString());
+        Logger.e(error.toString());
     }
 }

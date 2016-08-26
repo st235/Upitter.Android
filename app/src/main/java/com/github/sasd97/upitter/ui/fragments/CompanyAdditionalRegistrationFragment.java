@@ -25,6 +25,7 @@ import com.github.sasd97.upitter.ui.adapters.recyclers.CompanyAddressListRecycle
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.results.CompanyCoordinatesSelectionResult;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -130,11 +131,13 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
     @Override
     public void onAuthorize(CompanyPointerModel companyPointerModel) {
         setHolder(CompanyHolder.getHolder());
+        Logger.i(companyPointerModel.toString());
 
         CompanyModel companyModel = new CompanyModel
                 .Builder()
                 .id(companyPointerModel.getId())
                 .name(companyPointerModel.getName())
+                .alias(companyPointerModel.getAlias())
                 .isVerify(companyPointerModel.isVerify())
                 .avatarUrl(companyPointerModel.getLogoUrl())
                 .description(companyPointerModel.getDescription())
