@@ -12,6 +12,7 @@
     <color name="colorBlack">#000</color>
     <color name="colorGreenMd500">#4CAF50</color>
     <color name="colorTextField">#9EB8C4</color>
+    <color name="colorWhite">#FFF</color>
     <!-- Endregion -->
 
     <!-- Login activity region. -->
@@ -37,6 +38,7 @@
     <color name="colorGalleryBackground">#313131</color>
     <color name="colorEditImageSubBar">#263545</color>
     <color name="colorEditImageSubBarActive">#22303f</color>
+    <color name="colorFilterText">#6c7a8a</color>
     <!-- Endregion -->
 
     <!-- Navigation drawer region. -->

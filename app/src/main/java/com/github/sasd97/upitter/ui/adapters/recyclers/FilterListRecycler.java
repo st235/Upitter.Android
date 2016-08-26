@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
+import com.github.sasd97.upitter.utils.Palette;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Alex on 31.01.2016.
@@ -26,6 +28,8 @@ public class FilterListRecycler extends RecyclerView.Adapter<FilterListRecycler.
     public interface OnFilterChooseListener {
         void onChoose(int position);
     }
+
+    private int selected = 0;
 
     private Context context;
     private ArrayList<String> filterList;
@@ -46,11 +50,11 @@ public class FilterListRecycler extends RecyclerView.Adapter<FilterListRecycler.
         onFilterChooseListener = listener;
     }
 
-    public static class FilterChooseViewHolder extends BaseViewHolder
+    public class FilterChooseViewHolder extends BaseViewHolder
                                                 implements View.OnClickListener {
 
         @BindView(R.id.filter_title) TextView filterTitle;
-        @BindView(R.id.filter_preview) ImageView filterPreview;
+        @BindView(R.id.filter_preview) CircleImageView filterPreview;
 
         public FilterChooseViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +67,11 @@ public class FilterListRecycler extends RecyclerView.Adapter<FilterListRecycler.
 
         @Override
         public void onClick(View v) {
+            int temp = selected;
+            selected = getAdapterPosition();
+            notifyItemChanged(temp);
+            notifyItemChanged(selected);
+
             if (onFilterChooseListener != null)
                 onFilterChooseListener.onChoose(getAdapterPosition());
         }
@@ -76,8 +85,33 @@ public class FilterListRecycler extends RecyclerView.Adapter<FilterListRecycler.
 
     @Override
     public void onBindViewHolder(final FilterChooseViewHolder holder, final int position) {
-        holder.filterTitle.setText(filterList.get(position));
-        Glide.with(context).load(previewsList.get(position)).centerCrop().into(holder.filterPreview);
+        holder
+                .filterTitle
+                .setText(filterList.get(position));
+
+        Glide
+                .with(context)
+                .load(previewsList.get(position))
+                .centerCrop()
+                .into(holder.filterPreview);
+
+        if (position == selected) {
+            holder
+                    .filterPreview
+                    .setBorderWidth(4);
+
+            holder
+                    .filterTitle
+                    .setTextColor(Palette.obtainColor(R.color.colorWhite));
+        } else {
+            holder
+                    .filterPreview
+                    .setBorderWidth(0);
+
+            holder
+                    .filterTitle
+                    .setTextColor(Palette.obtainColor(R.color.colorFilterText));
+        }
     }
 
     @Override

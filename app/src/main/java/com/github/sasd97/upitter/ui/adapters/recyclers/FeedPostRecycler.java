@@ -450,11 +450,12 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
         holder.imagesRecyclerView.setVisibility(View.VISIBLE);
         holder.imagesRecyclerView.setLayoutManager(collageLayoutManager);
+        holder.imagesRecyclerView.setHasFixedSize(true);
         holder.imagesRecyclerView.setAdapter(adapter);
     }
 
     public String getFirstPostId() {
-        if (getItemCount() == 0) return "null";
+        if (getItemCount() == FIRST_POSITION) return "null";
         return posts.get(FIRST_POSITION).getId();
     }
 

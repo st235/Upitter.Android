@@ -12,7 +12,6 @@ import static com.github.sasd97.upitter.constants.ImageCollageConstants.TIGHT_PI
 
 import static com.github.sasd97.upitter.constants.ImageCollageConstants.MEASURE_UNIT;
 
-
 public class CollageUtils {
 
     private CollageUtils() {}

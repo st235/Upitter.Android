@@ -9,19 +9,21 @@ import android.widget.ImageView;
 import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
 import com.github.sasd97.upitter.utils.CollageUtils;
 import com.github.sasd97.upitter.utils.Dimens;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
 import static com.github.sasd97.upitter.constants.ImageCollageConstants.Collage;
 import static com.github.sasd97.upitter.constants.ImageCollageConstants.WIDE_PICTURE;
+import static com.github.sasd97.upitter.constants.ImageCollageConstants.SQUARE_PICTURE;
+import static com.github.sasd97.upitter.constants.ImageCollageConstants.TIGHT_PICTURE;
+import static com.github.sasd97.upitter.constants.ImageCollageConstants.MINIMUM_TWICE_COLLAGE_PERCENTAGE;
 
 /**
  * Created by alexander on 19.07.16.
  */
 
 public class CollageLayoutManager extends RecyclerView.LayoutManager {
-
-    private static final String TAG = "Collage Layout Manager";
 
     private static final int FIRST_VIEW = 0;
     private static final int OFFSET_VIEW_POSITION = 1;
@@ -36,6 +38,8 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
     public CollageLayoutManager(List<ImagePointerModel> images) {
         this.images = images;
         this.margin = Dimens.dpToPx(1);
+        setMeasurementCacheEnabled(true);
+        setAutoMeasureEnabled(true);
     }
 
     @Override
@@ -77,35 +81,34 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
+    //region Simple Collage
     private void toSimpleCollage(RecyclerView.Recycler recycler) {
-        toSquareCollage(recycler);
-//        ImagePointerModel image = images.get(FIRST_VIEW);
-//
-//        Logger.d(image.toString());
-//        Logger.d(image.getType());
-//
-//        switch (image.getType()) {
-//            case SQUARE_PICTURE:
-//                toSquareCollage(recycler);
-//                break;
-//            case TIGHT_PICTURE:
-//                toTightCollage(recycler);
-//                break;
-//            case WIDE_PICTURE:
-//                toWideCollage(recycler);
-//                break;
-//        }
+        ImagePointerModel image = images.get(FIRST_VIEW);
+
+        switch (image.getType()) {
+            case SQUARE_PICTURE:
+                toSquareCollage(recycler);
+                break;
+            case TIGHT_PICTURE:
+                toNotSquareCollage(recycler, image);
+                break;
+            case WIDE_PICTURE:
+                toNotSquareCollage(recycler, image);
+                break;
+        }
     }
 
-    private void toWideCollage(RecyclerView.Recycler recycler) {
+    private void toNotSquareCollage(RecyclerView.Recycler recycler, ImagePointerModel image) {
         ImageView imageView = (ImageView) recycler.getViewForPosition(FIRST_VIEW);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         addView(imageView);
 
         final int width = getWidth();
-        final int height = width / 2;
+        final double coefficient = (float) image.getWidth() / (float) width;
+        final int height = (int) (image.getHeight()/ coefficient);
 
-        measureChildWithMargins(imageView, getWidth(), getHeight());
+        measureChildWithMargins(imageView, width, height);
+        Logger.d(String.valueOf(coefficient));
         layoutDecorated(imageView, LEFT_POSITION, TOP_POSITION, width, height);
     }
 
@@ -113,52 +116,51 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
         ImageView imageView = (ImageView) recycler.getViewForPosition(FIRST_VIEW);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         addView(imageView);
-        measureChildWithMargins(imageView, getWidth(), getHeight());
-        layoutDecorated(imageView, LEFT_POSITION, TOP_POSITION, getWidth(), getHeight());
-    }
-
-    private void toTightCollage(RecyclerView.Recycler recycler) {
-        ImageView imageView = (ImageView) recycler.getViewForPosition(FIRST_VIEW);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        addView(imageView);
 
         final int width = getWidth();
-        final int height = width * 2;
+        final int height = width;
 
-        measureChildWithMargins(imageView, getWidth(), getHeight());
+        measureChildWithMargins(imageView, width, height);
         layoutDecorated(imageView, LEFT_POSITION, TOP_POSITION, width, height);
     }
+    //endregion
 
+    //region Twice Collage
     private void toTwiceCollage(RecyclerView.Recycler recycler) {
         final int itemCount = getItemCount();
-        final int width = getWidth();
-        final int height = getHeight();
+        final int parentWidth = getWidth();
 
         if (isAllWide()) {
-            toHorizontalEaseCollage(recycler, itemCount, width, height);
+            toHorizontalEaseCollage(recycler, itemCount, parentWidth);
             return;
         }
 
-        toVerticalEaseCollage(recycler, itemCount, width, height);
+        toVerticalEaseCollage(recycler, itemCount, parentWidth);
     }
 
-    private void toHorizontalEaseCollage(RecyclerView.Recycler recycler, int itemCount, int width, int height) {
+    private void toHorizontalEaseCollage(RecyclerView.Recycler recycler, int itemCount, int parentWidth) {
+        ImagePointerModel sample = images.get(FIRST_VIEW);
+        final double coefficient = (float) sample.getWidth() / (float) parentWidth;
+
         final double halfPercentage = 0.5;
         int offset = 0;
 
         for (int i = 0; i < itemCount; i++) {
+            ImagePointerModel image = images.get(i);
             ImageView imageView = (ImageView) recycler.getViewForPosition(i);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             addView(imageView);
 
-            measureChildWithMargins(imageView, getWidth(), offset + (int) (getHeight() * halfPercentage));
-            layoutDecorated(imageView, 0, offset, getWidth(), (int) (offset + getHeight() * halfPercentage));
+            final int tHeight = (int) (image.getHeight() / coefficient);
 
-            offset += getHeight() * halfPercentage + margin;
+            measureChildWithMargins(imageView, parentWidth, offset + tHeight);
+            layoutDecorated(imageView, 0, offset, parentWidth, offset + tHeight);
+
+            offset += tHeight + margin;
         }
     }
 
-    private void toVerticalEaseCollage(RecyclerView.Recycler recycler, int itemCount, int width, int height) {
+    private void toVerticalEaseCollage(RecyclerView.Recycler recycler, int itemCount, int width) {
         final double halfPercentage = 0.5;
         int offset = 0;
 
@@ -173,7 +175,9 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
             offset += getWidth() * halfPercentage + margin;
         }
     }
+    //endregion
 
+    //region Vertical Grid collage (3-4)
     private void toVerticalGridCollage(RecyclerView.Recycler recycler) {
         final int itemCount = getItemCount();
         final int horizontalSectionCount = itemCount - 1;
@@ -195,7 +199,9 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
             verticalOffset += averageX + margin;
         }
     }
+    //endregion
 
+    //region Two Layer collage (5-10)
     private void toTwoLayerCollage(RecyclerView.Recycler recycler, int firstLayerAmount, double firstLayerPercentage) {
         final int itemCount = getItemCount();
         final int averageFirstLayerX = getWidth() / firstLayerAmount;
@@ -220,7 +226,9 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
             offsetX += averageSecondLayerX + margin;
         }
     }
+    //endregion
 
+    //region Utils
     private void placeView(View view,
                            int topPosition,
                            int leftPosition,
@@ -250,16 +258,17 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
         return result;
     }
 
-    @Override
-    public boolean performAccessibilityAction(RecyclerView.Recycler recycler, RecyclerView.State state, int action, Bundle args) {
-        return super.performAccessibilityAction(recycler, state, action, args);
-    }
-
     private int countMaxX() {
         int max = 0;
         for (ImagePointerModel image: images)
             if (image.getHeight() > max)
                 max = image.getHeight();
         return max;
+    }
+    //endregion
+
+    @Override
+    public boolean performAccessibilityAction(RecyclerView.Recycler recycler, RecyclerView.State state, int action, Bundle args) {
+        return super.performAccessibilityAction(recycler, state, action, args);
     }
 }

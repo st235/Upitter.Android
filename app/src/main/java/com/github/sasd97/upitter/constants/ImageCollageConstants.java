@@ -11,6 +11,8 @@ public interface ImageCollageConstants {
     int SQUARE_PICTURE = 1;
     int TIGHT_PICTURE = 2;
 
+    double MINIMUM_TWICE_COLLAGE_PERCENTAGE = 0.3;
+
     enum Collage {
         SIMPLE_COLLAGE(0, 1),
         TWICE_COLLAGE(2),

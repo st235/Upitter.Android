@@ -47,9 +47,12 @@ public class GalleryImageEditingResult extends BaseActivity
     final RadioGroup.OnCheckedChangeListener ToggleListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
+            Logger.i("clicked radio %1$d", i);
+
             for (int j = 0; j < radioGroup.getChildCount(); j++) {
                 final ToggleButton view = (ToggleButton) radioGroup.getChildAt(j);
                 view.setChecked(view.getId() == i);
+                view.setClickable(view.getId() != i);
             }
         }
     };
@@ -129,6 +132,8 @@ public class GalleryImageEditingResult extends BaseActivity
 
     public void onToggle(View view) {
         ((RadioGroup)view.getParent()).check(view.getId());
+
+        Logger.i("clicked toggle");
 
         switch (view.getId()) {
             case R.id.filter_toggle:
