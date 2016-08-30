@@ -76,7 +76,11 @@ public class LocationSelectionResult extends BaseActivity
 
         radiusTextView = (TextView) findViewById(R.id.radius_info_region);
 
-        CoordinatesModel coordinatesModel = new CoordinatesModel.Builder().latitude(location.getLatitude()).longitude(location.getLongitude()).build();
+        CoordinatesModel coordinatesModel = new CoordinatesModel
+                .Builder()
+                .latitude(location.getLatitude())
+                .longitude(location.getLongitude())
+                .build();
         GeocoderService.find(this, coordinatesModel, this);
 
         regionChooser.addTextChangedListener(new TextWatcher() {
@@ -109,6 +113,7 @@ public class LocationSelectionResult extends BaseActivity
 
         seekBar.setProgress(LocationHolder.getRadius());
         radiusTextView.setText(obtainRegionText(LocationHolder.getRadius()));
+
         seekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
 
             @Override

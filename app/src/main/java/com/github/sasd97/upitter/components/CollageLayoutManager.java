@@ -2,12 +2,9 @@ package com.github.sasd97.upitter.components;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
-import com.github.sasd97.upitter.utils.CollageUtils;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.orhanobut.logger.Logger;
 
@@ -18,6 +15,11 @@ import static com.github.sasd97.upitter.constants.ImageCollageConstants.WIDE_PIC
 import static com.github.sasd97.upitter.constants.ImageCollageConstants.SQUARE_PICTURE;
 import static com.github.sasd97.upitter.constants.ImageCollageConstants.TIGHT_PICTURE;
 import static com.github.sasd97.upitter.constants.ImageCollageConstants.MINIMUM_TWICE_COLLAGE_PERCENTAGE;
+
+import static com.github.sasd97.upitter.constants.ImageCollageConstants.MAXIMUM_TIGHT_IMAGE_HEIGHT;
+
+import static com.github.sasd97.upitter.utils.CollageUtils.placeView;
+import static com.github.sasd97.upitter.utils.CollageUtils.isAllWide;
 
 /**
  * Created by alexander on 19.07.16.
@@ -105,7 +107,9 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
         final int width = getWidth();
         final double coefficient = (float) image.getWidth() / (float) width;
-        final int height = (int) (image.getHeight()/ coefficient);
+        int height = (int) (image.getHeight()/ coefficient);
+
+        if (height > MAXIMUM_TIGHT_IMAGE_HEIGHT) height = MAXIMUM_TIGHT_IMAGE_HEIGHT;
 
         measureChildWithMargins(imageView, width, height);
         Logger.d(String.valueOf(coefficient));
@@ -130,7 +134,7 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
         final int itemCount = getItemCount();
         final int parentWidth = getWidth();
 
-        if (isAllWide()) {
+        if (isAllWide(images)) {
             toHorizontalEaseCollage(recycler, itemCount, parentWidth);
             return;
         }
@@ -142,7 +146,6 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
         ImagePointerModel sample = images.get(FIRST_VIEW);
         final double coefficient = (float) sample.getWidth() / (float) parentWidth;
 
-        final double halfPercentage = 0.5;
         int offset = 0;
 
         for (int i = 0; i < itemCount; i++) {
@@ -160,7 +163,7 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
-    private void toVerticalEaseCollage(RecyclerView.Recycler recycler, int itemCount, int width) {
+    private void toVerticalEaseCollage(RecyclerView.Recycler recycler, int itemCount, int parentWidth) {
         final double halfPercentage = 0.5;
         int offset = 0;
 
@@ -190,12 +193,12 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
 
         ImageView firstView = (ImageView) recycler.getViewForPosition(FIRST_VIEW);
         firstView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        placeView(firstView, 0, 0, getHeight(), horizontalOffset);
+        placeView(this, firstView, 0, 0, getHeight(), horizontalOffset);
 
         for (int i = OFFSET_VIEW_POSITION; i < itemCount; i++) {
             ImageView imageView = (ImageView) recycler.getViewForPosition(i);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            placeView(imageView, verticalOffset, horizontalOffset + margin, verticalOffset + averageX, getWidth());
+            placeView(this, imageView, verticalOffset, horizontalOffset + margin, verticalOffset + averageX, getWidth());
             verticalOffset += averageX + margin;
         }
     }
@@ -213,7 +216,7 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
         for (; counter < firstLayerAmount; counter++) {
             ImageView imageView = (ImageView) recycler.getViewForPosition(counter);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            placeView(imageView, 0, offsetX, firstLayerHeight, offsetX + averageFirstLayerX);
+            placeView(this, imageView, 0, offsetX, firstLayerHeight, offsetX + averageFirstLayerX);
             offsetX += averageFirstLayerX + margin;
         }
 
@@ -222,48 +225,9 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
         for (; counter < itemCount; counter++) {
             ImageView imageView = (ImageView) recycler.getViewForPosition(counter);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            placeView(imageView, firstLayerHeight + margin, offsetX, getHeight(), offsetX + averageSecondLayerX);
+            placeView(this, imageView, firstLayerHeight + margin, offsetX, getHeight(), offsetX + averageSecondLayerX);
             offsetX += averageSecondLayerX + margin;
         }
-    }
-    //endregion
-
-    //region Utils
-    private void placeView(View view,
-                           int topPosition,
-                           int leftPosition,
-                           int bottomPosition,
-                           int rightPosition) {
-        addView(view);
-        measureChildWithMargins(view, rightPosition, bottomPosition);
-        layoutDecorated(view, leftPosition, topPosition, rightPosition, bottomPosition);
-    }
-
-    private boolean isAllWide() {
-        boolean wide = true;
-        for (ImagePointerModel image: images) wide &= (
-                CollageUtils.calculateImageType(image.getHeight(), image.getWidth()) == WIDE_PICTURE);
-        return wide;
-    }
-
-    private int countSummaryX() {
-        int result = 0;
-        for (ImagePointerModel image: images) result += image.getHeight();
-        return result;
-    }
-
-    private int countSummaryY() {
-        int result = 0;
-        for (ImagePointerModel image: images) result += image.getWidth();
-        return result;
-    }
-
-    private int countMaxX() {
-        int max = 0;
-        for (ImagePointerModel image: images)
-            if (image.getHeight() > max)
-                max = image.getHeight();
-        return max;
     }
     //endregion
 

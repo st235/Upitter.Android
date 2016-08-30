@@ -1,5 +1,7 @@
 package com.github.sasd97.upitter.constants;
 
+import com.github.sasd97.upitter.utils.Dimens;
+
 /**
  * Created by alexander on 19.07.16.
  */
@@ -12,6 +14,15 @@ public interface ImageCollageConstants {
     int TIGHT_PICTURE = 2;
 
     double MINIMUM_TWICE_COLLAGE_PERCENTAGE = 0.3;
+
+    //region Simple Collage
+    int MAXIMUM_TIGHT_IMAGE_HEIGHT = Dimens.dpToPx(450);
+    //endregion
+
+
+    //region Twice Collage
+    int MAXIMUM_VERTICAL_COLLAGE = Dimens.dpToPx(450);
+    //endregion
 
     enum Collage {
         SIMPLE_COLLAGE(0, 1),
