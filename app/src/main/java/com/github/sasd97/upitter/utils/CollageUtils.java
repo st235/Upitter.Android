@@ -56,19 +56,19 @@ public class CollageUtils {
         return wide;
     }
 
-    public static int countSummaryX(List<ImagePointerModel> images) {
+    public static int countSummaryHeight(List<ImagePointerModel> images) {
         int result = 0;
         for (ImagePointerModel image: images) result += image.getHeight();
         return result;
     }
 
-    public static int countSummaryY(List<ImagePointerModel> images) {
+    public static int countSummaryWidth(List<ImagePointerModel> images) {
         int result = 0;
         for (ImagePointerModel image: images) result += image.getWidth();
         return result;
     }
 
-    public static int countMaxX(List<ImagePointerModel> images) {
+    public static int countMaxHeight(List<ImagePointerModel> images) {
         int max = 0;
         for (ImagePointerModel image: images)
             if (image.getHeight() > max)

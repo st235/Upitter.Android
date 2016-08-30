@@ -13,15 +13,23 @@ public interface ImageCollageConstants {
     int SQUARE_PICTURE = 1;
     int TIGHT_PICTURE = 2;
 
-    double MINIMUM_TWICE_COLLAGE_PERCENTAGE = 0.3;
-
     //region Simple Collage
     int MAXIMUM_TIGHT_IMAGE_HEIGHT = Dimens.dpToPx(450);
     //endregion
 
-
     //region Twice Collage
-    int MAXIMUM_VERTICAL_COLLAGE = Dimens.dpToPx(450);
+    double MINIMUM_TWICE_COMPETITION_COEFFICIENT = 0.3;
+    double MAXIMUM_TWICE_COMPETITION_COEFFICIENT = 0.7;
+    //endregion
+
+    //region Vertical Grid Collage
+    double MINIMUM_HORIZONTAL_COMPETITION_COEFFICIENT = 0.5;
+    double MAXIMUM_HORIZONTAL_COMPETITION_COEFFICIENT = 0.7;
+    int GRID_COLLAGE_MINIMUM_HEIGHT = Dimens.dpToPx(450);
+    //endregion
+
+    //region Two Layer Collage
+    int TL_COLLAGE_MAXIMUM_HEIGHT = Dimens.dpToPx(350);
     //endregion
 
     enum Collage {
