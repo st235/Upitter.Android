@@ -1,35 +1,64 @@
 package com.github.sasd97.upitter.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.models.ErrorModel;
+import com.github.sasd97.upitter.models.UserModel;
+import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
+import com.github.sasd97.upitter.services.query.CompanyFindQueryService;
+import com.github.sasd97.upitter.ui.adapters.pagers.CompanyProfilePager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.orhanobut.logger.Logger;
 
-public class CompanyProfileActivity extends BaseActivity {
+import butterknife.BindArray;
+import butterknife.BindView;
+
+import static com.github.sasd97.upitter.Upitter.getHolder;
+
+public class CompanyProfileActivity extends BaseActivity
+        implements CompanyFindQueryService.OnCompanySearchListener {
+
+    private final String SPACE = " ";
+
+    private UserModel userModel;
+    private CompanyFindQueryService findQueryService;
+
+    @BindView(R.id.view_pager) ViewPager viewPager;
+    @BindView(R.id.tab_layout) TabLayout tabLayout;
+    @BindView(R.id.collpasingToolbar) CollapsingToolbarLayout collapsingToolbarLayout;
+
+    @BindArray(R.array.company_profile_tabs_titile) String[] titles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
     protected void setupViews() {
+        setToolbar(R.id.toolbar);
+        userModel = getHolder().get();
+        findQueryService = CompanyFindQueryService.getService(this);
+        collapsingToolbarLayout.setTitle(SPACE);
+
+        viewPager.setAdapter(new CompanyProfilePager(getSupportFragmentManager(), titles));
+        tabLayout.setupWithViewPager(viewPager);
+        findQueryService.findByAlias(userModel.getAccessToken(), "id13");
+    }
+
+    @Override
+    public void onFind(CompanyPointerModel company) {
+        Logger.i(company.toString());
+    }
+
+    @Override
+    public void onError(ErrorModel error) {
 
     }
 }

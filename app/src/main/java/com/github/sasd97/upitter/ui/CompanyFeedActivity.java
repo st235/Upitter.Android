@@ -70,6 +70,10 @@ public class CompanyFeedActivity extends BaseActivity
         company = ((CompanyHolder) getHolder()).get();
         Logger.json(company.toJson());
 
+        Intent intent = new Intent(this, CompanyProfileActivity.class);
+        startActivity(intent);
+        finish();
+
         baseFeedFragment = BaseFeedFragment.getFragment();
 
         infoQueryService = ApplicationInfoQueryService.getService(this);

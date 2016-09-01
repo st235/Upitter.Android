@@ -95,37 +95,37 @@ public interface BaseFactory {
 
     @GET("post/obtainNew")
     Call<PostsContainerModel> obtainNewPosts(@Query("ln") String language,
-                                           @Query("accessToken") String accessToken,
-                                           @Query("latitude") double latitude,
-                                           @Query("longitude") double longitude,
-                                           @Query("radius") int radius,
-                                           @Query("postId") String postId,
-                                           @Query("activity[]") List<Integer> categories);
+                                             @Query("accessToken") String accessToken,
+                                             @Query("latitude") double latitude,
+                                             @Query("longitude") double longitude,
+                                             @Query("radius") int radius,
+                                             @Query("postId") String postId,
+                                             @Query("activity[]") List<Integer> categories);
 
     @GET("post/obtainOld")
     Call<PostsContainerModel> obtainOldPosts(@Query("ln") String language,
-                                           @Query("accessToken") String accessToken,
-                                           @Query("latitude") double latitude,
-                                           @Query("longitude") double longitude,
-                                           @Query("radius") int radius,
-                                           @Query("postId") String postId,
-                                           @Query("activity[]") List<Integer> categories);
+                                             @Query("accessToken") String accessToken,
+                                             @Query("latitude") double latitude,
+                                             @Query("longitude") double longitude,
+                                             @Query("radius") int radius,
+                                             @Query("postId") String postId,
+                                             @Query("activity[]") List<Integer> categories);
 
     @GET("post/like/{postId}")
     Call<PostContainerModel> likePost(@Path("postId") String postId,
-                                    @Query("ln") String language,
-                                    @Query("accessToken") String accessToken);
+                                      @Query("ln") String language,
+                                      @Query("accessToken") String accessToken);
 
     @GET("post/favorite/{postId}")
     Call<PostContainerModel> addPostToFavorite(@Path("postId") String postId,
-                                             @Query("ln") String language,
-                                             @Query("accessToken") String accessToken);
+                                               @Query("ln") String language,
+                                               @Query("accessToken") String accessToken);
 
     @GET("/post/vote/{postId}/{voteVariant}")
     Call<PostContainerModel> voteInPost(@Path("postId") String postId,
-                                      @Path("voteVariant") int voteVariant,
-                                      @Query("ln") String language,
-                                      @Query("accessToken") String accessToken);
+                                        @Path("voteVariant") int voteVariant,
+                                        @Query("ln") String language,
+                                        @Query("accessToken") String accessToken);
 
     @FormUrlEncoded
     @POST("company/edit")
@@ -164,4 +164,9 @@ public interface BaseFactory {
     @GET("service/info/android/get/v")
     Call<ApplicationInfoContainerModel> checkForUpdates(@Query("ln") String language,
                                                         @Query("accessToken") String accessToken);
+
+    @GET("/company/{alias}")
+    Call<CompanyContainerModel> findCompanyByAlias(@Path("alias") String alias,
+                                                     @Query("ln") String language,
+                                                     @Query("accessToken") String accessToken);
 }

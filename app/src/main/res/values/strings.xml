@@ -346,4 +346,11 @@
     </string-array>
     <string name="title_activity_company_profile">CompanyProfileActivity</string>
     <!-- Endregion -->
+
+    <!-- Company Profile region -->
+    <string-array name="company_profile_tabs_titile">
+        <item>Tape</item>
+        <item>Subscriptions</item>
+    </string-array>
+    <!-- Endregion -->
 </resources>

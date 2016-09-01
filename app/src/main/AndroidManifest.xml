@@ -208,7 +208,7 @@
         <activity
             android:name=".ui.CompanyProfileActivity"
             android:label="@string/title_activity_company_profile"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity
