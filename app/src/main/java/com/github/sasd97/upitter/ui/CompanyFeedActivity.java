@@ -39,6 +39,7 @@ import static com.github.sasd97.upitter.Upitter.*;
 import static com.github.sasd97.upitter.constants.FeedStartupLinks.NOTHING_STARTED;
 import static com.github.sasd97.upitter.constants.FeedStartupLinks.SETTINGS_STARTED;
 import static com.github.sasd97.upitter.constants.FeedStartupLinks.CREATE_POST_STARTED;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.COMPANY_ALIAS;
 
 public class CompanyFeedActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -69,10 +70,6 @@ public class CompanyFeedActivity extends BaseActivity
         setToolbar(R.id.toolbar);
         company = ((CompanyHolder) getHolder()).get();
         Logger.json(company.toJson());
-
-        Intent intent = new Intent(this, CompanyProfileActivity.class);
-        startActivity(intent);
-        finish();
 
         baseFeedFragment = BaseFeedFragment.getFragment();
 

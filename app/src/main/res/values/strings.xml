@@ -349,8 +349,8 @@
 
     <!-- Company Profile region -->
     <string-array name="company_profile_tabs_titile">
-        <item>Tape</item>
-        <item>Subscriptions</item>
+        <item>Posts\n</item>
+        <item>Subscriptions\n</item>
     </string-array>
     <!-- Endregion -->
 </resources>

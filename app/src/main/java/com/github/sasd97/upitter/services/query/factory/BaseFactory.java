@@ -169,4 +169,9 @@ public interface BaseFactory {
     Call<CompanyContainerModel> findCompanyByAlias(@Path("alias") String alias,
                                                      @Query("ln") String language,
                                                      @Query("accessToken") String accessToken);
+
+    @GET("/post/obtainByAlias/all")
+    Call<PostsContainerModel> obtainPostsByAlias(@Query("ln") String language,
+                                                 @Query("accessToken") String accessToken,
+                                                 @Query("alias") String alias);
 }

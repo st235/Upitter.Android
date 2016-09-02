@@ -28,6 +28,7 @@ import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
 import com.github.sasd97.upitter.services.query.FeedQueryService;
+import com.github.sasd97.upitter.ui.CompanyProfileActivity;
 import com.github.sasd97.upitter.ui.PostCreationActivity;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
@@ -46,6 +47,7 @@ import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.COMPANY_ALIAS;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATES_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.GALLERY_PREVIEW_SELECTION_MODE;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.LIST_ATTACH;
@@ -111,6 +113,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         @BindView(R.id.like_layout_post_single_view) LinearLayout likeLinearLayout;
         @BindView(R.id.comments_layout_post_single_view) LinearLayout commentLinearLayout;
         @BindView(R.id.favorites_layout_post_single_view) LinearLayout favoritesLinearLayout;
+        @BindView(R.id.user_area_post_single_view) LinearLayout userAreaPostLinearLayout;
 
         @BindView(R.id.quiz_variants_post_single_view) RecyclerView quizVariantsRecyclerView;
         @BindView(R.id.quiz_result_post_single_view) RecyclerView quizResultHorizontalChart;
@@ -129,6 +132,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         protected void setupViews() {
             queryService = FeedQueryService.getService(this);
             postToolbar.setOnMenuItemClickListener(this);
+            userAreaPostLinearLayout.setOnClickListener(this);
 
             likeClick = new View.OnClickListener() {
                 @Override
@@ -238,6 +242,13 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onClick(View view) {
+            if (view.getId() == R.id.user_area_post_single_view) {
+                Intent intent = new Intent(context, CompanyProfileActivity.class);
+                intent.putExtra(COMPANY_ALIAS, posts.get(getAdapterPosition()).getCompany().getAlias());
+                context.startActivity(intent);
+                return;
+            }
+
             Intent intent = new Intent(context, PostPreviewSchema.class);
             intent.putExtra(POST_ID, posts.get(getAdapterPosition()).getId());
             context.startActivity(intent);

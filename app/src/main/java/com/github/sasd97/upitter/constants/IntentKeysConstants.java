@@ -38,4 +38,8 @@ public interface IntentKeysConstants {
     //Location attach region
     String LOCATION_LIST = "LOCATION_LIST_ATTACHED";
     //Endregion
+
+    //region Company Profile
+    String COMPANY_ALIAS = "COMPANY_ALIAS";
+    //endregion
 }

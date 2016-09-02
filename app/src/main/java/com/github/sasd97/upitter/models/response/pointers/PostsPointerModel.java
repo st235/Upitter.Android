@@ -12,10 +12,17 @@ import java.util.Locale;
 
 public class PostsPointerModel {
 
+    @SerializedName("count")
+    @Expose
+    private int mCount;
+
     @SerializedName("posts")
     @Expose
     private List<PostPointerModel> mPosts;
 
+    public int getCount() {
+        return mCount;
+    }
 
     public List<PostPointerModel> getPosts() {
         return mPosts;
