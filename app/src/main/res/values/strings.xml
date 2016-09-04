@@ -353,4 +353,8 @@
         <item>Subscriptions\n</item>
     </string-array>
     <!-- Endregion -->
+
+    <!-- Chat Message Line region -->
+    <string name="chat_line_message">Message</string>
+    <!-- Endregion -->
 </resources>

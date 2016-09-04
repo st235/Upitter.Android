@@ -9,8 +9,8 @@ android {
         applicationId "com.github.sasd97.upitter"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 511
-        versionName "0.0.4.0"
+        versionCode 512
+        versionName "0.0.4.1"
     }
 
     buildTypes {

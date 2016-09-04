@@ -10,9 +10,6 @@ import com.github.sasd97.upitter.models.response.containers.CompanyContainerMode
 import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.containers.SocialIconContainerModel;
-import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
-import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
-import com.github.sasd97.upitter.models.response.pointers.PostsPointerModel;
 import com.github.sasd97.upitter.models.response.containers.ReportContainerModel;
 
 import org.json.JSONObject;
@@ -32,6 +29,7 @@ import retrofit2.http.Query;
 /**
  * Created by Alexander Dadukin on 06.06.2016.
  */
+
 public interface BaseFactory {
 
     @FormUrlEncoded
@@ -165,13 +163,16 @@ public interface BaseFactory {
     Call<ApplicationInfoContainerModel> checkForUpdates(@Query("ln") String language,
                                                         @Query("accessToken") String accessToken);
 
-    @GET("/company/{alias}")
+    @GET("company/{alias}")
     Call<CompanyContainerModel> findCompanyByAlias(@Path("alias") String alias,
                                                      @Query("ln") String language,
                                                      @Query("accessToken") String accessToken);
 
-    @GET("/post/obtainByAlias/all")
+    @GET("post/obtainByAlias/all")
     Call<PostsContainerModel> obtainPostsByAlias(@Query("ln") String language,
                                                  @Query("accessToken") String accessToken,
                                                  @Query("alias") String alias);
+
+//    @GET("company/subscribers")
+//    Call<> obtainSubscribers();
 }

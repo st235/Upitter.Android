@@ -82,7 +82,7 @@ public class CompanyProfileActivity extends BaseActivity
                     .builder()
                     .buildRoundRect(preview,
                             ContextCompat.getColor(this, R.color.colorShadowDark),
-                            Dimens.dpToPx(4));
+                            Dimens.drr());
 
             holder.setImageDrawable(textDrawable);
             return;

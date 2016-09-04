@@ -18,11 +18,9 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collpasingToolbar"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="230dp"
             android:fitsSystemWindows="true"
-            app:layout_scrollFlags="enterAlwaysCollapsed"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp">
+            app:layout_scrollFlags="enterAlwaysCollapsed">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -33,23 +31,28 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:padding="8dp"
+                    android:layout_marginTop="?attr/actionBarSize"
                     android:layout_above="@+id/tab_layout">
 
                     <ImageView
                         android:id="@+id/logo_company_profile"
-                        android:layout_width="54dp"
-                        android:layout_height="54dp"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_gravity="center"
                         />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
-                        android:orientation="vertical">
+                        android:paddingRight="16dp"
+                        android:paddingEnd="16dp"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
 
                         <TextView
                             android:id="@+id/title_company_profile"
@@ -59,6 +62,14 @@
                             android:textColor="@android:color/white"
                             android:text="@string/user_placeholder_company_tape"
                             tools:text="Adidas"
+                            />
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@drawable/rounded_button_shape_agressive_gray"
+                            android:layout_marginTop="8dp"
+                            android:text="Information"
                             />
                     </LinearLayout>
                 </LinearLayout>
@@ -78,7 +89,6 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin"
                 />
-
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>

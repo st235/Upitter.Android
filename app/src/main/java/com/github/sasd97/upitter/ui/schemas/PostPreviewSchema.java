@@ -84,12 +84,12 @@ public class PostPreviewSchema extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_preview);
-        setToolbar(R.id.toolbar, true);
-        Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.1f));
     }
 
     @Override
     protected void setupViews() {
+        setToolbar(R.id.toolbar, true);
+        Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.1f));
         postQueryService = PostQueryService.getService(this);
         feedQueryService = FeedQueryService.getService(this);
         user = getHolder().get();
@@ -109,6 +109,7 @@ public class PostPreviewSchema extends BaseActivity
         obtainPost(post);
     }
 
+    //region post preparation
     @Override
     public void onLike(PostPointerModel post) {
         this.post = post;
@@ -300,4 +301,7 @@ public class PostPreviewSchema extends BaseActivity
         imagesRecyclerView.setLayoutManager(collageLayoutManager);
         imagesRecyclerView.setAdapter(adapter);
     }
+    //endregion
+
+
 }
