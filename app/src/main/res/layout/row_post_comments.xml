@@ -1,20 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/avatar_comments_view"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        />
-
-    <TextView
-        android:id="@+id/comment_comments_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar_comments_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            />
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_toRightOf="@+id/avatar_comments_view"
+            android:layout_toEndOf="@+id/avatar_comments_view">
+
+            <TextView
+                android:id="@+id/user_name_comments_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#094582"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="Upitter User"
+                />
+
+            <TextView
+                android:id="@+id/comment_comments_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLightBabyBlue"
+        android:layout_alignParentBottom="true"
         />
 </LinearLayout>

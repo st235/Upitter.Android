@@ -9,7 +9,7 @@
 
     <stroke
         android:width="1dp"
-        android:color="@color/colorShapeStroke"
+        android:color="#dee2eb"
         />
 
     <solid

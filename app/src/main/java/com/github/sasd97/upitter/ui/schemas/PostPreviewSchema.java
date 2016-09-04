@@ -3,8 +3,10 @@ package com.github.sasd97.upitter.ui.schemas;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,15 +19,20 @@ import com.github.sasd97.upitter.components.CollageLayoutManager;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
+import com.github.sasd97.upitter.models.response.containers.CommentsContainerModel;
+import com.github.sasd97.upitter.models.response.pointers.CommentPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.CommentsPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostsPointerModel;
+import com.github.sasd97.upitter.services.query.CommentsQueryService;
 import com.github.sasd97.upitter.services.query.FeedQueryService;
 import com.github.sasd97.upitter.services.query.PostQueryService;
 import com.github.sasd97.upitter.ui.adapters.recyclers.FeedQuizVariantRecycler;
 import com.github.sasd97.upitter.ui.adapters.recyclers.FeedQuizVariantVotedRecycler;
 import com.github.sasd97.upitter.ui.adapters.recyclers.ImageCollageRecycler;
+import com.github.sasd97.upitter.ui.adapters.recyclers.PostCommentsRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Categories;
 import com.github.sasd97.upitter.utils.Dimens;
@@ -37,6 +44,7 @@ import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -49,6 +57,7 @@ import static com.github.sasd97.upitter.constants.PostCreateConstants.POST_ID;
 public class PostPreviewSchema extends BaseActivity
         implements PostQueryService.OnPostListener,
         FeedQueryService.OnTapeQueryListener,
+        CommentsQueryService.OnCommentListener,
         FeedQuizVariantRecycler.OnItemClickListener,
         ImageCollageRecycler.OnImageClickListener {
 
@@ -57,6 +66,9 @@ public class PostPreviewSchema extends BaseActivity
     private PostPointerModel post;
     private PostQueryService postQueryService;
     private FeedQueryService feedQueryService;
+    private CommentsQueryService commentsQueryService;
+
+    private PostCommentsRecycler recyclerAdapter;
 
     @BindView(R.id.user_name_post_single_view) TextView userNameTextView;
     @BindView(R.id.title_post_single_view) TextView postTitleTextView;
@@ -79,6 +91,10 @@ public class PostPreviewSchema extends BaseActivity
     @BindView(R.id.quiz_variants_post_single_view) RecyclerView quizVariantsRecyclerView;
     @BindView(R.id.quiz_result_post_single_view) RecyclerView quizResultHorizontalChart;
     @BindView(R.id.post_images_post_single_view) RecyclerView imagesRecyclerView;
+    @BindView(R.id.favorites_layout_post_single_view) LinearLayout favoritesLinearLayout;
+
+    @BindView(R.id.comment_conversation) RecyclerView commentConversation;
+    @BindView(R.id.input_message) EditText text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +108,39 @@ public class PostPreviewSchema extends BaseActivity
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.1f));
         postQueryService = PostQueryService.getService(this);
         feedQueryService = FeedQueryService.getService(this);
+        commentsQueryService = CommentsQueryService.getService(this);
         user = getHolder().get();
         postId = getIntent().getStringExtra(POST_ID);
 
         postQueryService.findPost(user.getAccessToken(), postId);
         postQueryService.watchPost(user.getAccessToken(), postId);
+
+        recyclerAdapter = new PostCommentsRecycler();
+        commentConversation.setLayoutManager(new LinearLayoutManager(this));
+        commentConversation.setAdapter(recyclerAdapter);
+
+
+        View.OnClickListener likeClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                feedQueryService.like(user.getAccessToken(),
+                        post.getId());
+            }
+        };
+
+        View.OnClickListener favoriteClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                feedQueryService.favorite(user.getAccessToken(),
+                        post.getId());
+            }
+        };
+
+        likeLinearLayout.setOnClickListener(likeClick);
+        favoritesLinearLayout.setOnClickListener(favoriteClick);
+
+        quizResultHorizontalChart.setLayoutManager(new LinearLayoutManager(this));
+        quizVariantsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -107,6 +151,8 @@ public class PostPreviewSchema extends BaseActivity
 
         obtainPostAuthor(author);
         obtainPost(post);
+
+        commentsQueryService.obtainComments(user.getAccessToken(), post.getId());
     }
 
     //region post preparation
@@ -130,8 +176,14 @@ public class PostPreviewSchema extends BaseActivity
     public void onAddFavorites(PostPointerModel post) {
         this.post = post;
         favoriteImageButton.setImageResource(R.drawable.ic_feed_icon_favorite_active);
-        likeAmountTextView.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
     }
+
+    @Override
+    public void onRemoveFromFavorites(PostPointerModel post) {
+        this.post = post;
+        favoriteImageButton.setImageResource(R.drawable.ic_feed_icon_favorite);
+    }
+
 
     @Override
     public void onVote(PostPointerModel post) {
@@ -165,11 +217,6 @@ public class PostPreviewSchema extends BaseActivity
         feedQueryService.vote(user.getAccessToken(),
                post.getId(),
                 position);
-    }
-
-    @Override
-    public void onRemoveFromFavorites(PostPointerModel post) {
-
     }
 
     @Override
@@ -263,6 +310,9 @@ public class PostPreviewSchema extends BaseActivity
         }
 
         commentsTextHolder.setText(String.valueOf(post.getCommentsAmount()));
+
+        if (post.isFavoriteByMe()) favoritesImageHolder.setImageResource(R.drawable.ic_feed_icon_favorite_active);
+        else favoritesImageHolder.setImageResource(R.drawable.ic_feed_icon_favorite);
     }
 
     private void obtainQuiz(PostPointerModel post) {
@@ -304,4 +354,32 @@ public class PostPreviewSchema extends BaseActivity
     //endregion
 
 
+    @Override
+    public void onRemove(boolean isSuccess) {
+
+    }
+
+    @Override
+    public void onEdit(CommentPointerModel comment) {
+
+    }
+
+    @Override
+    public void onAdd(CommentPointerModel comment) {
+        recyclerAdapter.add(comment);
+    }
+
+    @Override
+    public void onObtain(CommentsPointerModel comments) {
+        Logger.i(comments.toString());
+        recyclerAdapter.addAll(comments.getComments());
+    }
+
+    @OnClick(R.id.send_message)
+    public void sendComment(View v) {
+        commentsQueryService.addComment(user.getAccessToken(),
+                this.post.getId(),
+                text.getText().toString());
+        text.setText("");
+    }
 }

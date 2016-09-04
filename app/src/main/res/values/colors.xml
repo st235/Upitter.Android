@@ -51,4 +51,8 @@
     <color name="colorCounter">#6C8BB6</color>
     <color name="colorIcons">#88AACC</color>
     <!-- Endregion -->
+
+    <!-- Send message region -->
+    <color name="colorSendAreaBackground">#f2f5f8</color>
+    <!-- Endregion -->
 </resources>

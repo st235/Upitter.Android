@@ -6,6 +6,8 @@ import com.github.sasd97.upitter.models.response.containers.AuthorizationRequest
 import com.github.sasd97.upitter.models.response.containers.AuthorizationContainerModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
 import com.github.sasd97.upitter.models.response.containers.CategoriesContainerModel;
+import com.github.sasd97.upitter.models.response.containers.CommentContainerModel;
+import com.github.sasd97.upitter.models.response.containers.CommentsContainerModel;
 import com.github.sasd97.upitter.models.response.containers.CompanyContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
@@ -175,4 +177,36 @@ public interface BaseFactory {
 
 //    @GET("company/subscribers")
 //    Call<> obtainSubscribers();
+
+    @GET("comments")
+    Call<CommentsContainerModel> obtainPostComments(@Query("ln") String language,
+                                                    @Query("accessToken") String accessToken,
+                                                    @Query("postId") String postId);
+
+    @FormUrlEncoded
+    @POST("comment/create")
+    Call<CommentContainerModel> addPostComment(@Query("ln") String language,
+                                                @Query("accessToken") String accessToken,
+                                                @Field("postId") String postId,
+                                                @Field("text") String text);
+
+    @FormUrlEncoded
+    @POST("comment/create")
+    Call<CommentContainerModel> addPostComment(@Query("ln") String language,
+                                                              @Query("accessToken") String accessToken,
+                                                              @Field("postId") String postId,
+                                                              @Field("text") String text,
+                                                              @Field("replyTo") String replyTo);
+    @FormUrlEncoded
+    @POST("comment/edit")
+    Call<CommentContainerModel> editPostComment(@Query("ln") String language,
+                                                 @Query("accessToken") String accessToken,
+                                                 @Field("commentId") String commentId,
+                                                 @Field("text") String text);
+
+    @FormUrlEncoded
+    @POST("comment/remove")
+    Call<SimpleResponseModel> removePostComment(@Query("ln") String language,
+                                                   @Query("accessToken") String accessToken,
+                                                   @Field("commentId") String commentId);
 }

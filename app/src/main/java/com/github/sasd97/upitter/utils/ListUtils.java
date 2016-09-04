@@ -109,6 +109,8 @@ public final class ListUtils {
     }
 
     public static <T> String toString(List<T> list) {
+        if (list == null) return "Null";
+
         StringBuilder builder = new StringBuilder();
         for (T item: list) builder.append(item.toString()).append(", ");
         return builder.toString();
