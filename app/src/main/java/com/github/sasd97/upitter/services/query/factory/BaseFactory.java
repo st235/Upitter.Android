@@ -13,6 +13,7 @@ import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.containers.SocialIconContainerModel;
 import com.github.sasd97.upitter.models.response.containers.ReportContainerModel;
+import com.github.sasd97.upitter.models.response.containers.SubscribersContainerModel;
 
 import org.json.JSONObject;
 
@@ -175,8 +176,9 @@ public interface BaseFactory {
                                                  @Query("accessToken") String accessToken,
                                                  @Query("alias") String alias);
 
-//    @GET("company/subscribers")
-//    Call<> obtainSubscribers();
+    @GET("company/subscribers")
+    Call<SubscribersContainerModel> obtainSubscribers(@Query("ln") String language,
+                                                      @Query("accessToken") String accessToken);
 
     @GET("comments")
     Call<CommentsContainerModel> obtainPostComments(@Query("ln") String language,

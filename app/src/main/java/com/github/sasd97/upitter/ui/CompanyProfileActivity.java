@@ -108,6 +108,11 @@ public class CompanyProfileActivity extends BaseActivity
     }
 
     @Override
+    public void onSubscribersObtained() {
+
+    }
+
+    @Override
     public void onError(ErrorModel error) {
 
     }
