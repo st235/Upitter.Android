@@ -10,7 +10,7 @@ import java.util.Locale;
 /**
  * Created by alexander on 05.09.16.
  */
-public class SubscribersPointerModel {
+public class SubscriberPointerModel {
 
     @SerializedName("count")
     @Expose
