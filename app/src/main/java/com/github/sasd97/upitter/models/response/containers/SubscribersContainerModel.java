@@ -1,14 +1,14 @@
 package com.github.sasd97.upitter.models.response.containers;
 
 import com.github.sasd97.upitter.models.response.BaseResponseModel;
-import com.github.sasd97.upitter.models.response.pointers.SubscriberPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.SubscribersPointerModel;
 
 /**
  * Created by alexander on 05.09.16.
  */
-public class SubscribersContainerModel extends BaseResponseModel<SubscriberPointerModel> {
+public class SubscribersContainerModel extends BaseResponseModel<SubscribersPointerModel> {
 
-    public SubscriberPointerModel getSubscribers() {
+    public SubscribersPointerModel getSubscribers() {
         return mResponse;
     }
 

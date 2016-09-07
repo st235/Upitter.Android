@@ -178,7 +178,8 @@ public interface BaseFactory {
 
     @GET("company/subscribers")
     Call<SubscribersContainerModel> obtainSubscribers(@Query("ln") String language,
-                                                      @Query("accessToken") String accessToken);
+                                                      @Query("accessToken") String accessToken,
+                                                      @Query("companyId") String companyId);
 
     @GET("comments")
     Call<CommentsContainerModel> obtainPostComments(@Query("ln") String language,

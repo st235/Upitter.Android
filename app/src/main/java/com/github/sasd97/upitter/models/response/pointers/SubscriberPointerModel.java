@@ -12,26 +12,35 @@ import java.util.Locale;
  */
 public class SubscriberPointerModel {
 
-    @SerializedName("count")
+    @SerializedName("customId")
     @Expose
-    private int mAmount;
+    private String mCustomId;
 
-    @SerializedName("subscribers")
+    @SerializedName("nickname")
     @Expose
-    private List<String> mSubscribersIds;
+    private String mNickname;
 
-    public int getAmount() {
-        return mAmount;
+    @SerializedName("logoUrl")
+    @Expose
+    private String mLogoUrl;
+
+    public String getId() {
+        return mCustomId;
     }
 
-    public List<String> getSubscribers() {
-        return mSubscribersIds;
+    public String getNick() {
+        return mNickname;
+    }
+
+    public String getLogoUrl() {
+        return mLogoUrl;
     }
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "%1$d\n%2$s",
-                mAmount,
-                ListUtils.toString(mSubscribersIds));
+        return String.format(Locale.getDefault(), "%1$s\n%2$s\n%3$s\n\n",
+                mCustomId,
+                mNickname,
+                mLogoUrl == null ? "Null" : mLogoUrl);
     }
 }

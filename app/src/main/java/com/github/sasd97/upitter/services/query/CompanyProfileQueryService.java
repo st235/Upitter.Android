@@ -73,10 +73,11 @@ public class CompanyProfileQueryService {
         });
     }
 
-    public void obtainSubscribers(@NonNull String accessToken) {
+    public void obtainSubscribers(@NonNull String accessToken,
+                                  @NonNull String companyId) {
         Call<SubscribersContainerModel> obtainSubscribers = RestService
                 .baseFactory()
-                .obtainSubscribers(language(), accessToken);
+                .obtainSubscribers(language(), accessToken, companyId);
 
         obtainSubscribers.enqueue(new Callback<SubscribersContainerModel>(listener) {
             @Override
