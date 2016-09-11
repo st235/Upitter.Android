@@ -64,7 +64,7 @@ public class CodeVerificationActivity extends BaseActivity implements
         queryService = CompanyAuthorizationQueryService.getService(this);
         requestCodeReceiver = RequestCodeReceiver.getReceiver(this);
 
-        if (BuildConfig.DEBUG) requestCodeEdt.setText("615243");
+        if (BuildConfig.DEBUG) requestCodeEdt.setText("162534");
     }
 
     public void onLoginClick(View v) {

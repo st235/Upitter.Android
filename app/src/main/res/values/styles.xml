@@ -11,12 +11,12 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="AppTheme.LowestActivity" parent="AppTheme" >
+    <style name="AppTheme.LowestActivity" parent="AppTheme">
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
-    <style name="AppTheme.LowestActivity.NoActionBar" parent="AppTheme.NoActionBar" >
+    <style name="AppTheme.LowestActivity.NoActionBar" parent="AppTheme.NoActionBar">
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>

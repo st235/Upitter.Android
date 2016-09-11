@@ -55,4 +55,8 @@
     <!-- Send message region -->
     <color name="colorSendAreaBackground">#f2f5f8</color>
     <!-- Endregion -->
+
+    <!-- Company information -->
+    <color name="colorLabelText">#929ca9</color>
+    <!-- Endregion -->
 </resources>

@@ -94,6 +94,7 @@ public class CompanyPointerModel {
     }
 
     public String getSite() {
+        if (!mSite.contains("http://") || !mSite.contains("https://")) return "http://".concat(mSite);
         return mSite;
     }
 

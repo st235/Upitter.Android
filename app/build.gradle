@@ -9,8 +9,8 @@ android {
         applicationId "com.github.sasd97.upitter"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 544
-        versionName "0.0.4.2"
+        versionCode 551
+        versionName "0.0.4.3"
     }
 
     buildTypes {
@@ -29,6 +29,7 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.0'
     compile 'com.android.support:gridlayout-v7:24.2.0'
     compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:customtabs:24.2.0'
     compile 'com.android.support:design:24.2.0'
     compile 'com.google.android.gms:play-services-maps:9.4.0'
     compile 'ch.acra:acra:4.9.0-RC-2'

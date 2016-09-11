@@ -356,5 +356,14 @@
 
     <!-- Chat Message Line region -->
     <string name="chat_line_message">Message</string>
+    <string name="title_activity_company_information">CompanyInformationActivity</string>
+    <!-- Endregion -->
+
+    <!-- Company information region -->
+    <string name="summary_rating_company_information">All likes:</string>
+    <string name="description_company_information">Description:</string>
+    <string name="contacts_company_information">Contacts:</string>
+    <string name="activities_company_information">Activity:</string>
+    <string name="show_on_map_company_information">Show on map</string>
     <!-- Endregion -->
 </resources>

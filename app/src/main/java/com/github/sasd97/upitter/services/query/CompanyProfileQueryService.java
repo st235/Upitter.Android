@@ -9,6 +9,7 @@ import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.containers.SubscribersContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.SubscribersPointerModel;
 import com.github.sasd97.upitter.services.RestService;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class CompanyProfileQueryService {
     public interface OnCompanySearchListener extends OnErrorQueryListener {
         void onFind(CompanyPointerModel company);
         void onObtainPosts(PostsContainerModel posts);
-        void onSubscribersObtained();
+        void onSubscribersObtained(SubscribersPointerModel subscribers);
     }
 
     private OnCompanySearchListener listener;
@@ -74,17 +75,17 @@ public class CompanyProfileQueryService {
     }
 
     public void obtainSubscribers(@NonNull String accessToken,
-                                  @NonNull String companyId) {
+                                  @NonNull String aliasId) {
         Call<SubscribersContainerModel> obtainSubscribers = RestService
                 .baseFactory()
-                .obtainSubscribers(language(), accessToken, companyId);
+                .obtainSubscribers(language(), accessToken, aliasId);
 
         obtainSubscribers.enqueue(new Callback<SubscribersContainerModel>(listener) {
             @Override
             public void onResponse(Call<SubscribersContainerModel> call, Response<SubscribersContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
-                listener.onSubscribersObtained();
+                listener.onSubscribersObtained(response.body().getSubscribers());
             }
         });
     }

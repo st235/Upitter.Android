@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.services.query.factory;
 
+import com.github.sasd97.upitter.models.response.containers.ActivitiesContainerModel;
 import com.github.sasd97.upitter.models.response.containers.ApplicationInfoContainerModel;
 import com.github.sasd97.upitter.models.response.containers.AuthorizationCompanyContainerModel;
 import com.github.sasd97.upitter.models.response.containers.AuthorizationRequestCodeContainerModel;
@@ -58,7 +59,6 @@ public interface BaseFactory {
                                                                  @Path("countryCode") String countryCode,
                                                                  @Field("code") String requestCode);
 
-
     @FormUrlEncoded
     @POST("debug/authorization/phone/verify_development/{number}/{countryCode}")
     Call<AuthorizationRequestCodeContainerModel> debugRequestCode(@Path("number") String number,
@@ -80,6 +80,11 @@ public interface BaseFactory {
     @GET("categories")
     Call<CategoriesContainerModel> getCategories(@Query("ln") String language,
                                                  @Query("accessToken") String accessToken);
+
+    @FormUrlEncoded
+    @POST("categories/obtainTitles")
+    Call<ActivitiesContainerModel> obtainActivitiesTitles(@Query("ln") String language,
+                                                          @Field("activity") Integer[] activities);
 
     @POST("post/create")
     Call<PostContainerModel> createPost(@Query("ln") String language,
@@ -179,7 +184,7 @@ public interface BaseFactory {
     @GET("company/subscribers")
     Call<SubscribersContainerModel> obtainSubscribers(@Query("ln") String language,
                                                       @Query("accessToken") String accessToken,
-                                                      @Query("companyId") String companyId);
+                                                      @Query("alias") String aliasId);
 
     @GET("comments")
     Call<CommentsContainerModel> obtainPostComments(@Query("ln") String language,

@@ -113,6 +113,10 @@ public class PostPointerModel {
 
     public int getCommentsAmount() { return mCommentsAmount; }
 
+    public void addCommentsAmount() {
+        this.mCommentsAmount++;
+    }
+
     public int getVotersAmount() { return mVotersAmount; }
 
     public int getWatchesAmount() { return mWatchesAmount; }

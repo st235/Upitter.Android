@@ -39,8 +39,8 @@
 
                     <ImageView
                         android:id="@+id/logo_company_profile"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
                         android:layout_gravity="center"
                         />
 
@@ -58,13 +58,14 @@
                             android:id="@+id/title_company_profile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
+                            android:textSize="24sp"
                             android:textColor="@android:color/white"
                             android:text="@string/user_placeholder_company_tape"
                             tools:text="Adidas"
                             />
 
                         <Button
+                            android:id="@+id/company_profile_fc_information"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@drawable/rounded_button_shape_agressive_gray"

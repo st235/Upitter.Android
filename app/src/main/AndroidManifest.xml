@@ -19,7 +19,6 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="DATABASE"
             android:value="upitter_base.db" />
@@ -52,23 +51,19 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            />
-
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ui.SplashScreenActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.AuthorizationActivity"
-            android:theme="@style/AppTheme.LowestActivity.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.LowestActivity.NoActionBar" />
         <activity
             android:name=".ui.results.CountryCodeSelectionResult"
             android:parentActivityName=".ui.AuthorizationActivity"
@@ -77,43 +72,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.AuthorizationActivity" />
         </activity>
-
         <activity
             android:name=".ui.CompanyFeedActivity"
             android:label="@string/title_activity_tape"
-            android:theme="@style/AppTheme.LowestActivity.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.LowestActivity.NoActionBar" />
         <activity
             android:name=".ui.CodeVerificationActivity"
             android:label="@string/title_activity_code_confirm_activity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.CompanyRegistrationActivity"
             android:label="@string/title_activity_bussines_registration"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.results.GalleryResult"
             android:label="@string/title_gallery_activity"
-            android:theme="@style/AppTheme"
-            />
-
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.schemas.AlbumPreviewGallerySchema"
             android:label="@string/title_gallery_album_preview_activity"
-            android:theme="@style/AppTheme"
-            />
-
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.results.GalleryImageEditingResult"
             android:label="@string/title_gallery_album_preview_activity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.results.CategoriesSelectionResult"
             android:label="@string/title_categories_activity"
@@ -123,7 +105,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.CompanyRegistrationActivity" />
         </activity>
-
         <activity
             android:name=".ui.results.CompanyCoordinatesSelectionResult"
             android:label="@string/title_map_choose_activity"
@@ -133,13 +114,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.CompanyRegistrationActivity" />
         </activity>
-
         <activity
             android:name=".ui.schemas.MapPreviewSchema"
             android:label="@string/title_activity_people_tape"
-            android:theme="@style/AppTheme.LowestActivity.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.LowestActivity.NoActionBar" />
         <activity
             android:name=".ui.PostCreationActivity"
             android:label="@string/title_create_post_activity"
@@ -150,7 +128,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.CompanyFeedActivity" />
         </activity>
-
         <activity
             android:name=".ui.results.QuizCreationResult"
             android:label="@string/quiz_label_create_post_activity"
@@ -160,7 +137,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.CompanyFeedActivity" />
         </activity>
-
         <activity
             android:name=".ui.results.PostTypeSelectionResult"
             android:label="@string/quiz_label_create_post_activity"
@@ -170,52 +146,39 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.CompanyFeedActivity" />
         </activity>
-
         <activity
             android:name=".ui.PeopleFeedActivity"
             android:label="@string/title_activity_people_tape"
-            android:theme="@style/AppTheme.LowestActivity.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.LowestActivity.NoActionBar" />
         <activity
             android:name=".ui.results.LocationSelectionResult"
             android:label="@string/title_choose_location_activity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.CompanySettingsActivity"
             android:label="@string/title_activity_company_settings"
-            android:theme="@style/AppTheme"
-            />
-
-        <activity
-            android:name=".ui.results.SocialIconInstallationResult"
-            />
-
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.results.SocialIconInstallationResult" />
         <activity
             android:name=".ui.schemas.PostPreviewSchema"
             android:label="@string/title_activity_post_preview_schema"
-            android:theme="@style/AppTheme"
-            />
-
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.results.SetupLocationResult"
             android:label="@string/title_activity_setup_location_result"
-            android:theme="@style/AppTheme"
-            />
-
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.CompanyProfileActivity"
             android:label="@string/title_activity_company_profile"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.AppInfoActivity"
             android:label="@string/title_activity_company_profile"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.CompanyInformationActivity"
+            android:label="@string/title_activity_company_information"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

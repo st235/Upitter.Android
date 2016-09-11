@@ -367,6 +367,18 @@ public class PostPreviewSchema extends BaseActivity
     @Override
     public void onAdd(CommentPointerModel comment) {
         recyclerAdapter.add(comment);
+        post.addCommentsAmount();
+
+        if (post.getCommentsAmount() > 0) {
+            commentImageView.setImageResource(R.drawable.ic_feed_icon_comment_active);
+            commentsAmountTextView.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+        }
+        else {
+            commentImageView.setImageResource(R.drawable.ic_feed_icon_comment);
+            commentsAmountTextView.setTextColor(ContextCompat.getColor(this, R.color.colorCounter));
+        }
+
+        commentsAmountTextView.setText(String.valueOf(post.getCommentsAmount()));
     }
 
     @Override
