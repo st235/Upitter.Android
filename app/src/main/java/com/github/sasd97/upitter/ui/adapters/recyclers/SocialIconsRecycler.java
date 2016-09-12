@@ -3,6 +3,8 @@ package com.github.sasd97.upitter.ui.adapters.recyclers;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,14 +30,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SocialIconsRecycler extends RecyclerView.Adapter<SocialIconsRecycler.SocialIconsViewHolder> {
 
     private Context context;
+
     private List<SocialIconModel> socialIcons;
 
     public SocialIconsRecycler() {
         this.socialIcons = new ArrayList<>();
-    }
-
-    public SocialIconsRecycler(@NonNull List<SocialIconModel> socialIcons) {
-        this.socialIcons = socialIcons;
     }
 
     public class SocialIconsViewHolder extends BaseViewHolder {
@@ -48,7 +48,22 @@ public class SocialIconsRecycler extends RecyclerView.Adapter<SocialIconsRecycle
 
         @Override
         protected void setupViews() {
+            socialLink.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    socialIcons.get(getAdapterPosition()).setLink(editable.toString());
+                }
+            });
         }
     }
 
@@ -57,6 +72,7 @@ public class SocialIconsRecycler extends RecyclerView.Adapter<SocialIconsRecycle
         SocialIconModel socialIcon = socialIcons.get(position);
 
         holder.socialLink.setHint(socialIcon.getTitle());
+        holder.socialLink.setText(socialIcon.getLink());
 
         if (!socialIcon.isIcon()) return;
 
@@ -77,6 +93,10 @@ public class SocialIconsRecycler extends RecyclerView.Adapter<SocialIconsRecycle
     @Override
     public int getItemCount() {
         return socialIcons.size();
+    }
+
+    public ArrayList<SocialIconModel> getList() {
+        return new ArrayList<>(socialIcons);
     }
 
     public void addAll(Collection<SocialIconModel> collection) {

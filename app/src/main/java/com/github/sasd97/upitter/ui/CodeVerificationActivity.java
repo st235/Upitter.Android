@@ -127,6 +127,7 @@ public class CodeVerificationActivity extends BaseActivity implements
                 .contactPhones(companyPointerModel.getContactPhones())
                 .site(companyPointerModel.getSite())
                 .coordinates(companyPointerModel.getCoordinates())
+                .socialIcons(companyPointerModel.getSocialLinksBoxed())
                 .accessToken(companyPointerModel.getAccessToken())
                 .build();
 

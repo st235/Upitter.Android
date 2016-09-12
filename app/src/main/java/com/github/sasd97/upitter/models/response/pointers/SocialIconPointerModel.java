@@ -12,6 +12,10 @@ import java.util.Locale;
  */
 public class SocialIconPointerModel {
 
+    @SerializedName("customId")
+    @Expose
+    private String mCustomId;
+
     @SerializedName("title")
     @Expose
     private String mTitle;
@@ -24,6 +28,10 @@ public class SocialIconPointerModel {
     @Expose
     private String mLink;
 
+    public String getId() {
+        return mCustomId;
+    }
+    
     public String getTitle() {
         return mTitle;
     }

@@ -25,17 +25,20 @@ import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.ActivityPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.SocialIconPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.SubscribersPointerModel;
 import com.github.sasd97.upitter.services.query.ActivityQueryService;
 import com.github.sasd97.upitter.services.query.CompanyProfileQueryService;
 import com.github.sasd97.upitter.ui.adapters.recyclers.ActivitiesRecycler;
 import com.github.sasd97.upitter.ui.adapters.recyclers.ContactPhonesPreviewRecycler;
+import com.github.sasd97.upitter.ui.adapters.recyclers.SocialIconsPreviewRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.Palette;
 import com.github.sasd97.upitter.utils.SlidrUtils;
+import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
@@ -68,6 +71,7 @@ public class CompanyInformationActivity extends BaseActivity
     @BindView(R.id.company_description_textview) TextView companyDescriptionTextView;
     @BindView(R.id.contact_phones_recycler_view) RecyclerView contactPhonesRecyclerView;
     @BindView(R.id.activities_recycler_view) RecyclerView activitiesRecyclerView;
+    @BindView(R.id.social_links_recycler_view) RecyclerView socialLinksRecyclerView;
     @BindView(R.id.contact_site) TextView contactSite;
 
     @Override
@@ -124,6 +128,8 @@ public class CompanyInformationActivity extends BaseActivity
         contactSite.setText(company.getSite());
         contactPhonesRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         contactPhonesRecyclerView.setAdapter(new ContactPhonesPreviewRecycler(company.getContactPhones()));
+        socialLinksRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        socialLinksRecyclerView.setAdapter(new SocialIconsPreviewRecycler(company.getSocialLinks()));
     }
 
     @Override
@@ -144,7 +150,7 @@ public class CompanyInformationActivity extends BaseActivity
 
     @Override
     public void onError(ErrorModel error) {
-
+        Logger.e(error.toString());
     }
 
     @OnClick(R.id.contact_site)

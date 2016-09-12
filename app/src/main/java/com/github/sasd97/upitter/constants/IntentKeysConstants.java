@@ -41,5 +41,6 @@ public interface IntentKeysConstants {
 
     //region Company Profile
     String COMPANY_ALIAS = "COMPANY_ALIAS";
+    String COMPANY_SOCIAL_ICONS = "COMPANY_SOCIAL_ICONS";
     //endregion
 }

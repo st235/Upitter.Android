@@ -144,6 +144,7 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
                 .categories(companyPointerModel.getActivity())
                 .contactPhones(companyPointerModel.getContactPhones())
                 .site(companyPointerModel.getSite())
+                .socialIcons(companyPointerModel.getSocialLinksBoxed())
                 .coordinates(companyPointerModel.getCoordinates())
                 .accessToken(companyPointerModel.getAccessToken())
                 .build();

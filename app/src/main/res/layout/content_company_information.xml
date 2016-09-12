@@ -77,6 +77,13 @@
             android:layout_marginTop="4dp"
             />
 
+        <com.github.sasd97.upitter.components.AutoFitRecyclerView
+            android:id="@+id/social_links_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            />
+
         <TextView
             android:id="@+id/contact_site"
             android:layout_width="wrap_content"

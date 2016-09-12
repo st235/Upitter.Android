@@ -71,7 +71,7 @@ public class CompanyModel extends UserModel
     private List<CoordinatesModel> mCoordinates;
     private String mCoordinatesRepresentation;
 
-    @SerializedName("socialIcons")
+    @SerializedName("socialLinks")
     @Expose
     @Ignore
     private List<SocialIconModel> mSocialIcons;
@@ -99,6 +99,7 @@ public class CompanyModel extends UserModel
         mSite = builder.site;
         mCoordinates = builder.coordinates;
         mAccessToken = builder.accessToken;
+        mSocialIcons = builder.socialIcons;
         mTemporaryToken = builder.temporaryToken;
         mAvatarUrl = builder.avatarUrl;
 
@@ -106,6 +107,7 @@ public class CompanyModel extends UserModel
         mCategoriesRepresentation = gson.toJson(mCategories);
         mContactPhonesRepresentation = gson.toJson(mContactPhones);
         mCoordinatesRepresentation = gson.toJson(mCoordinates);
+        mSocialIconsRepresentation = gson.toJson(mSocialIcons);
     }
 
     @Override
@@ -214,12 +216,28 @@ public class CompanyModel extends UserModel
         return mCoordinates;
     }
 
+    public List<SocialIconModel> getSocialIcons() {
+        if (mSocialIcons != null) return mSocialIcons;
+        if (mSocialIconsRepresentation == null) return new ArrayList<>();
+        Logger.i(mSocialIconsRepresentation);
+        Type type = new TypeToken<List<SocialIconModel>>(){}.getType();
+        mSocialIcons = ListUtils.fromJson(type, mSocialIconsRepresentation);
+        return mSocialIcons;
+    }
+
+    public void setSocialLinks(List<SocialIconModel> list) {
+        mSocialIcons = list;
+        Gson gson = new Gson();
+        mSocialIconsRepresentation = gson.toJson(mSocialIcons);
+    }
+
     @Override
     public long save() {
         Gson gson = new Gson();
         mCategoriesRepresentation = gson.toJson(mCategories);
         mContactPhonesRepresentation = gson.toJson(mContactPhones);
         mCoordinatesRepresentation = gson.toJson(mCoordinates);
+        mSocialIconsRepresentation = gson.toJson(mSocialIcons);
         if (mPhone != null) mPhone.save();
         return super.save();
     }
@@ -271,6 +289,7 @@ public class CompanyModel extends UserModel
         private List<String> contactPhones;
         private String site;
         private List<CoordinatesModel> coordinates;
+        private List<SocialIconModel> socialIcons;
         private String accessToken;
         private String temporaryToken;
 
@@ -326,6 +345,11 @@ public class CompanyModel extends UserModel
 
         public Builder coordinates(List<CoordinatesModel> coordinates) {
             this.coordinates = coordinates;
+            return this;
+        }
+
+        public Builder socialIcons(List<SocialIconModel> socialIcons) {
+            this.socialIcons = socialIcons;
             return this;
         }
 

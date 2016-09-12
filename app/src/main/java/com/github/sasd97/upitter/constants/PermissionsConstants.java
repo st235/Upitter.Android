@@ -8,5 +8,4 @@ public interface PermissionsConstants {
 
     int REQUEST_RECEIVE_SMS = 3;
     int REQUEST_COMPLEX = 5;
-
 }

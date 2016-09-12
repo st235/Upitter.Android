@@ -11,14 +11,21 @@ import android.widget.LinearLayout;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.CompanyModel;
+import com.github.sasd97.upitter.models.SocialIconModel;
 import com.github.sasd97.upitter.ui.adapters.recyclers.ContactPhonesRecycler;
+import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.results.SocialIconInstallationResult;
+import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.github.sasd97.upitter.constants.RequestCodesConstants.CHOOSE_SOCIAL_LINKS;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.COMPANY_SOCIAL_ICONS;
 
 /**
  * Created by alexander on 06.08.16.
@@ -89,6 +96,22 @@ public class CompanyAdditionalSettingsFragment extends BaseFragment
     @OnClick(R.id.social_links_chooser_button)
     public void onSocialIconsClick(View v) {
         Intent intent = new Intent(getContext(), SocialIconInstallationResult.class);
-        startActivity(intent);
+        intent.putParcelableArrayListExtra(COMPANY_SOCIAL_ICONS, new ArrayList<>(companyModel.getSocialIcons()));
+        startActivityForResult(intent, CHOOSE_SOCIAL_LINKS);
+    }
+
+    private void handleSocialLinks(Intent data) {
+        List<SocialIconModel> links = data.getParcelableArrayListExtra(COMPANY_SOCIAL_ICONS);
+        companyModel.setSocialLinks(links);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != BaseActivity.RESULT_OK) return;
+
+        if (requestCode == CHOOSE_SOCIAL_LINKS) {
+            handleSocialLinks(data);
+        }
     }
 }
