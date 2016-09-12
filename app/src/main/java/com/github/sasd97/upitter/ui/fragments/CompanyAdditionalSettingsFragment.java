@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.ui.fragments;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -12,7 +13,7 @@ import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.ui.adapters.recyclers.ContactPhonesRecycler;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
-import com.orhanobut.logger.Logger;
+import com.github.sasd97.upitter.ui.results.SocialIconInstallationResult;
 
 import java.util.List;
 
@@ -83,5 +84,11 @@ public class CompanyAdditionalSettingsFragment extends BaseFragment
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         contactPhonesRecycler.addPhone();
         phonesRecyclerView.setLayoutParams(lp);
+    }
+
+    @OnClick(R.id.social_links_chooser_button)
+    public void onSocialIconsClick(View v) {
+        Intent intent = new Intent(getContext(), SocialIconInstallationResult.class);
+        startActivity(intent);
     }
 }

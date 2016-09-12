@@ -27,7 +27,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.utils.filters.*;
 
 public class GPUImageFilterTools {
     public static void showDialog(final Context context,
@@ -46,7 +45,7 @@ public class GPUImageFilterTools {
         filters.addFilter("Nashville", FilterType.I_NASHVILLE);
         filters.addFilter("Rise", FilterType.I_NASHVILLE);
         filters.addFilter("Sierra", FilterType.I_SIERRA);
-        filters.addFilter("sutro", FilterType.I_SUTRO);
+        filters.addFilter("Sutro", FilterType.I_SUTRO);
         filters.addFilter("Toaster", FilterType.I_TOASTER);
         filters.addFilter("Valencia", FilterType.I_VALENCIA);
         filters.addFilter("Walden", FilterType.I_WALDEN);

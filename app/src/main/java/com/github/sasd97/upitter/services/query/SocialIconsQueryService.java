@@ -35,7 +35,7 @@ public class SocialIconsQueryService {
         return new SocialIconsQueryService(listener);
     }
 
-    public void obtainIcons(@NonNull String accessToken) {
+    public void obtainIconsList(@NonNull String accessToken) {
         Call<SocialIconContainerModel> obtainIcons = RestService
                 .baseFactory()
                 .obtainSocialIcons(accessToken, language());
@@ -44,7 +44,7 @@ public class SocialIconsQueryService {
             @Override
             public void onResponse(Call<SocialIconContainerModel> call, Response<SocialIconContainerModel> response) {
                 super.onResponse(call, response);
-                if (RestService.handleError(call, response, listener)) return;
+                if (!RestService.handleError(call, response, listener)) return;
                 listener.onObtainSocialIcons(response.body().getIconsList());
             }
         });

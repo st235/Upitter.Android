@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.models.response.pointers;
 
 import com.github.sasd97.upitter.models.CoordinatesModel;
+import com.github.sasd97.upitter.models.SocialIconModel;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Names;
 import com.google.gson.annotations.Expose;
@@ -55,6 +56,10 @@ public class CompanyPointerModel {
     @Expose
     private List<CoordinatesPointerModel> mCoordinates;
 
+    @SerializedName("socialLinks")
+    @Expose
+    private List<SocialIconPointerModel> mSocialLinks;
+
     @SerializedName("phone")
     @Expose
     private PhonePointerModel mPhone;
@@ -94,12 +99,29 @@ public class CompanyPointerModel {
     }
 
     public String getSite() {
-        if (!mSite.contains("http://") || !mSite.contains("https://")) return "http://".concat(mSite);
         return mSite;
     }
 
     public List<String> getContactPhones() {
         return mContactPhones;
+    }
+
+    public List<SocialIconPointerModel> getSocialLinks() {
+        return mSocialLinks;
+    }
+
+    public List<SocialIconModel> getSocialLinksBoxed() {
+        return ListUtils.mutate(mSocialLinks, new ListUtils.OnListMutateListener<SocialIconPointerModel, SocialIconModel>() {
+            @Override
+            public SocialIconModel mutate(SocialIconPointerModel object) {
+                return new SocialIconModel
+                        .Builder()
+                        .title(object.getTitle())
+                        .link(object.getLink())
+                        .icon(object.getIcon())
+                        .build();
+            }
+        });
     }
 
     public List<CoordinatesModel> getCoordinates() {

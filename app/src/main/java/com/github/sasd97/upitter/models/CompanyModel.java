@@ -71,6 +71,12 @@ public class CompanyModel extends UserModel
     private List<CoordinatesModel> mCoordinates;
     private String mCoordinatesRepresentation;
 
+    @SerializedName("socialIcons")
+    @Expose
+    @Ignore
+    private List<SocialIconModel> mSocialIcons;
+    private String mSocialIconsRepresentation;
+
     @SerializedName("logoUrl")
     @Expose
     private String mAvatarUrl;

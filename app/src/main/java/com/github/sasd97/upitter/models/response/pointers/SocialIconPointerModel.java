@@ -16,9 +16,9 @@ public class SocialIconPointerModel {
     @Expose
     private String mTitle;
 
-    @SerializedName("avatar")
+    @SerializedName("icon")
     @Expose
-    private String mAvatar;
+    private String mIcon;
 
     @SerializedName("link")
     @Expose
@@ -28,8 +28,8 @@ public class SocialIconPointerModel {
         return mTitle;
     }
 
-    public String getAvatar() {
-        return mAvatar;
+    public String getIcon() {
+        return mIcon;
     }
 
     public String getLink() {
@@ -40,10 +40,14 @@ public class SocialIconPointerModel {
         mLink = link;
     }
 
+    public boolean isIcon() {
+        return mIcon != null && !mIcon.trim().equalsIgnoreCase("");
+    }
+
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "Social Icon\nTitle: %1$s\nAvatar: %2$d",
+        return String.format(Locale.getDefault(), "Social Icon\nTitle: %1$s\nAvatar: %2$s",
                 mTitle,
-                mAvatar);
+                mIcon);
     }
 }
