@@ -60,6 +60,8 @@ public final class Names {
     }
 
     public static String getNamePreview(@NonNull String name) {
+        if (name == null) return "Null";
+
         if (name.contains(SPACE)) {
             String[] split = name.split(SPACE);
             StringBuilder builder = new StringBuilder();

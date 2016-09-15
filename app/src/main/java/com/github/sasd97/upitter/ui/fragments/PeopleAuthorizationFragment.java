@@ -27,6 +27,7 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.orhanobut.logger.Logger;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -45,7 +46,7 @@ import static com.github.sasd97.upitter.Upitter.*;
  * Created by Alexander Dadukin on 06.06.2016.
  */
 
-public class UserAuthorizationFragment extends BaseFragment
+public class PeopleAuthorizationFragment extends BaseFragment
         implements GoogleApiClient.OnConnectionFailedListener,
         FacebookCallback<LoginResult>,
         UserAuthorizationQueryService.OnSocialAuthorizationListener {
@@ -57,12 +58,12 @@ public class UserAuthorizationFragment extends BaseFragment
     @BindView(R.id.google_plus_button_user_login_fragment) Button signGoogleButton;
     @BindView(R.id.twitter_button_user_login_fragment) Button signTwitterButton;
 
-    public UserAuthorizationFragment() {
+    public PeopleAuthorizationFragment() {
         super(R.layout.fragment_user_authorization);
     }
 
-    public static UserAuthorizationFragment getFragment() {
-        return new UserAuthorizationFragment();
+    public static PeopleAuthorizationFragment getFragment() {
+        return new PeopleAuthorizationFragment();
     }
 
     @Override
@@ -94,7 +95,7 @@ public class UserAuthorizationFragment extends BaseFragment
         signFacebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(UserAuthorizationFragment.this, Arrays.asList(facebookScope));
+                LoginManager.getInstance().logInWithReadPermissions(PeopleAuthorizationFragment.this, Arrays.asList(facebookScope));
             }
         });
 
@@ -137,8 +138,11 @@ public class UserAuthorizationFragment extends BaseFragment
 
     @Override
     public void onServerNotify(UserPointerModel userPointerModel) {
+        Logger.json(userPointerModel.toString());
+
         PeopleModel.Builder builder = new PeopleModel
                 .Builder()
+                .id(userPointerModel.getId())
                 .nickname(userPointerModel.getNickname())
                 .sex(userPointerModel.getSex())
                 .isVerify(userPointerModel.isVerify())

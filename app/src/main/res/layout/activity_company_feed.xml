@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/colorNavigationDrawerBackground"
-        app:menu="@menu/tape_activity_drawer"
+        app:menu="@menu/drawer_company"
         app:headerLayout="@layout/nav_header_company_feed"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"

@@ -1,5 +1,7 @@
 package com.github.sasd97.upitter.models;
 
+import java.util.Locale;
+
 /**
  * Created by Alex on 16.06.2016.
  */
@@ -40,6 +42,7 @@ public class PeopleModel extends UserModel {
 
     @Override
     public String getName() {
+        if (mName == null) return mNickname;
         return mName;
     }
 
@@ -78,6 +81,14 @@ public class PeopleModel extends UserModel {
     @Override
     public UserType getType() {
         return UserType.People;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.getDefault(), "People Model\nUID %1$s\nNickname %2$s\nName %3$s\n",
+                mId,
+                mNickname,
+                mName);
     }
 
     public static class Builder {
@@ -139,7 +150,7 @@ public class PeopleModel extends UserModel {
         }
 
         public Builder isVerify(boolean isVerify) {
-            this.id = id;
+            this.isVerify = isVerify;
             return this;
         }
 

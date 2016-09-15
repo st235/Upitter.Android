@@ -20,6 +20,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_people_feed"
-        app:menu="@menu/people_tape_activity_drawer" />
+        app:menu="@menu/drawer_people"
+        />
 
 </android.support.v4.widget.DrawerLayout>

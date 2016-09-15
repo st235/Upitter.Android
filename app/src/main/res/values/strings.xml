@@ -366,4 +366,11 @@
     <string name="activities_company_information">Activity:</string>
     <string name="show_on_map_company_information">Show on map</string>
     <!-- Endregion -->
+
+    <!-- People Feed region -->
+    <string-array name="people_feed_titles">
+        <item>Feed</item>
+        <item>Subscription</item>
+    </string-array>
+    <!-- Endregion -->
 </resources>

@@ -1,26 +1,36 @@
 package com.github.sasd97.upitter.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.holders.PeopleHolder;
+import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
-import com.github.sasd97.upitter.ui.fragments.BaseFeedFragment;
+import com.github.sasd97.upitter.ui.base.BaseFragment;
+import com.github.sasd97.upitter.ui.fragments.FavoritesFragment;
+import com.github.sasd97.upitter.ui.fragments.PeopleFeedFragment;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
-import butterknife.OnClick;
+
+import static com.github.sasd97.upitter.Upitter.*;
 
 public class PeopleFeedActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
+    private PeopleModel people;
+    private PeopleFeedFragment peopleFeedFragment;
+
+    @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
 
     @Override
@@ -32,6 +42,9 @@ public class PeopleFeedActivity extends BaseActivity
     @Override
     protected void setupViews() {
         setToolbar(R.id.toolbar, true);
+        people = ((PeopleHolder) getHolder()).get();
+        peopleFeedFragment = PeopleFeedFragment.getFragment();
+        Logger.i(people.toString());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -42,17 +55,12 @@ public class PeopleFeedActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.fragment_container, BaseFeedFragment.getFragment())
-//                .commit();
-    }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container, peopleFeedFragment)
+                .commit();
 
-    @Override
-    @OnClick(R.id.fab)
-    public void onClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        interactWithTabs(false);
     }
 
     @Override
@@ -86,7 +94,44 @@ public class PeopleFeedActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        switch (id) {
+            case R.id.nav_tape:
+                navigate(peopleFeedFragment);
+                interactWithTabs(false);
+                break;
+            case R.id.nav_favorites:
+                interactWithTabs(true);
+                navigate(FavoritesFragment.getFragment());
+                break;
+            case R.id.nav_app:
+                startActivity(new Intent(this, AppInfoActivity.class));
+                break;
+            case R.id.nav_logout:
+                deleteSession();
+                break;
+        }
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void interactWithTabs(boolean isHide) {
+        tabLayout.setVisibility(isHide ? View.GONE : View.VISIBLE);
+        //if (!isHide) tabLayout.setupWithViewPager(peopleFeedFragment.getViewPager());
+    }
+
+    private void navigate(BaseFragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void deleteSession() {
+        Intent intent = new Intent(this, AuthorizationActivity.class);
+        getHolder().delete();
+        startActivity(intent);
+        finish();
     }
 }
