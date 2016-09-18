@@ -17,6 +17,12 @@ import com.github.sasd97.upitter.ui.adapters.pagers.AuthorizationPager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.Permissions;
+import com.orhanobut.logger.Logger;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKError;
+import com.vk.sdk.util.VKUtil;
 
 import butterknife.BindView;
 
@@ -131,10 +137,23 @@ public class AuthorizationActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == TWITTER_SIGN_IN_REQUEST)
             authorizationPager
                 .getPeopleAuthorizationFragment()
                 .onActivityResult(requestCode, resultCode, data);
+
+        VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+            @Override
+            public void onResult(VKAccessToken res) {
+                Logger.e(res.accessToken.toString());
+            }
+
+            @Override
+            public void onError(VKError error) {
+
+            }
+        });
     }
 
     @Override

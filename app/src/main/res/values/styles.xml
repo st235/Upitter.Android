@@ -69,6 +69,11 @@
         <item name="android:textColor">@color/rounded_button_watermelon_text_selector</item>
     </style>
 
+    <style name="Upitter.Button.Rounded.VK" parent="@style/Upitter.Button.Rounded">
+        <item name="android:background">@drawable/rounded_button_shape_vk</item>
+        <item name="android:textColor">@color/rounded_button_watermelon_text_selector</item>
+    </style>
+
     <style name="Upitter.Button.Rounded.Google" parent="@style/Upitter.Button.Rounded">
         <item name="android:background">@drawable/rounded_button_shape_google_red</item>
         <item name="android:textColor">@color/rounded_button_watermelon_text_selector</item>

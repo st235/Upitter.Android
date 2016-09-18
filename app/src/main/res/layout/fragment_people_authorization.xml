@@ -62,6 +62,21 @@
                     style="@style/Upitter.Button.Rounded.Facebook"
                     />
 
+            <Button
+                android:id="@+id/vk_button_user_login_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/activity_short_margin"
+                android:layout_marginLeft="@dimen/activity_short_margin"
+                android:layout_marginRight="@dimen/activity_short_margin"
+                android:padding="8dp"
+                android:drawableLeft="@drawable/ic_facebook"
+                android:drawableStart="@drawable/ic_facebook"
+                android:text="VKontakte"
+                style="@style/Upitter.Button.Rounded.VK"
+                />
+
                 <Button
                     android:id="@+id/google_plus_button_user_login_fragment"
                     android:layout_width="match_parent"

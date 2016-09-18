@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
@@ -32,10 +33,16 @@ import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKError;
 
 import java.util.Arrays;
 
+import butterknife.BindArray;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.GOOGLE_SIGN_IN_REQUEST;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.TWITTER_SIGN_IN_REQUEST;
@@ -54,12 +61,10 @@ public class PeopleAuthorizationFragment extends BaseFragment
     private GoogleApiClient googleClient;
     private UserAuthorizationQueryService service = UserAuthorizationQueryService.getService(this);
 
-    @BindView(R.id.facebook_button_user_login_fragment) Button signFacebookButton;
-    @BindView(R.id.google_plus_button_user_login_fragment) Button signGoogleButton;
-    @BindView(R.id.twitter_button_user_login_fragment) Button signTwitterButton;
+    @BindArray(R.array.facebook_app_scope) String[] facebookScope;
 
     public PeopleAuthorizationFragment() {
-        super(R.layout.fragment_user_authorization);
+        super(R.layout.fragment_people_authorization);
     }
 
     public static PeopleAuthorizationFragment getFragment() {
@@ -67,49 +72,41 @@ public class PeopleAuthorizationFragment extends BaseFragment
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        final String[] facebookScope = getResources().getStringArray(R.array.facebook_app_scope);
+    protected void setupViews() {
         googleClient = AuthorizationService.google(getContext(), getActivity(), this);
         LoginManager.getInstance().registerCallback(AuthorizationService.facebook(), this);
+    }
 
-        signTwitterButton.setOnClickListener(new View.OnClickListener() {
+    @OnClick(R.id.twitter_button_user_login_fragment)
+    void onTwitterClick(View v) {
+        AuthorizationService.twitter().authorize(getActivity(), new Callback<TwitterSession>() {
             @Override
-            public void onClick(View v) {
-                AuthorizationService.twitter().authorize(getActivity(), new Callback<TwitterSession>() {
-                    @Override
-                    public void success(Result<TwitterSession> result) {
-                        service.notifyByTwitter(result.data.getAuthToken().token, result.data.getAuthToken().secret);
-                    }
-
-                    @Override
-                    public void failure(TwitterException exception) {
-                        exception.printStackTrace();
-                        showErrorSnackbar();
-                    }
-                });
+            public void success(Result<TwitterSession> result) {
+                service.notifyByTwitter(result.data.getAuthToken().token, result.data.getAuthToken().secret);
             }
-        });
 
-        signFacebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(PeopleAuthorizationFragment.this, Arrays.asList(facebookScope));
-            }
-        });
-
-        signGoogleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signIn = Auth.GoogleSignInApi.getSignInIntent(googleClient);
-                startActivityForResult(signIn, GOOGLE_SIGN_IN_REQUEST);
+            public void failure(TwitterException exception) {
+                exception.printStackTrace();
+                showErrorSnackbar();
             }
         });
     }
 
-    @Override
-    protected void setupViews() {
+    @OnClick(R.id.facebook_button_user_login_fragment)
+    void onFacebookClick(View v) {
+        LoginManager.getInstance().logInWithReadPermissions(PeopleAuthorizationFragment.this, Arrays.asList(facebookScope));
+    }
+
+    @OnClick(R.id.google_plus_button_user_login_fragment)
+    void onGoogleClick(View v) {
+        Intent signIn = Auth.GoogleSignInApi.getSignInIntent(googleClient);
+        startActivityForResult(signIn, GOOGLE_SIGN_IN_REQUEST);
+    }
+
+    @OnClick(R.id.vk_button_user_login_fragment)
+    void onVKClick(View v) {
+        VKSdk.login(getActivity(), null);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.LoggingBehavior;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.services.query.UserAuthorizationQueryService;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -18,6 +19,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+import com.vk.sdk.VKSdk;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -39,6 +41,7 @@ public final class AuthorizationService {
         initFacebook(context);
         initTwitter(context);
         initGoogle(context);
+        initVK(context);
     }
 
     private static void initFacebook(Context context) {
@@ -64,6 +67,10 @@ public final class AuthorizationService {
                 .requestIdToken(context.getString(R.string.google_server_client_id))
                 .requestEmail()
                 .build();
+    }
+
+    private static void initVK(Context context) {
+        VKSdk.initialize(context);
     }
 
     public static GoogleApiClient google(@NonNull Context context,
