@@ -3,13 +3,11 @@ package com.github.sasd97.upitter.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.holders.PeopleHolder;
@@ -30,7 +28,6 @@ public class PeopleFeedActivity extends BaseActivity
     private PeopleModel people;
     private PeopleFeedFragment peopleFeedFragment;
 
-    @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
 
     @Override
@@ -59,8 +56,6 @@ public class PeopleFeedActivity extends BaseActivity
                 .beginTransaction()
                 .add(R.id.fragment_container, peopleFeedFragment)
                 .commit();
-
-        interactWithTabs(false);
     }
 
     @Override
@@ -97,10 +92,8 @@ public class PeopleFeedActivity extends BaseActivity
         switch (id) {
             case R.id.nav_tape:
                 navigate(peopleFeedFragment);
-                interactWithTabs(false);
                 break;
             case R.id.nav_favorites:
-                interactWithTabs(true);
                 navigate(FavoritesFragment.getFragment());
                 break;
             case R.id.nav_app:
@@ -113,11 +106,6 @@ public class PeopleFeedActivity extends BaseActivity
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void interactWithTabs(boolean isHide) {
-        tabLayout.setVisibility(isHide ? View.GONE : View.VISIBLE);
-        //if (!isHide) tabLayout.setupWithViewPager(peopleFeedFragment.getViewPager());
     }
 
     private void navigate(BaseFragment fragment) {

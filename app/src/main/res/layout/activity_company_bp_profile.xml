@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:fitsSystemWindows="true"
-    tools:context="com.github.sasd97.upitter.ui.CompanyProfileActivity">
+    tools:context=".ui.CompanyBCProfileActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                             android:layout_height="40dp"
                             android:background="@drawable/rounded_button_shape_agressive_gray"
                             android:layout_marginTop="8dp"
-                            android:text="Information"
+                            android:text="Subscribe"
                             />
                     </LinearLayout>
                 </LinearLayout>
@@ -94,6 +94,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_company_profile" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

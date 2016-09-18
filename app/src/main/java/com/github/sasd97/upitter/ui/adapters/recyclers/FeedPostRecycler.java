@@ -21,14 +21,15 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.components.CollageLayoutManager;
 import com.github.sasd97.upitter.models.CategoryModel;
-import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
+import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
 import com.github.sasd97.upitter.services.query.FeedQueryService;
-import com.github.sasd97.upitter.ui.CompanyProfileActivity;
+import com.github.sasd97.upitter.ui.CompanyBCProfileActivity;
+import com.github.sasd97.upitter.ui.CompanyBPProfileActivity;
 import com.github.sasd97.upitter.ui.PostCreationActivity;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
@@ -243,7 +244,8 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.user_area_post_single_view) {
-                Intent intent = new Intent(context, CompanyProfileActivity.class);
+                Class<?> target = user instanceof PeopleModel ? CompanyBPProfileActivity.class : CompanyBCProfileActivity.class;
+                Intent intent = new Intent(context, target);
                 intent.putExtra(COMPANY_ALIAS, posts.get(getAdapterPosition()).getCompany().getAlias());
                 context.startActivity(intent);
                 return;
@@ -274,7 +276,6 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.photo_row_feed_header:
-
                     break;
                 default:
                     Intent intent = new Intent(context, PostCreationActivity.class);

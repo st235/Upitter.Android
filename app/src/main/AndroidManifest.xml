@@ -173,7 +173,11 @@
             android:label="@string/title_activity_setup_location_result"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.CompanyProfileActivity"
+            android:name=".ui.CompanyBCProfileActivity"
+            android:label="@string/title_activity_company_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.CompanyBPProfileActivity"
             android:label="@string/title_activity_company_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

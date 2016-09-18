@@ -37,7 +37,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.COMPANY_ALIAS;
 
-public class CompanyProfileActivity extends BaseActivity
+public class CompanyBPProfileActivity extends BaseActivity
         implements CompanyProfileQueryService.OnCompanySearchListener {
 
     private final String SPACE = " ";
@@ -60,7 +60,7 @@ public class CompanyProfileActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_profile);
+        setContentView(R.layout.activity_company_bp_profile);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.github.sasd97.upitter.ui.fragments;
 
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.github.sasd97.upitter.R;
@@ -14,6 +15,7 @@ import butterknife.BindView;
  */
 public class PeopleFeedFragment extends BaseFragment {
 
+    @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindArray(R.array.people_feed_titles) String[] titles;
     @BindView(R.id.view_pager) ViewPager viewPager;
 
@@ -27,7 +29,8 @@ public class PeopleFeedFragment extends BaseFragment {
 
     @Override
     protected void setupViews() {
-        viewPager.setAdapter(new PeopleFeedViewPager(getFragmentManager(), titles));
+        viewPager.setAdapter(new PeopleFeedViewPager(getChildFragmentManager(), titles));
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     public ViewPager getViewPager() {
