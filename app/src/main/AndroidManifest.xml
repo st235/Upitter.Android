@@ -184,6 +184,10 @@
             android:label="@string/title_activity_company_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".ui.AppInfoWhiteActivity"
+            android:label="@string/title_activity_company_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.CompanyInformationActivity"
             android:label="@string/title_activity_company_information"
             android:theme="@style/AppTheme.NoActionBar" />
