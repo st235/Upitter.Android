@@ -117,6 +117,15 @@ public interface BaseFactory {
                                              @Query("postId") String postId,
                                              @Query("activity[]") List<Integer> categories);
 
+    @GET("post/obtainBySubscriptions")
+    Call<PostsContainerModel> obtainSubscriptionsPosts(@Query("ln") String language,
+                                                       @Query("accessToken") String accessToken);
+
+    @GET("post/obtainBySubscriptions")
+    Call<PostsContainerModel> obtainOldSubscriptionsPosts(@Query("ln") String language,
+                                                          @Query("accessToken") String accessToken,
+                                                          @Query("postId") String postId);
+
     @GET("post/like/{postId}")
     Call<PostContainerModel> likePost(@Path("postId") String postId,
                                       @Query("ln") String language,

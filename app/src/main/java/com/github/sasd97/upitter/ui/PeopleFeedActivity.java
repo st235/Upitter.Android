@@ -92,6 +92,10 @@ public class PeopleFeedActivity extends BaseActivity
 
             TextDrawable textDrawable = TextDrawable
                     .builder()
+                    .beginConfig()
+                    .width(Dimens.dpToPx(75))
+                    .height(Dimens.dpToPx(75))
+                    .endConfig()
                     .buildRoundRect(preview,
                             ContextCompat.getColor(this, R.color.colorShadowDark),
                             Dimens.dpToPx(4));
@@ -150,6 +154,9 @@ public class PeopleFeedActivity extends BaseActivity
                 break;
             case R.id.nav_favorites:
                 navigate(FavoritesFragment.getFragment());
+                break;
+            case R.id.nav_settings:
+                startActivity(new Intent(this, PeopleSettingsActivity.class));
                 break;
             case R.id.nav_app:
                 startActivity(new Intent(this, AppInfoActivity.class));

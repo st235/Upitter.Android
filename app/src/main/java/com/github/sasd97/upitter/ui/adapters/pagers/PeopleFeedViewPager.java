@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.github.sasd97.upitter.ui.fragments.BaseFeedFragment;
+import com.github.sasd97.upitter.ui.fragments.SubscriptionFeedFragment;
 
 /**
  * Created by alexander on 15.09.16.
@@ -23,7 +24,7 @@ public class PeopleFeedViewPager extends FragmentPagerAdapter {
             case 0:
                 return BaseFeedFragment.getFragment();
             case 1:
-                return BaseFeedFragment.getFragment();
+                return SubscriptionFeedFragment.getFragment();
             default:
                 return BaseFeedFragment.getFragment();
         }
