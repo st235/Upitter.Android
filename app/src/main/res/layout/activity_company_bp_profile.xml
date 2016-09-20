@@ -71,7 +71,7 @@
                             android:background="@drawable/rounded_button_shape_agressive_gray"
                             android:layout_marginTop="8dp"
                             android:text="Subscribe"
-                            />
+                            android:elevation="0dp" />
                     </LinearLayout>
                 </LinearLayout>
 
