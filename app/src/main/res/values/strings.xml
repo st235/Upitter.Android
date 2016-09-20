@@ -373,6 +373,8 @@
         <item>Feed</item>
         <item>Subscription</item>
     </string-array>
-    <string name="title_activity_people_settings">PeopleSettingsActivity</string>
     <!-- Endregion -->
+
+    <string name="title_activity_people_settings">Settings</string>
+    <string name="title_activity_people_subscription">Subscriptions</string>
 </resources>

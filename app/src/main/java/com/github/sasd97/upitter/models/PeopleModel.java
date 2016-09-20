@@ -1,5 +1,7 @@
 package com.github.sasd97.upitter.models;
 
+import android.support.annotation.NonNull;
+
 import java.util.Locale;
 
 /**
@@ -46,6 +48,18 @@ public class PeopleModel extends UserModel {
         return mName;
     }
 
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public void setSurname(String surname) {
+        mSurname = surname;
+    }
+
+    public void setNickname(String nickname) {
+        mNickname = nickname;
+    }
+
     public String getSurname() {
         return mSurname;
     }
@@ -68,6 +82,10 @@ public class PeopleModel extends UserModel {
         return mAvatarUrl;
     }
 
+    public void setAvatarUrl(@NonNull String avatarUrl) {
+        mAvatarUrl = avatarUrl;
+    }
+
     @Override
     public String getAccessToken() {
         return mAccessToken;
@@ -85,10 +103,11 @@ public class PeopleModel extends UserModel {
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "People Model\nUID %1$s\nNickname %2$s\nName %3$s\n",
+        return String.format(Locale.getDefault(), "People Model\nUID %1$s\nNickname %2$s\nName %3$s\nAccess token: %4$s\n",
                 mId,
                 mNickname,
-                mName);
+                mName,
+                mAccessToken);
     }
 
     public static class Builder {

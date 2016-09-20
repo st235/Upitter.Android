@@ -37,6 +37,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:onClick="onUploadAvatar"
                     android:orientation="vertical"
                     android:layout_centerInParent="true">
 
@@ -72,14 +74,4 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_people_settings" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end" />
-
 </android.support.design.widget.CoordinatorLayout>

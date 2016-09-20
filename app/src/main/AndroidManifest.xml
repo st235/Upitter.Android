@@ -196,6 +196,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.github.sasd97.upitter.ui.PeopleFeedActivity" />
         </activity>
+        <activity
+            android:name=".ui.PeopleSubscriptionActivity"
+            android:label="@string/title_activity_people_subscription"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

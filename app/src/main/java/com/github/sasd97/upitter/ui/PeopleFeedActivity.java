@@ -155,6 +155,9 @@ public class PeopleFeedActivity extends BaseActivity
             case R.id.nav_favorites:
                 navigate(FavoritesFragment.getFragment());
                 break;
+            case R.id.nav_subscriptions:
+                startActivity(new Intent(this, PeopleSubscriptionActivity.class));
+                break;
             case R.id.nav_settings:
                 startActivity(new Intent(this, PeopleSettingsActivity.class));
                 break;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,10 +9,51 @@
     tools:context="com.github.sasd97.upitter.ui.PeopleSettingsActivity"
     tools:showIn="@layout/activity_people_settings">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/user_nickname_edt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/company_title_hint"
+            android:layout_marginTop="8dp"
+            app:met_floatingLabel="highlight"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/user_name_edt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/company_description_hint"
+            android:layout_marginTop="8dp"
+            app:met_floatingLabel="highlight"
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/user_surname_edt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/company_description_hint"
+            android:layout_marginTop="8dp"
+            app:met_floatingLabel="highlight"
+            />
+
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/activity_short_margin"
+            android:layout_marginLeft="@dimen/activity_short_margin"
+            android:layout_marginRight="@dimen/activity_short_margin"
+            android:padding="8dp"
+            android:text="Save"
+            style="@style/Upitter.Button.Rounded.Upitter"
+            />
+    </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

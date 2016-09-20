@@ -54,6 +54,11 @@
         <item name="android:textSize">@dimen/rounded_button_text_size</item>
     </style>
 
+    <style name="Upitter.Button.Rounded.Upitter" parent="@style/Upitter.Button.Rounded">
+        <item name="android:background">@drawable/rounded_button_shape_upitter</item>
+        <item name="android:textColor">@color/rounded_button_watermelon_text_selector</item>
+    </style>
+
     <style name="Upitter.Button.Rounded.Watermelon" parent="@style/Upitter.Button.Rounded">
         <item name="android:background">@drawable/rounded_button_watermelon</item>
         <item name="android:textColor">@color/rounded_button_watermelon_text_selector</item>
