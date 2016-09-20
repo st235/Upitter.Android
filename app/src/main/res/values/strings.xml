@@ -204,6 +204,7 @@
     <string name="notifications_navigation_drawer">Notifications</string>
     <string name="settings_navigation_drawer">My account</string>
     <string name="tape_navigation_drawer">Tape</string>
+    <string name="subscriptions_navigation_drawer">Subscriptions</string>
     <!-- Endregion -->
 
     <!-- Choose location region -->
@@ -372,5 +373,6 @@
         <item>Feed</item>
         <item>Subscription</item>
     </string-array>
+    <string name="title_activity_people_settings">PeopleSettingsActivity</string>
     <!-- Endregion -->
 </resources>
