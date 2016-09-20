@@ -162,7 +162,7 @@ public class PeopleFeedActivity extends BaseActivity
                 startActivity(new Intent(this, PeopleSettingsActivity.class));
                 break;
             case R.id.nav_app:
-                startActivity(new Intent(this, AppInfoActivity.class));
+                startActivity(new Intent(this, AppInfoWhiteActivity.class));
                 break;
             case R.id.nav_logout:
                 deleteSession();
