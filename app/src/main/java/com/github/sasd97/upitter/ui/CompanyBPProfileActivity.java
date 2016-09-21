@@ -1,6 +1,5 @@
 package com.github.sasd97.upitter.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -20,7 +19,8 @@ import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.SubscribersPointerModel;
 import com.github.sasd97.upitter.services.query.CompanyProfileQueryService;
-import com.github.sasd97.upitter.ui.adapters.pagers.CompanyProfilePager;
+import com.github.sasd97.upitter.ui.adapters.pagers.CompanyProfileBCPager;
+import com.github.sasd97.upitter.ui.adapters.pagers.CompanyProfileBPPager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
@@ -54,8 +54,11 @@ public class CompanyBPProfileActivity extends BaseActivity
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.collpasingToolbar) CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.subscription_value) TextView subscriptionValue;
+    @BindView(R.id.subscription_counter) TextView subscriptionCounter;
 
-    @BindArray(R.array.company_profile_tabs_titile) String[] titles;
+
+    @BindArray(R.array.company_profile_titles) String[] titles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,14 +109,32 @@ public class CompanyBPProfileActivity extends BaseActivity
     }
 
     private void setupPager() {
-        viewPager.setAdapter(new CompanyProfilePager(getSupportFragmentManager(), titles, posts, subscribers));
+        viewPager.setAdapter(new CompanyProfileBPPager(getSupportFragmentManager(), titles, posts, subscribers));
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setupSubscribeButton(CompanyPointerModel company) {
+        subscriptionCounter.setText(String.valueOf(company.getSubscribersAmount()));
+    }
+
+    private void setupSubscribeButtonColor(boolean isActive) {
+        if (isActive) {
+            subscriptionCounter.setBackgroundResource(R.drawable.half_button_subscribe_left);
+            subscriptionValue.setBackgroundResource(R.drawable.half_button_subscribe_right);
+            subscriptionValue.setText(R.string.people_subscribe);
+            return;
+        }
+
+        subscriptionCounter.setBackgroundResource(R.drawable.half_button_unsubscribe_left);
+        subscriptionValue.setBackgroundResource(R.drawable.half_button_unsubscribe_right);
+        subscriptionValue.setText(R.string.people_unsubscribe);
     }
 
     @Override
     public void onFind(CompanyPointerModel company) {
         Logger.i(company.toString());
         obtainCompanyHeader(company);
+        setupSubscribeButton(company);
     }
 
     @Override
@@ -132,10 +153,7 @@ public class CompanyBPProfileActivity extends BaseActivity
     public void onError(ErrorModel error) {
     }
 
-    @OnClick(R.id.company_profile_fc_information)
-    public void onInformationButtonClick(View v) {
-        Intent intent = new Intent(this, CompanyInformationActivity.class);
-        intent.putExtra(COMPANY_ALIAS, alias);
-        startActivity(intent);
+    @OnClick(R.id.subscribe_button)
+    public void onSubscribeClick(View v) {
     }
 }

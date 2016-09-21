@@ -15,7 +15,7 @@ import com.orhanobut.logger.Logger;
  * Created by alexander on 01.09.16.
  */
 
-public class CompanyProfilePager extends FragmentPagerAdapter {
+public class CompanyProfileBCPager extends FragmentPagerAdapter {
 
     private final int TABS_AMOUNT = 2;
 
@@ -24,10 +24,10 @@ public class CompanyProfilePager extends FragmentPagerAdapter {
     private PostsContainerModel posts;
     private SubscribersPointerModel subscribers;
 
-    public CompanyProfilePager(@NonNull FragmentManager fragmentManager,
-                               @NonNull String[] titles,
-                               @NonNull PostsContainerModel posts,
-                               @NonNull SubscribersPointerModel subscribers) {
+    public CompanyProfileBCPager(@NonNull FragmentManager fragmentManager,
+                                 @NonNull String[] titles,
+                                 @NonNull PostsContainerModel posts,
+                                 @NonNull SubscribersPointerModel subscribers) {
         super(fragmentManager);
         this.titles = titles;
         this.posts = posts;

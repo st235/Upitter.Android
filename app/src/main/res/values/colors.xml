@@ -60,4 +60,12 @@
     <!-- Company information -->
     <color name="colorLabelText">#929ca9</color>
     <!-- Endregion -->
+
+    <!-- Subscription area -->
+    <color name="colorSubscribeActiveLeft">#68c880</color>
+    <color name="colorSubscribeActiveRight">#50b769</color>
+    <color name="colorSubscribeInactiveLeft">#455361</color>
+    <color name="colorSubscribeInactiveRight">#515e6b</color>
+    <color name="colorSubscribeInformation">#303f4f</color>
+    <!-- Endregion -->
 </resources>

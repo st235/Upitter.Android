@@ -20,7 +20,7 @@ import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.SubscribersPointerModel;
 import com.github.sasd97.upitter.services.query.CompanyProfileQueryService;
-import com.github.sasd97.upitter.ui.adapters.pagers.CompanyProfilePager;
+import com.github.sasd97.upitter.ui.adapters.pagers.CompanyProfileBCPager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
@@ -106,7 +106,7 @@ public class CompanyBCProfileActivity extends BaseActivity
     }
 
     private void setupPager() {
-        viewPager.setAdapter(new CompanyProfilePager(getSupportFragmentManager(), titles, posts, subscribers));
+        viewPager.setAdapter(new CompanyProfileBCPager(getSupportFragmentManager(), titles, posts, subscribers));
         tabLayout.setupWithViewPager(viewPager);
     }
 

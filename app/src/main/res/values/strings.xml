@@ -376,5 +376,15 @@
     <!-- Endregion -->
 
     <string name="title_activity_people_settings">Settings</string>
+
+    <!-- Company profile by user region -->
     <string name="title_activity_people_subscription">Subscriptions</string>
+    <string name="people_subscribe">Subscribe</string>
+    <string name="people_unsubscribe">Unsubscribe</string>
+
+    <string-array name="company_profile_titles">
+        <item>Posts</item>
+        <item>Information</item>
+    </string-array>
+    <!-- Endregion -->
 </resources>

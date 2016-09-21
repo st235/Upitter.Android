@@ -3,7 +3,6 @@ package com.github.sasd97.upitter.ui.results;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -40,7 +39,7 @@ public class CompanyCoordinatesSelectionResult extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acitivity_map_preview);
+        setContentView(R.layout.activity_map_preview);
     }
 
     @Override

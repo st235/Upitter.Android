@@ -68,6 +68,10 @@ public class CompanyPointerModel {
     @Expose
     private String mAccessToken;
 
+    @SerializedName("subscribersAmount")
+    @Expose
+    private String mSubscribersAmount;
+
     public String getId() {
         return mCustomId;
     }
@@ -144,6 +148,10 @@ public class CompanyPointerModel {
 
     public String getAccessToken() {
         return mAccessToken;
+    }
+
+    public String getSubscribersAmount() {
+        return mSubscribersAmount;
     }
 
     @Override

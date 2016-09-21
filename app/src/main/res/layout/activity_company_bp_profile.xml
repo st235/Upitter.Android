@@ -9,6 +9,13 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.CompanyBCProfileActivity">
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,14 +71,38 @@
                             tools:text="Adidas"
                             />
 
-                        <Button
-                            android:id="@+id/company_profile_fc_information"
+                        <android.support.v7.widget.GridLayout
+                            android:id="@+id/subscribe_button"
+                            android:clickable="true"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:background="@drawable/rounded_button_shape_agressive_gray"
-                            android:layout_marginTop="8dp"
-                            android:text="Subscribe"
-                            android:elevation="0dp" />
+                            app:orientation="horizontal"
+                            app:columnCount="2"
+                            app:rowCount="1">
+
+                            <TextView
+                                android:id="@+id/subscription_value"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_column="0"
+                                app:layout_columnWeight="2"
+                                android:gravity="center"
+                                android:text="@string/people_subscribe"
+                                android:textSize="20sp"
+                                android:background="@drawable/half_button_subscribe_left"
+                                />
+
+                            <TextView
+                                android:id="@+id/subscription_counter"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_column="1"
+                                app:layout_columnWeight="1"
+                                android:gravity="center"
+                                android:textSize="20sp"
+                                android:background="@drawable/half_button_subscribe_right"
+                                />
+                        </android.support.v7.widget.GridLayout>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -93,12 +124,5 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
 
 </android.support.design.widget.CoordinatorLayout>
