@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -92,10 +93,9 @@ public class PostCreationActivity extends BaseActivity
 
         setCategory(Categories.getDefaultCategory());
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         imageHolderRecyclerAdapter = new ImageHolderRecyclerAdapter(this, new ArrayList<String>(), this);
-        photosRecyclerView.setLayoutManager(linearLayoutManager);
+        photosRecyclerView.setLayoutManager(gridLayoutManager);
         photosRecyclerView.setAdapter(imageHolderRecyclerAdapter);
     }
 

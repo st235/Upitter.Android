@@ -97,7 +97,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/image_placeholder_recyclerview_publication"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="wrap_content"
             android:padding="4dp"
             android:background="@drawable/above_score_stroke"
             android:visibility="gone"
