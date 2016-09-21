@@ -72,6 +72,10 @@ public class CompanyPointerModel {
     @Expose
     private String mSubscribersAmount;
 
+    @SerializedName("isMySubscription")
+    @Expose
+    private boolean mIsMySubscription;
+
     public String getId() {
         return mCustomId;
     }
@@ -152,6 +156,10 @@ public class CompanyPointerModel {
 
     public String getSubscribersAmount() {
         return mSubscribersAmount;
+    }
+
+    public boolean isMySubscription() {
+        return mIsMySubscription;
     }
 
     @Override

@@ -6,7 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
+import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.SubscribersPointerModel;
+import com.github.sasd97.upitter.ui.fragments.CompanyInformationFragment;
 import com.github.sasd97.upitter.ui.fragments.CompanyProfileFeedFragment;
 import com.github.sasd97.upitter.ui.fragments.CompanyProfileSubscribersFragment;
 
@@ -21,16 +23,16 @@ public class CompanyProfileBPPager extends FragmentPagerAdapter {
     private String[] titles;
 
     private PostsContainerModel posts;
-    private SubscribersPointerModel subscribers;
+    private CompanyPointerModel company;
 
     public CompanyProfileBPPager(@NonNull FragmentManager fragmentManager,
                                  @NonNull String[] titles,
                                  @NonNull PostsContainerModel posts,
-                                 @NonNull SubscribersPointerModel subscribers) {
+                                 @NonNull CompanyPointerModel company) {
         super(fragmentManager);
         this.titles = titles;
         this.posts = posts;
-        this.subscribers = subscribers;
+        this.company = company;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class CompanyProfileBPPager extends FragmentPagerAdapter {
             case 0:
                 return CompanyProfileFeedFragment.getFragment(posts);
             case 1:
-                return CompanyProfileSubscribersFragment.getFragment(subscribers);
+                return CompanyInformationFragment.getFragment(company);
             default:
                 return CompanyProfileFeedFragment.getFragment(posts);
         }

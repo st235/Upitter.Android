@@ -13,12 +13,14 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.SubscribersPointerModel;
 import com.github.sasd97.upitter.services.query.CompanyProfileQueryService;
+import com.github.sasd97.upitter.services.query.SubscribeQueryService;
 import com.github.sasd97.upitter.ui.adapters.pagers.CompanyProfileBCPager;
 import com.github.sasd97.upitter.ui.adapters.pagers.CompanyProfileBPPager;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
@@ -38,13 +40,16 @@ import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.COMPANY_ALIAS;
 
 public class CompanyBPProfileActivity extends BaseActivity
-        implements CompanyProfileQueryService.OnCompanySearchListener {
+        implements CompanyProfileQueryService.OnCompanySearchListener,
+        SubscribeQueryService.OnSubscribeListener {
 
     private final String SPACE = " ";
 
     private String alias;
     private UserModel userModel;
+    private CompanyPointerModel company;
     private CompanyProfileQueryService findQueryService;
+    private SubscribeQueryService subscribeQueryService;
 
     private PostsContainerModel posts;
     private SubscribersPointerModel subscribers;
@@ -73,6 +78,7 @@ public class CompanyBPProfileActivity extends BaseActivity
 
         userModel = getHolder().get();
         findQueryService = CompanyProfileQueryService.getService(this);
+        subscribeQueryService = SubscribeQueryService.getService(this);
         collapsingToolbarLayout.setTitle(SPACE);
 
         alias = getIntent().getStringExtra(COMPANY_ALIAS);
@@ -109,29 +115,31 @@ public class CompanyBPProfileActivity extends BaseActivity
     }
 
     private void setupPager() {
-        viewPager.setAdapter(new CompanyProfileBPPager(getSupportFragmentManager(), titles, posts, subscribers));
+        viewPager.setAdapter(new CompanyProfileBPPager(getSupportFragmentManager(), titles, posts, company));
         tabLayout.setupWithViewPager(viewPager);
     }
 
     private void setupSubscribeButton(CompanyPointerModel company) {
         subscriptionCounter.setText(String.valueOf(company.getSubscribersAmount()));
+        setupSubscribeButtonColor(!company.isMySubscription());
     }
 
     private void setupSubscribeButtonColor(boolean isActive) {
         if (isActive) {
-            subscriptionCounter.setBackgroundResource(R.drawable.half_button_subscribe_left);
-            subscriptionValue.setBackgroundResource(R.drawable.half_button_subscribe_right);
+            subscriptionCounter.setBackgroundResource(R.drawable.half_button_subscribe_right);
+            subscriptionValue.setBackgroundResource(R.drawable.half_button_subscribe_left);
             subscriptionValue.setText(R.string.people_subscribe);
             return;
         }
 
-        subscriptionCounter.setBackgroundResource(R.drawable.half_button_unsubscribe_left);
-        subscriptionValue.setBackgroundResource(R.drawable.half_button_unsubscribe_right);
+        subscriptionCounter.setBackgroundResource(R.drawable.half_button_unsubscribe_right);
+        subscriptionValue.setBackgroundResource(R.drawable.half_button_unsubscribe_left);
         subscriptionValue.setText(R.string.people_unsubscribe);
     }
 
     @Override
     public void onFind(CompanyPointerModel company) {
+        this.company = company;
         Logger.i(company.toString());
         obtainCompanyHeader(company);
         setupSubscribeButton(company);
@@ -150,10 +158,17 @@ public class CompanyBPProfileActivity extends BaseActivity
     }
 
     @Override
+    public void onSubscribe(boolean isSubscribe, String amount) {
+        subscriptionCounter.setText(String.valueOf(amount));
+        setupSubscribeButtonColor(!isSubscribe);
+    }
+
+    @Override
     public void onError(ErrorModel error) {
     }
 
     @OnClick(R.id.subscribe_button)
     public void onSubscribeClick(View v) {
+        subscribeQueryService.subscribe(company.getId(), userModel.getAccessToken());
     }
 }

@@ -10,6 +10,7 @@ import com.github.sasd97.upitter.models.response.containers.CategoriesContainerM
 import com.github.sasd97.upitter.models.response.containers.CommentContainerModel;
 import com.github.sasd97.upitter.models.response.containers.CommentsContainerModel;
 import com.github.sasd97.upitter.models.response.containers.CompanyContainerModel;
+import com.github.sasd97.upitter.models.response.containers.PlainSubscribeContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.containers.SocialIconContainerModel;
@@ -245,6 +246,11 @@ public interface BaseFactory {
     @FormUrlEncoded
     @POST("user/edit")
     Call<UserContainerModel> editUserLogo(@Field("accessToken") String accessToken,
-                                                @Field("ln") String language,
-                                                @Field("picture") String logoUrl);
+                                          @Field("ln") String language,
+                                          @Field("picture") String logoUrl);
+
+    @GET("user/toggle_subscription/{companyId}")
+    Call<PlainSubscribeContainerModel> subscribe(@Path("companyId") String companyId,
+                                                 @Query("accessToken") String accessToken,
+                                                 @Query("ln") String language);
 }
