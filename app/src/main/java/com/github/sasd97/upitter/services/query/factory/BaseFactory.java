@@ -239,7 +239,8 @@ public interface BaseFactory {
                                       @Field("ln") String language,
                                       @Field("name") String name,
                                       @Field("surname") String surname,
-                                      @Field("nickname") String nickname);
+                                      @Field("nickname") String nickname,
+                                      @Field("sex") int sex);
 
     @FormUrlEncoded
     @POST("user/edit")

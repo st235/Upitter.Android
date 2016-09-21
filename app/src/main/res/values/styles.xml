@@ -118,4 +118,12 @@
         <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="android:textColorSecondary">@color/colorTextField</item>
     </style>
+    <!-- Endregion -->
+
+    <!-- Radio group region -->
+    <style name="Upitter.Radiogroup" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+    </style>
+    <!-- Endregion -->
 </resources>

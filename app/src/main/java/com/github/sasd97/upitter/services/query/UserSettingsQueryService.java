@@ -56,10 +56,11 @@ public class UserSettingsQueryService {
     public void edit(@NonNull String accessToken,
                      @NonNull String name,
                      @NonNull String surname,
-                     @NonNull String nickname) {
+                     @NonNull String nickname,
+                     int sex) {
         Call<UserContainerModel> edit = RestService
                 .baseFactory()
-                .editUser(accessToken, language(), name, surname, nickname);
+                .editUser(accessToken, language(), name, surname, nickname, sex);
 
         edit.enqueue(new Callback<UserContainerModel>(listener) {
             @Override

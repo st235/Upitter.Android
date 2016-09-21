@@ -2,6 +2,8 @@ package com.github.sasd97.upitter.models;
 
 import android.support.annotation.NonNull;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.Locale;
 
 /**
@@ -75,6 +77,11 @@ public class PeopleModel extends UserModel {
 
     public int getSex() {
         return mSex;
+    }
+
+    public void setSex(int sex) {
+        if (sex < 0 || sex > 2) return;
+        mSex = sex;
     }
 
     @Override

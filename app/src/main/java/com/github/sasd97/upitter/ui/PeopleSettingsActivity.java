@@ -9,6 +9,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -54,6 +56,7 @@ public class PeopleSettingsActivity extends BaseActivity
     @BindView(R.id.user_nickname_edt) MaterialEditText userNicknameEdt;
     @BindView(R.id.user_name_edt) MaterialEditText userNameEdt;
     @BindView(R.id.user_surname_edt) MaterialEditText userSurnameEdt;
+    @BindView(R.id.sex_radio_group) RadioGroup sexSelectorRdg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,8 @@ public class PeopleSettingsActivity extends BaseActivity
 
         fileUploadQueryService = FileUploadQueryService.getService(this);
         userSettingsQueryService = UserSettingsQueryService.getService(this);
+        RadioButton radioButton = (RadioButton) sexSelectorRdg.getChildAt(people.getSex());
+        radioButton.setChecked(true);
 
         obtainPeopleLogo(userAvatar, bluredBackground, people.getAvatarUrl());
         userName.setText(people.getName());
@@ -77,6 +82,13 @@ public class PeopleSettingsActivity extends BaseActivity
         userNameEdt.setText(people.getName());
         userNicknameEdt.setText(people.getNickname());
         userSurnameEdt.setText(people.getSurname());
+
+        sexSelectorRdg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                people.setSex(checkedId - 1);
+            }
+        });
 
         userNameEdt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -130,12 +142,15 @@ public class PeopleSettingsActivity extends BaseActivity
 
     @OnClick(R.id.save_button)
     public void onSave(View v) {
+        Logger.e(String.valueOf(people.getSex()));
         userSettingsQueryService.edit(people.getAccessToken(),
                 people.getName(),
                 people.getSurname(),
-                people.getNickname());
+                people.getNickname(),
+                people.getSex());
     }
 
+    @OnClick(R.id.user_avatar_click_area)
     public void onUploadAvatar(View v) {
         Intent gallery = new Gallery
                 .Builder()
