@@ -1,10 +1,14 @@
 package com.github.sasd97.upitter.utils;
 
 import android.content.Context;
+import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.ErrorModel;
+import com.github.sasd97.upitter.models.response.pointers.ComplaintPointerModel;
+
+import java.util.List;
 
 /**
  * Created by alexander on 31.07.16.

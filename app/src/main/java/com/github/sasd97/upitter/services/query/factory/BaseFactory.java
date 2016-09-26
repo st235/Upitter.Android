@@ -10,6 +10,7 @@ import com.github.sasd97.upitter.models.response.containers.CategoriesContainerM
 import com.github.sasd97.upitter.models.response.containers.CommentContainerModel;
 import com.github.sasd97.upitter.models.response.containers.CommentsContainerModel;
 import com.github.sasd97.upitter.models.response.containers.CompanyContainerModel;
+import com.github.sasd97.upitter.models.response.containers.ComplainContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PlainSubscribeContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
@@ -253,4 +254,15 @@ public interface BaseFactory {
     Call<PlainSubscribeContainerModel> subscribe(@Path("companyId") String companyId,
                                                  @Query("accessToken") String accessToken,
                                                  @Query("ln") String language);
+
+    @GET("report/reasons/post")
+    Call<ComplainContainerModel> obtainComplainList(@Query("accessToken") String accessToken,
+                                                    @Query("ln") String language);
+
+    @FormUrlEncoded
+    @POST("report/create")
+    Call<SimpleResponseModel> createComplain(@Query("accessToken") String accessToken,
+                                                @Query("ln") String language,
+                                                @Field("reasonId") String reasonId,
+                                                @Field("targetId") String targetId);
 }

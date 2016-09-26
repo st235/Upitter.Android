@@ -119,7 +119,6 @@ public class CollageLayoutManager extends RecyclerView.LayoutManager {
         if (height > MAXIMUM_TIGHT_IMAGE_HEIGHT) height = MAXIMUM_TIGHT_IMAGE_HEIGHT;
 
         measureChildWithMargins(imageView, width, height);
-        Logger.d(String.valueOf(coefficient));
         layoutDecorated(imageView, LEFT_POSITION, TOP_POSITION, width, height);
     }
 

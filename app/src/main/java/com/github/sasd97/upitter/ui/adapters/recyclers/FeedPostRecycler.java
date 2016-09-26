@@ -3,8 +3,10 @@ package com.github.sasd97.upitter.ui.adapters.recyclers;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -25,8 +29,10 @@ import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
+import com.github.sasd97.upitter.models.response.pointers.ComplaintPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
+import com.github.sasd97.upitter.services.query.ComplainQueryService;
 import com.github.sasd97.upitter.services.query.FeedQueryService;
 import com.github.sasd97.upitter.ui.CompanyBCProfileActivity;
 import com.github.sasd97.upitter.ui.CompanyBPProfileActivity;
@@ -36,6 +42,7 @@ import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.ui.schemas.MapPreviewSchema;
 import com.github.sasd97.upitter.ui.schemas.PostPreviewSchema;
 import com.github.sasd97.upitter.utils.Categories;
+import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Names;
@@ -90,6 +97,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
     public class TapeViewHolder extends BaseViewHolder
         implements FeedQueryService.OnTapeQueryListener,
             FeedQuizVariantRecycler.OnItemClickListener,
+            ComplainQueryService.ComplainListener,
             ImageCollageRecycler.OnImageClickListener,
             Toolbar.OnMenuItemClickListener,
             View.OnClickListener {
@@ -121,6 +129,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         @BindView(R.id.post_images_post_single_view) RecyclerView imagesRecyclerView;
 
         private FeedQueryService queryService;
+        private ComplainQueryService complainQueryService;
         private View.OnClickListener likeClick;
         private View.OnClickListener favoriteClick;
 
@@ -132,6 +141,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         protected void setupViews() {
             queryService = FeedQueryService.getService(this);
+            complainQueryService= ComplainQueryService.getService(this);
             postToolbar.setOnMenuItemClickListener(this);
             userAreaPostLinearLayout.setOnClickListener(this);
 
@@ -168,9 +178,53 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
                     intent.putExtra(COORDINATES_ATTACH, post.toAuthorOnMapModel());
                     context.startActivity(intent);
                     break;
+                case R.id.action_share:
+                    ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+                    mShareActionProvider.setShareIntent(doShare());
+                    break;
+                case R.id.action_complain:
+                    complainQueryService.obtainComplainList(user.getAccessToken());
             }
 
             return false;
+        }
+
+        private Intent doShare() {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("image/jpeg");
+            intent.putExtra(Intent.EXTRA_TEXT, "Put whatever you want");
+            return intent;
+        }
+
+        @Override
+        public void onObtainComplainList(final List<ComplaintPointerModel> complains) {
+                     new MaterialDialog
+                    .Builder(context)
+                    .title("Complains")
+                    .items(complains)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            ComplaintPointerModel complaintPointerModel = complains.get(which);
+                            PostPointerModel postPointerModel = posts.get(getAdapterPosition());
+
+                            complainQueryService.createComplain(user.getAccessToken(),
+                                    postPointerModel.getId(),
+                                    complaintPointerModel.getId()
+                            );
+                        }
+                    })
+                    .show();
+        }
+
+        @Override
+        public void onComplainSuccess() {
+            Toast.makeText(context, "Complain success", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onComplainError() {
+            Toast.makeText(context, "Complain error", Toast.LENGTH_LONG).show();
         }
 
         @Override
