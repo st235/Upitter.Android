@@ -83,7 +83,6 @@ public class AppInfoActivity extends BaseActivity implements ApplicationInfoQuer
     @Override
     protected void onPause() {
         super.onPause();
-
         if (dialog != null && dialog.isShowing()) dialog.dismiss();
     }
 }

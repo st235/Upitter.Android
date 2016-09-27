@@ -53,6 +53,11 @@ public interface BaseFactory {
     Call<AuthorizationContainerModel> authorizeWithTwitter(@Field("token") String token,
                                                            @Field("secret") String secret);
 
+    @FormUrlEncoded
+    @POST("authorization/vkontakte/verify")
+    Call<AuthorizationContainerModel> authorizeWithVK(@Field("token") String token,
+                                                      @Field("secret") String secret);
+
     @POST("authorization/phone/set/{number}/{countryCode}")
     Call<SimpleResponseModel> obtainRequestCode(@Path("number") String number,
                                                 @Path("countryCode") String countryCode);
