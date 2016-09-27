@@ -3,12 +3,15 @@ package com.github.sasd97.upitter.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.github.sasd97.upitter.holders.CompanyHolder;
 import com.github.sasd97.upitter.holders.PeopleHolder;
 import com.github.sasd97.upitter.holders.UserHolder;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.orhanobut.logger.Logger;
+import com.vk.sdk.util.VKUtil;
 
 import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.Upitter.setHolder;

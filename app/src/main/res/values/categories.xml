@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="categories_title">
+    <string-array name="categories_title" translatable="false">
         <item>News</item>
         <item>Discount</item>
         <item>Special</item>
@@ -12,7 +12,7 @@
     </string-array>
 
 
-    <string-array name="categories_id">
+    <string-array name="categories_id" translatable="false">
         <item>news</item>
         <item>discount</item>
         <item>special</item>

@@ -21,6 +21,7 @@ import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.response.pointers.UserPointerModel;
 import com.github.sasd97.upitter.services.query.UserAuthorizationQueryService;
+import com.github.sasd97.upitter.ui.EmptyFeedActvity;
 import com.github.sasd97.upitter.ui.PeopleFeedActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.services.AuthorizationService;
@@ -36,6 +37,7 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
+import com.vk.sdk.VKServiceActivity;
 import com.vk.sdk.api.VKError;
 
 import java.util.Arrays;
@@ -109,6 +111,16 @@ public class PeopleAuthorizationFragment extends BaseFragment
         VKSdk.login(getActivity(), null);
     }
 
+    @OnClick(R.id.skip_button_user_login_fragment)
+    void onSkipClick(View v) {
+        startActivity(new Intent(getContext(), EmptyFeedActvity.class));
+        getActivity().finish();
+    }
+
+    public void connectWithVK(@NonNull String accessToken) {
+        service.notifyByVK(accessToken);
+    }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Snackbar
@@ -135,7 +147,7 @@ public class PeopleAuthorizationFragment extends BaseFragment
 
     @Override
     public void onServerNotify(UserPointerModel userPointerModel) {
-        Logger.json(userPointerModel.toString());
+        Logger.i(userPointerModel.toString());
 
         PeopleModel.Builder builder = new PeopleModel
                 .Builder()
@@ -152,7 +164,7 @@ public class PeopleAuthorizationFragment extends BaseFragment
         if (userPointerModel.getEmail() != null) builder.email(userPointerModel.getEmail());
 
         setHolder(PeopleHolder.getHolder());
-        getHolder().save(builder.build());
+        ((PeopleHolder) getHolder()).save(builder.build());
 
         Snackbar
                 .make(getView(), getString(R.string.authorized_successfully_login_activity), Snackbar.LENGTH_LONG)
@@ -163,6 +175,7 @@ public class PeopleAuthorizationFragment extends BaseFragment
 
     @Override
     public void onError(ErrorModel errorModel) {
+        Logger.e(errorModel.toString());
         showErrorSnackbar();
     }
 

@@ -37,8 +37,7 @@ public class RefreshQueryService {
         return new RefreshQueryService(listener);
     }
 
-    public void loadNew(@NonNull String accessToken,
-                        int radius,
+    public void loadNew(int radius,
                         double latitude,
                         double longitude,
                         @NonNull String postId,
@@ -46,7 +45,6 @@ public class RefreshQueryService {
         Call<PostsContainerModel> loadNew = RestService
                 .baseFactory()
                 .obtainNewPosts(language(),
-                                accessToken,
                                 latitude,
                                 longitude,
                                 radius,
@@ -67,8 +65,7 @@ public class RefreshQueryService {
         });
     }
 
-    public void loadOld(@NonNull String accessToken,
-                        @NonNull String postId,
+    public void loadOld(@NonNull String postId,
                         int radius,
                         double latitude,
                         double longitude,
@@ -76,7 +73,6 @@ public class RefreshQueryService {
         Call<PostsContainerModel> loadOld = RestService
                 .baseFactory()
                 .obtainOldPosts(language(),
-                        accessToken,
                         latitude,
                         longitude,
                         radius,

@@ -203,6 +203,10 @@
         <activity
             android:name=".ui.PeopleSubscriptionActivity"
             android:label="@string/title_activity_people_subscription"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.EmptyFeedActvity"
+            android:label="@string/title_activity_empty_feed_actvity"
             android:theme="@style/AppTheme"></activity>
     </application>
 

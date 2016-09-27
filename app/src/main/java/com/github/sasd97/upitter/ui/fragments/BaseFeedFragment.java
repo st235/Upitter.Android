@@ -47,8 +47,6 @@ public class BaseFeedFragment extends BaseFragment
         LocationService.OnLocationListener,
         SwipeRefreshLayout.OnRefreshListener {
 
-    private UserModel userModel;
-
     @BindView(R.id.swipe_layout_tape) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recycler_view_tape_fragment) RecyclerView tapeRecyclerView;
 
@@ -69,11 +67,12 @@ public class BaseFeedFragment extends BaseFragment
     @Override
     protected void setupViews() {
         setHasOptionsMenu(true);
-        userModel = getHolder().get();
         categoriesSelected = new ArrayList<>();
 
+        boolean isHolder = getHolder() != null;
+
         linearLayoutManager = new LinearLayoutManager(getContext());
-        feedPostRecycler = new FeedPostRecycler(getContext(), getHolder().get());
+        feedPostRecycler = new FeedPostRecycler(getContext(), isHolder ? getHolder().get() : null);
         tapeRecyclerView.setLayoutManager(linearLayoutManager);
         tapeRecyclerView.setAdapter(feedPostRecycler);
 
@@ -90,7 +89,6 @@ public class BaseFeedFragment extends BaseFragment
                 if (feedPostRecycler.getItemCount() < 20) return;
 
                 refreshQueryService.loadOld(
-                        userModel.getAccessToken(),
                         feedPostRecycler.getLastPostId(),
                         LocationHolder.getRadius(),
                         LocationHolder.getLocation().getLatitude(),
@@ -121,7 +119,6 @@ public class BaseFeedFragment extends BaseFragment
     @Override
     public void onLocationFind(Location location) {
         postQueryService.obtainPosts(
-                getHolder().get().getAccessToken(),
                 LocationHolder.getRadius(),
                 LocationHolder.getLocation().getLatitude(),
                 LocationHolder.getLocation().getLongitude(),
@@ -134,7 +131,6 @@ public class BaseFeedFragment extends BaseFragment
     @Override
     public void onRefresh() {
         refreshQueryService.loadNew(
-                userModel.getAccessToken(),
                 LocationHolder.getRadius(),
                 LocationHolder.getLocation().getLatitude(),
                 LocationHolder.getLocation().getLongitude(),
@@ -190,10 +186,12 @@ public class BaseFeedFragment extends BaseFragment
 
         switch (id) {
             case R.id.action_choose_category:
+                Logger.d("OK3");
                 Intent intent = new Intent(getContext(), CategoriesSelectionResult.class);
                 startActivityForResult(intent, CATEGORIES_ACTIVITY_REQUEST);
                 return true;
             case R.id.action_choose_location:
+                Logger.d("OK4");
                 startActivityForResult(new Intent(getContext(), LocationSelectionResult.class), LOCATION_CHANGE_REQUEST);
                 return true;
         }
@@ -205,7 +203,6 @@ public class BaseFeedFragment extends BaseFragment
         categoriesSelected = intent.getIntegerArrayListExtra(CATEGORIES_ATTACH);
         feedPostRecycler.refresh();
         postQueryService.obtainPosts(
-                getHolder().get().getAccessToken(),
                 LocationHolder.getRadius(),
                 LocationHolder.getLocation().getLatitude(),
                 LocationHolder.getLocation().getLongitude(),
@@ -213,9 +210,9 @@ public class BaseFeedFragment extends BaseFragment
     }
 
     private void handleLocation() {
+        Logger.d("OK2");
         feedPostRecycler.refresh();
         postQueryService.obtainPosts(
-                getHolder().get().getAccessToken(),
                 LocationHolder.getRadius(),
                 LocationHolder.getLocation().getLatitude(),
                 LocationHolder.getLocation().getLongitude(),
@@ -225,7 +222,9 @@ public class BaseFeedFragment extends BaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Logger.d("OK");
         if (resultCode != BaseActivity.RESULT_OK) return;
+        Logger.d("OK");
 
         if (requestCode == CATEGORIES_ACTIVITY_REQUEST) {
             handleCategoriesIntent(data);

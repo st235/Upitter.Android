@@ -40,8 +40,7 @@ public class PostQueryService {
         return new PostQueryService(listener);
     }
 
-    public void obtainPosts(@NonNull String accessToken,
-                            @NonNull Integer radius,
+    public void obtainPosts(@NonNull Integer radius,
                             double latitude,
                             double longitude,
                             @NonNull List<Integer> categories) {
@@ -50,7 +49,6 @@ public class PostQueryService {
                 RestService
                 .baseFactory()
                 .obtainPosts(language(),
-                        accessToken,
                         latitude,
                         longitude,
                         radius,

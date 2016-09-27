@@ -91,7 +91,6 @@ public class SubscriptionFeedFragment extends BaseFragment
                 if (feedPostRecycler.getItemCount() < 20) return;
 
                 refreshQueryService.loadOld(
-                        userModel.getAccessToken(),
                         feedPostRecycler.getLastPostId(),
                         LocationHolder.getRadius(),
                         LocationHolder.getLocation().getLatitude(),
@@ -127,7 +126,6 @@ public class SubscriptionFeedFragment extends BaseFragment
     @Override
     public void onRefresh() {
         refreshQueryService.loadNew(
-                userModel.getAccessToken(),
                 LocationHolder.getRadius(),
                 LocationHolder.getLocation().getLatitude(),
                 LocationHolder.getLocation().getLongitude(),

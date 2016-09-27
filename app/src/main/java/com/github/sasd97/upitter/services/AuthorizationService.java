@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.orhanobut.logger.Logger;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
@@ -92,6 +93,7 @@ public final class AuthorizationService {
 
     public static void obtainGoogle(UserAuthorizationQueryService service, GoogleSignInResult result) {
         GoogleSignInAccount googleAccount = result.getSignInAccount();
+        Logger.e(googleAccount.getIdToken());
         service.notifyByGoogle(googleAccount.getIdToken());
     }
 }

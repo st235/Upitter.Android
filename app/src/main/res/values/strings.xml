@@ -5,8 +5,8 @@
     <!-- Endregion -->
 
     <!-- Debug dialog region. -->
-    <string name="debug_dialog_title">Debug build</string>
-    <string name="debug_dialog_content" translatable="false">Warning. Current application remaining in debug mode.\nAll forms are fill by default values. For developers purposes only.\nVersion: 0.0.2.5\nVersion code: 401\nBuild date: 8/6/16\nUpitter LLC</string>
+    <string name="debug_dialog_title">Open beta-test</string>
+    <string name="debug_dialog_content">Warning. Current application remaining in debug mode.\nAll forms are fill by default values. For developers purposes only.\nVersion: 0.0.2.5\nVersion code: 401\nBuild date: 8/6/16\nUpitter LLC</string>
     <string name="debug_dialog_confirm">Agree</string>
     <!-- Endregion -->
 
@@ -15,16 +15,16 @@
     <!-- Endregion -->
 
     <!-- Update dialog region. -->
-    <string name="title_update_dialog">New version available</string>
-    <string name="content_update_dialog">Your current version is too old</string>
-    <string name="upload_update_dialog">Upload from Google Play</string>
-    <string name="close_update_dialog">Close</string>
+    <string name="title_update_dialog" translatable="false">New version available</string>
+    <string name="content_update_dialog" translatable="false">Your current version is too old</string>
+    <string name="upload_update_dialog" translatable="false">Upload from Google Play</string>
+    <string name="close_update_dialog" translatable="false">Close</string>
     <!-- Endregion -->
 
     <!-- No updates dialog region. -->
-    <string name="title_no_updates_dialog">No updates</string>
-    <string name="content_no_updates_dialog">You current version is actual</string>
-    <string name="ok_no_updates_dialog">Ok</string>
+    <string name="title_no_updates_dialog" translatable="false">No updates</string>
+    <string name="content_no_updates_dialog" translatable="false">You current version is actual</string>
+    <string name="ok_no_updates_dialog" translatable="false">Ok</string>
     <!-- Endregion -->
 
     <!-- Region permissions -->
@@ -129,7 +129,7 @@
     <!-- Endregion -->
 
     <!-- Filters region -->
-    <string-array name="filter_list">
+    <string-array name="filter_list" translatable="false">
         <item>DEFAULT</item>
         <item>1997</item>
         <item>AMARO</item>
@@ -204,7 +204,8 @@
     <string name="notifications_navigation_drawer">Notifications</string>
     <string name="settings_navigation_drawer">My account</string>
     <string name="tape_navigation_drawer">Tape</string>
-    <string name="subscriptions_navigation_drawer">Subscriptions</string>
+    <string name="subscriptions_navigation_drawer" translatable="false">Subscriptions</string>
+    <string name="sign_in_navigation_drawer" translatable="false">Sign in</string>
     <!-- Endregion -->
 
     <!-- Choose location region -->
@@ -345,46 +346,47 @@
         <item>Preview</item>
         <item>List</item>
     </string-array>
-    <string name="title_activity_company_profile">CompanyProfileActivity</string>
+    <string name="title_activity_company_profile" translatable="false">CompanyProfileActivity</string>
     <!-- Endregion -->
 
     <!-- Company Profile region -->
-    <string-array name="company_profile_tabs_titile">
+    <string-array name="company_profile_tabs_titile" translatable="false">
         <item>Posts\n</item>
         <item>Subscriptions\n</item>
     </string-array>
     <!-- Endregion -->
 
     <!-- Chat Message Line region -->
-    <string name="chat_line_message">Message</string>
-    <string name="title_activity_company_information">CompanyInformationActivity</string>
+    <string name="chat_line_message" translatable="false">Message</string>
+    <string name="title_activity_company_information" translatable="false">CompanyInformationActivity</string>
     <!-- Endregion -->
 
     <!-- Company information region -->
-    <string name="summary_rating_company_information">All likes:</string>
-    <string name="description_company_information">Description:</string>
-    <string name="contacts_company_information">Contacts:</string>
-    <string name="activities_company_information">Activity:</string>
-    <string name="show_on_map_company_information">Show on map</string>
+    <string name="summary_rating_company_information" translatable="false">All likes:</string>
+    <string name="description_company_information" translatable="false">Description:</string>
+    <string name="contacts_company_information" translatable="false">Contacts:</string>
+    <string name="activities_company_information" translatable="false">Activity:</string>
+    <string name="show_on_map_company_information" translatable="false">Show on map</string>
     <!-- Endregion -->
 
     <!-- People Feed region -->
-    <string-array name="people_feed_titles">
+    <string-array name="people_feed_titles" translatable="false">
         <item>Feed</item>
         <item>Subscription</item>
     </string-array>
     <!-- Endregion -->
 
-    <string name="title_activity_people_settings">Settings</string>
+    <string name="title_activity_people_settings" translatable="false">Settings</string>
 
     <!-- Company profile by user region -->
-    <string name="title_activity_people_subscription">Subscriptions</string>
-    <string name="people_subscribe">Subscribe</string>
-    <string name="people_unsubscribe">Unsubscribe</string>
+    <string name="title_activity_people_subscription" translatable="false">Subscriptions</string>
+    <string name="people_subscribe" translatable="false">Subscribe</string>
+    <string name="people_unsubscribe" translatable="false">Unsubscribe</string>
 
-    <string-array name="company_profile_titles">
+    <string-array name="company_profile_titles" translatable="false">
         <item>Posts</item>
         <item>Information</item>
     </string-array>
+    <string name="title_activity_empty_feed_actvity">EmptyFeedActvity</string>
     <!-- Endregion -->
 </resources>

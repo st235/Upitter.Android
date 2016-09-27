@@ -71,8 +71,8 @@
                 android:layout_marginLeft="@dimen/activity_short_margin"
                 android:layout_marginRight="@dimen/activity_short_margin"
                 android:padding="8dp"
-                android:drawableLeft="@drawable/ic_facebook"
-                android:drawableStart="@drawable/ic_facebook"
+                android:drawableLeft="@drawable/ic_vk"
+                android:drawableStart="@drawable/ic_vk"
                 android:text="VKontakte"
                 style="@style/Upitter.Button.Rounded.VK"
                 />

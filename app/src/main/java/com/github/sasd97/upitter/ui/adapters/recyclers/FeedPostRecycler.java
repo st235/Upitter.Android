@@ -81,15 +81,16 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
     public FeedPostRecycler(Context context, UserModel user) {
         posts = new ArrayList<>();
-        posts.add(new PostPointerModel());
         this.context = context;
         this.user = user;
+        this.isHeader = user != null;
+        if (this.isHeader) posts.add(new PostPointerModel());
     }
 
     public FeedPostRecycler(Context context, UserModel user, boolean isHeader) {
         this.user = user;
         this.context = context;
-        this.isHeader = isHeader;
+        this.isHeader = isHeader && user != null;
         posts = new ArrayList<>();
         if (!isHeader) FIRST_POSITION = 0;
     }
@@ -363,7 +364,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     private boolean isHeaderView(int position) {
-        return position == 0;
+        return user != null && position == 0;
     }
 
     @Override
@@ -437,6 +438,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
     private void obtainToolbar(Toolbar toolbar, CompanyPointerModel author) {
         toolbar.getMenu().clear();
+        if (user == null) return;
 
         if (user.getUId().equalsIgnoreCase(author.getId())) {
             toolbar.inflateMenu(R.menu.post_owner_single_view_menu);

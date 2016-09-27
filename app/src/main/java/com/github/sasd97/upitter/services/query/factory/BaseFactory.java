@@ -54,9 +54,8 @@ public interface BaseFactory {
                                                            @Field("secret") String secret);
 
     @FormUrlEncoded
-    @POST("authorization/vkontakte/verify")
-    Call<AuthorizationContainerModel> authorizeWithVK(@Field("token") String token,
-                                                      @Field("secret") String secret);
+    @POST("authorization/vk/verify")
+    Call<AuthorizationContainerModel> authorizeWithVK(@Field("accessToken") String token);
 
     @POST("authorization/phone/set/{number}/{countryCode}")
     Call<SimpleResponseModel> obtainRequestCode(@Path("number") String number,
@@ -102,7 +101,6 @@ public interface BaseFactory {
 
     @GET("post/obtain")
     Call<PostsContainerModel> obtainPosts(@Query("ln") String language,
-                                          @Query("accessToken") String accessToken,
                                           @Query("latitude") double latitude,
                                           @Query("longitude") double longitude,
                                           @Query("radius") int radius,
@@ -110,7 +108,6 @@ public interface BaseFactory {
 
     @GET("post/obtainNew")
     Call<PostsContainerModel> obtainNewPosts(@Query("ln") String language,
-                                             @Query("accessToken") String accessToken,
                                              @Query("latitude") double latitude,
                                              @Query("longitude") double longitude,
                                              @Query("radius") int radius,
@@ -119,7 +116,6 @@ public interface BaseFactory {
 
     @GET("post/obtainOld")
     Call<PostsContainerModel> obtainOldPosts(@Query("ln") String language,
-                                             @Query("accessToken") String accessToken,
                                              @Query("latitude") double latitude,
                                              @Query("longitude") double longitude,
                                              @Query("radius") int radius,

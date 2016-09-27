@@ -56,6 +56,14 @@ public class UserAuthorizationQueryService {
         notifyServerBySignIn(notify);
     }
 
+    public void notifyByVK(@NonNull String accessToken) {
+        Call<AuthorizationContainerModel> notify = RestService
+                .baseFactory()
+                .authorizeWithVK(accessToken);
+
+        notifyServerBySignIn(notify);
+    }
+
     private void notifyServerBySignIn(@NonNull Call<AuthorizationContainerModel> notify) {
         notify.enqueue(new Callback<AuthorizationContainerModel>(listener) {
             @Override

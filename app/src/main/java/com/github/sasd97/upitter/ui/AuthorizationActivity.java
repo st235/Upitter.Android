@@ -134,7 +134,7 @@ public class AuthorizationActivity extends BaseActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == TWITTER_SIGN_IN_REQUEST)
@@ -145,7 +145,9 @@ public class AuthorizationActivity extends BaseActivity
         VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
-                Logger.e(res.accessToken.toString());
+                authorizationPager
+                        .getPeopleAuthorizationFragment()
+                        .connectWithVK(res.accessToken);
             }
 
             @Override
