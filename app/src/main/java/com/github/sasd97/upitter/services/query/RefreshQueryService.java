@@ -38,6 +38,7 @@ public class RefreshQueryService {
     }
 
     public void loadNew(int radius,
+                        @NonNull String accessToken,
                         double latitude,
                         double longitude,
                         @NonNull String postId,
@@ -45,6 +46,7 @@ public class RefreshQueryService {
         Call<PostsContainerModel> loadNew = RestService
                 .baseFactory()
                 .obtainNewPosts(language(),
+                                accessToken,
                                 latitude,
                                 longitude,
                                 radius,
@@ -65,7 +67,36 @@ public class RefreshQueryService {
         });
     }
 
+    public void loadNewAnonymous(int radius,
+                        double latitude,
+                        double longitude,
+                        @NonNull String postId,
+                        @NonNull List<Integer> categories) {
+        Call<PostsContainerModel> loadNew = RestService
+                .baseFactory()
+                .obtainNewPostsAnonymous(language(),
+                        latitude,
+                        longitude,
+                        radius,
+                        postId,
+                        categories);
+
+        loadNew.enqueue(new Callback<PostsContainerModel>(listener) {
+            @Override
+            public void onResponse(Call<PostsContainerModel> call, Response<PostsContainerModel> response) {
+                super.onResponse(call, response);
+                if (!RestService.handleError(call, response, listener)) return;
+                if (response.body().getResponseModel().getPosts().size() == 0) {
+                    listener.onEmpty();
+                    return;
+                }
+                listener.onLoadNew(response.body().getResponseModel());
+            }
+        });
+    }
+
     public void loadOld(@NonNull String postId,
+                        @NonNull String accessToken,
                         int radius,
                         double latitude,
                         double longitude,
@@ -73,6 +104,31 @@ public class RefreshQueryService {
         Call<PostsContainerModel> loadOld = RestService
                 .baseFactory()
                 .obtainOldPosts(language(),
+                        accessToken,
+                        latitude,
+                        longitude,
+                        radius,
+                        postId,
+                        categories);
+
+        loadOld.enqueue(new Callback<PostsContainerModel>(listener) {
+            @Override
+            public void onResponse(Call<PostsContainerModel> call, Response<PostsContainerModel> response) {
+                super.onResponse(call, response);
+                if (!RestService.handleError(call, response, listener)) return;
+                listener.onLoadOld(response.body().getResponseModel());
+            }
+        });
+    }
+
+    public void loadOldAnonymous(@NonNull String postId,
+                        int radius,
+                        double latitude,
+                        double longitude,
+                        @NonNull List<Integer> categories) {
+        Call<PostsContainerModel> loadOld = RestService
+                .baseFactory()
+                .obtainOldPostsAnonymous(language(),
                         latitude,
                         longitude,
                         radius,

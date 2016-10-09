@@ -42,6 +42,7 @@
                         android:layout_width="84dp"
                         android:layout_height="84dp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/universal_image_content_description"
                         />
 
                     <LinearLayout
@@ -70,7 +71,7 @@
                             android:layout_height="40dp"
                             android:background="@drawable/rounded_button_shape_agressive_gray"
                             android:layout_marginTop="8dp"
-                            android:text="Information"
+                            android:text="@string/company_information"
                             />
                     </LinearLayout>
                 </LinearLayout>

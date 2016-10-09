@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.ui.fragments;
 
 import android.content.Intent;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import com.github.sasd97.upitter.ui.adapters.recyclers.FeedPostRecycler;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.results.CategoriesSelectionResult;
+import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.Palette;
 import com.orhanobut.logger.Logger;
 
@@ -45,23 +47,34 @@ public class BaseFeedFragment extends BaseFragment
         implements PostQueryService.OnPostListener,
         RefreshQueryService.OnRefreshListener,
         LocationService.OnLocationListener,
-        SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener,
+        FeedPostRecycler.OnFeedNotAuthorizedClickListener {
+
+    public static final String IS_HEADER_LINE = "FEED_HAS_HEADER_LINE";
 
     @BindView(R.id.swipe_layout_tape) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recycler_view_tape_fragment) RecyclerView tapeRecyclerView;
 
+    private String accessToken;
     private PostQueryService postQueryService;
     private RefreshQueryService refreshQueryService;
     private FeedPostRecycler feedPostRecycler;
     private ArrayList<Integer> categoriesSelected;
     private LinearLayoutManager linearLayoutManager;
 
+    private boolean isHolder;
+    private boolean isNoAccessListener = false;
+
     public BaseFeedFragment() {
         super(R.layout.fragment_base_feed);
     }
 
-    public static BaseFeedFragment getFragment() {
-        return new BaseFeedFragment();
+    public static BaseFeedFragment getFragment(boolean isHeaderLine) {
+        BaseFeedFragment fragment = new BaseFeedFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(IS_HEADER_LINE, isHeaderLine);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -69,10 +82,15 @@ public class BaseFeedFragment extends BaseFragment
         setHasOptionsMenu(true);
         categoriesSelected = new ArrayList<>();
 
-        boolean isHolder = getHolder() != null;
+        isHolder = getHolder() != null;
+        if (isHolder) accessToken = getHolder().get().getAccessToken();
+        boolean isHeaderLine = getArguments().getBoolean(IS_HEADER_LINE);
 
         linearLayoutManager = new LinearLayoutManager(getContext());
-        feedPostRecycler = new FeedPostRecycler(getContext(), isHolder ? getHolder().get() : null);
+        feedPostRecycler = new FeedPostRecycler(getContext(), isHolder ? getHolder().get() : null, isHeaderLine);
+        if (isNoAccessListener)
+            feedPostRecycler.setOnFeedNotAuthorizedClickListener(this);
+
         tapeRecyclerView.setLayoutManager(linearLayoutManager);
         tapeRecyclerView.setAdapter(feedPostRecycler);
 
@@ -84,21 +102,44 @@ public class BaseFeedFragment extends BaseFragment
         tapeRecyclerView.addOnScrollListener(new OnEndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                Logger.i("Infinity scroll detected");
                 Logger.i(String.valueOf(feedPostRecycler.getItemCount()));
                 if (feedPostRecycler.getItemCount() < 20) return;
 
-                refreshQueryService.loadOld(
-                        feedPostRecycler.getLastPostId(),
-                        LocationHolder.getRadius(),
-                        LocationHolder.getLocation().getLatitude(),
-                        LocationHolder.getLocation().getLongitude(),
-                        categoriesSelected);
+
+                if (isHolder) {
+                    refreshQueryService.loadOld(
+                            feedPostRecycler.getLastPostId(),
+                            accessToken,
+                            LocationHolder.getRadius(),
+                            LocationHolder.getLocation().getLatitude(),
+                            LocationHolder.getLocation().getLongitude(),
+                            categoriesSelected);
+                } else {
+                    refreshQueryService.loadOldAnonymous(
+                            feedPostRecycler.getLastPostId(),
+                            LocationHolder.getRadius(),
+                            LocationHolder.getLocation().getLatitude(),
+                            LocationHolder.getLocation().getLongitude(),
+                            categoriesSelected);
+                }
             }
         });
 
         swipeRefreshLayout.setColorSchemeColors(Palette.getSwipeRefreshPalette());
         swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    public void addNoAccessListener() {
+        if (feedPostRecycler != null)
+            feedPostRecycler.setOnFeedNotAuthorizedClickListener(this);
+        this.isNoAccessListener = true;
+    }
+
+    @Override
+    public void onNotAuthorizedClick() {
+        DialogUtils
+                .showNoAccessDialog(getContext())
+                .show();
     }
 
     @Override
@@ -118,11 +159,20 @@ public class BaseFeedFragment extends BaseFragment
 
     @Override
     public void onLocationFind(Location location) {
-        postQueryService.obtainPosts(
-                LocationHolder.getRadius(),
-                LocationHolder.getLocation().getLatitude(),
-                LocationHolder.getLocation().getLongitude(),
-                categoriesSelected);
+        if (isHolder) {
+            postQueryService.obtainPosts(
+                    LocationHolder.getRadius(),
+                    accessToken,
+                    LocationHolder.getLocation().getLatitude(),
+                    LocationHolder.getLocation().getLongitude(),
+                    categoriesSelected);
+        } else {
+            postQueryService.obtainPostsAnonymous(
+                    LocationHolder.getRadius(),
+                    LocationHolder.getLocation().getLatitude(),
+                    LocationHolder.getLocation().getLongitude(),
+                    categoriesSelected);
+        }
     }
 
     @Override
@@ -130,12 +180,22 @@ public class BaseFeedFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
-        refreshQueryService.loadNew(
-                LocationHolder.getRadius(),
-                LocationHolder.getLocation().getLatitude(),
-                LocationHolder.getLocation().getLongitude(),
-                feedPostRecycler.getFirstPostId(),
-                categoriesSelected);
+        if (isHolder) {
+            refreshQueryService.loadNew(
+                    LocationHolder.getRadius(),
+                    accessToken,
+                    LocationHolder.getLocation().getLatitude(),
+                    LocationHolder.getLocation().getLongitude(),
+                    feedPostRecycler.getFirstPostId(),
+                    categoriesSelected);
+        } else {
+            refreshQueryService.loadNewAnonymous(
+                    LocationHolder.getRadius(),
+                    LocationHolder.getLocation().getLatitude(),
+                    LocationHolder.getLocation().getLongitude(),
+                    feedPostRecycler.getFirstPostId(),
+                    categoriesSelected);
+        }
     }
 
     @Override
@@ -202,21 +262,39 @@ public class BaseFeedFragment extends BaseFragment
     private void handleCategoriesIntent(@NonNull Intent intent) {
         categoriesSelected = intent.getIntegerArrayListExtra(CATEGORIES_ATTACH);
         feedPostRecycler.refresh();
-        postQueryService.obtainPosts(
-                LocationHolder.getRadius(),
-                LocationHolder.getLocation().getLatitude(),
-                LocationHolder.getLocation().getLongitude(),
-                categoriesSelected);
+
+        if (isHolder) {
+            postQueryService.obtainPosts(
+                    LocationHolder.getRadius(),
+                    accessToken,
+                    LocationHolder.getLocation().getLatitude(),
+                    LocationHolder.getLocation().getLongitude(),
+                    categoriesSelected);
+        } else {
+            postQueryService.obtainPostsAnonymous(
+                    LocationHolder.getRadius(),
+                    LocationHolder.getLocation().getLatitude(),
+                    LocationHolder.getLocation().getLongitude(),
+                    categoriesSelected);
+        }
     }
 
     private void handleLocation() {
-        Logger.d("OK2");
         feedPostRecycler.refresh();
-        postQueryService.obtainPosts(
-                LocationHolder.getRadius(),
-                LocationHolder.getLocation().getLatitude(),
-                LocationHolder.getLocation().getLongitude(),
-                categoriesSelected);
+        if (isHolder) {
+            postQueryService.obtainPosts(
+                    LocationHolder.getRadius(),
+                    accessToken,
+                    LocationHolder.getLocation().getLatitude(),
+                    LocationHolder.getLocation().getLongitude(),
+                    categoriesSelected);
+        } else {
+            postQueryService.obtainPostsAnonymous(
+                    LocationHolder.getRadius(),
+                    LocationHolder.getLocation().getLatitude(),
+                    LocationHolder.getLocation().getLongitude(),
+                    categoriesSelected);
+        }
     }
 
     @Override

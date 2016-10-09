@@ -30,5 +30,6 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_margin="8dp"
+        android:contentDescription="@string/universal_image_content_description"
         />
 </RelativeLayout>

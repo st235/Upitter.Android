@@ -27,10 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
-            android:singleLine="true"
+            android:maxLines="1"
             />
 
         <TextView
@@ -38,10 +38,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
-            android:singleLine="true"
+            android:maxLines="1"
             />
     </LinearLayout>
 </RelativeLayout>

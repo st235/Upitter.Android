@@ -22,11 +22,11 @@ public class PeopleFeedViewPager extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return BaseFeedFragment.getFragment();
+                return BaseFeedFragment.getFragment(false);
             case 1:
                 return SubscriptionFeedFragment.getFragment();
             default:
-                return BaseFeedFragment.getFragment();
+                return BaseFeedFragment.getFragment(false);
         }
     }
 

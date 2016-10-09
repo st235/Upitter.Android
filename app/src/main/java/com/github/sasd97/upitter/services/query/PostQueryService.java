@@ -41,6 +41,7 @@ public class PostQueryService {
     }
 
     public void obtainPosts(@NonNull Integer radius,
+                            @NonNull String accessToken,
                             double latitude,
                             double longitude,
                             @NonNull List<Integer> categories) {
@@ -49,10 +50,35 @@ public class PostQueryService {
                 RestService
                 .baseFactory()
                 .obtainPosts(language(),
+                        accessToken,
                         latitude,
                         longitude,
                         radius,
                         categories);
+
+        obtainPosts.enqueue(new Callback<PostsContainerModel>(listener) {
+            @Override
+            public void onResponse(Call<PostsContainerModel> call, Response<PostsContainerModel> response) {
+                super.onResponse(call, response);
+                if (!RestService.handleError(call, response, listener)) return;
+                listener.onPostObtained(response.body().getResponseModel());
+            }
+        });
+    }
+
+    public void obtainPostsAnonymous(@NonNull Integer radius,
+                            double latitude,
+                            double longitude,
+                            @NonNull List<Integer> categories) {
+
+        Call<PostsContainerModel> obtainPosts =
+                RestService
+                        .baseFactory()
+                        .obtainPostsAnonymous(language(),
+                                latitude,
+                                longitude,
+                                radius,
+                                categories);
 
         obtainPosts.enqueue(new Callback<PostsContainerModel>(listener) {
             @Override

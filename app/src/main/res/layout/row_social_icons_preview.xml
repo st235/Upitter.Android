@@ -8,5 +8,6 @@
         android:id="@+id/social_link_preview"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:contentDescription="@string/universal_image_content_description"
         />
 </LinearLayout>

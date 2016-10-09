@@ -71,7 +71,7 @@ public class CompanyFeedActivity extends BaseActivity
         company = ((CompanyHolder) getHolder()).get();
         Logger.json(company.toJson());
 
-        baseFeedFragment = BaseFeedFragment.getFragment();
+        baseFeedFragment = BaseFeedFragment.getFragment(true);
 
         infoQueryService = ApplicationInfoQueryService.getService(this);
         infoQueryService.obtainInfo(company.getAccessToken());
@@ -196,6 +196,7 @@ public class CompanyFeedActivity extends BaseActivity
     private void deleteSession() {
         Intent intent = new Intent(this, AuthorizationActivity.class);
         getHolder().delete();
+        setHolder(null);
         startActivity(intent);
         finish();
     }

@@ -55,6 +55,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/ic_rotate_90_degrees_ccw_white_24dp"
                         android:scaleType="centerInside"
+                        android:contentDescription="@string/universal_image_content_description"
                         />
 
                     <TextView
@@ -63,7 +64,8 @@
                         android:textColor="@android:color/white"
                         android:layout_marginBottom="4dp"
                         android:gravity="center"
-                        android:text="Rotate"/>
+                        android:text="@string/rotate_gallery"
+                        />
                 </LinearLayout>
             </LinearLayout>
 
@@ -90,6 +92,7 @@
                         android:layout_height="40dp"
                         android:src="@drawable/ic_settings_overscan_white_24dp"
                         android:scaleType="centerInside"
+                        android:contentDescription="@string/universal_image_content_description"
                         />
 
                     <TextView
@@ -98,7 +101,8 @@
                         android:textColor="@android:color/white"
                         android:layout_marginBottom="4dp"
                         android:gravity="center"
-                        android:text="Free mode"/>
+                        android:text="@string/free_mode_gallery"
+                        />
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.GridLayout>

@@ -26,7 +26,7 @@
                 android:hint="@string/whats_up_title_create_post_activity"
                 android:gravity="top"
                 android:textStyle="bold"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:textCursorDrawable="@drawable/create_post_cursor_drawable"
                 app:met_hideUnderline="true"
                 app:met_floatingLabel="highlight"
@@ -205,6 +205,7 @@
                         android:layout_gravity="center"
                         android:src="@drawable/ic_send"
                         android:scaleType="centerInside"
+                        android:contentDescription="@string/universal_image_content_description"
                         />
 
                 </LinearLayout>

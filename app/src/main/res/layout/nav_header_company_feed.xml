@@ -28,6 +28,7 @@
                 android:id="@+id/logo_company_tape"
                 android:layout_width="54dp"
                 android:layout_height="54dp"
+                android:contentDescription="@string/universal_image_content_description"
                 />
 
             <LinearLayout
@@ -75,6 +76,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:scaleType="centerInside"
+                android:contentDescription="@string/universal_image_content_description"
                 />
 
             <TextView

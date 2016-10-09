@@ -15,13 +15,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.github.sasd97.upitter.components.ImageUploaderView
-            android:id="@+id/avatar_url_business_registration_base_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            />
-
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,6 +57,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="32dp"
                 android:layout_marginStart="32dp"
+                android:contentDescription="@string/universal_image_content_description"
                 />
 
             <TextView
@@ -107,6 +101,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="32dp"
                 android:layout_marginStart="32dp"
+                android:contentDescription="@string/universal_image_content_description"
                 />
 
             <TextView

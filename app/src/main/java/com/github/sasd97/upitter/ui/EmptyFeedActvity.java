@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
+import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.github.sasd97.upitter.ui.fragments.BaseFeedFragment;
 import com.github.sasd97.upitter.ui.fragments.PeopleFeedFragment;
 
@@ -43,9 +45,12 @@ public class EmptyFeedActvity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        BaseFeedFragment baseFeedFragment = BaseFeedFragment.getFragment(false);
+        baseFeedFragment.addNoAccessListener();
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container, BaseFeedFragment.getFragment())
+                .add(R.id.fragment_container, baseFeedFragment)
                 .commit();
     }
 
@@ -74,7 +79,7 @@ public class EmptyFeedActvity extends BaseActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_sign_in) {

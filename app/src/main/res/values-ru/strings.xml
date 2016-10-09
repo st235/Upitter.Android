@@ -39,9 +39,6 @@
     <string name="crash_ticker_message">Помогите нам улучшить Upitter</string>
     <string name="crash_title_message">Upitter сломан</string>
     <string name="create_post_company_tape">Создать новость</string>
-    <string name="debug_dialog_confirm">Согласен</string>
-    <string name="debug_dialog_content">Данная сборка является бета-сборкой</string>
-    <string name="debug_dialog_title">Открытое бета-тестирование</string>
     <string name="delete_post_tape_single_view">Удалить пост</string>
     <string name="description_label_code_confirm_activity">Мы отправили на Ваш телефон код подтвержения.\nЕсли код не был введен в поле ниже автоматически, пожалуйста, введите его вручную.</string>
     <string name="description_label_company_registration_activity">Описание</string>
@@ -127,4 +124,28 @@
         <item>Карта</item>
         <item>Список</item>
     </string-array>
+    <string name="activities_company_information">Активность:</string>
+    <string name="close_update_dialog">Закрыть</string>
+    <string name="company_information">Информация</string>
+    <string name="chat_line_message">Сообщение</string>
+    <string name="contacts_company_information">Контакты:</string>
+    <string name="company_title">Sealdo, 2016</string>
+    <string name="crop_toggle">Обрезать</string>
+    <string name="description_company_information">Описание:</string>
+    <string name="filter_toggle">Фильтры</string>
+    <string name="free_mode_gallery">Свободно</string>
+    <string name="men_radio">Мужчина</string>
+    <string name="name_edititext">Имя</string>
+    <string name="nickname_edittext">Ник</string>
+    <string name="not_selected_radio">Не выбрано</string>
+    <string name="people_subscribe">Подписаться</string>
+    <string name="people_unsubscribe">Отписаться</string>
+    <string name="rotate_gallery">Повернуть</string>
+    <string name="save_button">Сохранить</string>
+    <string name="secondname_edittext">Фамилия</string>
+    <string name="some_location">Некоторе место</string>
+    <string name="some_sublocation">Некторый регион</string>
+    <string name="title_activity_empty_feed_actvity">Лента</string>
+    <string name="women_radio">Женщина</string>
+    <string name="whats_new">Что нового?</string>
 </resources>

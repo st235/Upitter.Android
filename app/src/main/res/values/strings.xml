@@ -4,12 +4,6 @@
     <string name="empty_field">Empty</string>
     <!-- Endregion -->
 
-    <!-- Debug dialog region. -->
-    <string name="debug_dialog_title">Open beta-test</string>
-    <string name="debug_dialog_content">Warning. Current application remaining in debug mode.\nAll forms are fill by default values. For developers purposes only.\nVersion: 0.0.2.5\nVersion code: 401\nBuild date: 8/6/16\nUpitter LLC</string>
-    <string name="debug_dialog_confirm">Agree</string>
-    <!-- Endregion -->
-
     <!-- Progress dialog region. -->
     <string name="progress_dialog_title">Still progress&#8230;</string>
     <!-- Endregion -->
@@ -18,7 +12,7 @@
     <string name="title_update_dialog" translatable="false">New version available</string>
     <string name="content_update_dialog" translatable="false">Your current version is too old</string>
     <string name="upload_update_dialog" translatable="false">Upload from Google Play</string>
-    <string name="close_update_dialog" translatable="false">Close</string>
+    <string name="close_update_dialog">Close</string>
     <!-- Endregion -->
 
     <!-- No updates dialog region. -->
@@ -357,15 +351,15 @@
     <!-- Endregion -->
 
     <!-- Chat Message Line region -->
-    <string name="chat_line_message" translatable="false">Message</string>
+    <string name="chat_line_message">Message</string>
     <string name="title_activity_company_information" translatable="false">CompanyInformationActivity</string>
     <!-- Endregion -->
 
     <!-- Company information region -->
     <string name="summary_rating_company_information" translatable="false">All likes:</string>
-    <string name="description_company_information" translatable="false">Description:</string>
-    <string name="contacts_company_information" translatable="false">Contacts:</string>
-    <string name="activities_company_information" translatable="false">Activity:</string>
+    <string name="description_company_information">Description:</string>
+    <string name="contacts_company_information">Contacts:</string>
+    <string name="activities_company_information">Activity:</string>
     <string name="show_on_map_company_information" translatable="false">Show on map</string>
     <!-- Endregion -->
 
@@ -380,13 +374,53 @@
 
     <!-- Company profile by user region -->
     <string name="title_activity_people_subscription" translatable="false">Subscriptions</string>
-    <string name="people_subscribe" translatable="false">Subscribe</string>
-    <string name="people_unsubscribe" translatable="false">Unsubscribe</string>
+    <string name="people_subscribe">Subscribe</string>
+    <string name="people_unsubscribe">Unsubscribe</string>
 
     <string-array name="company_profile_titles" translatable="false">
         <item>Posts</item>
         <item>Information</item>
     </string-array>
-    <string name="title_activity_empty_feed_actvity">EmptyFeedActvity</string>
+    <string name="title_activity_empty_feed_actvity">Feed</string>
     <!-- Endregion -->
+
+    <!-- No Access dialog region -->
+    <string name="no_access_title" translatable="false">No access</string>
+    <string name="no_access_content" translatable="false">You have not access to this function</string>
+    <string name="no_access_ok" translatable="false">OK</string>
+    <!-- Endregion -->
+
+    <string name="some_location">Some location</string>
+    <string name="some_sublocation">Some subocation</string>
+
+    <string name="universal_image_content_description" translatable="false">Upitter image</string>
+    <string name="company_title">Sealdo, 2016</string>
+
+    <!-- Company profile region -->
+    <string name="company_information">Information</string>
+    <!-- Endregion -->
+    
+    <!-- Gallery toggles region -->
+    <string name="filter_toggle">Filter</string>
+    <string name="crop_toggle">Crop</string>
+    <string name="rotate_gallery">Rotate</string>
+    <string name="free_mode_gallery">Free mode</string>
+    <!-- Endregion -->
+
+    <!-- User settings region -->
+    <string name="nickname_edittext">Nickname</string>
+    <string name="name_edititext">Name</string>
+    <string name="secondname_edittext">Second name</string>
+    <string name="save_button">Save</string>
+    <string name="men_radio">Men</string>
+    <string name="women_radio">Women</string>
+    <string name="not_selected_radio">Not selected</string>
+    <!-- Endregion -->
+
+    <string name="twitter" translatable="false">Twitter</string>
+    <string name="facebook" translatable="false">Facebook</string>
+    <string name="google" translatable="false">Google</string>
+    <string name="vk" translatable="false">VK</string>
+
+    <string name="whats_new">Whats new?</string>
 </resources>

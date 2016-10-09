@@ -37,6 +37,7 @@
                     android:id="@+id/user_icon_post_single_view"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
+                    android:contentDescription="@string/universal_image_content_description"
                     />
 
                 <LinearLayout
@@ -83,6 +84,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
                             android:src="@drawable/ic_feed_eye"
+                            android:contentDescription="@string/universal_image_content_description"
                             />
 
                         <TextView
@@ -229,6 +231,7 @@
                             android:layout_marginRight="8dp"
                             android:layout_marginEnd="8dp"
                             android:src="@drawable/ic_feed_icon_favorite"
+                            android:contentDescription="@string/universal_image_content_description"
                             />
                     </LinearLayout>
 
@@ -261,6 +264,7 @@
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:src="@drawable/ic_feed_icon_comment"
+                            android:contentDescription="@string/universal_image_content_description"
                             />
                     </LinearLayout>
 
@@ -291,6 +295,7 @@
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:src="@drawable/ic_feed_icon_like"
+                            android:contentDescription="@string/universal_image_content_description"
                             />
                     </LinearLayout>
                 </LinearLayout>

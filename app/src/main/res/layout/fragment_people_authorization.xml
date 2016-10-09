@@ -42,7 +42,7 @@
                     android:padding="8dp"
                     android:drawableLeft="@drawable/ic_twitter"
                     android:drawableStart="@drawable/ic_twitter"
-                    android:text="Twitter"
+                    android:text="@string/twitter"
                     style="@style/Upitter.Button.Rounded.Twitter"
                     />
 
@@ -58,7 +58,7 @@
                     android:padding="8dp"
                     android:drawableLeft="@drawable/ic_facebook"
                     android:drawableStart="@drawable/ic_facebook"
-                    android:text="Facebook"
+                    android:text="@string/facebook"
                     style="@style/Upitter.Button.Rounded.Facebook"
                     />
 
@@ -73,7 +73,7 @@
                 android:padding="8dp"
                 android:drawableLeft="@drawable/ic_vk"
                 android:drawableStart="@drawable/ic_vk"
-                android:text="VKontakte"
+                android:text="@string/vk"
                 style="@style/Upitter.Button.Rounded.VK"
                 />
 

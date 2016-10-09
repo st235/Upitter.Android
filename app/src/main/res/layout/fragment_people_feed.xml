@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:elevation="6dp"
+        app:elevation="6dp"
         android:background="@color/colorPrimary"
         />
 

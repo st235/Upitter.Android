@@ -3,14 +3,14 @@ apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         applicationId "com.github.sasd97.upitter"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 712
-        versionName "0.0.5.6"
+        versionName "0.0.5.7"
     }
 
     buildTypes {

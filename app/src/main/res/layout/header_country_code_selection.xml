@@ -11,4 +11,4 @@
     android:textDirection="locale"
     android:textSize="20sp"
     tools:text="Header Item"
-    />
+/>

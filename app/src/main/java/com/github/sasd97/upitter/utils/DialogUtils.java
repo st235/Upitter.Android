@@ -1,34 +1,21 @@
 package com.github.sasd97.upitter.utils;
 
 import android.content.Context;
-import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.response.pointers.ComplaintPointerModel;
-
-import java.util.List;
 
 /**
  * Created by alexander on 31.07.16.
  */
+
 public class DialogUtils {
 
     private DialogUtils() {}
 
     public static MaterialDialog.Builder showError(ErrorModel errorModel) {
         return null;
-    }
-
-    public static MaterialDialog showDebugInfo(Context context) {
-        return new MaterialDialog
-                .Builder(context)
-                .title(R.string.debug_dialog_title)
-                .content(R.string.debug_dialog_content)
-                .positiveText(R.string.debug_dialog_confirm)
-                .cancelable(false)
-                .build();
     }
 
     public static MaterialDialog showProgressDialog(Context context) {
@@ -56,6 +43,15 @@ public class DialogUtils {
                 .title(R.string.title_no_updates_dialog)
                 .content(R.string.content_no_updates_dialog)
                 .positiveText(R.string.ok_no_updates_dialog)
+                .build();
+    }
+
+    public static MaterialDialog showNoAccessDialog(Context context) {
+        return new MaterialDialog
+                .Builder(context)
+                .title(R.string.no_access_title)
+                .content(R.string.no_access_content)
+                .positiveText(R.string.no_access_ok)
                 .build();
     }
 }

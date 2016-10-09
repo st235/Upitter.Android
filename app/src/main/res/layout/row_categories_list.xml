@@ -17,6 +17,7 @@
         android:id="@+id/category_preview_category_single_view"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:contentDescription="@string/universal_image_content_description"
         />
 
     <TextView

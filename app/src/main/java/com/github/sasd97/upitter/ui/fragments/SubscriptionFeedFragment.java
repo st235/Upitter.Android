@@ -74,7 +74,7 @@ public class SubscriptionFeedFragment extends BaseFragment
         categoriesSelected = new ArrayList<>();
 
         linearLayoutManager = new LinearLayoutManager(getContext());
-        feedPostRecycler = new FeedPostRecycler(getContext(), getHolder().get());
+        feedPostRecycler = new FeedPostRecycler(getContext(), getHolder().get(), false);
         tapeRecyclerView.setLayoutManager(linearLayoutManager);
         tapeRecyclerView.setAdapter(feedPostRecycler);
 
@@ -92,6 +92,7 @@ public class SubscriptionFeedFragment extends BaseFragment
 
                 refreshQueryService.loadOld(
                         feedPostRecycler.getLastPostId(),
+                        userModel.getAccessToken(),
                         LocationHolder.getRadius(),
                         LocationHolder.getLocation().getLatitude(),
                         LocationHolder.getLocation().getLongitude(),
@@ -127,6 +128,7 @@ public class SubscriptionFeedFragment extends BaseFragment
     public void onRefresh() {
         refreshQueryService.loadNew(
                 LocationHolder.getRadius(),
+                userModel.getAccessToken(),
                 LocationHolder.getLocation().getLatitude(),
                 LocationHolder.getLocation().getLongitude(),
                 feedPostRecycler.getFirstPostId(),

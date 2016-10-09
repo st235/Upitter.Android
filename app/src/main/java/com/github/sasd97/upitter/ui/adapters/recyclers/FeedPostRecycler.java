@@ -2,11 +2,10 @@ package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,11 +41,11 @@ import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.ui.schemas.MapPreviewSchema;
 import com.github.sasd97.upitter.ui.schemas.PostPreviewSchema;
 import com.github.sasd97.upitter.utils.Categories;
-import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.Palette;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +68,10 @@ import static com.github.sasd97.upitter.constants.PostCreateConstants.POST_ID;
 
 public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
+    public interface OnFeedNotAuthorizedClickListener {
+        void onNotAuthorizedClick();
+    }
+
     private final int HEADER_VIEW = 0;
     private final int ITEM_VIEW = 1;
 
@@ -78,6 +81,8 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
     private List<PostPointerModel> posts;
 
     private int FIRST_POSITION = 1;
+
+    private OnFeedNotAuthorizedClickListener listener;
 
     public FeedPostRecycler(Context context, UserModel user) {
         posts = new ArrayList<>();
@@ -93,6 +98,10 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         this.isHeader = isHeader && user != null;
         posts = new ArrayList<>();
         if (!isHeader) FIRST_POSITION = 0;
+    }
+
+    public void setOnFeedNotAuthorizedClickListener(@NonNull OnFeedNotAuthorizedClickListener listener) {
+        this.listener = listener;
     }
 
     public class TapeViewHolder extends BaseViewHolder
@@ -134,7 +143,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         private View.OnClickListener likeClick;
         private View.OnClickListener favoriteClick;
 
-        public TapeViewHolder(View itemView) {
+        TapeViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
         }
@@ -149,6 +158,11 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
             likeClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (user == null) {
+                        if (listener != null) listener.onNotAuthorizedClick();
+                        return;
+                    }
+
                     queryService.like(user.getAccessToken(),
                             posts.get(getAdapterPosition()).getId());
                 }
@@ -157,6 +171,11 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
             favoriteClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (user == null) {
+                        if (listener != null) listener.onNotAuthorizedClick();
+                        return;
+                    }
+
                     queryService.favorite(user.getAccessToken(),
                             posts.get(getAdapterPosition()).getId());
                 }
@@ -171,6 +190,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
+
             PostPointerModel post = posts.get(getAdapterPosition());
 
             switch (item.getItemId()) {
@@ -179,22 +199,11 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
                     intent.putExtra(COORDINATES_ATTACH, post.toAuthorOnMapModel());
                     context.startActivity(intent);
                     break;
-                case R.id.action_share:
-                    ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-                    mShareActionProvider.setShareIntent(doShare());
-                    break;
                 case R.id.action_complain:
                     complainQueryService.obtainComplainList(user.getAccessToken());
             }
 
             return false;
-        }
-
-        private Intent doShare() {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("image/jpeg");
-            intent.putExtra(Intent.EXTRA_TEXT, "Put whatever you want");
-            return intent;
         }
 
         @Override
@@ -291,6 +300,11 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onItemClick(int position) {
+            if (user == null) {
+                if (listener != null) listener.onNotAuthorizedClick();
+                return;
+            }
+
             queryService.vote(user.getAccessToken(),
                     posts.get(getAdapterPosition()).getId(),
                     position);
@@ -298,6 +312,11 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onClick(View view) {
+            if (user == null) {
+                if (listener != null) listener.onNotAuthorizedClick();
+                return;
+            }
+
             if (view.getId() == R.id.user_area_post_single_view) {
                 Class<?> target = user instanceof PeopleModel ? CompanyBPProfileActivity.class : CompanyBCProfileActivity.class;
                 Intent intent = new Intent(context, target);

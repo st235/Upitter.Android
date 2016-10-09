@@ -19,7 +19,7 @@
             android:id="@+id/user_nickname_edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/company_title_hint"
+            android:hint="@string/nickname_edittext"
             android:layout_marginTop="8dp"
             app:met_floatingLabel="highlight"
             />
@@ -28,7 +28,7 @@
             android:id="@+id/user_name_edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/company_description_hint"
+            android:hint="@string/name_edititext"
             android:layout_marginTop="8dp"
             app:met_floatingLabel="highlight"
             />
@@ -37,7 +37,7 @@
             android:id="@+id/user_surname_edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/company_description_hint"
+            android:hint="@string/secondname_edittext"
             android:layout_marginTop="8dp"
             app:met_floatingLabel="highlight"
             />
@@ -52,20 +52,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/background_dark"
-                android:text="Men" />
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/background_dark"
-                android:text="Women"
+                android:text="@string/men_radio"
                 />
 
             <android.support.v7.widget.AppCompatRadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/background_dark"
-                android:text="Unknown"
+                android:text="@string/women_radio"
+                />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/background_dark"
+                android:text="@string/not_selected_radio"
                 />
         </RadioGroup>
 
@@ -78,7 +79,7 @@
             android:layout_marginLeft="@dimen/activity_short_margin"
             android:layout_marginRight="@dimen/activity_short_margin"
             android:padding="8dp"
-            android:text="Save"
+            android:text="@string/save_button"
             style="@style/Upitter.Button.Rounded.Upitter"
             />
     </LinearLayout>

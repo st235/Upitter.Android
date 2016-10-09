@@ -101,6 +101,7 @@ public interface BaseFactory {
 
     @GET("post/obtain")
     Call<PostsContainerModel> obtainPosts(@Query("ln") String language,
+                                          @Query("accessToken") String accessToken,
                                           @Query("latitude") double latitude,
                                           @Query("longitude") double longitude,
                                           @Query("radius") int radius,
@@ -108,6 +109,7 @@ public interface BaseFactory {
 
     @GET("post/obtainNew")
     Call<PostsContainerModel> obtainNewPosts(@Query("ln") String language,
+                                             @Query("accessToken") String accessToken,
                                              @Query("latitude") double latitude,
                                              @Query("longitude") double longitude,
                                              @Query("radius") int radius,
@@ -116,11 +118,36 @@ public interface BaseFactory {
 
     @GET("post/obtainOld")
     Call<PostsContainerModel> obtainOldPosts(@Query("ln") String language,
+                                             @Query("accessToken") String accessToken,
                                              @Query("latitude") double latitude,
                                              @Query("longitude") double longitude,
                                              @Query("radius") int radius,
                                              @Query("postId") String postId,
                                              @Query("activity[]") List<Integer> categories);
+
+    @GET("post/obtain")
+    Call<PostsContainerModel> obtainPostsAnonymous(@Query("ln") String language,
+                                          @Query("latitude") double latitude,
+                                          @Query("longitude") double longitude,
+                                          @Query("radius") int radius,
+                                          @Query("activity[]") List<Integer> categories);
+
+    @GET("post/obtainNew")
+    Call<PostsContainerModel> obtainNewPostsAnonymous(@Query("ln") String language,
+                                             @Query("latitude") double latitude,
+                                             @Query("longitude") double longitude,
+                                             @Query("radius") int radius,
+                                             @Query("postId") String postId,
+                                             @Query("activity[]") List<Integer> categories);
+
+    @GET("post/obtainOld")
+    Call<PostsContainerModel> obtainOldPostsAnonymous(@Query("ln") String language,
+                                             @Query("latitude") double latitude,
+                                             @Query("longitude") double longitude,
+                                             @Query("radius") int radius,
+                                             @Query("postId") String postId,
+                                             @Query("activity[]") List<Integer> categories);
+
 
     @GET("post/obtainBySubscriptions")
     Call<PostsContainerModel> obtainSubscriptionsPosts(@Query("ln") String language,
@@ -165,7 +192,7 @@ public interface BaseFactory {
 
     @GET("general/socialInfo/get")
     Call<SocialIconContainerModel> obtainSocialIcons(@Query("accessToken") String accessToken,
-                                                @Query("ln") String language);
+                                                     @Query("ln") String language);
 
     @POST("company/edit")
     Call<CompanyContainerModel> editCompany(@Query("ln") String language,

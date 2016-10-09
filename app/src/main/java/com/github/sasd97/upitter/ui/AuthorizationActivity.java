@@ -69,10 +69,6 @@ public class AuthorizationActivity extends BaseActivity
         viewPager.setAdapter(authorizationPager);
         viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
-
-        if (BuildConfig.DEBUG) DialogUtils
-                .showDebugInfo(this)
-                .show();
     }
 
     @Override

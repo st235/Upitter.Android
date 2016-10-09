@@ -40,8 +40,7 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.GALLERY_
  */
 
 public class CompanyBaseRegistrationFragment
-        extends BaseFragment
-        implements ImageUploaderView.OnImageUploadListener {
+        extends BaseFragment {
 
     @BindString(R.string.empty_field) String EMPTY_ERROR;
 
@@ -56,7 +55,6 @@ public class CompanyBaseRegistrationFragment
     @BindView(R.id.categories_choose_business_registration_base_fragment) RelativeLayout categoriesLayout;
     @BindView(R.id.name_edittext_business_registration_base_fragment) MaterialEditText companyNameEditText;
     @BindView(R.id.site_edittext_business_registration_base_fragment) MaterialEditText companySiteEditText;
-    @BindView(R.id.avatar_url_business_registration_base_fragment) ImageUploaderView avatarImageUploaderView;
     @BindView(R.id.description_edittext_business_registration_base_fragment) MaterialEditText companyDescriptionEditText;
 
     public CompanyBaseRegistrationFragment() {
@@ -78,11 +76,6 @@ public class CompanyBaseRegistrationFragment
     protected void setupViews() {
         companyBuilder = new CompanyModel.Builder();
 
-        avatarImageUploaderView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { onAvatarChooseClick();
-            }
-        });
         categoriesLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,7 +93,6 @@ public class CompanyBaseRegistrationFragment
             public void onClick(View view) {onAddressChooseClick(true);
             }
         });
-        avatarImageUploaderView.setOnImageUploadListener(this);
 
         contactPhonesRecycler = new ContactPhonesRecycler();
         phonesRecyclerView.setHasFixedSize(true);
@@ -169,18 +161,11 @@ public class CompanyBaseRegistrationFragment
 
     private void handleAvatarIntent(@NonNull Intent intent) {
         String path = intent.getStringExtra(PUT_CROPPED_IMAGE);
-        avatarImageUploaderView.uploadPhoto(path);
     }
 
     private void handleCategoriesIntent(@NonNull Intent intent) {
         categoriesSelected = intent.getIntegerArrayListExtra(CATEGORIES_ATTACH);
         companyBuilder.categories(categoriesSelected);
-    }
-
-    @Override
-    public void onUpload(String path) {
-        Log.d("AVATAR", path);
-        companyBuilder.avatarUrl(path);
     }
 
     private boolean validateForm(boolean isExtraRequired) {

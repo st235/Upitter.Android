@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -19,6 +18,7 @@
             android:layout_height="match_parent"
             android:src="@drawable/ic_icon_add_photo"
             android:scaleType="centerInside"
+            android:contentDescription="@string/universal_image_content_description"
             />
 
         <com.github.rahatarmanahmed.cpv.CircularProgressView
@@ -45,6 +45,7 @@
             android:scaleType="centerInside"
             android:layout_margin="4dp"
             android:visibility="gone"
+            android:contentDescription="@string/universal_image_content_description"
             />
 
         <ImageView
@@ -59,6 +60,7 @@
             android:scaleType="centerInside"
             android:layout_margin="4dp"
             android:visibility="gone"
+            android:contentDescription="@string/universal_image_content_description"
             />
     </RelativeLayout>
 

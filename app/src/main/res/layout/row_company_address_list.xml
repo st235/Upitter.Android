@@ -15,6 +15,7 @@
         android:scaleType="centerInside"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
+        android:contentDescription="@string/universal_image_content_description"
         />
 
     <TextView

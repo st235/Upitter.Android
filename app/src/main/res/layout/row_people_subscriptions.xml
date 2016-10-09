@@ -9,6 +9,7 @@
         android:id="@+id/company_logo_preview"
         android:layout_width="72dp"
         android:layout_height="72dp"
+        android:contentDescription="@string/universal_image_content_description"
         />
 
     <TextView
