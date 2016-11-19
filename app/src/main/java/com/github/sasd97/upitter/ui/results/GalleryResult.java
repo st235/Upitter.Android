@@ -28,6 +28,7 @@ import com.github.sasd97.upitter.utils.Gallery;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Search;
 import com.github.sasd97.upitter.utils.SlidrUtils;
+import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
@@ -45,7 +46,6 @@ public class GalleryResult extends BaseActivity
         OnGalleryInteractionListener,
         ListUtils.OnListMutateListener<String, ImageSkeleton> {
 
-    private static final String TAG = "Gallery Activity";
     private static final String EMPTY_TOOLBAR = "";
 
     private final static int DEFAULT_MULTI_SELECT_MAX_AMOUNT = 3;
@@ -102,23 +102,6 @@ public class GalleryResult extends BaseActivity
             applyFab.hide();
             return;
         }
-
-        imageGridRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx,int dy){
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) {
-                    if (applyFab.isShown()) {
-                        applyFab.hide();
-                    }
-                } else if (dy < 0) {
-                    if (!applyFab.isShown()) {
-                        applyFab.show();
-                    }
-                }
-            }
-        });
     }
 
     @Override
@@ -173,8 +156,7 @@ public class GalleryResult extends BaseActivity
 
     @Override
     public void onSearchError() {
-        // TODO Search error ???
-        Log.d(TAG, "Error happenes");
+        Logger.d("Error happenes");
     }
 
     @Override
@@ -187,8 +169,6 @@ public class GalleryResult extends BaseActivity
 
     @Override
     public void onThumbnailClick(int position, ImageSkeleton path) {
-        Log.d(TAG, path.getPath());
-
         Intent intent = new Intent(this, AlbumPreviewGallerySchema.class);
         intent.putExtra(PATH_ATTACH, path.getPath());
         intent.putExtra(POSITION_ATTACH, position);

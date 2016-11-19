@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,7 +44,8 @@ public class CompanyAuthorizationFragment extends BaseFragment
         DialCodeWatcher.OnCountryReadyListener,
         LocationService.OnLocationListener,
         GeocoderService.OnAddressListener,
-        CompanyAuthorizationQueryService.OnCompanyAuthorizationListener {
+        CompanyAuthorizationQueryService.OnCompanyAuthorizationListener,
+        View.OnKeyListener {
 
     @BindString(R.string.empty_field) String EMPTY_FIELD;
     @BindString(R.string.nothing_found_country_code_choose) String COUNTRY_NOT_VALID;
@@ -83,6 +85,9 @@ public class CompanyAuthorizationFragment extends BaseFragment
         prepareCountryDisplay(countryDisplayTextView);
 
         countryDialCodeEditText.addTextChangedListener(new DialCodeWatcher(countryDialCodeEditText, this));
+
+        countryDialCodeEditText.setOnKeyListener(this);
+        countryBodyCodeEditText.setOnKeyListener(this);
     }
 
     @Override
@@ -185,6 +190,16 @@ public class CompanyAuthorizationFragment extends BaseFragment
 
     @Override
     public void onSendCodeError(int attemptsAmount) {
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+            onClick(getView());
+            return true;
+        }
+
+        return false;
     }
 
     private boolean validateForms() {

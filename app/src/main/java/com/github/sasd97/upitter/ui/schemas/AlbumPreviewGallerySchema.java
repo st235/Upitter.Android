@@ -58,7 +58,6 @@ public class AlbumPreviewGallerySchema extends BaseActivity {
                 || getIntent().getBooleanExtra(GALLERY_PREVIEW_SELECTION_MODE, IS_GALLERY_NO_SUBBAR);
 
 
-        Logger.i(String.valueOf(isBottomBar));
         if (isBottomBar) gridLayout.setVisibility(View.GONE);
 
         imagePaths = getIntent().getStringArrayListExtra(LIST_ATTACH);

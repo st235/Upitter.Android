@@ -154,8 +154,11 @@ public class CompanyInformationActivity extends BaseActivity
 
     @OnClick(R.id.contact_site)
     public void onSiteClick(View v) {
-        Uri uri = Uri.parse(company.getSite());
+        String site = company.getSite();
+        if (!site.contains("http://")) site = "http://".concat(site);
+        Uri uri = Uri.parse(site);
         String PACKAGE_NAME = "com.android.chrome";
+
 
         CustomTabsIntent customTabsIntent = new CustomTabsIntent
                 .Builder()

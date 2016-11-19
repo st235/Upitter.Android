@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.github.sasd97.upitter.BuildConfig;
@@ -37,10 +38,9 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.*;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CODE_RECEIVER_INTENT_NAME;
 
 public class CodeVerificationActivity extends BaseActivity implements
+        View.OnKeyListener,
         RequestCodeReceiver.OnRequestCodeReceiveListener,
         CompanyAuthorizationQueryService.OnCompanyAuthorizationListener {
-
-    private final static String TAG = "Code Verification";
 
     private final String UPITTER_SMS_HEADER = "999999";
 
@@ -63,6 +63,7 @@ public class CodeVerificationActivity extends BaseActivity implements
         currentPhone = getIntent().getParcelableExtra(RECEIVED_PHONE);
         queryService = CompanyAuthorizationQueryService.getService(this);
         requestCodeReceiver = RequestCodeReceiver.getReceiver(this);
+        requestCodeEdt.setOnKeyListener(this);
 
         if (BuildConfig.DEBUG) requestCodeEdt.setText("162534");
     }
@@ -179,5 +180,15 @@ public class CodeVerificationActivity extends BaseActivity implements
         }
 
         return true;
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+            onLoginClick(getRootView());
+            return true;
+        }
+
+        return false;
     }
 }

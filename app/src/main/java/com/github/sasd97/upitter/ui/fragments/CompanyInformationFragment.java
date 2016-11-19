@@ -65,7 +65,9 @@ public class CompanyInformationFragment extends BaseFragment
                 .getTitles(ListUtils.toArray(Integer.class, company.getActivity()));
 
         companyDescriptionTextView.setText(company.getDescription());
+
         contactSite.setText(company.getSite());
+
         contactPhonesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         contactPhonesRecyclerView.setAdapter(new ContactPhonesPreviewRecycler(company.getContactPhones()));
         socialLinksRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
