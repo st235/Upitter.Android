@@ -93,7 +93,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textColor="#459ffa"
-            android:padding="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
             android:background="@drawable/information_underlay_background"
             />
     </LinearLayout>

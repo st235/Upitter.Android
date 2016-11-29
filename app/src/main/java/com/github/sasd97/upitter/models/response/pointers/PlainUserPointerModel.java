@@ -23,6 +23,10 @@ public class PlainUserPointerModel {
     @Expose
     private String mLogoUrl;
 
+    @SerializedName("avatar")
+    @Expose
+    private String mAvatar;
+
     public String getId() {
         return mCustomId;
     }
@@ -33,6 +37,10 @@ public class PlainUserPointerModel {
 
     public String getLogoUrl() {
         return mLogoUrl;
+    }
+
+    public String getAvatar() {
+        return mAvatar;
     }
 
     @Override

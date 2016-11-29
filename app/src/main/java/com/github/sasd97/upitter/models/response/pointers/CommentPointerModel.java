@@ -3,6 +3,7 @@ package com.github.sasd97.upitter.models.response.pointers;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -22,6 +23,10 @@ public class CommentPointerModel {
     @Expose
     private PlainUserPointerModel mAuthor;
 
+    @SerializedName("createdDate")
+    @Expose
+    private long mCreatedDate;
+
     public String getId() {
         return mCustomId;
     }
@@ -34,11 +39,16 @@ public class CommentPointerModel {
         return mAuthor;
     }
 
+    public Date getCreationDate() {
+        return new Date(mCreatedDate * 1000);
+    }
+
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "Comment #%1$s\nAuthor: %2$s\n%3$s",
+        return String.format(Locale.getDefault(), "Comment #%1$s\nAuthor: %2$s\n%3$s\nCreation date: %4$s",
                 mCustomId,
                 mAuthor == null ? "Null" : mAuthor.toString(),
-                mAuthor);
+                mAuthor,
+                mCreatedDate);
     }
 }

@@ -10,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 712
-        versionName "0.0.5.7"
+        versionName "0.0.5.9"
     }
 
     buildTypes {

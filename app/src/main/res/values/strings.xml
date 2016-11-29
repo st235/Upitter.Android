@@ -399,7 +399,7 @@
     <!-- Company profile region -->
     <string name="company_information">Information</string>
     <!-- Endregion -->
-    
+
     <!-- Gallery toggles region -->
     <string name="filter_toggle">Filter</string>
     <string name="crop_toggle">Crop</string>

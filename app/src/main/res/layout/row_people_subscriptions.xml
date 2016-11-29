@@ -3,12 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/company_logo_preview"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
         android:contentDescription="@string/universal_image_content_description"
         />
 
@@ -16,5 +21,10 @@
         android:id="@+id/company_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="start"
         />
 </LinearLayout>

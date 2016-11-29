@@ -11,6 +11,7 @@ import com.github.sasd97.upitter.models.response.containers.CommentContainerMode
 import com.github.sasd97.upitter.models.response.containers.CommentsContainerModel;
 import com.github.sasd97.upitter.models.response.containers.CompanyContainerModel;
 import com.github.sasd97.upitter.models.response.containers.ComplainContainerModel;
+import com.github.sasd97.upitter.models.response.containers.NotificationsContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PlainSubscribeContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
@@ -259,6 +260,11 @@ public interface BaseFactory {
                                                 @Query("accessToken") String accessToken,
                                                 @Field("commentId") String commentId);
 
+    @GET("post/remove")
+    Call<SimpleResponseModel> removePost(@Query("ln") String language,
+                                         @Query("accessToken") String accessToken,
+                                         @Query("postId") String postId);
+
     @GET("user/subscriptions")
     Call<UserSubscriptionsContainerModel> obtainUserSubscriptions(@Query("ln") String language,
                                                                   @Query("accessToken") String accessToken);
@@ -293,4 +299,14 @@ public interface BaseFactory {
                                                 @Query("ln") String language,
                                                 @Field("reasonId") String reasonId,
                                                 @Field("targetId") String targetId);
+
+    @GET("notifications")
+    Call<NotificationsContainerModel> obtainNotifications(@Query("accessToken") String accessToken,
+                                                          @Query("ln") String language);
+
+    @GET("notifications")
+    Call<NotificationsContainerModel> obtainOldNotifications(@Query("accessToken") String accessToken,
+                                                             @Query("ln") String language,
+                                                             @Query("type") String type,
+                                                             @Query("notificationId") String id);
 }

@@ -23,14 +23,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.components.CollageLayoutManager;
+import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.UserModel;
+import com.github.sasd97.upitter.models.response.SimpleResponseModel;
+import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.ComplaintPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
+import com.github.sasd97.upitter.services.RestService;
 import com.github.sasd97.upitter.services.query.ComplainQueryService;
 import com.github.sasd97.upitter.services.query.FeedQueryService;
 import com.github.sasd97.upitter.ui.CompanyBCProfileActivity;
@@ -53,7 +57,10 @@ import java.util.List;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import retrofit2.Call;
+import retrofit2.Response;
 
+import static com.github.sasd97.upitter.Upitter.language;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.COMPANY_ALIAS;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.COORDINATES_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.GALLERY_PREVIEW_SELECTION_MODE;
@@ -89,7 +96,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         this.context = context;
         this.user = user;
         this.isHeader = user != null;
-        if (this.isHeader) posts.add(new PostPointerModel());
+        if (this.isHeader) posts.add(0, new PostPointerModel());
     }
 
     public FeedPostRecycler(Context context, UserModel user, boolean isHeader) {
@@ -98,6 +105,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         this.isHeader = isHeader && user != null;
         posts = new ArrayList<>();
         if (!isHeader) FIRST_POSITION = 0;
+        else posts.add(0, new PostPointerModel());
     }
 
     public void setOnFeedNotAuthorizedClickListener(@NonNull OnFeedNotAuthorizedClickListener listener) {
@@ -201,6 +209,24 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
                     break;
                 case R.id.action_complain:
                     complainQueryService.obtainComplainList(user.getAccessToken());
+                    break;
+                case R.id.action_delete_post:
+                    Call<SimpleResponseModel> deletePost = RestService
+                            .baseFactory()
+                            .removePost(language(), user.getAccessToken(), post.getId());
+
+                    deletePost.enqueue(new retrofit2.Callback<SimpleResponseModel>() {
+                        @Override
+                        public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
+                            RestService.logRequest(call);
+                            removeAt(getAdapterPosition());
+                        }
+
+                        @Override
+                        public void onFailure(Call<SimpleResponseModel> call, Throwable t) {
+
+                        }
+                    });
             }
 
             return false;
@@ -329,6 +355,12 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
             intent.putExtra(POST_ID, posts.get(getAdapterPosition()).getId());
             context.startActivity(intent);
         }
+
+        public void removeAt(int position) {
+            posts.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, posts.size());
+        }
     }
 
     public class TapeHeaderViewHolder extends BaseViewHolder implements View.OnClickListener {
@@ -411,6 +443,8 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addAll(List<PostPointerModel> posts) {
         this.posts.addAll(posts);
+        Logger.e(this.posts.get(0).toString());
+        Logger.e(this.posts.get(1).toString());
         notifyItemInserted(this.posts.size());
     }
 

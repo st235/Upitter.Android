@@ -155,7 +155,7 @@ public class PostPointerModel {
                 mText,
                 mCompany == null ? "Null" : mCompany.toString(),
                 mLikesAmount,
-                mCoordinates.getLatitude(),
-                mCoordinates.getLongitude());
+                mCoordinates == null ? 0f : mCoordinates.getLatitude(),
+                mCoordinates == null ? 0f :  mCoordinates.getLongitude());
     }
 }

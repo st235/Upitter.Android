@@ -141,6 +141,9 @@ public class PeopleFeedActivity extends BaseActivity
             case R.id.nav_tape:
                 navigate(peopleFeedFragment);
                 break;
+            case R.id.nav_notification:
+                startActivity(new Intent(this, NotificationActivity.class));
+                break;
             case R.id.nav_favorites:
                 navigate(FavoritesFragment.getFragment());
                 break;
