@@ -60,22 +60,6 @@ public class CategoriesSelectionResult extends BaseActivity
         categoryRecyclerView.setHasFixedSize(true);
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         categoryRecyclerView.setAdapter(categoriesListRecycler);
-        categoryRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx,int dy){
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) {
-                    if (fab.isShown()) {
-                        fab.hide();
-                    }
-                } else if (dy < 0) {
-                    if (!fab.isShown()) {
-                        fab.show();
-                    }
-                }
-            }
-        });
 
         CategoriesQueryService queryService = CategoriesQueryService.getService(this);
         queryService.getCategories(Locale.getDefault().getLanguage());

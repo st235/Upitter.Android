@@ -53,6 +53,7 @@ public class PostCommentsRecycler extends RecyclerView.Adapter<PostCommentsRecyc
         @BindView(R.id.avatar_comments_view) CircleImageView avatarCommentsImageView;
         @BindView(R.id.comment_comments_view) TextView commentCommentsTextView;
         @BindView(R.id.user_name_comments_view) TextView userTextCommentsTextView;
+        @BindView(R.id.comment_created_date) TextView commentCreatedDate;
 
 
         public PostCommentsViewHolder(View itemView) {
@@ -80,6 +81,7 @@ public class PostCommentsRecycler extends RecyclerView.Adapter<PostCommentsRecyc
 
         holder.commentCommentsTextView.setText(comment.getText());
         holder.userTextCommentsTextView.setText(user.getName());
+        holder.commentCreatedDate.setText(comment.getCreationDate());
         obtainCompanyLogo(holder.avatarCommentsImageView, user.getName(), user.getLogoUrl());
     }
 

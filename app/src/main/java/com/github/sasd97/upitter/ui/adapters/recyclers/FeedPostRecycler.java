@@ -159,9 +159,10 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         protected void setupViews() {
             queryService = FeedQueryService.getService(this);
-            complainQueryService= ComplainQueryService.getService(this);
+            complainQueryService = ComplainQueryService.getService(this);
             postToolbar.setOnMenuItemClickListener(this);
             userAreaPostLinearLayout.setOnClickListener(this);
+            commentLinearLayout.setOnClickListener(this);
 
             likeClick = new View.OnClickListener() {
                 @Override
@@ -443,8 +444,6 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addAll(List<PostPointerModel> posts) {
         this.posts.addAll(posts);
-        Logger.e(this.posts.get(0).toString());
-        Logger.e(this.posts.get(1).toString());
         notifyItemInserted(this.posts.size());
     }
 

@@ -25,7 +25,7 @@ public class CommentPointerModel {
 
     @SerializedName("createdDate")
     @Expose
-    private long mCreatedDate;
+    private String mCreatedDate;
 
     public String getId() {
         return mCustomId;
@@ -39,8 +39,8 @@ public class CommentPointerModel {
         return mAuthor;
     }
 
-    public Date getCreationDate() {
-        return new Date(mCreatedDate * 1000);
+    public String getCreationDate() {
+        return mCreatedDate;
     }
 
     @Override

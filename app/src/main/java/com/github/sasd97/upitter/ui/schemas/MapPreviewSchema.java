@@ -35,6 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;

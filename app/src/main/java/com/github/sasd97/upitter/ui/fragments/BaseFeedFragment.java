@@ -224,8 +224,6 @@ public class BaseFeedFragment extends BaseFragment
 
     @Override
     public void onEmpty() {
-        Logger.i("Empty");
-
         if (swipeRefreshLayout.isShown())
             swipeRefreshLayout.setRefreshing(false);
     }
@@ -246,13 +244,23 @@ public class BaseFeedFragment extends BaseFragment
 
         switch (id) {
             case R.id.action_choose_category:
-                Logger.d("OK3");
-                Intent intent = new Intent(getContext(), CategoriesSelectionResult.class);
-                startActivityForResult(intent, CATEGORIES_ACTIVITY_REQUEST);
+                Intent chooseCategory = new Intent(getActivity(), CategoriesSelectionResult.class);
+                if (categoriesSelected != null && categoriesSelected.size() != 0) chooseCategory.putIntegerArrayListExtra(CATEGORIES_ATTACH, categoriesSelected);
+                startActivityForResult(chooseCategory, CATEGORIES_ACTIVITY_REQUEST);
                 return true;
             case R.id.action_choose_location:
-                Logger.d("OK4");
                 startActivityForResult(new Intent(getContext(), LocationSelectionResult.class), LOCATION_CHANGE_REQUEST);
+                return true;
+            case R.id.action_clear_category:
+                categoriesSelected.clear();
+                feedPostRecycler.refresh();
+
+                postQueryService.obtainPosts(
+                        LocationHolder.getRadius(),
+                        accessToken,
+                        LocationHolder.getLocation().getLatitude(),
+                        LocationHolder.getLocation().getLongitude(),
+                        categoriesSelected);
                 return true;
         }
 
@@ -300,9 +308,7 @@ public class BaseFeedFragment extends BaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Logger.d("OK");
         if (resultCode != BaseActivity.RESULT_OK) return;
-        Logger.d("OK");
 
         if (requestCode == CATEGORIES_ACTIVITY_REQUEST) {
             handleCategoriesIntent(data);

@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -139,9 +140,11 @@ public class PeopleFeedActivity extends BaseActivity
 
         switch (id) {
             case R.id.nav_tape:
+                setActionTitle(R.string.title_activity_tape);
                 navigate(peopleFeedFragment);
                 break;
             case R.id.nav_notification:
+                setActionTitle(R.string.favorites_activity_tape);
                 startActivity(new Intent(this, NotificationActivity.class));
                 break;
             case R.id.nav_favorites:
@@ -163,6 +166,10 @@ public class PeopleFeedActivity extends BaseActivity
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setActionTitle(@StringRes int title) {
+        getSupportActionBar().setTitle(title);
     }
 
     private void navigate(BaseFragment fragment) {

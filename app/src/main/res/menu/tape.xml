@@ -15,4 +15,11 @@
         android:title="@string/choose_category"
         app:showAsAction="never"
         />
+
+    <item
+        android:id="@+id/action_clear_category"
+        android:orderInCategory="100"
+        android:title="@string/clear_category"
+        app:showAsAction="never"
+        />
 </menu>

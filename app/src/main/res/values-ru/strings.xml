@@ -148,4 +148,6 @@
     <string name="title_activity_empty_feed_actvity">Лента</string>
     <string name="women_radio">Женщина</string>
     <string name="whats_new">Что нового?</string>
+    <string name="favorites_activity_tape">Избранное</string>
+    <string name="clear_category">Очистить категории</string>
 </resources>

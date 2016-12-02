@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
@@ -104,6 +105,16 @@ public class CompanyFeedActivity extends BaseActivity
     }
 
     private void obtainNavigationHeader(View header) {
+        View v = findById(header, R.id.click_area);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CompanyFeedActivity.this, CompanyBCProfileActivity.class);
+                intent.putExtra(COMPANY_ALIAS, company.getAlias());
+                startActivity(intent);
+            }
+        });
+
         createPostView = findById(header, R.id.create_post_tape_company_nav_header);
         logoImageView = findById(header, R.id.logo_company_tape);
         titleTextView = findById(header, R.id.title_company_tape);
@@ -163,12 +174,14 @@ public class CompanyFeedActivity extends BaseActivity
 
         switch (id) {
             case R.id.nav_tape:
+                setActionTitle(R.string.title_activity_tape);
                 navigate(baseFeedFragment);
                 break;
             case R.id.nav_notification:
                 startActivity(new Intent(this, NotificationActivity.class));
                 break;
             case R.id.nav_favorites:
+                setActionTitle(R.string.favorites_activity_tape);
                 navigate(FavoritesFragment.getFragment());
                 break;
             case R.id.nav_settings:
@@ -186,6 +199,10 @@ public class CompanyFeedActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setActionTitle(@StringRes int title) {
+        getSupportActionBar().setTitle(title);
     }
 
     private void navigate(BaseFragment fragment) {

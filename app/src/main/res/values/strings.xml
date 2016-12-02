@@ -71,6 +71,7 @@
 
     <!-- Tape activity region -->
     <string name="title_activity_tape">Tape</string>
+    <string name="favorites_activity_tape">Favorites</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
@@ -208,6 +209,7 @@
 
     <!-- Choose category region -->
     <string name="choose_category">Choose category</string>
+    <string name="clear_category">Clear category</string>
     <string name="title_activity_company_settings">Settings</string>
     <!-- Endregion -->
 
