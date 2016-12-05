@@ -1,9 +1,12 @@
 package com.github.sasd97.upitter.utils;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.events.OnDeleteListener;
 import com.github.sasd97.upitter.models.ErrorModel;
 
 /**
@@ -52,6 +55,22 @@ public class DialogUtils {
                 .title(R.string.no_access_title)
                 .content(R.string.no_access_content)
                 .positiveText(R.string.no_access_ok)
+                .build();
+    }
+
+    public static MaterialDialog deleteDialog(Context context, final OnDeleteListener listener) {
+        return new MaterialDialog
+                .Builder(context)
+                .title(R.string.delete_post_title_dialog)
+                .content(R.string.delete_post_content_dialog)
+                .positiveText(R.string.delete_post_ok_dialog)
+                .negativeText(R.string.delete_post_cancel_dialog)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        listener.onDelete();
+                    }
+                })
                 .build();
     }
 }

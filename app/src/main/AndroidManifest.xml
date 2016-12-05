@@ -208,7 +208,10 @@
             android:name=".ui.EmptyFeedActvity"
             android:label="@string/title_activity_empty_feed_actvity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.NotificationActivity"></activity>
+        <activity android:name=".ui.NotificationActivity"
+            android:label="@string/notifications_navigation_drawer"
+            android:theme="@style/AppTheme"
+            />
     </application>
 
 </manifest>

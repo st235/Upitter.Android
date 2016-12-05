@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         applicationId "com.github.sasd97.upitter"
         minSdkVersion 15
-        targetSdkVersion 24
-        versionCode 712
-        versionName "0.0.5.9"
+        targetSdkVersion 25
+        versionCode 716
+        versionName "0.0.6.1"
     }
 
     buildTypes {
@@ -27,12 +27,13 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.vk:androidsdk:1.6.5'
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:gridlayout-v7:24.2.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:customtabs:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.google.android.gms:play-services-maps:9.6.1'
+    compile 'com.android.support:support-v4:25.0.1'
+    compile 'com.android.support:gridlayout-v7:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:customtabs:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.google.android.gms:play-services-maps:9.8.0'
+    compile 'com.google.android.gms:play-services-auth:9.8.0'
     compile 'ch.acra:acra:4.9.0-RC-2'
     compile 'com.orhanobut:logger:1.15'
     compile 'com.github.satyan:sugar:1.5'
@@ -49,7 +50,6 @@ dependencies {
     compile 'com.afollestad.material-dialogs:core:0.8.5.9'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'ca.barrenechea.header-decor:header-decor:0.2.6'
-    compile 'com.google.android.gms:play-services-auth:9.6.1'
     compile 'com.simplecityapps:recyclerview-fastscroll:1.0.9'
     compile 'com.facebook.android:facebook-android-sdk:4.12.1'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'

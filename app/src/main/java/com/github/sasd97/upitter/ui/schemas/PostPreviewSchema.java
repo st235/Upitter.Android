@@ -19,7 +19,6 @@ import com.github.sasd97.upitter.components.CollageLayoutManager;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
-import com.github.sasd97.upitter.models.response.containers.CommentsContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.CommentPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.CommentsPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
@@ -49,6 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.github.sasd97.upitter.Upitter.getHolder;
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.GALLERY_PREVIEW_SELECTION_MODE;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.LIST_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.MODE_ATTACH;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.POSITION_ATTACH;
@@ -117,6 +117,7 @@ public class PostPreviewSchema extends BaseActivity
 
         recyclerAdapter = new PostCommentsRecycler();
         commentConversation.setLayoutManager(new LinearLayoutManager(this));
+        commentConversation.setNestedScrollingEnabled(false);
         commentConversation.setAdapter(recyclerAdapter);
 
 
@@ -207,6 +208,7 @@ public class PostPreviewSchema extends BaseActivity
                 return object.getOriginalUrl();
             }
         }));
+        intent.putExtra(GALLERY_PREVIEW_SELECTION_MODE, true);
         intent.putExtra(POSITION_ATTACH, position);
         intent.putExtra(MODE_ATTACH, 1);
         startActivity(intent);
@@ -353,7 +355,6 @@ public class PostPreviewSchema extends BaseActivity
     }
     //endregion
 
-
     @Override
     public void onRemove(boolean isSuccess) {
 
@@ -366,7 +367,7 @@ public class PostPreviewSchema extends BaseActivity
 
     @Override
     public void onAdd(CommentPointerModel comment) {
-        recyclerAdapter.add(comment);
+        recyclerAdapter.addToEnd(comment);
         post.addCommentsAmount();
 
         if (post.getCommentsAmount() > 0) {

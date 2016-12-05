@@ -18,7 +18,14 @@
     <!-- No updates dialog region. -->
     <string name="title_no_updates_dialog" translatable="false">No updates</string>
     <string name="content_no_updates_dialog" translatable="false">You current version is actual</string>
-    <string name="ok_no_updates_dialog" translatable="false">Ok</string>
+    <string name="ok_no_updates_dialog" translatable="false">OK</string>
+    <!-- Endregion -->
+
+    <!-- Delete post dialog region. -->
+    <string name="delete_post_title_dialog">Are you sure?</string>
+    <string name="delete_post_content_dialog">Do you really want to delete this post?</string>
+    <string name="delete_post_ok_dialog" >OK</string>
+    <string name="delete_post_cancel_dialog" >Cancel</string>
     <!-- Endregion -->
 
     <!-- Region permissions -->
@@ -366,7 +373,7 @@
     <!-- Endregion -->
 
     <!-- People Feed region -->
-    <string-array name="people_feed_titles" translatable="false">
+    <string-array name="people_feed_titles">
         <item>Feed</item>
         <item>Subscription</item>
     </string-array>
@@ -375,7 +382,7 @@
     <string name="title_activity_people_settings" translatable="false">Settings</string>
 
     <!-- Company profile by user region -->
-    <string name="title_activity_people_subscription" translatable="false">Subscriptions</string>
+    <string name="title_activity_people_subscription">Subscriptions</string>
     <string name="people_subscribe">Subscribe</string>
     <string name="people_unsubscribe">Unsubscribe</string>
 

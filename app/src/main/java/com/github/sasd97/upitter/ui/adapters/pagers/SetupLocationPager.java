@@ -33,12 +33,14 @@ public class SetupLocationPager extends FragmentPagerAdapter implements Navigati
                               @NonNull ArrayList<CoordinatesModel> coordinates,
                               @NonNull ViewPager pager) {
         super(fm);
+
         this.titles = titles;
         this.coordinates = coordinates;
         this.pager = pager;
 
+        navigationPaginationPreviewFragment = NavigationPaginationPreviewFragment.getFragment(coordinates);
         navigationListFragment = NavigationListFragment.getFragment(coordinates, this);
-        navigationPaginationPreviewFragment= NavigationPaginationPreviewFragment.getFragment(coordinates);
+        navigationListFragment.setPaginationHolder(navigationPaginationPreviewFragment);
     }
 
     @Override

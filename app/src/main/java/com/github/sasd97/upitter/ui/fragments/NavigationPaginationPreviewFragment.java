@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.models.CoordinatesModel;
+import com.github.sasd97.upitter.models.skeletons.PaginationHolder;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +20,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -28,7 +31,9 @@ import butterknife.OnClick;
 
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.LOCATION_LIST;
 
-public class NavigationPaginationPreviewFragment extends BaseFragment implements OnMapReadyCallback {
+public class NavigationPaginationPreviewFragment extends BaseFragment
+        implements OnMapReadyCallback,
+        PaginationHolder {
 
     private static final int MIN_POSITION = 0;
 
@@ -80,6 +85,18 @@ public class NavigationPaginationPreviewFragment extends BaseFragment implements
         else fabPaginationLeft.show();
         if (position == (size - 1)) fabPaginationRight.hide();
         else fabPaginationRight.show();
+    }
+
+    @Override
+    public void redraw(List<CoordinatesModel> list) {
+        this.position = 0;
+        coordinates = new ArrayList<>(list);
+        size = coordinates.size();
+        checkPagination(size);
+
+        googleMap.clear();
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     private void moveTo(TextView addressHolder, GoogleMap googleMap, CoordinatesModel point) {

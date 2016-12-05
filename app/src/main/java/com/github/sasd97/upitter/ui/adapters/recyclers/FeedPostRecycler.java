@@ -24,6 +24,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.components.CollageLayoutManager;
 import com.github.sasd97.upitter.events.Callback;
+import com.github.sasd97.upitter.events.OnDeleteListener;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PeopleModel;
@@ -45,6 +46,7 @@ import com.github.sasd97.upitter.ui.schemas.AlbumPreviewGallerySchema;
 import com.github.sasd97.upitter.ui.schemas.MapPreviewSchema;
 import com.github.sasd97.upitter.ui.schemas.PostPreviewSchema;
 import com.github.sasd97.upitter.utils.Categories;
+import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Names;
@@ -118,6 +120,7 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
             ComplainQueryService.ComplainListener,
             ImageCollageRecycler.OnImageClickListener,
             Toolbar.OnMenuItemClickListener,
+            OnDeleteListener,
             View.OnClickListener {
 
         @BindView(R.id.post_toolbar) Toolbar postToolbar;
@@ -212,25 +215,32 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
                     complainQueryService.obtainComplainList(user.getAccessToken());
                     break;
                 case R.id.action_delete_post:
-                    Call<SimpleResponseModel> deletePost = RestService
-                            .baseFactory()
-                            .removePost(language(), user.getAccessToken(), post.getId());
-
-                    deletePost.enqueue(new retrofit2.Callback<SimpleResponseModel>() {
-                        @Override
-                        public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
-                            RestService.logRequest(call);
-                            removeAt(getAdapterPosition());
-                        }
-
-                        @Override
-                        public void onFailure(Call<SimpleResponseModel> call, Throwable t) {
-
-                        }
-                    });
+                    DialogUtils.deleteDialog(context, this).show();
             }
 
             return false;
+        }
+
+        @Override
+        public void onDelete() {
+            PostPointerModel post = posts.get(getAdapterPosition());
+
+            Call<SimpleResponseModel> deletePost = RestService
+                    .baseFactory()
+                    .removePost(language(), user.getAccessToken(), post.getId());
+
+            deletePost.enqueue(new retrofit2.Callback<SimpleResponseModel>() {
+                @Override
+                public void onResponse(Call<SimpleResponseModel> call, Response<SimpleResponseModel> response) {
+                    RestService.logRequest(call);
+                    removeAt(getAdapterPosition());
+                }
+
+                @Override
+                public void onFailure(Call<SimpleResponseModel> call, Throwable t) {
+
+                }
+            });
         }
 
         @Override

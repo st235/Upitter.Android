@@ -24,12 +24,25 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:textSize="18sp"
-        android:singleLine="true"
+        android:maxLines="1"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_toRightOf="@+id/choose_button_address_single_view"
         android:layout_toEndOf="@+id/choose_button_address_single_view"
+        android:layout_toStartOf="@+id/delete_item"
+        android:layout_toLeftOf="@+id/delete_item"
         android:layout_centerVertical="true"
         tools:text="Alex"
+        />
+
+    <ImageView
+        android:id="@+id/delete_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close_black_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
         />
 </RelativeLayout>

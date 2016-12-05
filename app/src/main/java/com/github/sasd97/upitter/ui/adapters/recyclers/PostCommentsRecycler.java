@@ -119,6 +119,11 @@ public class PostCommentsRecycler extends RecyclerView.Adapter<PostCommentsRecyc
         notifyItemInserted(FIRST_POSITION);
     }
 
+    public void addToEnd(CommentPointerModel comment) {
+        this.comments.add(comment);
+        notifyItemInserted(getItemCount() - 1);
+    }
+
     public void addAll(Collection<CommentPointerModel> collection) {
         this.comments.addAll(collection);
         notifyItemRangeInserted(getItemCount() - 1, collection.size());

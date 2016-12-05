@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -10,6 +10,54 @@
         android:id="@+id/recycler_navigation_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:layout_above="@+id/linearLayout" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_long_margin"
+        android:layout_marginLeft="@dimen/activity_long_margin"
+        android:layout_marginRight="@dimen/activity_long_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
+
+        <RelativeLayout
+            style="@style/Upitter.LayoutButton.Rounded.BabyBlue.Light"
+            android:id="@+id/add_coordinates"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_icon_add_more"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:contentDescription="@string/universal_image_content_description"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:text="@string/add_position_label_company_registration_activity"
+                />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/finish_coordinates_editing"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:text="@string/finish_registration_label_company_registration_activity"
+            style="@style/Upitter.Button.Rounded.Watermelon"
+            />
+    </LinearLayout>
+</RelativeLayout>

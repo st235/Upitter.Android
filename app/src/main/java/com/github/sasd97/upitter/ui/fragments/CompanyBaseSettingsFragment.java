@@ -42,6 +42,7 @@ import static com.github.sasd97.upitter.constants.IntentKeysConstants.CATEGORIES
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.PUT_CROPPED_IMAGE;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.LOCATION_LIST;
 import static com.github.sasd97.upitter.constants.RequestCodesConstants.CATEGORIES_ACTIVITY_REQUEST;
+import static com.github.sasd97.upitter.constants.RequestCodesConstants.CHOOSE_ON_MAP_POINT_REQUEST;
 
 /**
  * Created by alexander on 06.08.16.
@@ -144,7 +145,7 @@ public class CompanyBaseSettingsFragment extends BaseFragment
         Intent intent = new Intent(getContext(), SetupLocationResult.class);
         ArrayList<CoordinatesModel> concreteCoordinates = new ArrayList<>(companyModel.getCoordinates());
         intent.putParcelableArrayListExtra(LOCATION_LIST, concreteCoordinates);
-        startActivity(intent);
+        startActivityForResult(intent, CHOOSE_ON_MAP_POINT_REQUEST);
     }
 
     @OnClick(R.id.choose_category_fragment_company_base_settings)
@@ -199,6 +200,11 @@ public class CompanyBaseSettingsFragment extends BaseFragment
         companyModel.setCategories(categoriesSelected);
     }
 
+    private void handleCoordinatesIntent(@NonNull Intent intent) {
+        ArrayList<CoordinatesModel> categoriesSelected = intent.getParcelableArrayListExtra(LOCATION_LIST);
+        companyModel.setCoordinates(categoriesSelected);
+    }
+
     private void obtainCompanyLogo(ImageView holder, String logoUrl) {
         if (logoUrl == null) {
             String preview = Names.getNamePreview(companyModel.getName());
@@ -233,6 +239,11 @@ public class CompanyBaseSettingsFragment extends BaseFragment
 
         if (requestCode == RequestCodesConstants.GALLERY_ACTIVITY_REQUEST) {
             handleImage(data);
+            return;
+        }
+
+        if (requestCode == CHOOSE_ON_MAP_POINT_REQUEST) {
+            handleCoordinatesIntent(data);
             return;
         }
     }

@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -41,6 +42,8 @@ public class CompanySettingsActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_settings);
         setToolbar(R.id.toolbar, true);
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) getToolbar().getLayoutParams();
+        params.setScrollFlags(0);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT, 0.3f));
     }
 
@@ -61,7 +64,6 @@ public class CompanySettingsActivity extends BaseActivity
 
     @Override
     public void onSuccess(CompanyPointerModel company) {
-        Logger.i("Success edit!");
         Logger.json(companyModel.toJson());
         ((CompanyHolder) getHolder()).save(companyModel);
         finish();

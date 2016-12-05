@@ -150,4 +150,15 @@
     <string name="whats_new">Что нового?</string>
     <string name="favorites_activity_tape">Избранное</string>
     <string name="clear_category">Очистить категории</string>
+    <string name="delete_post_title_dialog">Вы уверены?</string>
+    <string name="delete_post_content_dialog">Вы действительно хотите удалить публикацию?</string>
+    <string name="delete_post_ok_dialog">Да</string>
+    <string name="delete_post_cancel_dialog" >Нет</string>
+    <!-- People Feed region -->
+    <string-array name="people_feed_titles">
+        <item>Лента</item>
+        <item>Подписки</item>
+    </string-array>
+    <string name="title_activity_people_subscription">Подписки</string>
+    <!-- Endregion -->
 </resources>

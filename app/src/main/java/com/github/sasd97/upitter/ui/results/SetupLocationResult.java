@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.ui.results;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
@@ -31,12 +32,14 @@ public class SetupLocationResult extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_location);
         setToolbar(R.id.toolbar, true);
+
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) getToolbar().getLayoutParams();
+        params.setScrollFlags(0);
     }
 
     @Override
     protected void setupViews() {
         locationList = getIntent().getParcelableArrayListExtra(LOCATION_LIST);
-
         viewPager.setAdapter(new SetupLocationPager(getSupportFragmentManager(), titles, locationList, viewPager));
         tabLayout.setupWithViewPager(viewPager);
     }

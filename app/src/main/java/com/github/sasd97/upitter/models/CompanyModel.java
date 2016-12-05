@@ -216,6 +216,11 @@ public class CompanyModel extends UserModel
         return mCoordinates;
     }
 
+    public void setCoordinates(List<CoordinatesModel> coordinates) {
+        mCoordinates = coordinates;
+        mCoordinatesRepresentation = new Gson().toJson(mCoordinates);
+    }
+
     public List<SocialIconModel> getSocialIcons() {
         if (mSocialIcons != null) return mSocialIcons;
         if (mSocialIconsRepresentation == null) return new ArrayList<>();
