@@ -23,14 +23,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.components.CollageLayoutManager;
-import com.github.sasd97.upitter.events.Callback;
 import com.github.sasd97.upitter.events.OnDeleteListener;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.models.response.SimpleResponseModel;
-import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.ComplaintPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.ImagePointerModel;
@@ -51,7 +49,6 @@ import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.ListUtils;
 import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.Palette;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -197,7 +194,12 @@ public class FeedPostRecycler extends RecyclerView.Adapter<BaseViewHolder> {
             favoritesLinearLayout.setOnClickListener(favoriteClick);
 
             quizResultHorizontalChart.setLayoutManager(new LinearLayoutManager(context));
+            quizResultHorizontalChart.setNestedScrollingEnabled(false);
+
             quizVariantsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+            quizVariantsRecyclerView.setNestedScrollingEnabled(false);
+
+            imagesRecyclerView.setNestedScrollingEnabled(false);
         }
 
         @Override

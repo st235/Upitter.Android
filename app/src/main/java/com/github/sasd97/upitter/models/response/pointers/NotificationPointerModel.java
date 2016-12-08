@@ -29,6 +29,10 @@ public class NotificationPointerModel {
     @Expose
     private String createdDate;
 
+    @SerializedName("postId")
+    @Expose
+    private String postId;
+
     public String getCustomId() {
         return customId;
     }
@@ -47,6 +51,10 @@ public class NotificationPointerModel {
 
     public String getCreatedDate() {
         return createdDate;
+    }
+
+    public String getPostId() {
+        return postId;
     }
 
     @Override

@@ -19,6 +19,7 @@ import com.github.sasd97.upitter.components.CollageLayoutManager;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
+import com.github.sasd97.upitter.models.response.containers.PostContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.CommentPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.CommentsPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
@@ -46,6 +47,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import retrofit2.Call;
 
 import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.GALLERY_PREVIEW_SELECTION_MODE;
@@ -60,6 +62,8 @@ public class PostPreviewSchema extends BaseActivity
         CommentsQueryService.OnCommentListener,
         FeedQuizVariantRecycler.OnItemClickListener,
         ImageCollageRecycler.OnImageClickListener {
+
+    private Call<PostContainerModel> findPostCall;
 
     private String postId;
     private UserModel user;
@@ -112,7 +116,7 @@ public class PostPreviewSchema extends BaseActivity
         user = getHolder().get();
         postId = getIntent().getStringExtra(POST_ID);
 
-        postQueryService.findPost(user.getAccessToken(), postId);
+        findPostCall = postQueryService.findPost(user.getAccessToken(), postId);
         postQueryService.watchPost(user.getAccessToken(), postId);
 
         recyclerAdapter = new PostCommentsRecycler();
@@ -146,7 +150,6 @@ public class PostPreviewSchema extends BaseActivity
 
     @Override
     public void onFindPost(PostPointerModel post) {
-        Logger.d(post.toString());
         this.post = post;
         CompanyPointerModel author = post.getCompany();
 
@@ -394,5 +397,11 @@ public class PostPreviewSchema extends BaseActivity
                 this.post.getId(),
                 text.getText().toString());
         text.setText("");
+    }
+
+    @Override
+    protected void onDestroy() {
+        findPostCall.cancel();
+        super.onDestroy();
     }
 }

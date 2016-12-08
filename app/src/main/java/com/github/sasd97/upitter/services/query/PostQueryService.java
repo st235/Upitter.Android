@@ -122,7 +122,7 @@ public class PostQueryService {
         });
     }
 
-    public void findPost(@NonNull String accessToken,
+    public Call<PostContainerModel> findPost(@NonNull String accessToken,
                           @NonNull String postId) {
         Call<PostContainerModel> createPost = RestService
                 .baseFactory()
@@ -136,5 +136,7 @@ public class PostQueryService {
                 listener.onFindPost(response.body().getResponseModel());
             }
         });
+
+        return createPost;
     }
 }

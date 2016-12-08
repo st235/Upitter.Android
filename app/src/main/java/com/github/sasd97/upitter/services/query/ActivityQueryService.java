@@ -7,6 +7,7 @@ import com.github.sasd97.upitter.events.OnErrorQueryListener;
 import com.github.sasd97.upitter.models.response.containers.ActivitiesContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.ActivityPointerModel;
 import com.github.sasd97.upitter.services.RestService;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class ActivityQueryService {
         Call<ActivitiesContainerModel> getTitles = RestService
                 .baseFactory()
                 .obtainActivitiesTitles(language(), activities);
+
+        for (int i: activities) Logger.e(String.valueOf(i));
 
         getTitles.enqueue(new Callback<ActivitiesContainerModel>(listener) {
             @Override

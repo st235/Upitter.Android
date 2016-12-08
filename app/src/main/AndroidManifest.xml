@@ -161,6 +161,7 @@
         <activity
             android:name=".ui.CompanySettingsActivity"
             android:label="@string/title_activity_company_settings"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme" />
         <activity android:name=".ui.results.SocialIconInstallationResult" />
         <activity

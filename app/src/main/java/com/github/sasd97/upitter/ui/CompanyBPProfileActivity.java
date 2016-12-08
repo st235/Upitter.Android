@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -13,6 +14,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.events.AppBarStateChangeListener;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
@@ -58,6 +60,7 @@ public class CompanyBPProfileActivity extends BaseActivity
     @BindView(R.id.title_company_profile) TextView titleTextView;
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
+    @BindView(R.id.scrollable) View scrollableLayout;
     @BindView(R.id.collpasingToolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.subscription_value) TextView subscriptionValue;
     @BindView(R.id.subscription_counter) TextView subscriptionCounter;
@@ -77,6 +80,26 @@ public class CompanyBPProfileActivity extends BaseActivity
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
 
         userModel = getHolder().get();
+
+        ((AppBarLayout) findById(R.id.appbar)).addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                switch (state) {
+                    case COLLAPSED:
+                        collapsingToolbarLayout.setTitle(company == null ? SPACE : company.getName());
+                        break;
+                    case IDLE:
+                        collapsingToolbarLayout.setTitle(SPACE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPercentage(double percentage) {
+                scrollableLayout.setAlpha((float) percentage);
+            }
+        });
+
         findQueryService = CompanyProfileQueryService.getService(this);
         subscribeQueryService = SubscribeQueryService.getService(this);
         collapsingToolbarLayout.setTitle(SPACE);

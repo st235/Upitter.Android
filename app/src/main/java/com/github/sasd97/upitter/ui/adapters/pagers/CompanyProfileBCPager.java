@@ -9,7 +9,6 @@ import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.SubscribersPointerModel;
 import com.github.sasd97.upitter.ui.fragments.CompanyProfileFeedFragment;
 import com.github.sasd97.upitter.ui.fragments.CompanyProfileSubscribersFragment;
-import com.orhanobut.logger.Logger;
 
 /**
  * Created by alexander on 01.09.16.

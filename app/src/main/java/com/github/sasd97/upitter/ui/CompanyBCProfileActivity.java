@@ -2,6 +2,7 @@ package com.github.sasd97.upitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -14,9 +15,8 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.models.CompanyModel;
+import com.github.sasd97.upitter.events.AppBarStateChangeListener;
 import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
@@ -27,7 +27,6 @@ import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.SlidrUtils;
-import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
@@ -46,6 +45,7 @@ public class CompanyBCProfileActivity extends BaseActivity
 
     private String alias;
     private UserModel userModel;
+    private CompanyPointerModel companyModel;
     private CompanyProfileQueryService findQueryService;
 
     private PostsContainerModel posts;
@@ -55,6 +55,7 @@ public class CompanyBCProfileActivity extends BaseActivity
     @BindView(R.id.title_company_profile) TextView titleTextView;
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
+    @BindView(R.id.scrollable) View scrollableLayout;
     @BindView(R.id.collpasingToolbar) CollapsingToolbarLayout collapsingToolbarLayout;
 
     @BindArray(R.array.company_profile_tabs_titile) String[] titles;
@@ -69,8 +70,27 @@ public class CompanyBCProfileActivity extends BaseActivity
     protected void setupViews() {
         setToolbar(R.id.toolbar, true);
         Slidr.attach(this, SlidrUtils.config(SlidrPosition.LEFT));
-
         userModel = getHolder().get();
+
+        ((AppBarLayout) findById(R.id.appbar)).addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                switch (state) {
+                    case COLLAPSED:
+                        collapsingToolbarLayout.setTitle(companyModel == null ? SPACE : companyModel.getName());
+                        break;
+                    case IDLE:
+                        collapsingToolbarLayout.setTitle(SPACE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPercentage(double percentage) {
+                scrollableLayout.setAlpha((float) percentage);
+            }
+        });
+
         findQueryService = CompanyProfileQueryService.getService(this);
         collapsingToolbarLayout.setTitle(SPACE);
 
@@ -101,10 +121,10 @@ public class CompanyBCProfileActivity extends BaseActivity
         }
 
         Glide
-                .with(this)
-                .load(logoUrl)
-                .bitmapTransform(new CenterCrop(this), new RoundedCornersTransformation(this, Dimens.drr(), 0))
-                .into(holder);
+            .with(this)
+            .load(logoUrl)
+            .bitmapTransform(new CenterCrop(this), new RoundedCornersTransformation(this, Dimens.drr(), 0))
+            .into(holder);
     }
 
     private void setupPager() {
@@ -114,7 +134,7 @@ public class CompanyBCProfileActivity extends BaseActivity
 
     @Override
     public void onFind(CompanyPointerModel company) {
-        Logger.i(company.toString());
+        companyModel = company;
         obtainCompanyHeader(company);
     }
 

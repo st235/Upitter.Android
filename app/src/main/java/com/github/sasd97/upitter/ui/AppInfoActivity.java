@@ -2,7 +2,6 @@ package com.github.sasd97.upitter.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,12 +14,8 @@ import com.github.sasd97.upitter.services.query.ApplicationInfoQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.DialogUtils;
 import com.github.sasd97.upitter.utils.SlidrUtils;
-import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,7 +28,6 @@ import static com.github.sasd97.upitter.Upitter.getHolder;
 
 public class AppInfoActivity extends BaseActivity implements ApplicationInfoQueryService.OnInfoListener {
 
-    private final String SCHEMA = "v %1$s";
     private final String PATTERN = "[^\\d]";
     private final int versionName = Integer.valueOf(BuildConfig.VERSION_NAME.replaceAll(PATTERN, ""));
 
@@ -56,6 +50,7 @@ public class AppInfoActivity extends BaseActivity implements ApplicationInfoQuer
         queryService = ApplicationInfoQueryService.getService(this);
         userModel = getHolder().get();
 
+        String SCHEMA = "v %1$s";
         appVersionTv.setText(String.format(SCHEMA, BuildConfig.VERSION_NAME));
     }
 

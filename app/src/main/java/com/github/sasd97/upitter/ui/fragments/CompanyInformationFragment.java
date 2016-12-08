@@ -1,37 +1,32 @@
 package com.github.sasd97.upitter.ui.fragments;
 
-import android.support.annotation.LayoutRes;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.ContextCompat;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
-import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.ErrorModel;
-import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.ActivityPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.CompanyPointerModel;
-import com.github.sasd97.upitter.models.response.pointers.SubscribersPointerModel;
 import com.github.sasd97.upitter.services.query.ActivityQueryService;
 import com.github.sasd97.upitter.ui.adapters.recyclers.ActivitiesRecycler;
 import com.github.sasd97.upitter.ui.adapters.recyclers.ContactPhonesPreviewRecycler;
 import com.github.sasd97.upitter.ui.adapters.recyclers.SocialIconsPreviewRecycler;
 import com.github.sasd97.upitter.ui.base.BaseFragment;
-import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.ListUtils;
-import com.github.sasd97.upitter.utils.Names;
+import com.github.sasd97.upitter.utils.Palette;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
 import butterknife.BindView;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import butterknife.OnClick;
 
 /**
  * Created by Alexadner Dadukin on 21.09.2016.
@@ -88,5 +83,31 @@ public class CompanyInformationFragment extends BaseFragment
 
     public void setCompany(CompanyPointerModel company) {
         this.company = company;
+    }
+
+    @OnClick(R.id.contact_site)
+    public void onSiteClick(View v) {
+        String site = company.getSite();
+        if (!site.contains("http://")) site = "http://".concat(site);
+        Uri uri = Uri.parse(site);
+        String PACKAGE_NAME = "com.android.chrome";
+
+
+        CustomTabsIntent customTabsIntent = new CustomTabsIntent
+                .Builder()
+                .setToolbarColor(Palette.getPrimaryColor())
+                .build();
+        customTabsIntent.intent.setData(uri);
+
+        PackageManager packageManager = getContext().getPackageManager();
+        List<ResolveInfo> resolveInfoList = packageManager.queryIntentActivities(customTabsIntent.intent, PackageManager.MATCH_DEFAULT_ONLY);
+
+        for (ResolveInfo resolveInfo : resolveInfoList) {
+            String packageName = resolveInfo.activityInfo.packageName;
+            if (TextUtils.equals(packageName, PACKAGE_NAME))
+                customTabsIntent.intent.setPackage(PACKAGE_NAME);
+        }
+
+        customTabsIntent.launchUrl(getActivity(), uri);
     }
 }
