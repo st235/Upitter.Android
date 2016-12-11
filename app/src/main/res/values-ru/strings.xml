@@ -124,7 +124,7 @@
         <item>Карта</item>
         <item>Список</item>
     </string-array>
-    <string name="activities_company_information">Активность:</string>
+    <string name="activities_company_information">Деятельность:</string>
     <string name="close_update_dialog">Закрыть</string>
     <string name="company_information">Информация</string>
     <string name="chat_line_message">Сообщение</string>
@@ -160,5 +160,14 @@
         <item>Подписки</item>
     </string-array>
     <string name="title_activity_people_subscription">Подписки</string>
+    <string-array name="company_profile_tabs_titile">
+        <item>Публикации\n</item>
+        <item>Подписчики\n</item>
+    </string-array>
+    <string-array name="company_profile_titles">
+        <item>Публикации</item>
+        <item>Информация</item>
+    </string-array>
+    <string name="subscriptions_navigation_drawer">Подписки</string>
     <!-- Endregion -->
 </resources>

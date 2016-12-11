@@ -61,6 +61,7 @@ public class CompanyBPProfileActivity extends BaseActivity
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.scrollable) View scrollableLayout;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.collpasingToolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.subscription_value) TextView subscriptionValue;
     @BindView(R.id.subscription_counter) TextView subscriptionCounter;
@@ -83,19 +84,11 @@ public class CompanyBPProfileActivity extends BaseActivity
 
         ((AppBarLayout) findById(R.id.appbar)).addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                switch (state) {
-                    case COLLAPSED:
-                        collapsingToolbarLayout.setTitle(company == null ? SPACE : company.getName());
-                        break;
-                    case IDLE:
-                        collapsingToolbarLayout.setTitle(SPACE);
-                        break;
-                }
-            }
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {}
 
             @Override
             public void onPercentage(double percentage) {
+                toolbarTitle.setAlpha((float) Math.abs(1 - percentage));
                 scrollableLayout.setAlpha((float) percentage);
             }
         });
@@ -163,6 +156,7 @@ public class CompanyBPProfileActivity extends BaseActivity
     @Override
     public void onFind(CompanyPointerModel company) {
         this.company = company;
+        toolbarTitle.setText(company == null ? SPACE : company.getName());
         Logger.i(company.toString());
         obtainCompanyHeader(company);
         setupSubscribeButton(company);

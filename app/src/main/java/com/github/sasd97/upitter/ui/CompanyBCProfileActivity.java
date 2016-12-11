@@ -7,6 +7,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.github.sasd97.upitter.ui.base.BaseActivity;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
 import com.github.sasd97.upitter.utils.SlidrUtils;
+import com.orhanobut.logger.Logger;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
@@ -56,6 +58,7 @@ public class CompanyBCProfileActivity extends BaseActivity
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.scrollable) View scrollableLayout;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.collpasingToolbar) CollapsingToolbarLayout collapsingToolbarLayout;
 
     @BindArray(R.array.company_profile_tabs_titile) String[] titles;
@@ -74,19 +77,11 @@ public class CompanyBCProfileActivity extends BaseActivity
 
         ((AppBarLayout) findById(R.id.appbar)).addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                switch (state) {
-                    case COLLAPSED:
-                        collapsingToolbarLayout.setTitle(companyModel == null ? SPACE : companyModel.getName());
-                        break;
-                    case IDLE:
-                        collapsingToolbarLayout.setTitle(SPACE);
-                        break;
-                }
-            }
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {}
 
             @Override
             public void onPercentage(double percentage) {
+                toolbarTitle.setAlpha((float) Math.abs(1 - percentage));
                 scrollableLayout.setAlpha((float) percentage);
             }
         });
@@ -135,6 +130,7 @@ public class CompanyBCProfileActivity extends BaseActivity
     @Override
     public void onFind(CompanyPointerModel company) {
         companyModel = company;
+        toolbarTitle.setText(companyModel == null ? SPACE : companyModel.getName());
         obtainCompanyHeader(company);
     }
 

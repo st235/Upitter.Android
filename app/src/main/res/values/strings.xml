@@ -206,7 +206,7 @@
     <string name="notifications_navigation_drawer">Notifications</string>
     <string name="settings_navigation_drawer">My account</string>
     <string name="tape_navigation_drawer">Tape</string>
-    <string name="subscriptions_navigation_drawer" translatable="false">Subscriptions</string>
+    <string name="subscriptions_navigation_drawer">Subscriptions</string>
     <string name="sign_in_navigation_drawer" translatable="false">Sign in</string>
     <!-- Endregion -->
 
@@ -353,7 +353,7 @@
     <!-- Endregion -->
 
     <!-- Company Profile region -->
-    <string-array name="company_profile_tabs_titile" translatable="false">
+    <string-array name="company_profile_tabs_titile">
         <item>Posts\n</item>
         <item>Subscriptions\n</item>
     </string-array>
@@ -386,7 +386,7 @@
     <string name="people_subscribe">Subscribe</string>
     <string name="people_unsubscribe">Unsubscribe</string>
 
-    <string-array name="company_profile_titles" translatable="false">
+    <string-array name="company_profile_titles">
         <item>Posts</item>
         <item>Information</item>
     </string-array>
