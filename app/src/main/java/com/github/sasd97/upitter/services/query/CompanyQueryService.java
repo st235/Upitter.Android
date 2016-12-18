@@ -33,7 +33,7 @@ public class CompanyQueryService {
         return new CompanyQueryService(listener);
     }
 
-    public void changeAvatar(@NonNull String accessToken,
+    public Call<CompanyContainerModel> changeAvatar(@NonNull String accessToken,
                              @NonNull final String logoUrl) {
         Call<CompanyContainerModel> changeAvatar = RestService
                 .baseFactory()
@@ -49,5 +49,7 @@ public class CompanyQueryService {
                 listener.onAvatarChanged(logoUrl);
             }
         });
+
+        return changeAvatar;
     }
 }

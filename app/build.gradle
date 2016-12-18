@@ -10,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 801
-        versionName "0.0.6.7"
+        versionName "0.0.6.8"
     }
 
     buildTypes {
@@ -27,13 +27,13 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.vk:androidsdk:1.6.5'
-    compile 'com.android.support:support-v4:25.0.1'
-    compile 'com.android.support:gridlayout-v7:25.0.1'
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support:customtabs:25.0.1'
-    compile 'com.android.support:design:25.0.1'
-    compile 'com.google.android.gms:play-services-maps:9.8.0'
-    compile 'com.google.android.gms:play-services-auth:9.8.0'
+    compile 'com.android.support:support-v4:25.1.0'
+    compile 'com.android.support:gridlayout-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:customtabs:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
+    compile 'com.google.android.gms:play-services-auth:10.0.1'
     compile 'ch.acra:acra:4.9.0-RC-2'
     compile 'com.orhanobut:logger:1.15'
     compile 'com.github.satyan:sugar:1.5'

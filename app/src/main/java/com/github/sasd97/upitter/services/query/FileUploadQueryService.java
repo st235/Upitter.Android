@@ -37,10 +37,10 @@ public class FileUploadQueryService {
         return new FileUploadQueryService(listener);
     }
 
-    public void uploadImage(@NonNull String id,
-                            @NonNull String path,
-                            @NonNull String type,
-                            @NonNull String purpose) {
+    public Call<MediaContainerModel> uploadImage(@NonNull String id,
+                                                 @NonNull String path,
+                                                 @NonNull String type,
+                                                 @NonNull String purpose) {
 
         HashMap<String, RequestBody> imageBody = RestService.obtainImageMultipart(new File(path));
 
@@ -59,10 +59,12 @@ public class FileUploadQueryService {
                 listener.onUpload(response.body().getResponseModel().getPath());
             }
         });
+
+        return uploadImage;
     }
 
-    public void uploadAvatar(@NonNull String id,
-                            @NonNull String path) {
+    public Call<MediaContainerModel> uploadAvatar(@NonNull String id,
+                                                  @NonNull String path) {
 
         HashMap<String, RequestBody> imageBody = RestService.obtainImageMultipart(new File(path));
 
@@ -79,11 +81,13 @@ public class FileUploadQueryService {
                 listener.onUpload(response.body().getResponseModel().getPath());
             }
         });
+
+        return uploadImage;
     }
 
-    public void uploadPostImage(@NonNull String id,
-                                @NonNull String path,
-                                @NonNull ImageUploadRequestBody.UploadCallback callback) {
+    public Call<FileContainerModel> uploadPostImage(@NonNull String id,
+                                                    @NonNull String path,
+                                                    @NonNull ImageUploadRequestBody.UploadCallback callback) {
         File file = new File(path);
         final RequestBody requestId = RestService.obtainTextMultipart(id);
         ImageUploadRequestBody imageToRequest = new ImageUploadRequestBody(file, callback);
@@ -100,5 +104,7 @@ public class FileUploadQueryService {
                 listener.onUpload(response.body().getResponseModel().getFid());
             }
         });
+
+        return uploadPostImage;
     }
 }

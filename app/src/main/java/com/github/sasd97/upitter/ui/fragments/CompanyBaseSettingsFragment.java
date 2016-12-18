@@ -18,6 +18,9 @@ import com.github.sasd97.upitter.constants.RequestCodesConstants;
 import com.github.sasd97.upitter.models.CompanyModel;
 import com.github.sasd97.upitter.models.CoordinatesModel;
 import com.github.sasd97.upitter.models.ErrorModel;
+import com.github.sasd97.upitter.models.response.containers.CompanyContainerModel;
+import com.github.sasd97.upitter.models.response.containers.MediaContainerModel;
+import com.github.sasd97.upitter.models.response.pointers.MediaPointerModel;
 import com.github.sasd97.upitter.services.query.CompanyQueryService;
 import com.github.sasd97.upitter.services.query.FileUploadQueryService;
 import com.github.sasd97.upitter.ui.base.BaseActivity;
@@ -36,6 +39,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import retrofit2.Call;
 
 import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.CATEGORIES_ATTACH;
@@ -65,6 +69,9 @@ public class CompanyBaseSettingsFragment extends BaseFragment
     @BindString(R.string.avatar_upload_state_success) String UPLOAD_SUCCESS;
     @BindString(R.string.avatar_upload_state_error) String UPLOAD_ERROR;
     @BindString(R.string.avatar_upload_state_pending) String UPLOAD_PENDING;
+
+    private Call<MediaContainerModel> fileUploadRequest;
+    private Call<CompanyContainerModel> changeAvatarRequest;
 
     public CompanyBaseSettingsFragment() {
         super(R.layout.fragment_company_base_settings);
@@ -170,7 +177,7 @@ public class CompanyBaseSettingsFragment extends BaseFragment
     @Override
     public void onUpload(String path) {
         Logger.d(path);
-        companyQueryService.changeAvatar(companyModel.getAccessToken(), path);
+        changeAvatarRequest = companyQueryService.changeAvatar(companyModel.getAccessToken(), path);
     }
 
     @Override
@@ -192,7 +199,7 @@ public class CompanyBaseSettingsFragment extends BaseFragment
 
     private void handleImage(Intent data) {
         String path = data.getStringExtra(PUT_CROPPED_IMAGE);
-        fileUploadQueryService.uploadAvatar(companyModel.getUId(), path);
+        fileUploadRequest = fileUploadQueryService.uploadAvatar(companyModel.getUId(), path);
     }
 
     private void handleCategoriesIntent(@NonNull Intent intent) {
@@ -246,5 +253,12 @@ public class CompanyBaseSettingsFragment extends BaseFragment
             handleCoordinatesIntent(data);
             return;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (fileUploadRequest != null && fileUploadRequest.isExecuted()) fileUploadRequest.cancel();
+        if (changeAvatarRequest != null && changeAvatarRequest.isExecuted()) changeAvatarRequest.cancel();
     }
 }
