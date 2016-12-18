@@ -8,7 +8,9 @@
     android:paddingRight="16dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/company_logo_preview"

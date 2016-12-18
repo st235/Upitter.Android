@@ -36,7 +36,7 @@ public class PlainCompanyPointerModel {
     }
 
     public String getAlias() {
-        return mName;
+        return mAlias;
     }
 
     public String getLogoUrl() {

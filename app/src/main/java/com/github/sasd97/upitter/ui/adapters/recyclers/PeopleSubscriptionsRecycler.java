@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,10 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.models.PeopleModel;
 import com.github.sasd97.upitter.models.response.pointers.PlainCompanyPointerModel;
+import com.github.sasd97.upitter.ui.CompanyBCProfileActivity;
+import com.github.sasd97.upitter.ui.CompanyBPProfileActivity;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
@@ -25,6 +29,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.COMPANY_ALIAS;
 
 /**
  * Created by Alexadner Dadukin on 20.09.2016.
@@ -39,18 +45,27 @@ public class PeopleSubscriptionsRecycler extends RecyclerView.Adapter<PeopleSubs
         this.companies = new ArrayList<>();
     }
 
-    class PeopleSubscriptionsViewHolder extends BaseViewHolder {
+    class PeopleSubscriptionsViewHolder extends BaseViewHolder implements View.OnClickListener {
 
         @BindView(R.id.company_logo_preview) ImageView companyLogoPreview;
         @BindView(R.id.company_text) TextView companyText;
 
         public PeopleSubscriptionsViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         protected void setupViews() {
 
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(context, CompanyBPProfileActivity.class);
+            intent.putExtra(COMPANY_ALIAS, companies.get(getAdapterPosition()).getAlias());
+            context.startActivity(intent);
+            return;
         }
     }
 

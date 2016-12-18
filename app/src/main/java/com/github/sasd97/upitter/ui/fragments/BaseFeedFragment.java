@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.behaviors.OnEndlessRecyclerViewScrollListener;
@@ -52,6 +53,7 @@ public class BaseFeedFragment extends BaseFragment
 
     public static final String IS_HEADER_LINE = "FEED_HAS_HEADER_LINE";
 
+    @BindView(R.id.empty_tape) View emptyTapeView;
     @BindView(R.id.swipe_layout_tape) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recycler_view_tape_fragment) RecyclerView tapeRecyclerView;
 
@@ -127,6 +129,11 @@ public class BaseFeedFragment extends BaseFragment
 
         swipeRefreshLayout.setColorSchemeColors(Palette.getSwipeRefreshPalette());
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        Logger.e(String.valueOf(locationService.isLocated()));
+        if (locationService.isLocated()) {
+            load();
+        }
     }
 
     public void addNoAccessListener() {
@@ -144,6 +151,8 @@ public class BaseFeedFragment extends BaseFragment
 
     @Override
     public void onPostObtained(PostsPointerModel posts) {
+        if (posts.getPosts().size() > 0) switchTape(false);
+        else switchTape(true);
         feedPostRecycler.addAll(posts.getPosts());
     }
 
@@ -159,20 +168,7 @@ public class BaseFeedFragment extends BaseFragment
 
     @Override
     public void onLocationFind(Location location) {
-        if (isHolder) {
-            postQueryService.obtainPosts(
-                    LocationHolder.getRadius(),
-                    accessToken,
-                    LocationHolder.getLocation().getLatitude(),
-                    LocationHolder.getLocation().getLongitude(),
-                    categoriesSelected);
-        } else {
-            postQueryService.obtainPostsAnonymous(
-                    LocationHolder.getRadius(),
-                    LocationHolder.getLocation().getLatitude(),
-                    LocationHolder.getLocation().getLongitude(),
-                    categoriesSelected);
-        }
+        load();
     }
 
     @Override
@@ -303,6 +299,28 @@ public class BaseFeedFragment extends BaseFragment
                     LocationHolder.getLocation().getLongitude(),
                     categoriesSelected);
         }
+    }
+
+    private void load() {
+        if (isHolder) {
+            postQueryService.obtainPosts(
+                    LocationHolder.getRadius(),
+                    accessToken,
+                    LocationHolder.getLocation().getLatitude(),
+                    LocationHolder.getLocation().getLongitude(),
+                    categoriesSelected);
+        } else {
+            postQueryService.obtainPostsAnonymous(
+                    LocationHolder.getRadius(),
+                    LocationHolder.getLocation().getLatitude(),
+                    LocationHolder.getLocation().getLongitude(),
+                    categoriesSelected);
+        }
+    }
+
+    private void switchTape(boolean isHidden) {
+        emptyTapeView.setVisibility(isHidden ? View.VISIBLE : View.GONE);
+        swipeRefreshLayout.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
 
     @Override

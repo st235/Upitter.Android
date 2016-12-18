@@ -90,6 +90,8 @@ public class LocationService implements LocationListener {
 
         currentLocation = getLastKnownLocation(context);
 
+        Logger.v("Is current location setup: %1$b", currentLocation != null);
+
         if (currentLocation != null) {
             Logger.i(currentLocation.toString());
             LocationHolder.setLocation(currentLocation);
@@ -120,6 +122,10 @@ public class LocationService implements LocationListener {
     @Override
     public void onProviderDisabled(String s) {
         Logger.d("Current provider disabled. Description: %1$s", s);
+    }
+
+    public boolean isLocated() {
+        return currentLocation != null;
     }
 
     public Location getCurrentLocation() {
