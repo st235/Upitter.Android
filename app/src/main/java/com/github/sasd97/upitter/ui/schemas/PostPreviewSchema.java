@@ -3,6 +3,7 @@ package com.github.sasd97.upitter.ui.schemas;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.components.CollageLayoutManager;
+import com.github.sasd97.upitter.events.behaviors.OnEndlessRecyclerViewScrollListener;
 import com.github.sasd97.upitter.models.CategoryModel;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
@@ -74,6 +76,8 @@ public class PostPreviewSchema extends BaseActivity
 
     private PostCommentsRecycler recyclerAdapter;
 
+    @BindView(R.id.nestedscrollview) NestedScrollView nestedScrollView;
+
     @BindView(R.id.user_name_post_single_view) TextView userNameTextView;
     @BindView(R.id.title_post_single_view) TextView postTitleTextView;
     @BindView(R.id.text_post_single_view) TextView postDescriptionTextView;
@@ -120,10 +124,20 @@ public class PostPreviewSchema extends BaseActivity
         postQueryService.watchPost(user.getAccessToken(), postId);
 
         recyclerAdapter = new PostCommentsRecycler();
-        commentConversation.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        commentConversation.setLayoutManager(linearLayoutManager);
         commentConversation.setNestedScrollingEnabled(false);
         commentConversation.setAdapter(recyclerAdapter);
 
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    if (recyclerAdapter.getItemCount() < 20) return;
+                    commentsQueryService.obtainNewComments(user.getAccessToken(), postId, recyclerAdapter.getLast().getId());
+                }
+            }
+        });
 
         View.OnClickListener likeClick = new View.OnClickListener() {
             @Override
@@ -188,7 +202,6 @@ public class PostPreviewSchema extends BaseActivity
         favoriteImageButton.setImageResource(R.drawable.ic_feed_icon_favorite);
     }
 
-
     @Override
     public void onVote(PostPointerModel post) {
         quizResultHorizontalChart.setVisibility(View.VISIBLE);
@@ -225,9 +238,7 @@ public class PostPreviewSchema extends BaseActivity
     }
 
     @Override
-    public void onCreatePost() {
-
-    }
+    public void onCreatePost() {}
 
     @Override
     public void onPostWatch(int amount) {
@@ -235,9 +246,7 @@ public class PostPreviewSchema extends BaseActivity
     }
 
     @Override
-    public void onPostObtained(PostsPointerModel posts) {
-
-    }
+    public void onPostObtained(PostsPointerModel posts) {}
 
     @Override
     public void onError(ErrorModel error) {
@@ -360,12 +369,10 @@ public class PostPreviewSchema extends BaseActivity
 
     @Override
     public void onRemove(boolean isSuccess) {
-
     }
 
     @Override
     public void onEdit(CommentPointerModel comment) {
-
     }
 
     @Override
@@ -388,6 +395,11 @@ public class PostPreviewSchema extends BaseActivity
     @Override
     public void onObtain(CommentsPointerModel comments) {
         Logger.i(comments.toString());
+        recyclerAdapter.addAll(comments.getComments());
+    }
+
+    @Override
+    public void onObtainNew(CommentsPointerModel comments) {
         recyclerAdapter.addAll(comments.getComments());
     }
 

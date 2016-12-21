@@ -15,6 +15,9 @@ import com.github.sasd97.upitter.utils.SlidrUtils;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrPosition;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
@@ -63,8 +66,19 @@ public class QuizCreationResult extends BaseActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<String> result = adapter.getList();
+
+                for (String s: result) {
+                    String temp = s.trim();
+                    if (temp.length() == 0) {
+                        result.remove(s);
+                    }
+                }
+
+                if (result.size() == 0) return;
+
                 Intent data = new Intent();
-                data.putStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST, adapter.getList());
+                data.putStringArrayListExtra(QUIZ_MULTI_SELECTION_LIST, result);
                 setResult(RESULT_OK, data);
                 finish();
             }

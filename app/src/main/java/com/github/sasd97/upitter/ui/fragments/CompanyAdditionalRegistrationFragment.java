@@ -43,8 +43,6 @@ public class CompanyAdditionalRegistrationFragment extends BaseFragment
         GeocoderService.OnAddressListener,
         CompanyAuthorizationQueryService.OnCompanyAuthorizationListener {
 
-    private static final String TAG = "Company Additional";
-
     private CompanyModel.Builder companyModelBuilder;
     private CompanyAuthorizationQueryService queryService;
     private CompanyAddressListRecycler companyAddressListRecycler;

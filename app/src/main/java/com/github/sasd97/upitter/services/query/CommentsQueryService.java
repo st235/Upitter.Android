@@ -23,6 +23,7 @@ import static com.github.sasd97.upitter.Upitter.language;
 public class CommentsQueryService {
 
     public interface OnCommentListener extends OnErrorQueryListener {
+        void onObtainNew(CommentsPointerModel comments);
         void onObtain(CommentsPointerModel comments);
         void onAdd(CommentPointerModel comment);
         void onEdit(CommentPointerModel comment);
@@ -40,7 +41,7 @@ public class CommentsQueryService {
     }
 
     public void obtainComments(@NonNull String accessToken,
-                               @NonNull String postId) {
+                                    @NonNull String postId) {
         Call<CommentsContainerModel> obtainComments = RestService
                 .baseFactory()
                 .obtainPostComments(language(), accessToken, postId);
@@ -51,6 +52,23 @@ public class CommentsQueryService {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
                 listener.onObtain(response.body().getComments());
+            }
+        });
+    }
+
+    public void obtainNewComments(@NonNull String accessToken,
+                                  @NonNull String postId,
+                                  @NonNull String commentId) {
+        Call<CommentsContainerModel> obtainComments = RestService
+                .baseFactory()
+                .obtainNewPostComments(language(), accessToken, postId, commentId, "new");
+
+        obtainComments.enqueue(new Callback<CommentsContainerModel>(listener) {
+            @Override
+            public void onResponse(Call<CommentsContainerModel> call, Response<CommentsContainerModel> response) {
+                super.onResponse(call, response);
+                if (!RestService.handleError(call, response, listener)) return;
+                listener.onObtainNew(response.body().getComments());
             }
         });
     }

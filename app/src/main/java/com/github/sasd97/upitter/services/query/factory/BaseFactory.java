@@ -233,6 +233,13 @@ public interface BaseFactory {
                                                     @Query("accessToken") String accessToken,
                                                     @Query("postId") String postId);
 
+    @GET("comments")
+    Call<CommentsContainerModel> obtainNewPostComments(@Query("ln") String language,
+                                                       @Query("accessToken") String accessToken,
+                                                       @Query("postId") String postId,
+                                                       @Query("commentId") String commentId,
+                                                       @Query("type") String type);
+
     @FormUrlEncoded
     @POST("comment/create")
     Call<CommentContainerModel> addPostComment(@Query("ln") String language,

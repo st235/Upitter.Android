@@ -196,8 +196,12 @@ public class BaseFeedFragment extends BaseFragment
 
     @Override
     public void onLoadNew(PostsPointerModel posts) {
+        if (posts.getPosts().size() > 0) switchTape(false);
+        else switchTape(true);
+
         if (swipeRefreshLayout.isShown())
             swipeRefreshLayout.setRefreshing(false);
+
         linearLayoutManager.scrollToPosition(0);
         feedPostRecycler.addAhead(posts.getPosts());
 

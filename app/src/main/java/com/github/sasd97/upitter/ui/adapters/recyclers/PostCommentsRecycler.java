@@ -61,9 +61,7 @@ public class PostCommentsRecycler extends RecyclerView.Adapter<PostCommentsRecyc
         }
 
         @Override
-        protected void setupViews() {
-
-        }
+        protected void setupViews() {}
     }
 
     @Override
@@ -122,6 +120,10 @@ public class PostCommentsRecycler extends RecyclerView.Adapter<PostCommentsRecyc
     public void addToEnd(CommentPointerModel comment) {
         this.comments.add(comment);
         notifyItemInserted(getItemCount() - 1);
+    }
+
+    public CommentPointerModel getLast() {
+        return comments.get(getItemCount() - 1);
     }
 
     public void addAll(Collection<CommentPointerModel> collection) {
