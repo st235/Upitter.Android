@@ -56,6 +56,9 @@ public class PeopleFeedActivity extends BaseActivity
     protected void setupViews() {
         setToolbar(R.id.toolbar, true);
         people = ((PeopleHolder) getHolder()).get();
+
+        getSupportActionBar().setTitle("");
+
         peopleFeedFragment = PeopleFeedFragment.getFragment();
         Logger.i(people.toString());
 
@@ -140,14 +143,14 @@ public class PeopleFeedActivity extends BaseActivity
 
         switch (id) {
             case R.id.nav_tape:
-                setActionTitle(R.string.title_activity_tape);
+                //setActionTitle(R.string.title_activity_tape);
                 navigate(peopleFeedFragment);
                 break;
             case R.id.nav_notification:
                 startActivity(new Intent(this, NotificationActivity.class));
                 break;
             case R.id.nav_favorites:
-                setActionTitle(R.string.favorites_activity_tape);
+                //setActionTitle(R.string.favorites_activity_tape);
                 navigate(FavoritesFragment.getFragment());
                 break;
             case R.id.nav_subscriptions:

@@ -168,7 +168,7 @@ public class BaseFeedFragment extends BaseFragment
 
     @Override
     public void onLocationFind(Location location) {
-        load();
+        if (feedPostRecycler.getItemCount() == 0) load();
     }
 
     @Override
@@ -204,7 +204,6 @@ public class BaseFeedFragment extends BaseFragment
 
         linearLayoutManager.scrollToPosition(0);
         feedPostRecycler.addAhead(posts.getPosts());
-
     }
 
     @Override
@@ -213,14 +212,10 @@ public class BaseFeedFragment extends BaseFragment
     }
 
     @Override
-    public void onPostWatch(int amount) {
-
-    }
+    public void onPostWatch(int amount) {}
 
     @Override
-    public void onFindPost(PostPointerModel post) {
-
-    }
+    public void onFindPost(PostPointerModel post) {}
 
     @Override
     public void onEmpty() {
@@ -289,6 +284,7 @@ public class BaseFeedFragment extends BaseFragment
 
     private void handleLocation() {
         feedPostRecycler.refresh();
+
         if (isHolder) {
             postQueryService.obtainPosts(
                     LocationHolder.getRadius(),
@@ -306,6 +302,8 @@ public class BaseFeedFragment extends BaseFragment
     }
 
     private void load() {
+        feedPostRecycler.refresh();
+
         if (isHolder) {
             postQueryService.obtainPosts(
                     LocationHolder.getRadius(),

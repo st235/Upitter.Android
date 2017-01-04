@@ -72,6 +72,8 @@ public class CompanyFeedActivity extends BaseActivity
         company = ((CompanyHolder) getHolder()).get();
         Logger.json(company.toJson());
 
+        getSupportActionBar().setTitle("");
+
         baseFeedFragment = BaseFeedFragment.getFragment(true);
 
         infoQueryService = ApplicationInfoQueryService.getService(this);
@@ -174,14 +176,14 @@ public class CompanyFeedActivity extends BaseActivity
 
         switch (id) {
             case R.id.nav_tape:
-                setActionTitle(R.string.title_activity_tape);
+                //setActionTitle(R.string.title_activity_tape);
                 navigate(baseFeedFragment);
                 break;
             case R.id.nav_notification:
                 startActivity(new Intent(this, NotificationActivity.class));
                 break;
             case R.id.nav_favorites:
-                setActionTitle(R.string.favorites_activity_tape);
+                //setActionTitle(R.string.favorites_activity_tape);
                 navigate(FavoritesFragment.getFragment());
                 break;
             case R.id.nav_settings:

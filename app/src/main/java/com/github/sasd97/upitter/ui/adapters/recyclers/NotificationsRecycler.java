@@ -2,7 +2,11 @@ package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +45,7 @@ public class NotificationsRecycler extends RecyclerView.Adapter<NotificationsRec
 
     public class NotificationsViewHolder extends BaseViewHolder implements View.OnClickListener {
 
+        @BindView(R.id.notification_type) CircleImageView notificationType;
         @BindView(R.id.notification_avatar) CircleImageView notificationAvatar;
         @BindView(R.id.notification_name) TextView notificationName;
 
@@ -77,6 +82,7 @@ public class NotificationsRecycler extends RecyclerView.Adapter<NotificationsRec
         NotificationPointerModel notification = notifications.get(position);
         holder.notificationName.setText(notification.getText());
         obtainCompanyLogo(holder.notificationAvatar, notification.getAuthor().getName(), notification.getAuthor().getAvatar());
+        switchType(holder.notificationType, notification.getType());
     }
 
     @Override
@@ -101,8 +107,26 @@ public class NotificationsRecycler extends RecyclerView.Adapter<NotificationsRec
         }
 
         Glide
+            .with(context)
+            .load(logoUrl)
+            .into(holder);
+    }
+
+    private void switchType(CircleImageView holder, String type) {
+        int drawable = 0;
+
+        switch (type) {
+            case "like":
+                drawable = R.drawable.ic_notification_like;
+                break;
+            case "post":
+                drawable = R.drawable.ic_notification_sub;
+                break;
+        }
+
+        Glide
                 .with(context)
-                .load(logoUrl)
+                .load(drawable)
                 .into(holder);
     }
 }

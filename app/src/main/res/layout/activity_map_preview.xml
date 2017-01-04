@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/your_position_location_activity"
                     android:maxLines="1"
-                    android:maxLength="14"
+                    android:maxLength="25"
                     android:layout_marginRight="16dp"
                     android:layout_marginEnd="16dp"
                     app:met_floatingLabel="highlight"

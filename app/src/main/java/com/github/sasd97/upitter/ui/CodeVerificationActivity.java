@@ -65,7 +65,9 @@ public class CodeVerificationActivity extends BaseActivity implements
         requestCodeReceiver = RequestCodeReceiver.getReceiver(this);
         requestCodeEdt.setOnKeyListener(this);
 
-        if (BuildConfig.DEBUG) requestCodeEdt.setText("162534");
+        //TODO: go back
+        requestCodeEdt.setText("162534");
+        //if (BuildConfig.DEBUG) requestCodeEdt.setText("162534");
     }
 
     public void onLoginClick(View v) {
@@ -159,18 +161,24 @@ public class CodeVerificationActivity extends BaseActivity implements
     private void setRequestCode(@NonNull String requestCode) {
         requestCodeEdt.setText(requestCode);
 
-        if (BuildConfig.DEBUG) {
-            queryService.debugRequestCode(
-                    currentPhone.getPhoneBody(),
-                    currentPhone.getDialCode(),
-                    requestCode);
-            return;
-        }
+        queryService.debugRequestCode(
+        currentPhone.getPhoneBody(),
+        currentPhone.getDialCode(),
+        requestCode);
 
-        queryService.sendRequestCode(
-                currentPhone.getPhoneBody(),
-                currentPhone.getDialCode(),
-                requestCode);
+        //TODO: go back
+//        if (BuildConfig.DEBUG) {
+//            queryService.debugRequestCode(
+//                    currentPhone.getPhoneBody(),
+//                    currentPhone.getDialCode(),
+//                    requestCode);
+//            return;
+//        }
+//
+//        queryService.sendRequestCode(
+//                currentPhone.getPhoneBody(),
+//                currentPhone.getDialCode(),
+//                requestCode);
     }
 
     private boolean validateForms() {

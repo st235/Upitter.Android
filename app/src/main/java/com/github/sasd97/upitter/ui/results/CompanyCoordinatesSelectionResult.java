@@ -150,9 +150,9 @@ public class CompanyCoordinatesSelectionResult extends BaseActivity implements
 
     @Override
     public void onLocationChanged(Location location) {
-        this.location = location;
-        moveToPoint(googleMap, new LatLng(location.getLatitude(), location.getLongitude()));
-        find();
+//        this.location = location;
+//        moveToPoint(googleMap, new LatLng(location.getLatitude(), location.getLongitude()));
+//        find();
     }
 
     public void onResultClick() {

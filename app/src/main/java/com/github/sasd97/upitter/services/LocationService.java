@@ -28,7 +28,6 @@ public class LocationService implements LocationListener {
 
     public interface OnLocationListener {
         void onLocationFind(Location location);
-
         void onLocationChanged(Location location);
     }
 

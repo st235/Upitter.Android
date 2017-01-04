@@ -1,8 +1,12 @@
 package com.github.sasd97.upitter.ui.fragments;
 
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.github.sasd97.upitter.R;
 import com.github.sasd97.upitter.events.behaviors.OnEndlessRecyclerViewScrollListener;
@@ -45,6 +49,8 @@ public class FavoritesFragment extends BaseFragment implements FavoritesQuerySer
 
     @Override
     protected void setupViews() {
+        setHasOptionsMenu(true);
+
         userModel = getHolder().get();
         queryService = FavoritesQueryService.getService(this);
         queryService.obtainFavorites(userModel.getAccessToken());
@@ -56,8 +62,6 @@ public class FavoritesFragment extends BaseFragment implements FavoritesQuerySer
         recyclerView.addOnScrollListener(new OnEndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                Logger.i("Infinity scroll detected");
-                Logger.i(String.valueOf(feedPostRecycler.getItemCount()));
                 if (feedPostRecycler.getItemCount() < 20) return;
 
                 queryService.obtainOldFavorites(
@@ -65,6 +69,12 @@ public class FavoritesFragment extends BaseFragment implements FavoritesQuerySer
                         feedPostRecycler.getLastPostId());
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 
     @Override

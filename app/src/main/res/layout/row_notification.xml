@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:gravity="center"
+    android:background="?attr/selectableItemBackground"
     android:clickable="true"
-    android:background="?attr/selectableItemBackground">
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="8dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/notification_avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        />
+
+    <RelativeLayout
+        android:layout_width="65dp"
+        android:layout_height="65dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/notification_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/notification_type"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/notification_name"
@@ -21,7 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
 
 </LinearLayout>
