@@ -46,7 +46,6 @@ import static com.github.sasd97.upitter.constants.RequestCodesConstants.LOCATION
 
 public class SubscriptionFeedFragment extends BaseFragment
         implements SubscriptionPostQueryService.OnSubscriptionPostListener,
-        RefreshQueryService.OnRefreshListener,
         LocationService.OnLocationListener,
         SwipeRefreshLayout.OnRefreshListener {
 
@@ -56,12 +55,9 @@ public class SubscriptionFeedFragment extends BaseFragment
     @BindView(R.id.recycler_view_tape_fragment) RecyclerView tapeRecyclerView;
 
     private SubscriptionPostQueryService postQueryService;
-    private RefreshQueryService refreshQueryService;
     private FeedPostRecycler feedPostRecycler;
     private ArrayList<Integer> categoriesSelected;
     private LinearLayoutManager linearLayoutManager;
-
-    private Call<PostsContainerModel> requestPosts;
 
     public SubscriptionFeedFragment() {
         super(R.layout.fragment_base_feed);
@@ -83,7 +79,6 @@ public class SubscriptionFeedFragment extends BaseFragment
         tapeRecyclerView.setAdapter(feedPostRecycler);
 
         postQueryService = SubscriptionPostQueryService.getService(this);
-        refreshQueryService = RefreshQueryService.getService(this);
         LocationService locationService = LocationService.getService(this);
         locationService.init(getContext());
 
@@ -94,13 +89,9 @@ public class SubscriptionFeedFragment extends BaseFragment
                 Logger.i(String.valueOf(feedPostRecycler.getItemCount()));
                 if (feedPostRecycler.getItemCount() < 20) return;
 
-                refreshQueryService.loadOld(
-                        feedPostRecycler.getLastPostId(),
+                postQueryService.obtainOldSubscriptionPosts(
                         userModel.getAccessToken(),
-                        LocationHolder.getRadius(),
-                        LocationHolder.getLocation().getLatitude(),
-                        LocationHolder.getLocation().getLongitude(),
-                        categoriesSelected);
+                        feedPostRecycler.getLastPostId());
             }
         });
 
@@ -130,26 +121,21 @@ public class SubscriptionFeedFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
-        refreshQueryService.loadNew(
-                LocationHolder.getRadius(),
+        postQueryService.obtainNewSubscriptionPosts(
                 userModel.getAccessToken(),
-                LocationHolder.getLocation().getLatitude(),
-                LocationHolder.getLocation().getLongitude(),
-                feedPostRecycler.getFirstPostId(),
-                categoriesSelected);
+                feedPostRecycler.getFirstPostId());
     }
 
     @Override
-    public void onLoadNew(PostsPointerModel posts) {
+    public void onObtainNew(PostsPointerModel posts) {
         if (swipeRefreshLayout.isShown())
             swipeRefreshLayout.setRefreshing(false);
         linearLayoutManager.scrollToPosition(0);
         feedPostRecycler.addAhead(posts.getPosts());
-
     }
 
     @Override
-    public void onLoadOld(PostsPointerModel posts) {
+    public void onObtainOld(PostsPointerModel posts) {
         feedPostRecycler.addBehind(posts.getPosts());
     }
 

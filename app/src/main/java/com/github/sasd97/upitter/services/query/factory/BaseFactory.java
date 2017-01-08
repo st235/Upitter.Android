@@ -154,7 +154,13 @@ public interface BaseFactory {
     Call<PostsContainerModel> obtainSubscriptionsPosts(@Query("ln") String language,
                                                        @Query("accessToken") String accessToken);
 
-    @GET("post/obtainBySubscriptions")
+    @GET("post/obtainNewBySubscriptions")
+    Call<PostsContainerModel> obtainNewSubscriptionsPosts(@Query("ln") String language,
+                                                          @Query("accessToken") String accessToken,
+                                                          @Query("postId") String postId);
+
+
+    @GET("post/obtainOldBySubscriptions")
     Call<PostsContainerModel> obtainOldSubscriptionsPosts(@Query("ln") String language,
                                                           @Query("accessToken") String accessToken,
                                                           @Query("postId") String postId);
