@@ -1,6 +1,7 @@
 package com.github.sasd97.upitter.ui.adapters.recyclers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +15,13 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.github.sasd97.upitter.R;
+import com.github.sasd97.upitter.holders.UserHolder;
+import com.github.sasd97.upitter.models.PeopleModel;
+import com.github.sasd97.upitter.models.UserModel;
 import com.github.sasd97.upitter.models.response.pointers.CommentPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PlainUserPointerModel;
+import com.github.sasd97.upitter.ui.CompanyBCProfileActivity;
+import com.github.sasd97.upitter.ui.CompanyBPProfileActivity;
 import com.github.sasd97.upitter.ui.base.BaseViewHolder;
 import com.github.sasd97.upitter.utils.Dimens;
 import com.github.sasd97.upitter.utils.Names;
@@ -28,6 +34,8 @@ import java.util.List;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
+import static com.github.sasd97.upitter.constants.IntentKeysConstants.COMPANY_ALIAS;
 
 /**
  * Created by alexander on 04.09.16.
@@ -48,7 +56,7 @@ public class PostCommentsRecycler extends RecyclerView.Adapter<PostCommentsRecyc
         this.comments = comments;
     }
 
-    public class PostCommentsViewHolder extends BaseViewHolder {
+    public class PostCommentsViewHolder extends BaseViewHolder implements View.OnClickListener {
 
         @BindView(R.id.avatar_comments_view) CircleImageView avatarCommentsImageView;
         @BindView(R.id.comment_comments_view) TextView commentCommentsTextView;
@@ -58,10 +66,23 @@ public class PostCommentsRecycler extends RecyclerView.Adapter<PostCommentsRecyc
 
         public PostCommentsViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         protected void setupViews() {}
+
+        @Override
+        public void onClick(View view) {
+            PlainUserPointerModel user = comments.get(getAdapterPosition()).getAuthor();
+            if (Long.valueOf(user.getId()) < 0) {
+                Class<?> target = UserHolder.getUserType() == UserModel.UserType.People.getValue() ? CompanyBPProfileActivity.class : CompanyBCProfileActivity.class;
+                Intent intent = new Intent(context, target);
+                intent.putExtra(COMPANY_ALIAS, user.getAlias());
+                context.startActivity(intent);
+                return;
+            }
+        }
     }
 
     @Override

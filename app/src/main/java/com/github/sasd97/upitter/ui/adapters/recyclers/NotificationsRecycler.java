@@ -120,6 +120,9 @@ public class NotificationsRecycler extends RecyclerView.Adapter<NotificationsRec
                 drawable = R.drawable.ic_notification_like;
                 break;
             case "post":
+                drawable = R.drawable.ic_notification_new_post;
+                break;
+            case "subscribe":
                 drawable = R.drawable.ic_notification_sub;
                 break;
         }

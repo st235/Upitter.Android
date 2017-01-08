@@ -66,7 +66,7 @@ public class CodeVerificationActivity extends BaseActivity implements
         requestCodeEdt.setOnKeyListener(this);
 
         //TODO: go back
-        requestCodeEdt.setText("162534");
+        requestCodeEdt.setText("412237");
         //if (BuildConfig.DEBUG) requestCodeEdt.setText("162534");
     }
 

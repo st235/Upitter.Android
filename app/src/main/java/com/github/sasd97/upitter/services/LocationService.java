@@ -100,6 +100,8 @@ public class LocationService implements LocationListener {
         isInit = true;
     }
 
+
+
     @Override
     public void onLocationChanged(Location location) {
         Log.d(TAG, "location changed");

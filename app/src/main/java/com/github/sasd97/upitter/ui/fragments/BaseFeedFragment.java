@@ -17,6 +17,7 @@ import com.github.sasd97.upitter.events.behaviors.OnEndlessRecyclerViewScrollLis
 import com.github.sasd97.upitter.holders.LocationHolder;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
+import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostsPointerModel;
 import com.github.sasd97.upitter.services.LocationService;
@@ -34,6 +35,7 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import retrofit2.Call;
 
 import static com.github.sasd97.upitter.Upitter.*;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.CATEGORIES_ATTACH;
@@ -66,6 +68,8 @@ public class BaseFeedFragment extends BaseFragment
 
     private boolean isHolder;
     private boolean isNoAccessListener = false;
+
+    private Call<PostsContainerModel> postsRequest = null;
 
     public BaseFeedFragment() {
         super(R.layout.fragment_base_feed);
@@ -129,11 +133,6 @@ public class BaseFeedFragment extends BaseFragment
 
         swipeRefreshLayout.setColorSchemeColors(Palette.getSwipeRefreshPalette());
         swipeRefreshLayout.setOnRefreshListener(this);
-
-        Logger.e(String.valueOf(locationService.isLocated()));
-        if (locationService.isLocated()) {
-            load();
-        }
     }
 
     public void addNoAccessListener() {
@@ -168,7 +167,7 @@ public class BaseFeedFragment extends BaseFragment
 
     @Override
     public void onLocationFind(Location location) {
-        if (feedPostRecycler.getItemCount() == 0) load();
+        load();
     }
 
     @Override
@@ -303,21 +302,18 @@ public class BaseFeedFragment extends BaseFragment
 
     private void load() {
         feedPostRecycler.refresh();
+        if (postsRequest != null && postsRequest.isExecuted()) return;
 
-        if (isHolder) {
-            postQueryService.obtainPosts(
-                    LocationHolder.getRadius(),
-                    accessToken,
-                    LocationHolder.getLocation().getLatitude(),
-                    LocationHolder.getLocation().getLongitude(),
-                    categoriesSelected);
-        } else {
-            postQueryService.obtainPostsAnonymous(
-                    LocationHolder.getRadius(),
-                    LocationHolder.getLocation().getLatitude(),
-                    LocationHolder.getLocation().getLongitude(),
-                    categoriesSelected);
-        }
+        postsRequest = isHolder ? postQueryService.obtainPosts(
+            LocationHolder.getRadius(),
+            accessToken,
+            LocationHolder.getLocation().getLatitude(),
+            LocationHolder.getLocation().getLongitude(),
+            categoriesSelected) : postQueryService.obtainPostsAnonymous(
+            LocationHolder.getRadius(),
+            LocationHolder.getLocation().getLatitude(),
+            LocationHolder.getLocation().getLongitude(),
+            categoriesSelected);
     }
 
     private void switchTape(boolean isHidden) {

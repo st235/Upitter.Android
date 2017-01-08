@@ -40,7 +40,7 @@ public class PostQueryService {
         return new PostQueryService(listener);
     }
 
-    public void obtainPosts(@NonNull Integer radius,
+    public Call<PostsContainerModel> obtainPosts(@NonNull Integer radius,
                             @NonNull String accessToken,
                             double latitude,
                             double longitude,
@@ -64,9 +64,11 @@ public class PostQueryService {
                 listener.onPostObtained(response.body().getResponseModel());
             }
         });
+
+        return obtainPosts;
     }
 
-    public void obtainPostsAnonymous(@NonNull Integer radius,
+    public Call<PostsContainerModel> obtainPostsAnonymous(@NonNull Integer radius,
                             double latitude,
                             double longitude,
                             @NonNull List<Integer> categories) {
@@ -88,9 +90,11 @@ public class PostQueryService {
                 listener.onPostObtained(response.body().getResponseModel());
             }
         });
+
+        return obtainPosts;
     }
 
-    public void createPost(@NonNull String accessToken,
+    public Call<PostContainerModel> createPost(@NonNull String accessToken,
                            @NonNull RequestBody body) {
         Call<PostContainerModel> createPost = RestService
                 .baseFactory()
@@ -104,9 +108,11 @@ public class PostQueryService {
                 listener.onCreatePost();
             }
         });
+
+        return createPost;
     }
 
-    public void watchPost(@NonNull String accessToken,
+    public Call<PostContainerModel> watchPost(@NonNull String accessToken,
                           @NonNull String postId) {
         Call<PostContainerModel> createPost = RestService
                 .baseFactory()
@@ -120,6 +126,8 @@ public class PostQueryService {
                 listener.onPostWatch(response.body().getResponseModel().getWatchesAmount());
             }
         });
+
+        return createPost;
     }
 
     public Call<PostContainerModel> findPost(@NonNull String accessToken,

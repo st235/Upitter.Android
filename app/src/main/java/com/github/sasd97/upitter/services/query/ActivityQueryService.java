@@ -40,8 +40,6 @@ public class ActivityQueryService {
                 .baseFactory()
                 .obtainActivitiesTitles(language(), activities);
 
-        for (int i: activities) Logger.e(String.valueOf(i));
-
         getTitles.enqueue(new Callback<ActivitiesContainerModel>(listener) {
             @Override
             public void onResponse(Call<ActivitiesContainerModel> call, Response<ActivitiesContainerModel> response) {

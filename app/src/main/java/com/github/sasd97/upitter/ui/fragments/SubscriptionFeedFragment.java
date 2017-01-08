@@ -15,6 +15,7 @@ import com.github.sasd97.upitter.events.behaviors.OnEndlessRecyclerViewScrollLis
 import com.github.sasd97.upitter.holders.LocationHolder;
 import com.github.sasd97.upitter.models.ErrorModel;
 import com.github.sasd97.upitter.models.UserModel;
+import com.github.sasd97.upitter.models.response.containers.PostsContainerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostPointerModel;
 import com.github.sasd97.upitter.models.response.pointers.PostsPointerModel;
 import com.github.sasd97.upitter.services.LocationService;
@@ -32,6 +33,7 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import retrofit2.Call;
 
 import static com.github.sasd97.upitter.Upitter.getHolder;
 import static com.github.sasd97.upitter.constants.IntentKeysConstants.CATEGORIES_ATTACH;
@@ -58,6 +60,8 @@ public class SubscriptionFeedFragment extends BaseFragment
     private FeedPostRecycler feedPostRecycler;
     private ArrayList<Integer> categoriesSelected;
     private LinearLayoutManager linearLayoutManager;
+
+    private Call<PostsContainerModel> requestPosts;
 
     public SubscriptionFeedFragment() {
         super(R.layout.fragment_base_feed);

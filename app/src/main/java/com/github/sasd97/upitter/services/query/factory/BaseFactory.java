@@ -93,7 +93,7 @@ public interface BaseFactory {
     @FormUrlEncoded
     @POST("categories/obtainTitles")
     Call<ActivitiesContainerModel> obtainActivitiesTitles(@Query("ln") String language,
-                                                          @Field("activity") Integer[] activities);
+                                                          @Field("activity[]") Integer[] activities);
 
     @POST("post/create")
     Call<PostContainerModel> createPost(@Query("ln") String language,

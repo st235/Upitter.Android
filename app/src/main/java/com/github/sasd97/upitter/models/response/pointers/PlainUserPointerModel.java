@@ -19,6 +19,10 @@ public class PlainUserPointerModel {
     @Expose
     private String mName;
 
+    @SerializedName("alias")
+    @Expose
+    private String mAlias;
+
     @SerializedName("logoUrl")
     @Expose
     private String mLogoUrl;
@@ -33,6 +37,10 @@ public class PlainUserPointerModel {
 
     public String getName() {
         return mName;
+    }
+
+    public String getAlias() {
+        return mAlias;
     }
 
     public String getLogoUrl() {
