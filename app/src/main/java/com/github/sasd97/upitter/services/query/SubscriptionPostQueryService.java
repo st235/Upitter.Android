@@ -62,7 +62,10 @@ public class SubscriptionPostQueryService {
             public void onResponse(Call<PostsContainerModel> call, Response<PostsContainerModel> response) {
                 super.onResponse(call, response);
                 if (!RestService.handleError(call, response, listener)) return;
-                if (response.body().getResponseModel().getPosts().size() == 0) listener.onEmpty();
+                if (response.body().getResponseModel().getPosts().size() == 0) {
+                    listener.onEmpty();
+                    return;
+                }
                 listener.onObtainNew(response.body().getResponseModel());
             }
         });

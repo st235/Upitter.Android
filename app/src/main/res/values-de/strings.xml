@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application region. -->
+    <string name="app_name">Upitter</string>
+    <string name="empty_field">Empty</string>
+    <!-- Endregion -->
+
+    <!-- Progress dialog region. -->
+    <string name="progress_dialog_title">In Bearbeitung&#8230;</string>
+    <!-- Endregion -->
+
+    <!-- Update dialog region. -->
+    <string name="title_update_dialog">Neue Version verfuegbar</string>
+    <string name="content_update_dialog">Deine derzeitige Version ist zu alt</string>
+    <string name="upload_update_dialog">Upload von Google Play</string>
+    <string name="close_update_dialog">Close</string>
+        <!-- Endregion -->
+
+        <!-- No updates dialog region. -->
+    <string name="title_no_updates_dialog">Keine Updates</string>
+    <string name="content_no_updates_dialog">Deine derzeitige Version ist aktuell</string>
+        <!-- Endregion -->
+
+        <!-- Delete post dialog region. -->
+    <string name="delete_post_title_dialog">Bist du dir sicher?</string>
+    <string name="delete_post_content_dialog">Willst du diesen Post wirklich loeschen?</string>
+
+    <string name="delete_post_ok_dialog" >OK</string>
+    <string name="delete_post_cancel_dialog" >Cancel</string>
+        <!-- Endregion -->
+
+        <!-- Region permissions -->
+    <string name="permission_granted">Freigabe gewaehrt</string>
+    <string name="permission_denied">Freigabe verweigert</string>
+        <!-- Endregion -->
+
+        <!-- Region Send Crash Report -->
+    <string name="crash_title_message">Upitter ist abgestuerzt</string>
+    <string name="crash_ticker_message">Bitte hilf uns Upitter zu verbessern</string>
+    <string name="crash_body_message">Es scheint als waere Upitter abgestuerzt.
+            Wir We prepared some information to you, that you could share it with us.</string>
+        <!-- Endregion -->
+
+        <!-- Region gallery -->
+    <string name="title_gallery_activity">Upitter Galerie</string>
+    <string name="progress_label_gallery_activity">In Bearbeitung&#8230;\ninen Moment bitte</string>
+
+    <string name="spinner_all_photos_gallery_activity">All</string>
+    <string name="title_gallery_album_preview_activity">Album Vorschau</string>
+
+    <string name="image_of_gallery_album_preview_activity">of</string>
+    <string name="edit_gallery_album_preview_activity">Edit</string>
+    <string name="apply_gallery_album_preview_activity">Apply</string>
+        <!-- Endregion -->
+
+        <!-- Login activity region -->
+    <string name="user_registration_tab_login_activity">User</string>
+    <string name="company_registration_tab_login_activity">Company</string>
+    <string name="continue_label_login_activity">Continue</string>
+    <string name="enter_phone_number_label_login_activity">Enter your phone number:</string>
+    <string name="sign_in_with_login_activity">Sign in with:</string>
+    <string name="authorized_successfully_login_activity">Authorized successfully</string>
+    <string name="error_authorization_login_activity">Authorization error</string>
+    <string name="cancel_authorization_login_activity">Authorization canceled</string>
+    <string name="divider_text_login_activity">or</string>
+    <string name="skip_registration_label_login_activity">Skip</string>
+    <string name="dial_code_hint_login_activity">Code</string>
+    <string name="dial_body_hint_login_activity">Phone</string>
+    <string name="detecting_your_position_login_activity">Detect position&#8230;</string>
+    <string name="code_confirm_request_filed">Error</string>
+        <!-- Endregion -->
+
+        <!-- Country choose region -->
+    <string name="search_country_code_choose_menu">Search</string>
+    <string name="nothing_found_country_code_choose">Not a country code</string>
+        <!-- Endregion -->
+
+        <!-- Tape activity region -->
+    <string name="title_activity_tape">Tape</string>
+    <string name="favorites_activity_tape">Favorites</string>
+    <string name="action_settings">Settings</string>
+        <!-- Endregion -->
+
+        <!-- Code confirm activity region -->
+    <string name="title_activity_code_confirm_activity">Confirm code</string>
+    <string name="request_code_edittext_code_confirm_activity">Request code</string>
+    <string name="description_label_code_confirm_activity"> Wir haben einen request code an dein Telefon gesendet
+            Sollte die Authorisierung nicht automatisch erfolgen, bitten wir dich sie in das untere Feld einzutragen.</string>
+
+    <string name="login_label_code_confirm_activity">Login</string>
+    <string name="title_activity_bussines_registration">Business Registration</string>
+    <string name="wrong_request_code_confirm_activity">Wrong request code</string>
+        <!-- Endregion -->
+
+        <!-- Region categories activity -->
+    <string name="title_categories_activity">Categories</string>
+    <string name="category_select_categories_activity">Select</string>
+        <!-- Endregion -->
+
+        <!-- Region company registration activity -->
+    <string name="name_label_company_registration_activity">Company name</string>
+    <string name="description_label_company_registration_activity">Company description</string>
+    <string name="categories_label_company_registration_activity">Choose category</string>
+    <string name="contacts_label_company_registration_activity">Set up the contact information:</string>
+    <string name="phone_label_company_registration_activity">Contact phone</string>
+    <string name="add_phone_label_company_registration_activity">Add phone</string>
+    <string name="add_position_label_company_registration_activity">Add position</string>
+    <string name="choose_you_current_position_label_company_registration_activity">Choose you current position:</string>
+    <string name="site_label_company_registration_activity">Site</string>
+    <string name="position_label_company_registration_activity">Your position</string>
+    <string name="set_coordinates_company_registration_activity">Set position</string>
+    <string name="choose_avatar_company_registration_activity">Choose your\navatar</string>
+    <string name="finish_registration_label_company_registration_activity">Finish</string>
+    <string name="not_present_category_company_registration_activity">There is no choose categories</string>
+    <string name="extra_information_was_not_supply_company_registration_activity">Einige Informationen wurden nicht richtig uebermittelt, willst du fortfahren?</string>
+
+    <string name="ignore_extra_company_registration_activity">Ignore</string>
+    <string name="attempts_number_company_registration_activity">Wrong code. Attempt:</string>
+    <string name="attempts_of_company_registration_activity">of 5</string>
+    <!-- Endregion -->
+
+    <!-- Region Quiz Add -->
+    <string name="title_activity_quiz">Quiz</string>
+    <string name="add_button_text_activity_quiz">Add Variant</string>
+    <string name="hint_input_text_activity_quiz">Quiz Variant</string>
+    <!-- Endregion -->
+
+        <!-- Map activity region -->
+    <string name="title_map_choose_activity">Map</string>
+        <!-- Endregion -->
+
+        <!-- Create post region -->
+    <string name="title_create_post_activity">Create post</string>
+    <string name="whats_up_label_create_post_activity">Hier kannst du deine Services und Nachrichten veroeffentlichen&#8230;</string>
+
+    <string name="whats_up_title_create_post_activity">Title</string>
+    <string name="category_label_create_post_activity">Category:</string>
+    <string name="address_label_create_post_activity">Address(es)</string>
+    <string name="photo_label_create_post_activity">Photos</string>
+    <string name="quiz_label_create_post_activity">Quiz</string>
+    <string name="send_label_create_post_activity">Send</string>
+    <string name="title_activity_people_tape">People Tape</string>
+    <string name="choose_address_create_post_activity">Waehle deine Adresse</string>
+    <string name="miss_snackbar_create_post_activity">Es werden noch Informationen benoetigt</string>
+
+    <string name="miss_snackbar_action_create_post_activity">Show</string>
+    <string name="miss_title_create_post_activity">Some information need</string>
+    <string name="miss_content_create_post_activity">Bitte fuelle die naechsten Felder aus:</string>
+
+    <string name="miss_location_create_post_activity">Fehlende Location</string>
+
+    <string name="short_title_create_post_activity">Titel ist zu kurz</string>
+    <string name="short_description_post_activity">Beschreibung ist zu kurz</string>
+
+        <!-- Endregion -->
+
+        <!-- Tape region -->
+    <string name="voice_postfix">vote(-s)</string>
+        <!-- Endregion -->
+
+        <!-- Company tape region -->
+    <string name="create_post_company_tape">Erstelle ein post</string>
+
+    <string name="category_placeholder_company_tape">Some category</string>
+        <!-- Endregion -->
+
+        <!-- Company tape region -->
+    <string name="show_on_map_tape_single_view">Anzeigen auf Karte</string>
+
+    <string name="edit_post_tape_single_view">Post bearbeiten</string>
+
+    <string name="share_tape_single_view">Share</string>
+    <string name="complain_tape_single_view">Complain</string>
+    <string name="delete_post_tape_single_view">Post loeschen</string>
+
+    <string name="watch_count_tape_single_view">0</string>
+        <!-- Endregion -->
+
+        <!-- Navigation drawer region -->
+    <string name="about_app_navigation_drawer">About app</string>
+    <string name="favorites_navigation_drawer">Favoriten</string>
+
+    <string name="logout_navigation_drawer">Logout</string>
+    <string name="extra_navigation_drawer">Extra</string>
+    <string name="notifications_navigation_drawer">Benachrichtigungen</string>
+    <string name="settings_navigation_drawer">Mein Account</string>
+
+    <string name="tape_navigation_drawer">Tape</string>
+    <string name="subscriptions_navigation_drawer">Subscriptions</string>
+    <string name="sign_in_navigation_drawer">Anmelden</string>
+
+
+        <!-- Endregion -->
+
+        <!-- Choose location region -->
+    <string name="title_choose_location_activity">Waehle die Location</string>
+        <!-- Endregion -->
+
+        <!-- Choose category region -->
+    <string name="choose_category">Choose category</string>
+    <string name="clear_category">Clear category</string>
+    <string name="title_activity_company_settings">Einstellungen</string>
+        <!-- Endregion -->
+
+        <!-- Company settings region -->
+    <string name="company_name_company_settings">Name der Firma</string>
+    <string name="title_activity_show_company_locations">Company Locations</string>
+        <!-- Endregion -->
+
+        <!-- Location chooser region -->
+    <string name="your_position_location_activity">Waehle deine location</string>
+    <string name="your_radius_location_activity">Deinen Radius</string>
+
+    <string name="radius_postfix_location_activity">m</string>
+        <!-- Endregion -->
+
+        <!-- Company settings region -->
+    <string-array name="settings_pager">
+    <item>Base</item>
+    <item>Additional</item>
+    </string-array>
+
+    <string name="upload_avatar">Upload Avatar</string>
+    <string name="avatar_upload_state_pending">Uploading&#8230;</string>
+    <string name="avatar_upload_state_success">Erfolgreich</string>
+    <string name="avatar_upload_state_error">Error</string>
+    <string name="company_title_hint">Title</string>
+    <string name="company_alias_hint">Alias</string>
+    <string name="company_description_hint">Beschreibung</string>
+
+    <string name="company_site_hint">Site</string>
+    <string name="choose_social_icons_links">Social links</string>
+    <string name="choose_location_company_base_settings">Choose location</string>
+        <!-- Endregion -->
+
+        <!-- Post preview region -->
+    <string name="title_activity_post_preview_schema">Post</string>
+    <string name="title_activity_setup_location_result">Location Einstellungen</string>
+        <!-- Endregion -->
+
+        <!-- Setup location region -->
+    <string-array name="setup_location_pager">
+    <item>Preview</item>
+    <item>List</item>
+    </string-array>
+    <!-- Endregion -->
+
+        <!-- Company Profile region -->
+    <string-array name="company_profile_tabs_titile">
+    <item>Posts\n</item>
+    <item>Subscriptions\n</item>
+    </string-array>
+        <!-- Endregion -->
+
+        <!-- Chat Message Line region -->
+    <string name="chat_line_message">Message</string>
+    <!-- Endregion -->
+
+        <!-- Company information region -->
+    <string name="summary_rating_company_information">Alle likes:</string>
+    <string name="description_company_information">Description:</string>
+    <string name="contacts_company_information">Kontakte:</string>
+    <string name="activities_company_information">Aktivitaeten:</string>
+        <!-- Endregion -->
+
+        <!-- People Feed region -->
+    <string-array name="people_feed_titles">
+    <item>Feed</item>
+    <item>Subscription</item>
+    </string-array>
+        <!-- Endregion -->
+
+    <string name="title_activity_people_settings">Einstellungen</string>
+
+        <!-- Company profile by user region -->
+    <string name="title_activity_people_subscription">Subscriptions</string>
+    <string name="people_subscribe">Abonnieren</string>
+    <string name="people_unsubscribe">Abbestellen</string>
+    <string-array name="company_profile_titles">
+    <item>Posts</item>
+    <item>Information</item>
+    </string-array>
+    <string name="title_activity_empty_feed_actvity">Feed</string>
+        <!-- Endregion -->
+
+        <!-- No Access dialog region -->
+    <string name="no_access_title">Kein Zugriff</string>
+    <string name="no_access_content">Du hast leider keinen Zugriff auf diese Funktion</string>
+    <string name="show_on_map_company_information">Show on map</string>
+    <!-- Endregion -->
+
+    <string name="some_location">Some location</string>
+    <string name="some_sublocation">Some sublocation</string>
+
+    <string name="company_title">Sealdo, 2016</string>
+
+        <!-- Company profile region -->
+    <string name="company_information">Information</string>
+        <!-- Endregion -->
+
+        <!-- Gallery toggles region -->
+    <string name="filter_toggle">Filter</string>
+    <string name="crop_toggle">Crop</string>
+    <string name="rotate_gallery">Rotate</string>
+    <string name="free_mode_gallery">Free mode</string>
+        <!-- Endregion -->
+
+        <!-- User settings region -->
+    <string name="nickname_edittext">Nickname</string>
+    <string name="name_edititext">Name</string>
+    <string name="secondname_edittext">Second name</string>
+    <string name="save_button">Save</string>
+    <string name="men_radio">Men</string>
+    <string name="women_radio">Women</string>
+    <string name="not_selected_radio">Not selected</string>
+        <!-- Endregion -->
+
+    <string name="whats_new">Was gibt es neues?</string>
+</resources>

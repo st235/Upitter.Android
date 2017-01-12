@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,7 +57,6 @@ public class PeopleFeedActivity extends BaseActivity
     protected void setupViews() {
         setToolbar(R.id.toolbar, true);
         people = ((PeopleHolder) getHolder()).get();
-
         getSupportActionBar().setTitle("");
 
         peopleFeedFragment = PeopleFeedFragment.getFragment();

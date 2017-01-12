@@ -69,7 +69,7 @@ public class Upitter extends Application {
 
         Logger
                 .init(TAG)
-                .methodCount(3)
+                .methodCount(4)
                 .logLevel(BuildConfig.DEBUG ? LogLevel.FULL : LogLevel.NONE);
 
         Assets.init(this);

@@ -10,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 841
-        versionName "0.0.8.0"
+        versionName "0.0.8.1"
     }
 
     buildTypes {

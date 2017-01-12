@@ -169,5 +169,16 @@
         <item>Информация</item>
     </string-array>
     <string name="subscriptions_navigation_drawer">Подписки</string>
+    <string name="no_access_content">У Вас нет прав доступа к данному функцоиналу</string>
+    <string name="no_access_title">Ошибка доступа</string>
+    <string name="show_on_map_company_information">На карте</string>
+    <string name="sign_in_navigation_drawer">Войти</string>
+    <string name="summary_rating_company_information">Все лайки:</string>
+    <string name="title_activity_people_settings">Настройки</string>
+    <string name="title_update_dialog">Доступна новая версия</string>
+    <string name="content_update_dialog">Ваша текущая версия устарела</string>
+    <string name="upload_update_dialog">Загрузить из Google Play</string>
+    <string name="title_no_updates_dialog">Нет обновлений</string>
+    <string name="content_no_updates_dialog">Ваша текущая версия - актуальна</string>
     <!-- Endregion -->
 </resources>

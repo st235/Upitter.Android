@@ -9,15 +9,15 @@
     <!-- Endregion -->
 
     <!-- Update dialog region. -->
-    <string name="title_update_dialog" translatable="false">New version available</string>
-    <string name="content_update_dialog" translatable="false">Your current version is too old</string>
-    <string name="upload_update_dialog" translatable="false">Upload from Google Play</string>
+    <string name="title_update_dialog">New version available</string>
+    <string name="content_update_dialog">Your current version is too old</string>
+    <string name="upload_update_dialog">Upload from Google Play</string>
     <string name="close_update_dialog">Close</string>
     <!-- Endregion -->
 
     <!-- No updates dialog region. -->
-    <string name="title_no_updates_dialog" translatable="false">No updates</string>
-    <string name="content_no_updates_dialog" translatable="false">You current version is actual</string>
+    <string name="title_no_updates_dialog">No updates</string>
+    <string name="content_no_updates_dialog">You current version is actual</string>
     <string name="ok_no_updates_dialog" translatable="false">OK</string>
     <!-- Endregion -->
 
@@ -34,10 +34,9 @@
     <!-- Endregion -->
 
     <!-- Region Send Crash Report -->
-    <string name="crash_title_message">Upitter had been broken</string>
-    <string name="crash_ticker_message">Help us to improve Upitter</string>
-    <string name="crash_body_message">Looks like Upitter crash.
-        We prepared some information to you, that you could share it with us.</string>
+    <string name="crash_title_message">Upitter has been broken</string>
+    <string name="crash_ticker_message">Please help us to improve Upitter</string>
+    <string name="crash_body_message">Looks like Upitter crash. We prepared some information to you, that you could share it with us.</string>
     <!-- Endregion -->
 
     <!-- Region gallery -->
@@ -207,7 +206,7 @@
     <string name="settings_navigation_drawer">My account</string>
     <string name="tape_navigation_drawer">Tape</string>
     <string name="subscriptions_navigation_drawer">Subscriptions</string>
-    <string name="sign_in_navigation_drawer" translatable="false">Sign in</string>
+    <string name="sign_in_navigation_drawer">Sign in</string>
     <!-- Endregion -->
 
     <!-- Choose location region -->
@@ -365,11 +364,11 @@
     <!-- Endregion -->
 
     <!-- Company information region -->
-    <string name="summary_rating_company_information" translatable="false">All likes:</string>
+    <string name="summary_rating_company_information">All likes:</string>
     <string name="description_company_information">Description:</string>
     <string name="contacts_company_information">Contacts:</string>
     <string name="activities_company_information">Activity:</string>
-    <string name="show_on_map_company_information" translatable="false">Show on map</string>
+    <string name="show_on_map_company_information">Show on map</string>
     <!-- Endregion -->
 
     <!-- People Feed region -->
@@ -379,7 +378,7 @@
     </string-array>
     <!-- Endregion -->
 
-    <string name="title_activity_people_settings" translatable="false">Settings</string>
+    <string name="title_activity_people_settings">Settings</string>
 
     <!-- Company profile by user region -->
     <string name="title_activity_people_subscription">Subscriptions</string>
@@ -394,8 +393,8 @@
     <!-- Endregion -->
 
     <!-- No Access dialog region -->
-    <string name="no_access_title" translatable="false">No access</string>
-    <string name="no_access_content" translatable="false">You have not access to this function</string>
+    <string name="no_access_title">No access</string>
+    <string name="no_access_content">You have not access to this function</string>
     <string name="no_access_ok" translatable="false">OK</string>
     <!-- Endregion -->
 
